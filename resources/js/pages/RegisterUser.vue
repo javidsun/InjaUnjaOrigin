@@ -83,7 +83,7 @@ import apiService from "@/globalServices/apiService.js";
 import InjaUnjaLogo from "@/assets/images/logo1.png"
 
 export default {
-    name: "Register",
+    name: "Register", //salam
     data() {
         return {
             openRegisterDialog: true,

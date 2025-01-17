@@ -84,7 +84,7 @@ import InjaUnjaLogo from "@/assets/images/logo1.png"
 
 export default {
     name: "Register", //salam
-    data() {
+    data() {//
         return {
             openRegisterDialog: true,
             name: '',

@@ -1,0 +1,287 @@
+/*
+    Breadcrumb style
+*/
+
+.v-breadcrumbs-divider {
+    font-size: 1.2rem;
+    color: rgb(var(--v-theme-on-background));
+}
+
+.v-breadcrumbs {
+    padding: 1rem 0 !important;
+    align-items: center !important;
+
+    .v-breadcrumbs-item--disabled {
+        pointer-events: none;
+    }
+
+    .v-breadcrumbs-item {
+        color: rgb(var(--v-theme-on-background));
+        opacity: var(--v-disabled-opacity);
+        font-size: 1.2rem;
+    }
+
+    li:last-child {
+        font-size: 1.5rem;
+        color: rgb(var(--v-theme-on-background));
+        opacity: unset;
+        font-weight: bold;
+    }
+}
+
+/*
+    Dialog style
+*/
+
+.v-dialog > .v-overlay__content > .v-card,
+.v-dialog > .v-overlay__content > form > .v-card {
+    border-radius: 0.5rem;
+}
+
+/*
+    Button style
+*/
+.v-btn--disabled {
+    opacity: 1 !important;
+}
+
+.v-btn__overlay {
+    opacity: 0 !important;
+}
+
+.v-btn--disabled.v-btn--variant-elevated {
+    background-color: rgb(var(--v-theme-primary-disabled)) !important;
+    color: rgb(var(--v-theme-on-primary-disabled)) !important;
+}
+
+.v-btn--disabled.v-btn--variant-outlined {
+    color: rgb(var(--v-theme-on-primary-disabled)) !important;
+    background-color: rgb(var(--v-theme-primary-disabled)) !important;
+}
+
+.v-btn--disabled.v-btn--variant-outlined {
+    background-color: rgb(var(--v-theme-secondary-disabled)) !important;
+    color: rgb(var(--v-theme-on-secondary-disabled)) !important;
+}
+
+.v-btn:hover {
+    background-color: rgb(var(--v-theme-secondary-over)) !important;
+    color: rgb(var(--v-theme-on-secondary-over)) !important;
+    .v-btn__content {
+        color: rgb(var(--v-theme-on-secondary-over)) !important;
+    }
+}
+
+.bg-primary.v-btn:hover {
+    box-shadow: 0 0 0 1px currentColor !important; /* emulate the border */
+    background-color: rgb(var(--v-theme-primary-over)) !important;
+    color: rgb(var(--v-theme-on-primary-over)) !important;
+}
+
+.v-btn-card-action {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 8px !important;
+    border-radius: 10px !important;
+}
+
+.v-btn-card-action-compact {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 4px !important;
+}
+
+.toggle-btn-view .v-btn {
+    border-radius: 0.5rem !important;
+    box-shadow: 0 0 0 1px currentColor !important;
+    margin: 5px 5px;
+
+    &--active {
+        box-shadow: 0 0 0 1px rgb(var(--v-theme-primary)) !important;
+    }
+}
+
+/*
+    Table style
+*/
+.v-table.v-table--fixed-header > .v-table__wrapper > table > thead > tr > th {
+    background: rgb(var(--v-theme-table-header)) !important;
+    border-bottom: medium solid rgb(var(--v-theme-table-divider)) !important;
+}
+
+tr > td {
+    border-bottom: thin solid rgb(var(--v-theme-table-divider)) !important;
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: rgb(var(--v-theme-table-row-even)) !important;
+}
+
+tbody tr:nth-of-type(odd) {
+    background-color: rgb(var(--v-theme-table-row-odd)) !important;
+}
+
+.v-data-table-footer {
+    background-color: rgb(var(--v-theme-background)) !important;
+    border-bottom: thin solid rgb(var(--v-theme-table-divider)) !important;
+}
+
+.v-pagination__list > :not(.v-pagination__item--is-active) {
+    color: rgb(var(--v-theme-pagination-footer)) !important;
+}
+
+.v-toolbar__content {
+    gap: 0.5rem;
+}
+
+.v-toolbar__content:not(.v-app-bar .v-toolbar__content) {
+    background-color: rgb(var(--v-theme-background));
+}
+
+.v-data-table__tr .v-btn--size-default {
+    min-width: 0;
+    min-height: 0;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+/*
+  expansion-panel
+*/
+.v-expansion-panel-title {
+    background: rgb(var(--v-theme-surface)) !important;
+    border-bottom: thin solid rgb(var(--v-theme-on-surface)) !important;
+}
+
+/*
+  switch
+*/
+.v-switch__track .bg-switch {
+    opacity: 1 !important;
+}
+
+.v-selection-control
+.v-selection-control--dirty
+.v-selection-control--focused
+.v-selection-control--density-default
+.v-label
+.v-label--clickable {
+    opacity: 1 !important;
+}
+
+.true-switch .v-label--clickable {
+    opacity: 1 !important;
+    font-weight: 510;
+}
+
+/*
+  Cards
+*/
+.selected-card {
+    background: rgb(var(--v-theme-primary)) !important;
+    color: rgb(var(--v-theme-on-primary)) !important;
+}
+
+.cardTitlePrimary {
+    background-color: rgb(var(--v-theme-primary)) !important;
+    color: rgb(var(--v-theme-on-primary)) !important;
+}
+
+/*
+  Error card style
+*/
+.errorTitle {
+    background-color: rgb(var(--v-theme-error)) !important;
+    color: rgb(var(--v-theme-on-error)) !important;
+    display: flex !important;
+}
+
+.errorCard {
+    border-color: rgb(var(--v-theme-error)) !important;
+}
+
+.border-windows {
+    border: 1px solid rgb(var(--v-theme-windows)) !important;
+}
+.border-android {
+    border: 1px solid rgb(var(--v-theme-android)) !important;
+}
+.border-apple {
+    border: 1px solid rgb(var(--v-theme-apple)) !important;
+}
+.border-ios {
+    border: 1px solid rgb(var(--v-theme-apple)) !important;
+}
+
+/*
+  Fix, google picker is to shy
+*/
+.picker-dialog-bg {
+    z-index: 20000 !important;
+}
+
+.picker-dialog {
+    z-index: 20001 !important;
+}
+
+/*
+  Fix, google iframe style csp doesn't work (thank you Google👍)
+*/
+#iframeContainer iframe {
+    height: 55vh !important;
+}
+#iframeContainer {
+    height: 55vh !important;
+    position: relative;
+}
+
+/*
+  Scrollbar style
+*/
+
+/* width */
+::-webkit-scrollbar {
+    top: 64px;
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: rgb(var(--v-theme-surface));
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(var(--v-theme-on-surface));
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--v-theme-primary));
+}
+
+/*
+  Generic classes
+*/
+.bg-background {
+    background-color: rgb(var(--v-theme-background)) !important;
+}
+
+.bg-surface {
+    background-color: rgb(var(--v-theme-surface)) !important;
+}
+
+.color-error {
+    color: rgb(var(--v-theme-error)) !important;
+}
+
+.color-success {
+    color: rgb(var(--v-theme-success)) !important;
+}
+.color-warning {
+    color: rgb(var(--v-theme-warning)) !important;
+}
+
+.color-primary {
+    color: rgb(var(--v-theme-primary)) !important;
+}

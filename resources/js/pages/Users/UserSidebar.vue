@@ -29,7 +29,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { translate } from "../../store/languageStore";
+import { translate } from "@/store/languageStore.js";
 import { useRouter } from 'vue-router';
 import { Inertia } from '@inertiajs/inertia';
 

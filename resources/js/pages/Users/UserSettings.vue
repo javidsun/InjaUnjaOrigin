@@ -89,7 +89,7 @@ import { ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import UserSidebar from './Layout.vue';
 import SettingModal from './SettingModals/SettingModal.vue';
-import { translate } from "../../store/languageStore";
+import { translate } from "@/store/languageStore.js";
 import SecurityModal from './SettingModals/SecurityModal.vue';
 import PaymentsModal from './SettingModals/PaymentsModal.vue';
 import AccessModal from './SettingModals/AccessModal.vue';

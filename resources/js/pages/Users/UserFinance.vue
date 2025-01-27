@@ -350,3 +350,6 @@ export default {
     font-weight: bold;
 }
 </style>
+<script setup lang="ts">
+import UserSidebar from "@/pages/Users/UserSidebar.vue";
+</script>

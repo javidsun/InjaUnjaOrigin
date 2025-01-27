@@ -25,6 +25,7 @@ window.addEventListener("beforeunload", () => {
 });
 
 createInertiaApp({
+
     resolve: async name => {
         const pages = import.meta.glob('./pages/**/*.vue');
         let page = await pages[`./pages/${name}.vue`];

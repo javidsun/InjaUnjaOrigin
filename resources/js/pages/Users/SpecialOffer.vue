@@ -56,7 +56,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { translate } from "../../store/languageStore";
+import { translate } from "@/store/languageStore.js";
 
 const specialOffer = ref({
   title: "پیشنهاد ویژه برای شما",

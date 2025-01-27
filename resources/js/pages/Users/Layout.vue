@@ -39,7 +39,7 @@
 import { ref, onMounted } from "vue";
 import Searchbar from "../layout/Header/search/Searchbar.vue";
 import Darkmood from "../layout/Header/Darkmood.vue";
-import { translate } from "../../store/languageStore";
+import { translate } from "@/store/languageStore";
 import UserSidebar from "./UserSidebar.vue";
 import { useRouter } from 'vue-router';
 import LanguageSwitcher from "../layout/Header/LanguageSwitcher.vue";

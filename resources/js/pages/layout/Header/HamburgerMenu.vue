@@ -22,6 +22,7 @@
                 <v-list-item @click="navigateTo('/login')">
                     <v-list-item-title class="H_menu">{{ t('menu.login') }}</v-list-item-title>
                 </v-list-item>
+
                 <v-divider></v-divider>
                 <v-list-item @click="navigateTo('/add-property')">
                     <v-list-item-title class="H_menu">{{ t('menu.addProperty') }}</v-list-item-title>
@@ -43,17 +44,19 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 import { t } from "../../../store/languageStore";
 import Searchbar from "./search/Searchbar.vue";
+import { useRouter } from "vue-router";
+
+const navigateTo = (url) => {
+    if (useRouter) {
+        useRouter.push(url);
+    } else {
+        console.error('Router instance is not available');
+    }
+};
 
 const menuActive = ref(false);
-const router = useRouter();
-
-const navigateTo = (path) => {
-    router.push(path);
-    menuActive.value = false;
-};
 </script>
 
 <style scoped>

@@ -11,29 +11,31 @@ import apiService from "@/globalServices/apiService.js";
 
 const start = window.performance.now();
 
-// بازیابی state پس از reload
 const savedState = sessionStorage.getItem("piniaAppState");
 if (savedState) {
     pinia.state.value = JSON.parse(savedState);
 }
 
-// ذخیره state قبل از خروج از صفحه
 window.addEventListener("beforeunload", () => {
     sessionStorage.setItem("piniaAppState", JSON.stringify(pinia.state.value));
 });
 
 createInertiaApp({
     resolve: async name => {
-        const pages = import.meta.glob('./pages/*.vue');
-        let page = await pages[`./pages/${name}.vue`]();
-        // حذف لایه‌بندی پیش‌فرض و استفاده مستقیم از کامپوننت‌ها
-        return page;
+        const pages = import.meta.glob('./pages/**/*.vue');
+        let page = await pages[`./pages/${name}.vue`];
+
+        if (!page) {
+            throw new Error(`Page ${name} not found`);
+        }
+        return page();
     },
     setup({ el, App, props, plugin }) {
         const vue = createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(vuetify)
             .use(pinia)
+
             .component('InertiaLink', Link);
 
         return vue.mount(el);

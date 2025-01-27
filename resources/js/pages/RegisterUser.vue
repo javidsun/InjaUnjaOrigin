@@ -1,174 +1,142 @@
-<template>
-    <v-dialog v-model="openRegisterDialog" >
-        <v-container class="container__register">
-            <v-row align="center" justify="center">
-                <v-col cols="12" sm="8" md="6" lg="4">
-                    <v-card class="elevation-12 rounded-lg" border>
-                        <div class="d-flex justify-end align-center" style="padding-top: 10px">
-                            <v-icon class="mr-2" @click="coseDialog">mdi-close</v-icon>
-                        </div>
-                        <div class="d-flex align-center justify-center mt-1">
-                            <v-img
-                                :src="logo"
-                                max-height="140"
-                                max-width="140"
-                                contain
-                            />
-                        </div>
-                        <v-alert v-if="error" type="error" dismissible class="mt-3">
-                            {{ error }}
-                        </v-alert>
-                        <v-card-text>
-                            <v-form @submit.prevent="register" ref="form">
-                                <v-text-field
-                                    v-model="name"
-                                    :rules="[v => !!v || 'Il nome è obbligatorio']"
-                                    label="Nome"
-                                    prepend-icon="mdi-account"
-                                    required
-                                ></v-text-field>
-                                <v-text-field
-                                    v-model="email"
-                                    :rules="[
-                                v => !!v || 'L\'email è obbligatoria',
-                                v => /.+@.+\..+/.test(v) || 'L\'email deve essere valida']"
-                                    label="Email"
-                                    prepend-icon="mdi-email"
-                                    required
-                                ></v-text-field>
-                                <v-text-field
-                                    v-model="confirmEmail"
-                                    :rules="[
-                                v => !!v || 'La conferma dell\'email è obbligatoria',
-                                v => v === email || 'Le email non corrispondono']"
-                                    label="Conferma Email"
-                                    prepend-icon="mdi-email-check"
-                                    required
-                                ></v-text-field>
-                                <v-text-field
-                                    v-model="password"
-                                    :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                    :rules="[v => !!v || 'La password è obbligatoria']"
-                                    :type="showPassword ? 'text' : 'password'"
-                                    label="Password"
-                                    prepend-icon="mdi-lock"
-                                    @click:append="showPassword = !showPassword"
-                                    required
-                                ></v-text-field>
-                            </v-form>
-                        </v-card-text>
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn-primary color="primary" @click="register" :loading="loading">
-                                Registrati
-                            </v-btn-primary>
-                        </v-card-actions>
-                        <v-card-text class="text-center">
-                            <v-divider class="my-3"></v-divider>
-                            <div class="text-body-2 mb-3">Oppure registrati con</div>
-                            <v-btn icon="mdi-google" color="red" variant="text" class="mx-2"></v-btn>
-                            <v-btn icon="mdi-apple" color="black" variant="text" class="mx-2"></v-btn>
-                            <v-btn icon="mdi-facebook" color="blue" variant="text" class="mx-2"></v-btn>
-                            <v-btn icon="mdi-twitter" color="light-blue" variant="text" class="mx-2"></v-btn>
-                        </v-card-text>
-                    </v-card>
-                </v-col>
-            </v-row>
-        </v-container>
-    </v-dialog>
-</template>
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { t, currentLanguage } from "../store/languageStore";
+import Header from './layout/Header/Header.vue';
 
-<script>
-import apiService from "@/globalServices/apiService.js";
-import InjaUnjaLogo from "@/assets/images/logo1.png"
-
-export default {
-    name: "Register", //salam
-    data() {//
-        return {
-            openRegisterDialog: true,
-            name: '',
-            email: '',
-            confirmEmail: '',
-            password: '',
-            showPassword: false,
-            loading: false,
-            logo:null,
-            error: null,
-        };
-    },
-    created() {
-        this.logo = InjaUnjaLogo;
-    },
-    methods: {
-        coseDialog(){
-          this.$emit('closeRegisterDialog');
-        },
-        async register() {
-            this.loading = true;
-            this.error = null;
-
-            const formData = {
-                name: this.name,
-                email: this.email,
-                password: this.password,
-                password_confirmation: this.password, // Per la conferma in Laravel
-            };
-            console.log('form data sarebe : : : ',formData);
-
-            try {
-                await apiService.axiosToBackend().get('/sanctum/csrf-cookie');
-                const response =await apiService.axiosToBackend().post('/api/register', formData);
-
-                if (response.data.success) {
-                    console.log('Registrazione completata:', response.data);
-                    // this.$router.push('/dashboard'); // Redirige dopo la registrazione
-                } else {
-                    this.error = response.data.message;
-                }
-                console.log(response);
-                //this.$router.push('/dashboard'); // Redirigi l'utente dopo la registrazione
-            } catch (error) {
-                if (error.response && error.response.status === 422) {
-                    this.error = 'Errore di validazione: ' + Object.values(error.response.data.errors).join(', ');
-                } else {
-                    this.error = 'Errore durante la registrazione. Riprova più tardi.';
-                }
-                console.error('Errore durante la registrazione:', error);
-            } finally {
-                this.loading = false;
-            }
-        },
-    }
+const form = ref({
+    username: '',
+    email: '',
+    password: '',
+    privacyPolicies: false,
+});
+const setLanguage = (lang) => {
+    t(lang);
 };
+
+const isPasswordVisible = ref(false);
+const router = useRouter();
+
+const handleRegister = () => {
+    if (!form.value.username || !form.value.email || !form.value.password || !form.value.privacyPolicies) {
+        alert(messages.value.register.fillAllFields);
+        return;
+    }
+    console.log('Registering user:', form.value);
+    router.push({ name: 'login' });
+};
+const goToHome = () => {
+    router.push('/');
+};
+
 </script>
 
-<style scoped lang="scss">
-.container__register {
-    .v-card {
-        transition: all 0.3s ease-in-out;
-    }
+<template>
+    <v-app class="back">
+        <Header />
+        <br>
+        <br>
+        <br>
 
-    .v-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
-    }
 
-    .v-btn {
-        transition: all 0.2s ease-in-out;
-    }
+        <div class="auth-wrapper d-flex align-center justify-center pa-4">
+            <VCard class="auth-card pa-6 purple-background" style="max-width: 400px;">
+                <VCardText class="text-center">
+                    <div class="logo-container form">
+                        <img src="/assets/images/inja-unja.png" alt="Logo" class="logo-image" />
+                    </div>
+                    <h4 class="mb-1 font fontsize">
+                        {{ t('register.greeting') }}
+                    </h4>
+                    <p class="font fontsize2">{{ t('register.welcome') }}</p>
+                </VCardText>
 
-    .v-btn:hover {
-        transform: scale(1.05);
-    }
+                <VForm @submit.prevent="handleRegister" class="form_Style">
+                    <VRow>
+                        <VCol cols="12" class="font">
+                            <VTextField
+                                v-model="form.username"
+                                :label="t('register.username')"
+                                :placeholder="t('register.usernamePlaceholder')"
+                                outlined
+                                dense
+                            />
+                        </VCol>
 
-    .text-center {
-        text-align: center;
-    }
+                        <VCol cols="12" class="form font form_Style">
+                            <VTextField
+                                v-model="form.email"
+                                :label="t('register.email')"
+                                :placeholder="t('register.emailPlaceholder')"
+                                outlined
+                                dense
+                                type="email"
+                            />
+                        </VCol>
 
-    .mb-3 {
-        margin-bottom: 1rem;
-    }
+                        <VCol cols="12" class="form font form_Style">
+                            <VTextField
+                                v-model="form.password"
+                                :label="t('register.password')"
+                                :placeholder="t('register.passwordPlaceholder')"
+                                outlined
+                                dense
+                                :type="isPasswordVisible ? 'text' : 'password'"
+                                :append-inner-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
+                                @click:append-inner="isPasswordVisible = !isPasswordVisible"
+                            />
+                        </VCol>
 
-}
+                        <VCol cols="12" class="form font">
+                            <div class="d-flex align-items-center">
+                                <VCheckbox
+                                    v-model="form.privacyPolicies"
+                                    dense
+                                    class="mr-2"
+                                    style="vertical-align: middle;"
+                                />
+                                <RouterLink
+                                    to="/privacy-policy"
+                                    class="form2 privacy"
+                                >
+                                    {{ t('register.privacyPolicy') }}
+
+                                </RouterLink>
+                            </div>
+                        </VCol>
+
+                        <VCol cols="12" class="form2">
+                            <VBtn block type="submit" class="font buttonfont1"  color="light-purple">
+                                {{ t('register.register') }}
+                            </VBtn>
+                        </VCol>
+                    </VRow>
+                </VForm>
+
+                <VCardText class="text-center mt-4 form2 fontsize3 font">
+                    <p>
+                        {{ t('register.alreadyRegistered') }}
+
+                        <RouterLink to="login" style="color: #4cc8ff" class="fontsize3">
+                            {{ t('register.login') }}
+
+                        </RouterLink>
+                    </p>
+                </VCardText>
+
+                <VCardText class="text-center">
+                    <v-btn icon="mdi-google" color="red" variant="text" class="mx-2" @click="socialLogin('google')"></v-btn>
+                    <v-btn icon="mdi-facebook" color="blue" variant="text" class="mx-2" @click="socialLogin('facebook')"></v-btn>
+                    <v-btn icon="mdi-twitter" color="light-blue" variant="text" class="mx-2" @click="socialLogin('twitter')"></v-btn>
+                    <v-btn icon="mdi-apple" color="grey-darken-3" variant="text" class="mx-2" @click="socialLogin('apple')"></v-btn>
+                </VCardText>
+
+
+            </VCard>
+        </div>
+    </v-app>
+</template>
+<style>
+@import '../../css/@core/template/pages/page-auth.scss';
+
 </style>

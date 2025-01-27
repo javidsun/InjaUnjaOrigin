@@ -31,7 +31,7 @@ onMounted(() => {
     box-shadow: none;
     border: none;
     display: flex;
-    justify-content: right;
+    justify-content: center;
     align-items: center;
     font-size: 18px;
     color: orange;

@@ -71,6 +71,9 @@ Route::get('/inja-unja', function () {
 Route::get('/help-center', function () {
     return Inertia::render('HelpCenter');
 });
+Route::get('/AdminDashboard', function () {
+    return Inertia::render('views/dashboards/Admin/AdminDashboard');
+});
 
 Route::get('/UserDashboard', function () {
     return Inertia::render('Users/UserDashboard/UserDashboard');

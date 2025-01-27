@@ -2,7 +2,8 @@
     <v-app class="app-container">
         <Header />
         <v-main class="main-container">
-            <!--            <ContentSection />-->
+
+            <ContentSection />
         </v-main>
 
         <Footer />
@@ -14,6 +15,7 @@
 
 import Header from './layout/Header/Header.vue';
 import Footer from './layout/Footer.vue';
+import ContentSection from './layout/sections/ContentSection.vue';
 
 export default {
         name: 'Home2',
@@ -21,6 +23,8 @@ export default {
         components: {
         Header,
         Footer,
+        ContentSection,
+
     },
 };
 </script>

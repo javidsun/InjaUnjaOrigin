@@ -476,3 +476,187 @@
 [2025-01-27 20:25:31] local.INFO: frontend.php  
 [2025-01-27 20:26:36] local.INFO: frontend.php  
 [2025-01-27 20:27:14] local.INFO: frontend.php  
+[2025-01-27 20:37:30] local.INFO: frontend.php  
+[2025-01-27 20:37:30] local.INFO: frontend.php  
+[2025-01-27 20:41:14] local.INFO: frontend.php  
+[2025-01-27 20:41:14] local.INFO: frontend.php  
+[2025-01-27 20:41:23] local.INFO: frontend.php  
+[2025-01-27 20:43:23] local.INFO: frontend.php  
+[2025-01-27 20:58:18] local.INFO: frontend.php  
+[2025-01-27 20:58:18] local.INFO: frontend.php  
+[2025-01-27 21:00:52] local.INFO: frontend.php  
+[2025-01-27 21:00:53] local.INFO: frontend.php  
+[2025-01-27 21:00:53] local.INFO: frontend.php  
+[2025-01-27 21:01:19] local.INFO: frontend.php  
+[2025-01-27 21:01:20] local.INFO: frontend.php  
+[2025-01-27 21:01:32] local.INFO: frontend.php  
+[2025-01-27 21:01:33] local.INFO: frontend.php  
+[2025-01-27 21:02:01] local.INFO: frontend.php  
+[2025-01-27 21:02:01] local.INFO: frontend.php  
+[2025-01-27 21:02:14] local.INFO: frontend.php  
+[2025-01-27 21:02:14] local.INFO: frontend.php  
+[2025-01-27 21:03:05] local.INFO: frontend.php  
+[2025-01-27 21:03:06] local.INFO: frontend.php  
+[2025-01-27 21:03:20] local.INFO: frontend.php  
+[2025-01-27 21:03:21] local.INFO: frontend.php  
+[2025-01-27 21:03:21] local.INFO: frontend.php  
+[2025-01-27 21:03:21] local.INFO: frontend.php  
+[2025-01-27 21:03:22] local.INFO: frontend.php  
+[2025-01-27 21:03:22] local.INFO: frontend.php  
+[2025-01-27 21:03:25] local.INFO: frontend.php  
+[2025-01-27 21:03:30] local.INFO: frontend.php  
+[2025-01-27 21:03:33] local.INFO: frontend.php  
+[2025-01-27 21:03:34] local.INFO: frontend.php  
+[2025-01-27 21:03:34] local.INFO: frontend.php  
+[2025-01-27 21:03:35] local.INFO: frontend.php  
+[2025-01-27 21:03:35] local.INFO: frontend.php  
+[2025-01-27 21:03:38] local.INFO: frontend.php  
+[2025-01-27 21:03:54] local.INFO: frontend.php  
+[2025-01-27 21:03:56] local.INFO: frontend.php  
+[2025-01-27 21:03:56] local.INFO: frontend.php  
+[2025-01-27 21:03:57] local.INFO: frontend.php  
+[2025-01-27 21:03:57] local.INFO: frontend.php  
+[2025-01-27 21:04:00] local.INFO: frontend.php  
+[2025-01-27 21:06:16] local.INFO: frontend.php  
+[2025-01-27 21:06:17] local.INFO: frontend.php  
+[2025-01-27 21:06:17] local.INFO: frontend.php  
+[2025-01-27 21:06:17] local.INFO: frontend.php  
+[2025-01-27 21:06:23] local.INFO: frontend.php  
+[2025-01-27 21:07:01] local.INFO: frontend.php  
+[2025-01-27 21:07:02] local.INFO: frontend.php  
+[2025-01-27 21:11:41] local.INFO: frontend.php  
+[2025-01-27 21:19:22] local.INFO: frontend.php  
+[2025-01-27 21:20:37] local.INFO: frontend.php  
+[2025-01-27 21:20:39] local.INFO: frontend.php  
+[2025-01-27 21:20:40] local.INFO: frontend.php  
+[2025-01-27 21:22:09] local.INFO: frontend.php  
+[2025-01-27 21:22:31] local.INFO: frontend.php  
+[2025-01-27 21:22:46] local.INFO: frontend.php  
+[2025-01-27 21:23:36] local.INFO: frontend.php  
+[2025-01-27 21:23:47] local.INFO: frontend.php  
+[2025-01-27 21:24:22] local.INFO: frontend.php  
+[2025-01-27 21:27:49] local.INFO: frontend.php  
+[2025-01-27 21:29:24] local.INFO: frontend.php  
+[2025-01-27 21:29:37] local.INFO: frontend.php  
+[2025-01-27 21:29:37] local.INFO: frontend.php  
+[2025-01-27 21:29:37] local.INFO: frontend.php  
+[2025-01-27 21:29:37] local.INFO: frontend.php  
+[2025-01-27 21:30:14] local.INFO: frontend.php  
+[2025-01-27 21:30:33] local.INFO: frontend.php  
+[2025-01-27 21:30:33] local.INFO: frontend.php  
+[2025-01-27 21:30:34] local.INFO: frontend.php  
+[2025-01-27 21:30:34] local.INFO: frontend.php  
+[2025-01-27 21:33:40] local.INFO: frontend.php  
+[2025-01-27 21:33:40] local.INFO: frontend.php  
+[2025-01-27 21:33:45] local.INFO: frontend.php  
+[2025-01-27 21:33:59] local.INFO: frontend.php  
+[2025-01-27 21:34:00] local.INFO: frontend.php  
+[2025-01-27 21:34:27] local.INFO: frontend.php  
+[2025-01-27 21:34:27] local.ERROR: Unmatched '}' {"exception":"[object] (ParseError(code: 0): Unmatched '}' at C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\routes\\instanceWeb\\frontend.php:90)
+[stacktrace]
+#0 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteFileRegistrar.php(35): require()
+#1 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(513): Illuminate\\Routing\\RouteFileRegistrar->register()
+#2 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(467): Illuminate\\Routing\\Router->loadRoutes()
+#3 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteRegistrar.php(199): Illuminate\\Routing\\Router->group()
+#4 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Configuration\\ApplicationBuilder.php(248): Illuminate\\Routing\\RouteRegistrar->group()
+#5 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Foundation\\Configuration\\ApplicationBuilder->Illuminate\\Foundation\\Configuration\\{closure}()
+#6 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#7 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(83): Illuminate\\Container\\Util::unwrapIfClosure()
+#8 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#9 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(694): Illuminate\\Container\\BoundMethod::call()
+#10 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(162): Illuminate\\Container\\Container->call()
+#11 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(59): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->loadRoutes()
+#12 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->Illuminate\\Foundation\\Support\\Providers\\{closure}()
+#13 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#14 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(83): Illuminate\\Container\\Util::unwrapIfClosure()
+#15 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#16 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(694): Illuminate\\Container\\BoundMethod::call()
+#17 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\ServiceProvider.php(144): Illuminate\\Container\\Container->call()
+#18 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1127): Illuminate\\Support\\ServiceProvider->callBootedCallbacks()
+#19 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1105): Illuminate\\Foundation\\Application->bootProvider()
+#20 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}()
+#21 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1104): array_walk()
+#22 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#23 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(319): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap()
+#24 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(187): Illuminate\\Foundation\\Application->bootstrapWith()
+#25 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(171): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#26 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(145): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
+#27 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1193): Illuminate\\Foundation\\Http\\Kernel->handle()
+#28 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\public\\index.php(17): Illuminate\\Foundation\\Application->handleRequest()
+#29 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(23): require_once('...')
+#30 {main}
+"} 
+[2025-01-27 21:34:34] local.INFO: frontend.php  
+[2025-01-27 21:34:34] local.ERROR: Unmatched '}' {"exception":"[object] (ParseError(code: 0): Unmatched '}' at C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\routes\\instanceWeb\\frontend.php:90)
+[stacktrace]
+#0 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteFileRegistrar.php(35): require()
+#1 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(513): Illuminate\\Routing\\RouteFileRegistrar->register()
+#2 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(467): Illuminate\\Routing\\Router->loadRoutes()
+#3 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteRegistrar.php(199): Illuminate\\Routing\\Router->group()
+#4 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Configuration\\ApplicationBuilder.php(248): Illuminate\\Routing\\RouteRegistrar->group()
+#5 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Foundation\\Configuration\\ApplicationBuilder->Illuminate\\Foundation\\Configuration\\{closure}()
+#6 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#7 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(83): Illuminate\\Container\\Util::unwrapIfClosure()
+#8 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#9 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(694): Illuminate\\Container\\BoundMethod::call()
+#10 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(162): Illuminate\\Container\\Container->call()
+#11 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(59): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->loadRoutes()
+#12 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->Illuminate\\Foundation\\Support\\Providers\\{closure}()
+#13 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(43): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#14 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(83): Illuminate\\Container\\Util::unwrapIfClosure()
+#15 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#16 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(694): Illuminate\\Container\\BoundMethod::call()
+#17 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\ServiceProvider.php(144): Illuminate\\Container\\Container->call()
+#18 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1127): Illuminate\\Support\\ServiceProvider->callBootedCallbacks()
+#19 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1105): Illuminate\\Foundation\\Application->bootProvider()
+#20 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}()
+#21 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1104): array_walk()
+#22 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#23 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(319): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap()
+#24 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(187): Illuminate\\Foundation\\Application->bootstrapWith()
+#25 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(171): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#26 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(145): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
+#27 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1193): Illuminate\\Foundation\\Http\\Kernel->handle()
+#28 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\public\\index.php(17): Illuminate\\Foundation\\Application->handleRequest()
+#29 C:\\Users\\Webhouse\\Downloads\\InjaUnjaOrigin-development\\InjaUnjaOrigin-development\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(23): require_once('...')
+#30 {main}
+"} 
+[2025-01-27 21:34:49] local.INFO: frontend.php  
+[2025-01-27 21:36:51] local.INFO: frontend.php  
+[2025-01-27 21:36:53] local.INFO: frontend.php  
+[2025-01-27 21:38:06] local.INFO: frontend.php  
+[2025-01-27 21:38:25] local.INFO: frontend.php  
+[2025-01-27 21:45:51] local.INFO: frontend.php  
+[2025-01-27 21:46:16] local.INFO: frontend.php  
+[2025-01-27 21:46:46] local.INFO: frontend.php  
+[2025-01-27 21:47:20] local.INFO: frontend.php  
+[2025-01-27 22:14:16] local.INFO: frontend.php  
+[2025-01-27 22:14:59] local.INFO: frontend.php  
+[2025-01-27 22:15:56] local.INFO: frontend.php  
+[2025-01-27 22:17:17] local.INFO: frontend.php  
+[2025-01-27 22:17:24] local.INFO: frontend.php  
+[2025-01-27 22:17:48] local.INFO: frontend.php  
+[2025-01-27 22:18:13] local.INFO: frontend.php  
+[2025-01-27 22:18:23] local.INFO: frontend.php  
+[2025-01-27 22:18:27] local.INFO: frontend.php  
+[2025-01-27 22:18:28] local.INFO: frontend.php  
+[2025-01-27 22:18:28] local.INFO: frontend.php  
+[2025-01-27 22:18:32] local.INFO: frontend.php  
+[2025-01-27 22:19:07] local.INFO: frontend.php  
+[2025-01-27 22:19:14] local.INFO: frontend.php  
+[2025-01-27 22:19:34] local.INFO: frontend.php  
+[2025-01-27 22:21:07] local.INFO: frontend.php  
+[2025-01-27 22:21:55] local.INFO: frontend.php  
+[2025-01-27 22:24:59] local.INFO: frontend.php  
+[2025-01-27 22:26:04] local.INFO: frontend.php  
+[2025-01-27 22:27:08] local.INFO: frontend.php  
+[2025-01-27 22:27:11] local.INFO: frontend.php  
+[2025-01-27 22:27:29] local.INFO: frontend.php  
+[2025-01-27 22:30:11] local.INFO: frontend.php  
+[2025-01-27 22:30:14] local.INFO: frontend.php  
+[2025-01-27 22:37:26] local.INFO: frontend.php  
+[2025-01-27 22:42:58] local.INFO: frontend.php  
+[2025-01-27 22:44:34] local.INFO: frontend.php  
+[2025-01-27 22:47:54] local.INFO: frontend.php  
+[2025-01-27 22:48:22] local.INFO: frontend.php  
+[2025-01-27 22:50:21] local.INFO: frontend.php  

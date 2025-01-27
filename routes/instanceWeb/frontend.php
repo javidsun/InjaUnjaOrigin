@@ -54,3 +54,51 @@ Route::get('/help-center', function () {
     return Inertia::render('HelpCenter');
 });
 
+Route::get('/UserDashboard', function () {
+    return Inertia::render('Users/UserDashboard/UserDashboard');
+});
+Route::get('/UserProfile', function () {
+    return Inertia::render('Users/UserDashboard/UserProfile');
+});
+
+    Route::get('/UserReservations', function () {
+        return Inertia::render('Users/UserDashboard/UserReservations');
+    })->name('UserReservations');
+
+    Route::get('/MyAds', function () {
+        return Inertia::render('Users/UserDashboard/MyAds');
+    })->name('MyAds');
+
+    Route::get('/notifications', function () {
+        return Inertia::render('Users/UserDashboard/Notifications');
+    })->name('notifications');
+
+    Route::get('/UserFinance', function () {
+        return Inertia::render('Users/UserDashboard/UserFinance');
+    })->name('UserFinance');
+
+    Route::get('/UserSettings', function () {
+        return Inertia::render('Users/UserDashboard/UserSettings');
+    })->name('UserSettings');
+
+    Route::get('/Support', function () {
+        return Inertia::render('Users/UserDashboard/Support');
+    })->name('Support');
+
+
+// Routes for public sections
+Route::get('/houses', function () {
+    return Inertia::render('Houses');
+})->name('houses');
+
+Route::get('/vehicles', function () {
+    return Inertia::render('Vehicles');
+})->name('vehicles');
+
+Route::get('/events', function () {
+    return Inertia::render('Events');
+})->name('events');
+
+Route::get('/travelers', function () {
+    return Inertia::render('Travelers');
+})->name('travelers');

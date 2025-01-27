@@ -303,7 +303,7 @@
 
 
 <script>
-import { translate } from "../../../../../store/languageStore";
+import { translate } from "@/store/languageStore";
 import HousesMap from "./HousesMap.vue";
 import UserSidebar from '../../../../Users/Layout.vue';
 

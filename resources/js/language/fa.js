@@ -253,6 +253,7 @@ export default {
         events: 'آگهی های رویداد',
         travelers: 'آگهی های همسفر',
         Messages: 'اعلان‌ها و پیام',
+        notifications: 'اعلان‌ها و پیام',
         UserFinance: 'مدیریت مالی و پرداخت‌ها',
         UserSettings: 'تنظیمات و شخصی‌سازی',
         Support: 'پشتیبانی',
@@ -281,7 +282,6 @@ export default {
         EventReservation: "رزرو رویداد",
         TravelerReservation: "رزرو همراه سفر",
         AllReservations: "تمامی رزروها"
-
     },
     Tutorial: {
         Step1: "در ده ثانیه سایت رو آموزش ببینید.",
@@ -888,5 +888,6 @@ export default {
         termsUpdatesDescription: 'لطفاً این اطلاعات را درباره به‌روزرسانی‌های شرایط ما مرور کنید.',
     },
 };
+
 
 

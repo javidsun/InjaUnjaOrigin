@@ -40,7 +40,6 @@
 <script setup>
 import { ref } from "vue";
 import { translate } from "../../../store/languageStore";
-import Searchbar from "./search/Searchbar.vue";
 import { useRouter } from "vue-router";
 
 const navigateTo = (url) => {
@@ -52,6 +51,7 @@ const navigateTo = (url) => {
 };
 
 const menuActive = ref(false);
+const router = useRouter();
 </script>
 
 <style scoped>

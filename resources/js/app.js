@@ -7,12 +7,12 @@ import vuetify from '../js/pages/plugins/vuetify/vuetify.js';
 import pinia from '../js/pages/plugins/pinia/index';
 import App from "../js/pages/App.vue";
 import 'vuetify/dist/vuetify.min.css';
+import apiService from "@/globalServices/apiService.js";
 import store from './store'; // Import Vuex Store
 
 const app = createApp(App);
 app.use(store);
 app.mount('#app');
-
 const start = window.performance.now();
 
 const savedState = sessionStorage.getItem("piniaAppState");
@@ -48,3 +48,4 @@ createInertiaApp({
 
 const end = window.performance.now();
 const duration = end - start;
+

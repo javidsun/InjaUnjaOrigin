@@ -21,9 +21,9 @@ export default {
         name: 'Home2',
 
         components: {
+            ContentSection,
         Header,
         Footer,
-        ContentSection,
 
     },
 };

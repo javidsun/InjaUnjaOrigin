@@ -3,6 +3,7 @@
     <div class="field-content" @click="toggleMenu">
       <img
         src="/assets/images/guests-icon.png"
+        alt="Guests Icon"
         class="icon-img"
       />
 

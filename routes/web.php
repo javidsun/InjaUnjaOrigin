@@ -12,6 +12,9 @@ use Illuminate\Validation\ValidationException;
 use Laravel\Socialite\Facades\Socialite;
 
 
+
+
+
 $files = glob(__DIR__ . '/instanceWeb/*.php');
 
 foreach ($files as $file) {

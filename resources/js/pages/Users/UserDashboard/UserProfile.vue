@@ -117,7 +117,7 @@
 import { ref , onMounted } from "vue";
 import Layout from "../Layout.vue";
 import Footer from "../../layout/Footer.vue";
-import { translate } from "../../../store/languageStore";
+import { translate } from "@/store/languageStore.js";
 import UploadAvatar from "../UploadAvatar.vue";
 
 const userProfileImage = ref("/avatar-2.png");

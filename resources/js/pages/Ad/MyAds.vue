@@ -79,8 +79,9 @@
 </template>
 
 <script setup>
+
 import { ref, computed } from 'vue';
-import { translate } from "../../store/languageStore";
+import { translate } from "@/store/languageStore";
 import UserSidebar from '../Users/Layout.vue';
 
 const ads = ref([
@@ -126,7 +127,6 @@ const totalPriceComputed = computed(() => {
     const serviceFee = parseFloat(editedAd.value.serviceFee || 0);
     return (basePrice + serviceFee).toFixed(2);
 });
-
 const finalReceivedAmountComputed = computed(() => {
     const totalPrice = parseFloat(totalPriceComputed.value);
     const discountPercent = parseFloat(editedAd.value.discountPercent || 0);
@@ -139,12 +139,10 @@ const openEditModal = (ad) => {
     editedAd.value = { ...ad };
     editDialog.value = true;
 };
-
 const saveEdit = () => {
     const index = ads.value.findIndex(ad => ad.id === editedAd.value.id);
     if (index !== -1) {
         ads.value[index] = { ...editedAd.value };
-    }
     editDialog.value = false;
 };
 

@@ -546,7 +546,7 @@
 
     <script setup>
     import { ref, computed, defineProps, defineEmits, watch, nextTick ,onMounted } from 'vue';
-    import { translate } from "../../../store/languageStore";
+    import { translate } from "@/store/languageStore.js";
     import L from "leaflet";
     import "leaflet/dist/leaflet.css";
     import { useStore } from 'vuex';

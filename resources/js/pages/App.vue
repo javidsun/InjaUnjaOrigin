@@ -61,13 +61,10 @@ watch(isDarkMode, (newValue) => {
     --text-card-color--groups: #cccccc;
     --backgroundcards-color--profile: #2c294f;
     --border-color:#2a2a3b;
-    --background-color--groups2: #858585;
-    --price-color: #dee8f6;
-    --background-color--groups3: #121213;
 }
 
 .dark-mode {
-    --background-color: #121213;
+    --background-color: #161626FF;
     --liner-background: linear-gradient(135deg, #161626, #323233);
     --text-color: #F8FAFC;
     --primary-color: #fffff6;
@@ -76,7 +73,7 @@ watch(isDarkMode, (newValue) => {
     --background-color--groups: #585d5e;
     --search-background-color: #333333;
     --AdsList-background-color: #D2D5E0FF ;
-    --sidebar-background-color: #2a2d2d;
+    --sidebar-background-color: #2a2a3b;
     --sidebar-text-color: #ffffff;
     --sidebar-icon-color: #ffffff;
     --sidebar-active-text-color: #6984c0;
@@ -90,9 +87,6 @@ watch(isDarkMode, (newValue) => {
     --text-card-color--groups: #cccccc;
     --backgroundcards-color--profile: #2c294f;
     --border-color:#2a2a3b;
-    --background-color--groups2: #858585;
-    --price-color: #dee8f6;
-    --background-color--groups3: #121213;
 
 }
 
@@ -106,7 +100,7 @@ button {
     color: var(--text-color);
 }
 .light-mode {
-    --background-color: #ffffff;
+    --background-color: #F8FAFC;
     --liner-background: linear-gradient(135deg, #a79ada, #eaeaea);
     --text-color: #000000;
     --primary-color: #0b5394;

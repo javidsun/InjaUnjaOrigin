@@ -37,7 +37,7 @@ watch(isDarkMode, (newValue) => {
 </script>
 <style>
 :root {
-    --background-color: #161626FF;
+    --background-color: #121213;
     --liner-background: linear-gradient(135deg, #161626, #323233);
     --text-color: #F8FAFC;
     --primary-color: #fffff6;
@@ -61,10 +61,12 @@ watch(isDarkMode, (newValue) => {
     --text-card-color--groups: #cccccc;
     --backgroundcards-color--profile: #2c294f;
     --border-color:#2a2a3b;
+    --background-color--groups2: #858585;
+
 }
 
 .dark-mode {
-    --background-color: #161626FF;
+    --background-color: #121213;
     --liner-background: linear-gradient(135deg, #161626, #323233);
     --text-color: #F8FAFC;
     --primary-color: #fffff6;
@@ -87,6 +89,7 @@ watch(isDarkMode, (newValue) => {
     --text-card-color--groups: #cccccc;
     --backgroundcards-color--profile: #2c294f;
     --border-color:#2a2a3b;
+    --background-color--groups2: #858585;
 
 }
 
@@ -100,30 +103,30 @@ button {
     color: var(--text-color);
 }
 .light-mode {
-    --background-color: #F8FAFC;
+    --background-color: #d7d7d7;
     --liner-background: linear-gradient(135deg, #a79ada, #eaeaea);
     --text-color: #000000;
     --primary-color: #0b5394;
     --logo-brightness: 70%;
     --txt-color: #181C14;
     --background-color--groups: #b7b5b5;
-    --search-background-color: #ffffff;
-    --AdsList-background-color: #eaecf6;
-    --sidebar-background-color: #f1ebeb;
+    --search-background-color: #eae9e9;
+    --AdsList-background-color: #d7d7d7;
+    --sidebar-background-color: #d7d7d7;
     --sidebar-text-color: #161626;
     --sidebar-icon-color: #161626;
     --sidebar-active-text-color: #a8baec;
     --report-title-text-color: #0a2359;
-    --report-back-color: #ecf1ff;
-    --report-back2-color: #dde6f6;
-    --v-surface: #ecf1ff;
-    --backgroundcards-color--groups: #eaeaea;
-    --backgroundcards2-color--groups: #cccccc;
-    --backgroundcards3-color--groups: #ffffff;
+    --report-back-color: #d7d7d7;
+    --report-back2-color: #d7d7d7;
+    --v-surface: #d7d7d7;
+    --backgroundcards-color--groups: #d7d7d7;
+    --backgroundcards2-color--groups: #d7d7d7;
+    --backgroundcards3-color--groups: #d7d7d7;
     --text-card-color--groups: #161626;
     --backgroundcards-color--profile: #e4dfff;
-    --border-color:#cccccc;
-
+    --border-color:#d7d7d7;
+    --background-color--groups2: #676767;
 
 }
 

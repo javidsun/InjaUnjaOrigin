@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
+
+
+
 $files = glob(__DIR__ . '/instanceWeb/*.php');
 
 foreach ($files as $file) {

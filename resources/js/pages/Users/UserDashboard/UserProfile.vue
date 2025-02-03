@@ -96,7 +96,7 @@ const editProfile = () => {
 };
 
 const saveProfile = () => {
-  console.log("اطلاعات ذخیره شد:", editableInfo.value);
+  console.log("Information saved:", editableInfo.value);
   userInfo.value = [...editableInfo.value];
   isEditing.value = false;
 };

@@ -19,9 +19,13 @@ Route::get('/UserProfile', function () {
     return Inertia::render('Users/UserDashboard/UserProfile');
 });
 
-Route::get('/UserReservations', function () {
-    return Inertia::render('Users/UserDashboard/UserReservations');
-})->name('UserReservations');
+Route::get('/MyReservations', function () {
+    return Inertia::render('Users/Reserv/MyReservations');
+})->name('MyReservations');
+
+Route::get('/ReservationDetails/{id}', function ($id) {
+    return Inertia::render('Users/Reserv/ReservationDetails', ['id' => $id]);
+})->name('ReservationDetails');
 
 Route::get('/MyReservations', function () {
     return Inertia::render('Users/Reserv/MyReservations');

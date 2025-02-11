@@ -30,8 +30,10 @@
                     <v-card-title class="modal-title">{{ translate('Ad.AdsEdit') }}</v-card-title>
                     <v-card-text>
                         <v-text-field :label="translate('Ad.title')" v-model="editedAd.title" outlined></v-text-field>
-                        <v-textarea :label="translate('Ad.description')" v-model="editedAd.description" outlined></v-textarea>
-                        <v-text-field :label="translate('Ad.property_type')" v-model="editedAd.propertyType" outlined></v-text-field>
+                        <v-textarea :label="translate('Ad.description')" v-model="editedAd.description"
+                                    outlined></v-textarea>
+                        <v-text-field :label="translate('Ad.property_type')" v-model="editedAd.propertyType"
+                                      outlined></v-text-field>
 
                         <v-row>
                             <v-col cols="12">
@@ -48,7 +50,9 @@
                                         <v-card>
                                             <v-img :src="image" height="150" class="image-preview"></v-img>
                                             <v-card-actions>
-                                                <v-btn color="error" @click="removeImage(index)">{{ translate('Ad.delete') }}</v-btn>
+                                                <v-btn color="error" @click="removeImage(index)">{{
+                                                    translate('Ad.delete') }}
+                                                </v-btn>
                                             </v-card-actions>
                                         </v-card>
                                     </v-col>
@@ -56,17 +60,27 @@
                             </v-col>
                         </v-row>
 
-                        <v-text-field :label="translate('Ad.base_price')" v-model="editedAd.basePrice" type="number" outlined></v-text-field>
-                        <v-text-field :label="translate('Ad.service_fee')" v-model="editedAd.serviceFee" type="number" outlined></v-text-field>
-                        <v-text-field :label="translate('Ad.discount') + ' (%)'" v-model="editedAd.discountPercent" type="number" outlined></v-text-field>
-                        <v-text-field :label="translate('Ad.total_price')" :value="totalPriceComputed" type="number" readonly outlined></v-text-field>
-                        <v-text-field :label="translate('Ad.received_amount')" :value="finalReceivedAmountComputed" type="number" readonly outlined></v-text-field>
+                        <v-text-field :label="translate('Ad.base_price')" v-model="editedAd.basePrice" type="number"
+                                      outlined></v-text-field>
+                        <v-text-field :label="translate('Ad.service_fee')" v-model="editedAd.serviceFee" type="number"
+                                      outlined></v-text-field>
+                        <v-text-field :label="translate('Ad.discount') + ' (%)'" v-model="editedAd.discountPercent"
+                                      type="number" outlined></v-text-field>
+                        <v-text-field :label="translate('Ad.total_price')" :value="totalPriceComputed" type="number"
+                                      readonly outlined></v-text-field>
+                        <v-text-field :label="translate('Ad.received_amount')" :value="finalReceivedAmountComputed"
+                                      type="number" readonly outlined></v-text-field>
 
-                        <v-checkbox v-model="editedAd.hostType" :label="translate('Ad.host_as_individual')" value="individual"></v-checkbox>
-                        <v-checkbox v-model="editedAd.hostType" :label="translate('Ad.host_as_business')" value="business"></v-checkbox>
-                        <v-checkbox v-model="editedAd.locationFeatures" :label="translate('Ad.security_camera')" value="security_camera"></v-checkbox>
-                        <v-checkbox v-model="editedAd.locationFeatures" :label="translate('Ad.sound_insulation')" value="sound_insulation"></v-checkbox>
-                        <v-checkbox v-model="editedAd.locationFeatures" :label="translate('Ad.protective_weapons')" value="protective_weapons"></v-checkbox>
+                        <v-checkbox v-model="editedAd.hostType" :label="translate('Ad.host_as_individual')"
+                                    value="individual"></v-checkbox>
+                        <v-checkbox v-model="editedAd.hostType" :label="translate('Ad.host_as_business')"
+                                    value="business"></v-checkbox>
+                        <v-checkbox v-model="editedAd.locationFeatures" :label="translate('Ad.security_camera')"
+                                    value="security_camera"></v-checkbox>
+                        <v-checkbox v-model="editedAd.locationFeatures" :label="translate('Ad.sound_insulation')"
+                                    value="sound_insulation"></v-checkbox>
+                        <v-checkbox v-model="editedAd.locationFeatures" :label="translate('Ad.protective_weapons')"
+                                    value="protective_weapons"></v-checkbox>
                     </v-card-text>
                     <v-card-actions>
                         <v-btn color="green" @click="saveEdit">{{ translate('Ad.SaveExit') }}</v-btn>
@@ -80,8 +94,8 @@
 
 <script setup>
 
-import { ref, computed } from 'vue';
-import { translate } from "@/store/languageStore";
+import {ref, computed} from 'vue';
+import {translate} from "@/store/languageStore";
 import UserSidebar from '../Users/Layout.vue';
 
 const ads = ref([
@@ -136,39 +150,41 @@ const finalReceivedAmountComputed = computed(() => {
 });
 
 const openEditModal = (ad) => {
-    editedAd.value = { ...ad };
+    editedAd.value = {...ad};
     editDialog.value = true;
 };
 const saveEdit = () => {
     const index = ads.value.findIndex(ad => ad.id === editedAd.value.id);
     if (index !== -1) {
-        ads.value[index] = { ...editedAd.value };
-    editDialog.value = false;
-};
+        ads.value[index] = {...editedAd.value};
+        editDialog.value = false;
+    }
+    ;
 
-const deleteAd = (adId) => {
-    ads.value = ads.value.filter(ad => ad.id !== adId);
-};
+    const deleteAd = (adId) => {
+        ads.value = ads.value.filter(ad => ad.id !== adId);
+    };
 
-const handleImageUpload = (event) => {
-    const files = Array.from(event.target.files);
-    if (!files.length) return;
+    const handleImageUpload = (event) => {
+        const files = Array.from(event.target.files);
+        if (!files.length) return;
 
-    const maxImages = 10;
-    const validFiles = files.slice(0, maxImages - editedAd.value.images.length);
+        const maxImages = 10;
+        const validFiles = files.slice(0, maxImages - editedAd.value.images.length);
 
-    validFiles.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            editedAd.value.images.push(e.target.result);
-        };
-        reader.readAsDataURL(file);
-    });
-};
+        validFiles.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                editedAd.value.images.push(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        });
+    };
 
-const removeImage = (index) => {
-    editedAd.value.images.splice(index, 1);
-};
+    const removeImage = (index) => {
+        editedAd.value.images.splice(index, 1);
+    };
+}
 </script>
 
 <style scoped>

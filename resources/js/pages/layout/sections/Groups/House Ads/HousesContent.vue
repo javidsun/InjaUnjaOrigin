@@ -643,8 +643,8 @@ export default {
 }
 
 #map {
-    height: 85vh;
-    width: 100%;
+  height: 85vh;
+  width: 100%;
 }
 .AdsSetting{
     margin-top: 30px;

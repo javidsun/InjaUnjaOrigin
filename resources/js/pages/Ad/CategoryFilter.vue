@@ -17,7 +17,6 @@ const selectedCategory = ref(null);
 const categories = ref([]);
 
 const filterByCategory = () => {
-    // ارسال دسته‌بندی انتخاب‌شده به والد
     emit("categorySelected", selectedCategory.value);
 };
 

@@ -31,6 +31,7 @@
     <v-main>
       <slot />
     </v-main>
+      <Footer/>
   </v-app>
 </template>
 
@@ -42,6 +43,7 @@ import { t } from "../../store/languageStore";
 import UserSidebar from "./UserSidebar.vue";
 import { useRouter } from 'vue-router';
 import LanguageSwitcher from "../layout/Header/LanguageSwitcher.vue";
+import Footer from "../layout/Footer.vue";
 
 const userProfileImage = ref('/avatar-2.png');
 const isDarkMode = ref(true);

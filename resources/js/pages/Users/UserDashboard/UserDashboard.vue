@@ -59,7 +59,7 @@ import userSpecifications from '../../Users/UserDashboard/userSpecifications.vue
 import SpecialOffer from '../SpecialOffer.vue';
 import { t } from "../../../store/languageStore";
 import UserProfile from '../../Users/UserDashboard/UserProfile.vue';
-import UserReservations from '../UserReservations.vue';
+import UserReservations from '../Reserv/UserReservations.vue';
 import Layout from '../Layout.vue';
 import { useRouter } from 'vue-router';
 

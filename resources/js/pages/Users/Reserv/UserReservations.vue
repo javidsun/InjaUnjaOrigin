@@ -34,16 +34,16 @@
       </v-row>
     </v-card-text>
     <v-card-actions>
-      <v-btn :to="'/UserDashboard/MyReservations'" color="primary" outlined class="ml-auto">
-        {{ t("UserSidebar.ViewAllReservations") }}
-      </v-btn>
+        <v-btn :to="'/MyReservations'" color="primary" outlined class="ml-auto">
+            {{ t("UserSidebar.ViewAllReservations") }}
+        </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../store/languageStore";
+import { t } from "../../../store/languageStore.js";
 
 const recentReservations = ref([
   {

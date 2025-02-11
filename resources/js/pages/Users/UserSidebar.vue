@@ -31,11 +31,13 @@
 import { ref } from 'vue';
 import { t } from "../../store/languageStore";
 import { useRouter } from 'vue-router';
+import { Inertia } from '@inertiajs/inertia';
+
+const goToPage = (link) => {
+    Inertia.visit(link);
+};
 
 const router = useRouter();
-const goToPage = (link) => {
-    router.push(link);
-};
 
 const drawer = ref(false);
 
@@ -48,17 +50,18 @@ const menuItems = [
   { title: "UserSidebar.UserDashboard", icon: "mdi-home", page: "UserDashboard", link: "/UserDashboard" },
   { title: "UserSidebar.createAdForm", icon: "mdi-home", page: "createAdForm", link: "/createAdForm" },
   { title: "UserSidebar.UserProfile", icon: "mdi-account-multiple", page: "UserProfile", link: "/UserProfile" },
-  { title: "UserSidebar.UserReservations", icon: "mdi-home", page: "UserReservations", link: "/UserReservations" },
+  { title: "UserSidebar.UserReservations", icon: "mdi-home", page: "MyReservations", link: "/MyReservations" },
   { title: "UserSidebar.MyAds", icon: "mdi-home", page: "MyAds", link: "/MyAds" },
   { title: "UserSidebar.houses", icon: "mdi-home-city-outline", page: "houses", link: "/houses" },
   { title: "UserSidebar.vehicles", icon: "mdi-car", page: "vehicles", link: "/vehicles" },
   { title: "UserSidebar.events", icon: "mdi-calendar", page: "events", link: "/events" },
   { title: "UserSidebar.travelers", icon: "mdi-account-group", page: "travelers", link: "/travelers" },
-  { title: "UserSidebar.notifications", icon: "mdi-bell", page: "notifications", link: "/notifications" },
+  { title: "UserSidebar.Messages", icon: "mdi-bell", page: "Messages", link: "/Messages" },
   { title: "UserSidebar.UserFinance", icon: "mdi-file-chart", page: "UserFinance", link: "/UserFinance" },
   { title: "UserSidebar.UserSettings", icon: "mdi-cog", page: "UserSettings", link: "/UserSettings" },
   { title: "UserSidebar.Support", icon: "mdi-currency-usd", page: "Support", link: "/Support" },
 ];
+
 </script>
 
 

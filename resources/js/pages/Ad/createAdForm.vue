@@ -1,8 +1,7 @@
-<template>
-    <v-app class="Container">
-        <Header />
-        <br><br><br><br>
-        <v-container class="text-center">
+<template class="main">
+    <UserSidebar>
+        <v-container fluid class="d-flex ">
+            <v-container class="content text-center">
             <v-btn icon @click="$router.go(-1)" class="back-btn">
                 <v-icon>mdi-arrow-right</v-icon>
             </v-btn>
@@ -31,6 +30,7 @@
                 </v-col>
             </v-row>
         </v-container>
+        </v-container>
 
         <StepOneModal
             :modelValue="StepOne"
@@ -38,7 +38,8 @@
         />
 
         <Footer />
-    </v-app>
+
+    </UserSidebar>
 </template>
 
 <script setup>
@@ -47,11 +48,12 @@ import Header from '../layout/Header/Header.vue';
 import Footer from '../layout/Footer.vue';
 import StepOneModal from './CreateAd/StepOneModal.vue';
 import { t } from "../../store/languageStore";
+import UserSidebar from '../Users/Layout.vue';
 
 const StepOne = ref(false);
 
 const comingSoon = () => {
-    alert("به زودی!");
+    alert("Coming soon!");
 };
 </script>
 
@@ -113,5 +115,14 @@ const comingSoon = () => {
     text-align: center;
 }
 
+.title{
+    background-color: var(--background-color--groups3);
+    text-align: center;
+    color: var(--text-color);
+}
+.back{
+    background-color: var(--background-color--groups3);
+
+}
 
 </style>

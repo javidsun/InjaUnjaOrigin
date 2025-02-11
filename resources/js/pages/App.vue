@@ -46,7 +46,7 @@ watch(isDarkMode, (newValue) => {
     --background-color--groups: #585d5e;
     --search-background-color: #ffffff;
     --AdsList-background-color: #D2D5E0FF;
-    --sidebar-background-color: #2a2a3b;
+    --sidebar-background-color: #2a2d2d;
     --sidebar-text-color: #ffffff;
     --sidebar-icon-color: #ece3e3;
     --sidebar-active-text-color: #6984c0;
@@ -62,7 +62,8 @@ watch(isDarkMode, (newValue) => {
     --backgroundcards-color--profile: #2c294f;
     --border-color:#2a2a3b;
     --background-color--groups2: #858585;
-
+    --price-color: #dee8f6;
+    --background-color--groups3: #121213;
 }
 
 .dark-mode {
@@ -75,7 +76,7 @@ watch(isDarkMode, (newValue) => {
     --background-color--groups: #585d5e;
     --search-background-color: #333333;
     --AdsList-background-color: #D2D5E0FF ;
-    --sidebar-background-color: #2a2a3b;
+    --sidebar-background-color: #2a2d2d;
     --sidebar-text-color: #ffffff;
     --sidebar-icon-color: #ffffff;
     --sidebar-active-text-color: #6984c0;
@@ -90,6 +91,8 @@ watch(isDarkMode, (newValue) => {
     --backgroundcards-color--profile: #2c294f;
     --border-color:#2a2a3b;
     --background-color--groups2: #858585;
+    --price-color: #dee8f6;
+    --background-color--groups3: #121213;
 
 }
 
@@ -103,7 +106,7 @@ button {
     color: var(--text-color);
 }
 .light-mode {
-    --background-color: #d7d7d7;
+    --background-color: #ffffff;
     --liner-background: linear-gradient(135deg, #a79ada, #eaeaea);
     --text-color: #000000;
     --primary-color: #0b5394;
@@ -127,6 +130,8 @@ button {
     --backgroundcards-color--profile: #e4dfff;
     --border-color:#d7d7d7;
     --background-color--groups2: #676767;
+    --price-color: #dee8f6;
+    --background-color--groups3: #858585;
 
 }
 

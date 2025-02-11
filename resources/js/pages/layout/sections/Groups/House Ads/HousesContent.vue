@@ -1,149 +1,542 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="12">
-        <v-tabs vertical v-model="tab" class="pt-1">
-          <v-tab>
-            <v-icon left>mdi-home</v-icon>
-            {{ t('housescontent.list') }}
-          </v-tab>
-          <v-tab>
-            <v-icon left>mdi-map</v-icon>
-            {{ t('housescontent.map') }}
-          </v-tab>
-        </v-tabs>
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col cols="12" v-show="tab === 0">
-        <v-row class="mb-4 ">
-          <v-col v-for="(icon, index) in icons" :key="index" cols="2">
-            <v-btn class="d-flex justify-center align-center icon-btn" tile>
-              <img :src="icon.src" alt="Icon" class="icon-img" />
-            </v-btn>
-          </v-col>
-        </v-row>
-
-        <v-row class="d-flex flex-wrap">
-          <v-col
-            v-for="(item, index) in apartments"
-            :key="index"
-            class="apartment-card-container"
-          >
-            <v-card class="apartment-card">
-              <v-img :src="item.image" height="200px" class="apartment-img"></v-img>
-              <v-card-title class="apartment-title">
-                {{ item.location }}
-              </v-card-title>
-              <v-card-subtitle class="apartment-subtitle">
-                {{ item.host }}
-              </v-card-subtitle>
-              <v-card-text class="apartment-text">
-                <v-icon color="yellow">mdi-star</v-icon> {{ item.rating }}
-                <br />
-                {{ item.price }} {{ item.period }}
-              </v-card-text>
-            </v-card>
-          </v-col>
+    <v-container>
+        <v-row>
+            <v-col cols="12">
+                <v-tabs vertical v-model="tab" class="pt-1">
+                    <v-tab>
+                        <v-icon left>mdi-home</v-icon>
+                        {{ t('housescontent.list') }}
+                    </v-tab>
+                    <v-tab>
+                        <v-icon left>mdi-map</v-icon>
+                        {{ t('housescontent.map') }}
+                    </v-tab>
+                </v-tabs>
+            </v-col>
         </v-row>
 
         <v-row>
-          <v-col cols="12" class="d-flex justify-center">
-            <v-btn class="more-button" color="primary">
-              {{ t('housescontent.seeMore') }}
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-col>
+            <v-col cols="12" v-show="tab === 0">
+                <v-row class="mb-4">
+                    <v-col v-for="(icon, index) in icons" :key="index" cols="2">
+                        <v-btn
+                            class="d-flex justify-center align-center icon-btn"
+                            tile
+                            @click="filterApartments(icon.name)"
+                        >
+                            <img :src="icon.src" alt="Icon" class="icon-img" />
+                        </v-btn>
+                    </v-col>
+                </v-row>
 
-      <v-col cols="12" v-if="tab === 1">
-        <v-card>
-          <v-card-title>Map</v-card-title>
-          <HousesMap :apartments="apartments" />
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+                <v-row class="d-flex flex-wrap">
+                    <v-col
+                        v-for="(item, index) in filteredApartments"
+                        :key="index"
+                        class="apartment-card-container"
+                    >
+                        <v-card class="apartment-card" @click="openApartmentDetail(item)">
+                            <v-img :src="item.image" height="200px" class="apartment-img"></v-img>
+                            <v-card-title class="apartment-title">
+                                {{ item.location }}
+                            </v-card-title>
+                            <v-card-subtitle class="apartment-subtitle">
+                                {{ item.host }}
+                            </v-card-subtitle>
+                            <v-card-text class="apartment-text">
+                                <br />
+                                {{ item.price }} {{ item.period }}
+                            </v-card-text>
+                            <v-btn color="primary" @click.stop="openReservationModal(item)">
+                                {{ t('housescontent.Quick_booking') }}
+                            </v-btn>
+                        </v-card>
+                    </v-col>
+                </v-row>
+
+                <v-row v-if="filteredApartments.length === 0">
+                    <v-col cols="12" class="d-flex justify-center">
+                        <v-alert type="error" outlined>
+                            There are currently no ads available.
+                        </v-alert>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="12" class="d-flex justify-center">
+                        <v-btn
+                            class="more-button"
+                            color="primary"
+                            @click="loadMoreApartments"
+                        >
+                            {{ t('housescontent.seeMore') }}
+                        </v-btn>
+                    </v-col>
+                </v-row>
+            </v-col>
+
+            <v-col cols="12" v-if="tab === 1">
+                <v-card>
+                    <v-card-title>Map</v-card-title>
+                    <HousesMap :apartments="filteredApartments" />
+                </v-card>
+            </v-col>
+        </v-row>
+
+        <v-dialog v-model="localShow" max-width="600px">
+            <v-card class="Ads">
+                <v-card-title class="headline primary--text text-center">
+                    {{ t('housescontent.Reservation_request') }}
+                </v-card-title>
+
+                <v-card-text>
+                    <v-row>
+                        <v-col cols="4">
+                            <v-img :src="selectedApartment?.image" height="200px" class="rounded-lg"></v-img>
+                        </v-col>
+                        <v-col cols="8" class="AdsSetting">
+                            <v-card-subtitle class="AdsSetting2 text-h6 text-right">{{ selectedApartment?.host || "نامشخص" }}</v-card-subtitle>
+                            <p class="AdsSetting2 text-body-1 text-right"><strong>{{ t('housescontent.Location') }}</strong> {{ selectedApartment?.location || "نامشخص" }}</p>
+                            <p class="AdsSetting2 text-body-1 text-right"><strong>{{ t('housescontent.Owner') }}</strong> {{ selectedApartment?.host || "نامشخص" }}</p>
+                            <p class="AdsSetting2 text-body-1 text-right"><strong>{{ t('housescontent.Price') }} </strong> {{ selectedApartment?.price || "0" }} یورو</p>
+                        </v-col>
+                    </v-row>
+
+                    <v-divider class="my-4"></v-divider>
+                    <h3 class="font-weight-bold mt-4 text-h5 text-center">{{ t('housescontent.Your_details') }}</h3>
+                    <v-row>
+                        <v-col cols="6">
+                            <p class="text-body-1">{{ reservation?.startDate || "?" }} to {{ reservation?.endDate || "?" }}</p>
+                        </v-col>
+                        <v-col cols="6" class="text-right">
+                            <v-btn @click="showCalendar = true"  outlined>{{ t('housescontent.Edit_date') }}</v-btn>
+                        </v-col>
+
+                    </v-row>
+
+                    <v-dialog v-model="showCalendar" max-width="400px" centered persistent class="custom-dialog">
+                        <v-card>
+                            <v-card-title class="headline primary--text">{{ t('Ad.available_dates') }}</v-card-title>
+                            <v-card-text>
+                                <v-date-picker v-model="selectedDates" multiple></v-date-picker>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="primary" @click="saveDates">{{ t('Ad.SaveExit') }}</v-btn>
+                                <v-btn color="grey" text @click="showCalendar = false">{{ t('Ad.Back') }}</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+
+                    <v-row>
+                        <v-col cols="6">
+                            <p class="text-body-1">{{ reservation?.guests || 1 }} {{ t('housescontent.Guest') }} - {{ reservation?.name || "?" }}</p>
+                        </v-col>
+                        <v-col cols="6" class="d-flex justify-end">
+                            <v-btn @click="editGuests" outlined> {{ t('housescontent.Edit') }}</v-btn>
+                        </v-col>
+                    </v-row>
+
+                    <v-dialog v-model="showEditGuestsModal" max-width="400px">
+                        <v-card>
+                            <v-card-title class="headline primary--text text-center">{{ t('housescontent.Edit_guest2') }}</v-card-title>
+                            <v-card-text>
+                                <v-row>
+                                    <v-col cols="12">
+                                        <v-text-field
+                                            v-model="reservation.name"
+                                            :label="t('housescontent.Guest_name')"
+                                            outlined
+                                        ></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <v-text-field
+                                            v-model="reservation.guests"
+                                            :label="t('housescontent.Guest_number')"
+                                            type="number"
+                                            min="1"
+                                            outlined
+                                        ></v-text-field>
+                                    </v-col>
+                                </v-row>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn color="primary" @click="saveGuestInfo">{{ t('housescontent.Save') }}</v-btn>
+                                <v-btn color="error" @click="showEditGuestsModal = false">{{ t('housescontent.close') }}</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+
+
+                    <v-divider class="my-4"></v-divider>
+                    <h3 class="font-weight-bold mt-4 text-h5 text-center AdsSetting">
+                        {{ t('housescontent.Payment_Details') }}
+                    </h3>
+
+                    <v-row>
+                        <v-col cols="6">
+                            <p class="text-body-1">{{ t('housescontent.Project_Cost') }} * {{ t('housescontent.Reserved_Days') }}</p>
+                        </v-col>
+                        <v-col cols="6" class="text-right">
+                            <p class="text-body-1">{{ basePrice || "0" }} {{ t('housescontent.Euro') }}</p>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="6">
+                            <p class="text-body-1">{{ t('housescontent.Extra_Fee_Owner') }}</p>
+                        </v-col>
+                        <v-col cols="6" class="text-right">
+                            <p class="text-body-1">{{ selectedApartment?.extraFee || 0 }} {{ t('housescontent.Euro') }}</p>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="6">
+                            <p class="text-body-1">{{ t('housescontent.Tax_10') }}</p>
+                        </v-col>
+                        <v-col cols="6" class="text-right">
+                            <p class="text-body-1">{{ tax }} {{ t('housescontent.Euro') }}</p>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="6">
+                            <p class="font-weight-bold text-h6">{{ t('housescontent.Total_Amount') }} ({{ t('housescontent.Euro') }})</p>
+                        </v-col>
+                        <v-col cols="6" class="text-right">
+                            <p class="font-weight-bold text-h6">{{ total }} {{ t('housescontent.Euro') }}</p>
+                        </v-col>
+                    </v-row>
+
+
+                    <v-divider class="my-4"></v-divider>
+                    <h3 class="font-weight-bold mt-4 text-h5 AdsSetting text-center">{{ t('housescontent.Pay_with') }}</h3>
+                    <v-row>
+                        <v-col cols="4">
+                            <v-btn @click="selectedPayment = 'credit'" class="d-flex align-center" color="primary" outlined>
+                                <v-icon left>mdi-credit-card</v-icon>Credit card
+                            </v-btn>
+                        </v-col>
+                        <v-col cols="4">
+                            <v-btn @click="selectedPayment = 'paypal'" class="d-flex align-center" color="primary" outlined>
+                                <v-icon left>mdi-paypal</v-icon>PayPal
+                            </v-btn>
+                        </v-col>
+                        <v-col cols="4">
+                            <v-btn @click="selectedPayment = 'maestro'" class="d-flex align-center" color="primary" outlined>
+                                <v-icon left>mdi-bank</v-icon>Maestro
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                    <v-divider class="my-4"></v-divider>
+                    <p class="text-body-1 text-center">{{ t('housescontent.Free') }}</p>
+                    <v-divider class="my-4"></v-divider>
+                    <v-row>
+                        <v-col cols="6" class="text-left">
+                            <v-btn color="primary">{{ t('housescontent.Payment') }}</v-btn>
+                        </v-col>
+                        <v-col cols="6" class="text-right">
+                            <v-btn color="error" @click="closeModal">{{ t('housescontent.close') }}</v-btn>
+                        </v-col>
+                    </v-row>
+
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+        <v-dialog v-model="showDetail" max-width="800px" >
+            <v-card class="Ads">
+                <v-card-title class="headline">{{ t('housescontent.Ad_details') }}</v-card-title>
+                <v-card-text>
+                    <v-row>
+                        <v-col cols="6">
+                            <v-img :src="selectedApartment?.image" height="200px"></v-img>
+                        </v-col>
+                        <v-col cols="6" class="AdsSetting">
+                            <p><strong>نام مالک:</strong> {{ selectedApartment?.host || "نامشخص" }}</p>
+                            <p><strong>قیمت:</strong> {{ selectedApartment?.price || "نامشخص" }} {{ selectedApartment?.period || "نامشخص" }}</p>
+                            <p><strong>مکان:</strong> {{ selectedApartment?.location || "نامشخص" }}</p>
+                            <p><strong>نوع ملک:</strong> {{ selectedApartment?.type || "نامشخص" }}</p>
+                        </v-col>
+                    </v-row>
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn color="error" @click="showDetail = false">{{ t('housescontent.close') }}</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+    </v-container>
 </template>
+
 
 <script>
 import { t } from "../../../../../store/languageStore";
 import HousesMap from "./HousesMap.vue";
+import UserSidebar from '../../../../Users/Layout.vue';
 
 export default {
-  setup() {
-    return { t };
-  },
-  components: {
-    HousesMap,
-  },
-  data() {
-    return {
-      tab: 0,
-      icons: [
-        { name: 'home', src: '/home-icon.png' },
-        { name: 'apartment', src: '/apartment-icon.png' },
-        { name: 'furniture', src: '/furniture-icon.png' },
-        { name: 'bed', src: '/bed-icon.png' },
-        { name: 'car', src: '/car-icon.png' },
-        { name: 'travel tent', src: '/tent-icon.png' },
-      ],
-      apartments: [
-        {
-          location: "بروکسل،بلژیک",
-          host: "میزبان آرمین",
-          rating: "4.8",
-          price: "€ ۲۸",
-          period: "شبانه",
-          image: "rectangle-720.png",
-          coordinates: [50.8503, 4.3517],
+    setup() {
+        return { t };
+    },
+
+    components: {
+        HousesMap,
+        UserSidebar,
+    },
+    data() {
+        return {
+            showEditGuestsModal: false,
+
+            showCalendar: false,
+            selectedDates: [],
+            reservation: {
+                startDate: "2023-10-01",
+                endDate: "2023-10-05",
+                guests: 2,
+                name: "نام رزرو کننده",
+                days: 4,
+            },
+            showReservationModal: {},
+            selectedApartment: null,
+
+            tab: 0,
+            selectedType: null,
+            icons: [
+                { name: 'home', src: '/home-icon.png' },
+                { name: 'apartment', src: '/apartment-icon.png' },
+                { name: 'furniture', src: '/furniture-icon.png' },
+                { name: 'bed', src: '/bed-icon.png' },
+                { name: 'car', src: '/car-icon.png' },
+                { name: 'tent', src: '/tent-icon.png' },
+            ],
+            apartments: [
+                {
+                    location: "بروکسل،بلژیک",
+                    host: "میزبان آرمین",
+                    rating: "4.8",
+                    price: "28",
+                    period: "شبانه",
+                    type: "home",
+                    image: "rectangle-720.png",
+                    coordinates: [50.8503, 4.3517],
+                    extraFee: 5
+                },
+                {
+                    location: "آنتورپ،بلژیک",
+                    host: "مالک کامیاب",
+                    rating: "5",
+                    price: "18",
+                    period: "روزانه",
+                    type: "apartment",
+                    image: "rectangle-750.png",
+                    coordinates: [50.8549, 4.3479],
+                    extraFee: 8
+                },
+
+                {
+                    location: "بروکسل،بلژیک",
+                    host: "مالک کامیاب",
+                    rating: "5",
+                    price: "10",
+                    period: "روزانه",
+                    type: "apartment",
+                    image: "rectangle-750.png",
+                    coordinates: [50.8549, 4.3479],
+                    extraFee: 20
+                },
+                {
+                    location: "بروکسل،بلژیک",
+                    host: "میزبان سام",
+                    rating: "3.8",
+                    price: "22",
+                    type: "bed",
+                    period: "شبانه",
+                    image: "rectangle-2210.png",
+                    coordinates: [50.8521, 4.3459],
+                    extraFee: 5
+                },
+                {
+                    location: "بروکسل،بلژیک",
+                    host: "مالک کامیاب",
+                    rating: "5",
+                    price: "25",
+                    type: "tent",
+                    period: "روزانه",
+                    image: "rectangle-2200.png",
+                    coordinates: [50.8535, 4.3498],
+                    extraFee: 10
+                },
+            ],
+            filteredApartments: [],
+            loading: false,
+            showDetail: false,
+            MyReservations: [],
+            localShow: false,
+            selectedPayment: null,
+        };
+    },
+    computed: {
+        isLoggedIn() {
+            return !!this.$store.state.user;
         },
-        {
-          location: "بروکسل،بلژیک",
-          host: "مالک کامیاب",
-          rating: "5",
-          price: "€ ۱۸",
-          period: "روزانه",
-          image: "rectangle-750.png",
-          coordinates: [50.8549, 4.3479],
+        total() {
+            let basePrice = parseFloat(this.selectedApartment?.price.replace('€', '').trim()) || 0;
+            let days = this.reservation?.days || 0;
+            let extraFee = this.selectedApartment?.extraFee || 0;
+            let tax = (basePrice * days + extraFee) * 0.10;
+            let totalPrice = (basePrice * days) + extraFee + tax;
+            return totalPrice.toFixed(2);
         },
-        {
-          location: "بروکسل،بلژیک",
-          host: "میزبان سام",
-          rating: "3.8",
-          price: "€ 18",
-          period: "شبانه",
-          image: "rectangle-2210.png",
-          coordinates: [50.8521, 4.3459],
+        basePrice() {
+            let basePrice = parseFloat(this.selectedApartment?.price.replace('€', '').trim()) || 0;
+            let days = this.reservation?.days || 0;
+            return (basePrice * days).toFixed(2);
         },
-        {
-          location: "بروکسل،بلژیک",
-          host: "مالک کامیاب",
-          rating: "5",
-          price: "€ 30",
-          period: "روزانه",
-          image: "rectangle-2200.png",
-          coordinates: [50.8535, 4.3498],
+        tax() {
+            let basePrice = parseFloat(this.selectedApartment?.price.replace('€', '').trim()) || 0;
+            let days = this.reservation?.days || 0;
+            let extraFee = this.selectedApartment?.extraFee || 0;
+            return ((basePrice * days + extraFee) * 0.10).toFixed(2);
+        }
+    },
+    methods: {
+        saveTemporaryReservation() {
+            this.MyReservations.push({
+                ...this.reservation,
+                apartment: this.selectedApartment,
+                paymentStatus: 'pending'
+            });
+
+            this.openPaymentModal();
         },
-      ],
-    };
-  },
+
+        openPaymentModal() {
+            this.localShow = true;
+        },
+        saveDates() {
+            let startDate = new Date(this.selectedDates[0]);
+            let endDate = new Date(this.selectedDates[this.selectedDates.length - 1]);
+            let days = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+            this.reservation.startDate = this.selectedDates[0];
+            this.reservation.endDate = this.selectedDates[this.selectedDates.length - 1];
+            this.reservation.days = days;
+            this.showCalendar = false;
+        },
+        openReservationModal(apartment) {
+            this.selectedApartment = apartment;
+            this.localShow = true;
+        },
+        filterApartments(type) {
+            this.selectedType = type;
+            this.filteredApartments = this.apartments.filter(
+                apartment => apartment.type === type
+            );
+        },
+        async loadMoreApartments() {
+            if (this.loading) return;
+            this.loading = true;
+
+            const newApartments = [
+                {
+                    location: "آنتورپ،بلژیک",
+                    host: "میزبان علی",
+                    rating: "4.5",
+                    price: "€ 25",
+                    period: "روزانه",
+                    type: "apartment",
+                    image: "rectangle-2200.png",
+                    coordinates: [51.2194, 4.4025],
+                },
+            ];
+
+            this.apartments = this.apartments.concat(newApartments);
+
+            if (this.selectedType) {
+                this.filteredApartments = this.apartments.filter(
+                    apartment => apartment.type === this.selectedType
+                );
+            } else {
+                this.filteredApartments = this.apartments;
+            }
+
+            this.loading = false;
+        },
+        openApartmentDetail(item) {
+            this.selectedApartment = item;
+            this.showDetail = true;
+        },
+        closeModal() {
+            this.localShow = false;
+        },
+
+        editGuests() {
+            this.showEditGuestsModal = true;
+        },
+        saveGuestInfo() {
+            this.showEditGuestsModal = false;
+        },
+    },
+    mounted() {
+        this.filteredApartments = this.apartments;
+    },
 };
+
 </script>
 
 <style scoped>
-.apartment-card{
-  background-color: var(--sidebar-background-color);
-  color: var(--text-color);
+.apartment-card {
+    background-color: var(--sidebar-background-color);
+    color: var(--text-color);
 }
-.icon-btn{
-  background-color: var(--background-color);
-
+.icon-btn {
+    background-color: var(--background-color);
 }
 
 #map {
-  height: 85vh;
-  width: 100%;
+    height: 85vh;
+    width: 100%;
+}
+.AdsSetting{
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    alignment: center;
+}
+.AdsSetting2{
+    margin-top: 15px;
+
+}
+
+.Ads {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.headline {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1976D2;
+}
+
+.text-h6 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.text-body-1 {
+    font-size: 16px;
+    color: #ece3e3;
+}
+
+.primary--text {
+    color: #1976D2 !important;
+}
+
+.rounded-lg {
+    border-radius: 12px;
+}
+
+.custom-dialog {
+    border-radius: 12px;
 }
 </style>

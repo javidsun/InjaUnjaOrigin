@@ -1,0 +1,13 @@
+{
+    "users": [
+        { "id": 1, "name": "علی", "email": "ali@example.com" },
+        { "id": 2, "name": "سارا", "email": "sara@example.com" }
+    ],
+    "houses": [
+        { "id": 1, "title": "خانه زیبا", "price": 200 },
+        { "id": 2, "title": "خانه مدرن", "price": 300 }
+    ],
+    "reservations": [
+        { "id": 1, "userId": 1, "houseId": 2, "date": "2025-03-15" }
+    ]
+}

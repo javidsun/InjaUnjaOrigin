@@ -3,18 +3,26 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+
 Route::get('/houses', function () {
-    return Inertia::render('Houses');
-})->name('houses');
+    return Inertia::render('Users/Reserv/HousesAds');
+});
 
 Route::get('/vehicles', function () {
-    return Inertia::render('Vehicles');
-})->name('vehicles');
+    return Inertia::render('layout/sections/Groups/Travel Ads/TravelersContent');
+});
 
 Route::get('/events', function () {
-    return Inertia::render('Events');
-})->name('events');
+    return Inertia::render('layout/sections/Groups/Event Ads/EventsContent');
+});
 
 Route::get('/travelers', function () {
-    return Inertia::render('Travelers');
-})->name('travelers');
+    return Inertia::render('layout/sections/Groups/Vehicles Ads/VehiclesContent');
+});
+Route::get('/Messages', function () {
+    return Inertia::render('Users/Messages/Messages');
+});
+
+Route::get('/UserFinance', function () {
+    return Inertia::render('Users/UserFinance');
+});

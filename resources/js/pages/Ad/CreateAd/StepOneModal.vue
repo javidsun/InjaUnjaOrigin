@@ -4,8 +4,13 @@
             @update:model-value="emit('update:modelValue', $event)"
             max-width="600"
         >
-
             <v-card class="modal-container">
+                <v-card-title class="text-center modal-title">
+                    <h3>{{ ad ? 'Edit Ad' : 'Create Ad' }}</h3>
+                </v-card-title>
+
+
+                <v-card class="modal-container">
                 <v-card-title class="text-center modal-title">
                     <v-img v-if="openModal === 'amenities'" src="/Untitled design (1) 10.png" contain height="100"></v-img>
                     <v-img class="modal-img" v-else-if="openModal === 'photos'" src="/Untitled design (8) 2.png" contain height="100"></v-img>
@@ -16,10 +21,8 @@
 
                     <h3 v-if="openModal === 'amenities'">{{ t('Ad.highlight_your_place') }}</h3>
                     <h3 v-else-if="openModal === 'photos'">{{ t('Ad.add_photos_of_your_place') }}</h3>
-                    <h3 class="top1" v-else-if="openModal === 'title'">{{ t('Ad.give_title_for_accommodation') }}</h3>
                     <h4 v-else-if="openModal === 'modal4'">{{ t('Ad.modal_4_title') }}</h4>
                     <h3 class="text-primary" v-else-if="openModal === 'modalStep3'">{{ t('Ad.finalize_and_publish') }}<br>{{ t('Ad.step_three') }}</h3>
-                    <h3 class="title-extra-margin" v-else-if="openModal === 'modal5'">{{ t('Ad.create_your_description') }}</h3>
                     <h3 v-else-if="openModal === 'Step3-1'">{{ t('Ad.HowReserve') }}</h3>
                     <h3 class="top1" v-else-if="openModal === 'thirdStepSetPrice'">{{ t('Ad.set_your_price') }}</h3>
                     <h3 v-else-if="openModal === 'discountModal'">{{ t('Ad.discounts') }}</h3>
@@ -28,8 +31,6 @@
 
                     <p class="modal-text text-info" v-if="openModal === 'amenities'">{{ t('Ad.step_two') }}<br>{{ t('Ad.step_two_description') }}</p>
                     <p class="modal-text" v-else-if="openModal === 'photos'">{{ t('Ad.need_to_add_photos') }}</p>
-                    <p class="modal-text text-muted " v-else-if="openModal === 'title'">{{ t('Ad.short_title_suggestion') }}</p>
-                    <p class="modal-text text-muted" v-else-if="openModal === 'modal5'">{{ t('Ad.share_what_makes_your_place_special') }}</p>
                     <p class="modal-text text-muted" v-else-if="openModal === 'modalStep3'">{{ t('Ad.final_step_description') }}</p>
                     <p class="modal-text"  v-else-if="openModal === 'Step3-1'">{{ t('Ad.CanChange') }} </p>
                     <p class="modal-text top1" v-else-if="openModal === 'thirdStepSetPrice'">{{ t('Ad.CanChange') }}</p>
@@ -140,12 +141,34 @@
                     </template>
                 <template v-else-if="openModal === 'photos'">
                     <div class="rectangle">
-                        <v-btn block color="dark-gray lighten-3" class="py-8 rounded-lg" @click="openGallery">
-                            <v-icon left class="icon-small font-weight-bold">mdi-image</v-icon> {{ t('Ad.add_photo') }}
+                        <!-- دکمه Open Gallery فقط در دسکتاپ -->
+                        <v-btn
+                            block
+                            color="dark-gray lighten-3"
+                            class="py-8 rounded-lg d-none d-md-block"
+                            @click="openGallery">
+                            <v-icon left class="icon-small font-weight-bold">mdi-image</v-icon>
+                            {{ t('Ad.add_photo') }}
                         </v-btn>
 
-                        <v-btn block color="dark-gray lighten-3" class="py-8 rounded-lg mt-2" @click="openCamera">
-                            <v-icon left class="icon-small font-weight-bold">mdi-camera</v-icon> {{ t('Ad.take_new_photo') }}
+                        <!-- دکمه Open Camera فقط در موبایل -->
+                        <v-btn
+                            block
+                            color="dark-gray lighten-3"
+                            class="py-8 rounded-lg mt-2 d-md-none"
+                            @click="openCamera">
+                            <v-icon left class="icon-small font-weight-bold">mdi-camera</v-icon>
+                            {{ t('Ad.take_new_photo') }}
+                        </v-btn>
+
+                        <!-- دکمه Open Gallery فقط در موبایل -->
+                        <v-btn
+                            block
+                            color="dark-gray lighten-3"
+                            class="py-8 rounded-lg mt-2 d-md-none"
+                            @click="openGallery">
+                            <v-icon left class="icon-small font-weight-bold">mdi-image</v-icon>
+                            {{ t('Ad.add_photo') }}
                         </v-btn>
                     </div>
 
@@ -158,18 +181,39 @@
                     </div>
                 </template>
                 <v-card v-else-if="openModal === 'title'">
-                        <v-text-field v-model="title"
-                                      max-length="32"
-                                      counter
-                                      clearable
-                                      style="height: 10px;"
-                                      @input="checkCharacterLimit"
-                        ></v-text-field>
-                        <p class="text-left top1" :style="{ fontSize: '12px', color: characterLimitExceeded ? 'red' : 'grey' }">
-                            {{ t('Ad.max_32_characters') }}
-                        </p>
+                    <h3 class="top1" >{{ t('Ad.give_title_for_accommodation') }}</h3>
+                    <p class="modal-text text-muted ">{{ t('Ad.short_title_suggestion') }}</p>
 
-                    </v-card>
+                    <v-text-field v-model="title"
+                                  max-length="32"
+                                  counter
+                                  clearable
+                                  style="height: 10px;"
+                                  @input="checkCharacterLimit"
+                    ></v-text-field>
+                    <br>
+                    <p class="text-left top1" :style="{ fontSize: '12px', color: characterLimitExceeded ? 'red' : 'grey' }">
+                        {{ t('Ad.max_32_characters') }}
+                    </p>
+                    <br>
+
+                    <h3 >{{ t('Ad.create_your_description') }}</h3>
+                    <p >{{ t('Ad.share_what_makes_your_place_special') }}</p>
+
+                    <div class="description-container">
+                        <v-textarea v-model="description"
+                                    counter
+                                    maxlength="441"
+                                    rows="4"
+                                    class="description-box"
+                                    @input="checkCharacterLimit2"
+                        ></v-textarea>
+                        <p class="text-left" :style="{ fontSize: '12px', color: characterLimitExceeded2 ? 'red' : 'grey' }">
+                            {{ t('Ad.max_441_characters') }}
+                        </p>
+                    </div>
+
+                </v-card>
                 <template v-if="openModal === 'modal4'">
                     <div>
                         <p style="margin-top: 50px;" class="modal-text">{{ t('Ad.modal_4_description') }}</p>
@@ -189,20 +233,6 @@
                         </v-row>
                     </div>
                 </template>
-                <template v-if="openModal === 'modal5'">
-                <div class="description-container">
-                <v-textarea v-model="description"
-                                        counter
-                                        maxlength="441"
-                                        rows="4"
-                                        class="description-box"
-                                        @input="checkCharacterLimit2"
-                            ></v-textarea>
-                            <p class="text-left" :style="{ fontSize: '12px', color: characterLimitExceeded2 ? 'red' : 'grey' }">
-                                {{ t('Ad.max_441_characters') }}
-                            </p>
-                        </div>
-                    </template>
                 <template v-if="openModal === 'Step3-1'">
                     <div class="rectangle">
                         <v-btn
@@ -215,8 +245,8 @@
                         >
                             <v-icon size="25">mdi-lightning-bolt</v-icon>
                             <v-col cols="10">
-                                <h4 class="font-weight-bold">{{ t('Ad.HowReserve') }}</h4>
-                                <p class="font-weight-bold2">{{ t('Ad.CanChange') }}</p>
+                                <h4 class="font-weight-bold">{{ t('Ad.quickReserve') }}</h4>
+                                <p class="font-weight-bold2">{{ t('Ad.reservationAutomatically') }}</p>
                             </v-col>
                         </v-btn>
 
@@ -239,34 +269,27 @@
                 <template v-if="openModal === 'thirdStepSetPrice'">
                     <v-row justify="center">
                         <v-col cols="12" class="mb-1" align="center">
-                            <h1 class="font-weight-bold text-primary "
-                                style="margin-bottom: 10px;margin-top: 10px"
-                            >{{ totalPrice }} {{ currency }}</h1>
+                            <h1 class="font-weight-bold text-primary"
+                                style="margin-bottom: 10px; margin-top: 10px"
+                            >
+                                {{ finalTotalPrice }} {{ currency }}
+                            </h1>
                         </v-col>
-                        <v-col cols="8" >
-                            <v-select
-                                v-model="currency"
-                                :items="['$', '€', 'ریال']"
-                                :label="t('Ad.currency')"
-                                dense
-                                outlined
-                                class="rounded-lg"
-                            ></v-select>
-                        </v-col>
+
                         <v-col cols="8" class="mb-0">
                             <v-text-field v-model="basePrice" :label="t('Ad.base_price')" type="number" dense outlined class="rounded-lg"></v-text-field>
                         </v-col>
                         <v-col cols="8" class="mb-0">
                             <v-text-field v-model="serviceFee" :label="t('Ad.service_fee')" type="number" dense outlined class="rounded-lg"></v-text-field>
                         </v-col>
-                        <v-col cols="8" class="mb-0">
+                        <v-col cols="8" class="mb-0 received-amount2">
                             <v-text-field v-model="totalPrice" :label="t('Ad.total_price')" dense outlined readonly class="rounded-lg">
                                 <template v-slot:append>
                                     <span>{{ currency }}</span>
                                 </template>
                             </v-text-field>
                         </v-col>
-                        <v-col cols="8" class="mb-0">
+                        <v-col cols="8" class="mb-0 received-amount2">
                             <v-text-field v-model="receivedAmount" :label="t('Ad.received_amount')" dense outlined readonly class="rounded-lg">
                                 <template v-slot:append>
                                     <span>{{ currency }}</span>
@@ -279,29 +302,29 @@
                             :currency="currency"
                             v-model="discountModalOpen"
                         />
-
                     </v-row>
 
-                    <v-btn block color="primary" class="py-3 mt-4 rounded-lg" @click="addExtraFee">
+                    <v-btn v-if="!isCustomer" block color="primary" class="py-3 mt-4 rounded-lg" @click="addExtraFee">
                         + {{ t('Ad.add_extra_fee') }}
                     </v-btn>
 
-                    <v-row v-for="(fee, index) in extraFees" :key="index" justify="center">
+                    <v-row v-for="(fee, index) in extraFees" :key="index" justify="center" align="center">
                         <v-col cols="6">
                             <v-text-field v-model="fee.title" :label="t('Ad.extra_fee_title')" dense outlined class="rounded-lg"></v-text-field>
                         </v-col>
                         <v-col cols="4">
                             <v-text-field v-model="fee.amount" type="number" :label="t('Ad.amount')" dense outlined class="rounded-lg"></v-text-field>
                         </v-col>
+                        <v-col cols="2" v-if="isCustomer">
+                            <v-checkbox v-model="fee.selected" @change="updateFinalTotal" dense></v-checkbox>
+                        </v-col>
                     </v-row>
                 </template>
                 <template v-if="openModal === 'discountModal'">
                     <v-row justify="center">
                         <v-col cols="12" align="center">
-                            <h1 class="font-weight-bold text-primary"
-                                style="margin-top: 10px;"
-                            >
-                                {{t('Ad.total_price')}}: {{ totalPrice - discountAmount }} {{ currency }}
+                            <h1 class="font-weight-bold text-primary" style="margin-top: 10px;">
+                                {{ t('Ad.total_price') }}: {{ totalPrice - discountAmount }} €
                             </h1>
                         </v-col>
 
@@ -319,7 +342,7 @@
                                         <v-card-title class="font-weight-bold3 text-right">{{ t(discount.title) }}</v-card-title>
                                         <v-card-subtitle class="text-right">{{ t(discount.description) }}</v-card-subtitle>
                                         <v-card-actions class="justify-start">
-                                            <h1 class=" text-primary">{{ discount.percent }}%</h1>
+                                            <h1 class="text-primary">{{ discount.percent }}%</h1>
                                         </v-card-actions>
                                     </v-card>
                                 </v-col>
@@ -327,9 +350,8 @@
                         </v-col>
 
                         <v-col cols="12">
-                            <h3>  {{t('Ad.received_amount')}}: {{ receivedAmount }} {{ currency }}</h3>
+                            <h3>  {{ t('Ad.received_amount') }}: {{ receivedAmount }} €</h3>
                         </v-col>
-
                     </v-row>
                 </template>
                 <template v-if="openModal === 'finalStepModal'">
@@ -393,31 +415,37 @@
                 </template>
                 <template v-if="openModal === 'finalStepModal2'">
                     <v-row justify="center">
-                        <v-container class="top1">
-                            <v-row class="top1">
+                            <v-row class="top2">
                                 <v-col cols="12">
                                     <div class="info-container">
-                                        <div class="info-box">
-                                            <div align="center" style="color: #858585">{{ t('Ad.ShowHost') }}</div>
+                                        <div class="info-box"  >
+                                            <div align="center"  style="color: #858585">{{ t('Ad.ShowHost') }}</div>
+                                            <v-row class="d-flex flex-wrap" justify="center" >
+                                                    <v-card class="apartment-card top1" align="center">
+                                                        <v-img :src="uploadedImage || uploadedImages[0] || '/20.jpg'" height="100px" class="apartment-img"></v-img>
+                                                        <v-card-title class="apartment-title">
+                                                            {{ location }}
+                                                        </v-card-title>
+                                                        <v-card-subtitle class="apartment-subtitle">
+                                                            {{ userName }}
+                                                        </v-card-subtitle>
+                                                        <v-card-text >
+                                                            <br />
+                                                            <div class="price-info">
+                                                                <div style="text-decoration: line-through; color: red;">
+                                                                    {{ totalPrice }} {{ currency }}
+                                                                </div>
+                                                                <div style="color: #2fe700 ;border: black; font-weight: bold">{{ totalPrice - discountAmount }} {{ currency }}</div>
+                                                            </div>
+                                                        </v-card-text>
+                                                    </v-card>
+                                            </v-row>
 
-                                            <div class="info-body" style="display: flex; flex-direction: row; align-items: start;">
-                                                <v-img class="img" :src="uploadedImage || uploadedImages[0] || '/20.jpg'" contain height="100"></v-img>
-                                                <div class="info-details" style="text-align: center; margin-right: 12px;">
-                                                    <div>{{ location || 'Default location' }}</div>
-                                                    <div>{{ userName || 'Default name' }}</div>
-                                                    <div class="price-info">
-                                                        <div style="text-decoration: line-through; color: red;">
-                                                            {{ totalPrice }} {{ currency }}
-                                                        </div>
-                                                        <div style="color: #00c853 ; font-weight: bold">{{ totalPrice - discountAmount }} {{ currency }}</div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </v-col>
+
                             </v-row>
-                        </v-container>
                     </v-row>
 
                     <v-row>
@@ -475,7 +503,8 @@
                         {{ t('Ad.Back') }}
                     </v-btn>
 
-                    <v-btn color="grey" text class="btn-small" style="min-width: auto; padding: 4px 8px;" @click="$emit('update:modelValue', false)">
+                    <v-btn color="grey" text class="btn-small" style="min-width: auto;
+                     padding: 4px 8px;" @click="$emit('update:modelValue', false)">
                         {{ t('Ad.SaveExit') }}
                     </v-btn>
                     <v-btn color="primary" class="btn-small" style="min-width: auto; padding: 4px 8px;" @click="goNext" :disabled="characterLimitExceeded">
@@ -484,6 +513,7 @@
 
                 </v-card-actions>
             </v-card>
+                </v-card>
         </v-dialog>
 
 
@@ -492,13 +522,32 @@
 
 
     <script setup>
-    import {ref, computed, defineProps, defineEmits, watch, nextTick} from 'vue';
+    import { ref, computed, defineProps, defineEmits, watch, nextTick ,onMounted } from 'vue';
     import { t } from "../../../store/languageStore";
-    import StepOneModal from './StepOneModal.vue';
     import L from "leaflet";
     import "leaflet/dist/leaflet.css";
-    const openModal = ref("property");
+    import { useStore } from 'vuex';
+    let ads = computed(() => []);
+    import MyAds from "../MyAds.vue"
+    const store = useStore();
 
+    const title = ref('');
+    const description = ref('');
+    const images = ref([]);
+
+    onMounted(() => {
+        ads = computed(() => store.getters.getAds);
+    });
+
+    const editAd = (adId) => {
+        router.push({ name: 'EditAd', params: { id: adId } });
+    };
+
+    const deleteAd = (adId) => {
+        store.dispatch('deleteAd', adId);
+    };
+
+    const openModal = ref("property");
 
     const props = defineProps({
         modelValue: Boolean,
@@ -511,24 +560,68 @@
         userName: String,
         basePrice: Number,
         discountedPrice: Number,
-        discount: Boolean
+        discount: Boolean,
+        ad: {
+            type: Object,
+            default: null,
+        },
     });
 
-
-    const emit = defineEmits(["update:modelValue", "next", "back","update-total-price"]);
-    const title = ref('');
-    const characterLimitExceeded = ref(false);
-    const selectedModal4 = ref([]);
-    const description = ref('');
-    const characterLimitExceeded2 = ref(false);
-    const hostType = ref(null);
-    const locationFeatures = ref([]);
+    const emit = defineEmits(["update:modelValue", "next", "back", "update-total-price"]);
     const userName = "Default name";
     const location = "Default Location";
-    const selectedProperty = ref(null);
-
+    const selectedProperty = ref(props.ad ? props.ad.propertyType : null);
+    const selectedAmenities = ref(props.ad ? props.ad.amenities : []);
+    const hostType = ref(props.ad ? props.ad.hostType : null);
+    const locationFeatures = ref(props.ad ? props.ad.locationFeatures : []);
+    const basePrice = ref(props.ad ? props.ad.basePrice : 0);
+    const serviceFee = ref(props.ad ? props.ad.serviceFee : 0);
+    const extraFees = ref(props.ad ? props.ad.extraFees : []);
+    const uploadedImages = ref(props.ad ? props.ad.uploadedImages : []);
+    const uploadedImage = ref(props.ad ? props.ad.uploadedImage : '');
+    const characterLimitExceeded = ref(false);
+    const characterLimitExceeded2 = ref(false);
+    const selectedModal4 = ref([]);
+    const selectedReservation = ref(null);
+    const selectedDiscounts = ref([]);
+    const showCalendar = ref(false);
+    const selectedDates = ref([]);
+    const isCustomer = ref(false);
     const selectProperty = (title) => {
         selectedProperty.value = title;
+    };
+
+    const saveAd = () => {
+        const adData = {
+            title: title.value,
+            description: description.value,
+            propertyType: selectedProperty.value,
+            amenities: selectedAmenities.value,
+            hostType: hostType.value,
+            locationFeatures: locationFeatures.value,
+            basePrice: basePrice.value,
+            serviceFee: serviceFee.value,
+            extraFees: extraFees.value,
+            uploadedImages: uploadedImages.value,
+            totalPrice: totalPrice.value,
+            receivedAmount: receivedAmount.value,
+            images: uploadedImages.value,
+
+        };
+        title.value = '';
+        description.value = '';
+        selectedProperty.value = null;
+        uploadedImages.value = [];
+        store.dispatch('saveAd', adData);
+        router.push({ name: 'MyAds' });
+
+        if (props.ad) {
+            store.dispatch('editAd', { id: props.ad.id, ...adData });
+        } else {
+            store.dispatch('saveAd', adData);
+        }
+
+        emit('update:modelValue', false);
     };
 
     const searchQuery = ref("");
@@ -542,80 +635,56 @@
         { title: "Ad.container", image: "/container.png" },
         { title: "Ad.Treehouse", image: "/Treehouse.png" },
     ]);
-
     const accommodationDetails = ref([
         { name: "Ad.Guest", value: 1 },
         { name: "Ad.Room", value: 1 },
         { name: "Ad.bed", value: 1 },
         { name: "Ad.Bathroom", value: 1 },
     ]);
-    const confirmLocation = () => {
-        openModal.value = "details";
-    };
+
     const selectProperty2 = () => {
         openModal.value = "property";
     };
+
     const confirmStep2 = () => {
         emit("update:modelValue", false);
         emit("next");
     };
 
-
     const closeModal = () => {
         emit("update:modelValue", false);
     };
 
-
-    const checkCharacterLimit2 = () => {
-        characterLimitExceeded2.value = description.value.length > 441;
-    };
-    const selectedReservation = ref(null);
-
     const selectReservation = (type) => {
         selectedReservation.value = type;
     };
-
     const goBack = () => {
-
         if (openModal.value === "map") {
             openModal.value = "property";
         } else if (openModal.value === "details") {
             openModal.value = "map";
-        }
-        else if (openModal.value === 'title') {
+        } else if (openModal.value === 'title') {
             openModal.value = 'photos';
         } else if (openModal.value === 'photos') {
             openModal.value = 'amenities';
         } else if (openModal.value === 'modal4') {
             openModal.value = 'title';
-        }
-        else if (openModal.value === 'modal5') {
+        } else if (openModal.value === 'modalStep3') {
             openModal.value = 'modal4';
-        }
-        else if (openModal.value === 'modalStep3') {
-            openModal.value = 'modal5';
-        }
-        else if (openModal.value === 'Step3-1') {
+        } else if (openModal.value === 'Step3-1') {
             openModal.value = 'modalStep3';
-        }
-        else if (openModal.value === 'thirdStepSetPrice') {
+        } else if (openModal.value === 'thirdStepSetPrice') {
             openModal.value = 'Step3-1';
-        }
-        else if (openModal.value === 'discountModal') {
+        } else if (openModal.value === 'discountModal') {
             openModal.value = 'thirdStepSetPrice';
-        }
-        else if (openModal.value === 'finalStepModal') {
+        } else if (openModal.value === 'finalStepModal') {
             openModal.value = 'discountModal';
-        }
-        else if (openModal.value === 'finalStepModal2') {
+        } else if (openModal.value === 'finalStepModal2') {
             openModal.value = 'finalStepModal';
-        }
-
-        else {
+        } else {
             emit('update:modelValue', false);
         }
     };
-
 
     const goNext = () => {
         if (!characterLimitExceeded.value) {
@@ -626,22 +695,17 @@
                 }
                 openModal.value = 'map';
                 nextTick(initMap);
-            }
-            else if (openModal.value === 'map') {
+            } else if (openModal.value === 'map') {
                 openModal.value = 'details';
-            }
-            else if (openModal.value === 'details') {
+            } else if (openModal.value === 'details') {
                 openModal.value = 'amenities';
-            }
-            else if (openModal.value === 'amenities') {
+            } else if (openModal.value === 'amenities') {
                 openModal.value = 'photos';
             } else if (openModal.value === 'photos') {
                 openModal.value = 'title';
             } else if (openModal.value === 'title') {
                 openModal.value = 'modal4';
             } else if (openModal.value === 'modal4') {
-                openModal.value = 'modal5';
-            } else if (openModal.value === 'modal5') {
                 openModal.value = 'modalStep3';
             } else if (openModal.value === 'modalStep3') {
                 openModal.value = 'Step3-1';
@@ -651,15 +715,13 @@
                 openModal.value = 'discountModal';
             } else if (openModal.value === 'discountModal') {
                 openModal.value = 'finalStepModal';
-            }
-            else if (openModal.value === 'finalStepModal') {
+            } else if (openModal.value === 'finalStepModal') {
                 openModal.value = 'finalStepModal2';
             }
         } else {
             emit('update:modelValue', false);
         }
     };
-
 
     const openGallery = () => {
         const input = document.createElement("input");
@@ -670,7 +732,7 @@
             const files = Array.from(event.target.files);
             if (files.length > 0) {
                 const maxImages = 10;
-                const validFiles = files.slice(0, maxImages - uploadedImages.value.length); // تعداد عکس‌ها را محدود می‌کنیم
+                const validFiles = files.slice(0, maxImages - uploadedImages.value.length);
                 validFiles.forEach(file => {
                     const reader = new FileReader();
                     reader.onload = (e) => {
@@ -682,7 +744,6 @@
         };
         input.click();
     };
-
 
     const openCamera = () => {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -728,7 +789,6 @@
         }
     };
 
-
     const increment = (index) => {
         accommodationDetails.value[index].value += 1;
     };
@@ -740,17 +800,13 @@
     };
 
     let map, marker;
-
     const initMap = () => {
         if (!map) {
             map = L.map("map").setView([35.6892, 51.3890], 13);
-
             L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
-
             marker = L.marker([35.6892, 51.3890], { draggable: true }).addTo(map);
-
             map.on('click', (e) => {
                 const { lat, lng } = e.latlng;
                 marker.setLatLng([lat, lng]);
@@ -770,7 +826,6 @@
 
     const searchLocation = () => {
         if (!searchQuery.value) return;
-
         fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery.value}`)
             .then(response => response.json())
             .then(data => {
@@ -782,28 +837,11 @@
                 }
             });
     };
+
     const goToStep = (step) => {
         openModal.value = step;
     };
 
-    const checkCharacterLimit = () => {
-        if (title.value.length > 32) {
-            characterLimitExceeded.value = true;
-        } else {
-            characterLimitExceeded.value = false;
-        }
-    };
-
-    const selectedAmenities = ref([]);
-
-    const toggleAmenity = (amenity) => {
-        const index = selectedAmenities.value.indexOf(amenity);
-        if (index === -1) {
-            selectedAmenities.value.push(amenity);
-        } else {
-            selectedAmenities.value.splice(index, 1);
-        }
-    };
     const modal4Options = [
         { text: "Ad.peaceful", icon: 'mdi-home-heart' },
         { text: "Ad.unique", icon: 'mdi-flower' },
@@ -839,24 +877,14 @@
         { text: "Ad.first_aid_kit", icon: 'mdi-plus-circle' },
         { text: "Ad.carbon_monoxide_alarm", icon: 'mdi-molecule-co' },
     ];
-    const currency = ref('$');
-    const basePrice = ref(0);
-    const serviceFee = ref(0);
-    const extraFees = ref([]);
+
+    const currency = ref('€');
     const appliedDiscount = ref(0);
-
-    const totalPrice = computed(() => {
-        let extraTotal = extraFees.value.reduce((sum, fee) => sum + (parseFloat(fee.amount) || 0), 0);
-        let total = parseFloat(basePrice.value || 0) + parseFloat(serviceFee.value || 0) + extraTotal;
-        return total - appliedDiscount.value;
+    const discountAmount = computed(() => {
+        return selectedDiscounts.value.reduce((sum, discount) => {
+            return sum + (totalPrice.value * discount.percent / 100);
+        }, 0);
     });
-    const receivedAmount = computed(() => (totalPrice.value - discountAmount.value) * 0.94);
-
-
-    const addExtraFee = () => {
-        extraFees.value.push({ title: '', amount: 0 });
-    };
-    const selectedDiscount = ref(null);
 
     const discountOptions = [
         { value: 1, title: t("Ad.Special_discount"), description: t("Ad.OffFirstReserve"), percent: 20 },
@@ -864,26 +892,15 @@
         { value: 3, title: t("Ad.Monthly_discount"), description: t("Ad.Off28nightStay"), percent: 20 }
     ];
 
-    const selectDiscount = (discount) => {
-        const index = selectedDiscounts.value.findIndex(d => d.value === discount.value);
-        if (index === -1) {
-            selectedDiscounts.value.push(discount);
-        } else {
-            selectedDiscounts.value.splice(index, 1);
-        }
-    };
     watch(() => props.openModal, (newVal) => {
         if (newVal === 'finalStepModal2' && uploadedImages.value.length > 0) {
             uploadedImage.value = uploadedImages.value[0];
         }
     });
-    const uploadedImages = ref([]);
-    const uploadedImage = ref('');
 
     watch(() => props.totalPrice, (newValue) => {
-        receivedAmount.value = newValue - discountAmount.value;
+
     });
-    const selectedDiscounts = ref([]);
 
     const toggleDiscount = (value) => {
         const index = selectedDiscounts.value.indexOf(value);
@@ -893,20 +910,73 @@
             selectedDiscounts.value.splice(index, 1);
         }
     };
-    const discountAmount = computed(() => {
-        return selectedDiscounts.value.reduce((sum, discount) => {
-            return sum + (totalPrice.value * discount.percent / 100);
-        }, 0);
-    });
-    const showCalendar = ref(false);
-    const selectedDates = ref([]);
 
     const saveDates = () => {
-        console.log("تاریخ‌های انتخاب‌شده:", selectedDates.value);
+        console.log("Selected dates:", selectedDates.value);
         showCalendar.value = false;
     };
 
+    const updateFinalTotal = () => {
+    };
+
+    const checkCharacterLimit = () => {
+        characterLimitExceeded.value = title.value.length > 32;
+    };
+
+    const checkCharacterLimit2 = () => {
+        characterLimitExceeded2.value = description.value.length > 441;
+    };
+
+    const toggleAmenity = (amenity) => {
+        const index = selectedAmenities.value.indexOf(amenity);
+        if (index === -1) {
+            selectedAmenities.value.push(amenity);
+        } else {
+            selectedAmenities.value.splice(index, 1);
+        }
+    };
+
+    const addExtraFee = () => {
+        extraFees.value.push({ title: '', amount: 0 });
+    };
+
+    const selectDiscount = (discount) => {
+        const index = selectedDiscounts.value.findIndex(d => d.value === discount.value);
+        if (index === -1) {
+            selectedDiscounts.value.push(discount);
+        } else {
+            selectedDiscounts.value.splice(index, 1);
+        }
+    };
+
+    const totalPrice = computed(() => {
+        let extraTotal = extraFees.value.reduce((sum, fee) => sum + (parseFloat(fee.amount) || 0), 0);
+        let total = parseFloat(basePrice.value || 0) + parseFloat(serviceFee.value || 0) + extraTotal;
+        return total - (total * (selectedDiscounts.value.reduce((sum, discount) => sum + discount.percent, 0) / 100));
+    });
+
+    const receivedAmount = computed(() => totalPrice.value * 0.94);
+
+    watch(() => props.modelValue, (newVal) => {
+        if (newVal && props.ad) {
+            title.value = props.ad.title;
+            description.value = props.ad.description;
+            selectedProperty.value = props.ad.propertyType;
+            selectedAmenities.value = props.ad.amenities;
+            hostType.value = props.ad.hostType;
+            locationFeatures.value = props.ad.locationFeatures;
+            basePrice.value = props.ad.basePrice;
+            serviceFee.value = props.ad.serviceFee;
+            extraFees.value = props.ad.extraFees;
+            uploadedImages.value = props.ad.uploadedImages;
+            uploadedImage.value = props.ad.uploadedImage;
+        }
+    });
+
     </script>
+
+
+
     <style scoped>
     .modal-container {
         width: 500px !important;
@@ -920,8 +990,6 @@
         top: 50% !important;
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
-
-
     }
     .modal-title {
         font-size: 18px;
@@ -954,31 +1022,16 @@
     }
 
 
-    .info-body {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
     .info-image img {
         width: 100px;
         height: 100px;
     }
 
-    .info-details {
-        text-align: left;
-        margin-left: 10px;
-    }
-
     .price-info {
+        margin-top: -30px;
         display: flex;
         flex-direction: column;
-    }
-
-    .modal-content {
-        max-height: 350px;
-        overflow-y: auto;
-        padding: 20px;
+        font-size: 18px;
     }
 
     .amenity-card {
@@ -1067,11 +1120,10 @@
             height: 450px !important;
             font-size: 50%;
         }
-
-        .modal-content {
-            max-height: 300px;
-            padding: 15px;
-            font-size: 50%;
+        .price-info {
+            display: flex;
+            flex-direction: column;
+            font-size: 14px;
         }
 
         .modal-text, .amenity-text {
@@ -1194,5 +1246,22 @@
     }
 
 
+    .received-amount2 {
+        color: #83ceff;
+        font-weight: bold;
+        font-size: 1.25rem;
+        text-align: center;
+    }
+    .apartment-card{
+        background-color: var(--price-color );
+        color: var(--background-color);
+    }
 
+    .top2{
+        margin-top: 70px;
+    }
+    .apartment-img{
+        border-radius: 20px;
+        margin-top: 5px;
+    }
     </style>

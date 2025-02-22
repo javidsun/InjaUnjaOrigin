@@ -41,12 +41,10 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import UserSidebar from "../Layout.vue";
 
-// دریافت مقدار id از props
 const props = defineProps({
-    id: String // مقدار id به عنوان string دریافت می‌شود
+    id: String
 });
 
-// تبدیل مقدار id به عدد
 const reservationId = ref(parseInt(props.id));
 
 const reservations = ref([

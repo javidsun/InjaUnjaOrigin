@@ -26,3 +26,6 @@ Route::get('/Messages', function () {
 Route::get('/UserFinance', function () {
     return Inertia::render('Users/UserFinance');
 });
+Route::get('/UserSettings', function () {
+    return Inertia::render('Users/UserSettings');
+});

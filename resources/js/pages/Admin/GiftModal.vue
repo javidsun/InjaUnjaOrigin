@@ -78,9 +78,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { translate } from "../../store/languageStore";
-import { Inertia } from "@inertiajs/inertia";
+import {ref} from 'vue';
+import {translate} from "../../store/languageStore";
+import {Inertia} from "@inertiajs/inertia";
 
 const isModalOpen = ref(false);
 
@@ -115,7 +115,7 @@ const confirmGiftCardPurchase = () => {
 };
 
 
-defineExpose({ openModal });
+defineExpose({openModal});
 </script>
 
 <style scoped>

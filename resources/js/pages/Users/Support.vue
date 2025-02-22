@@ -1,7 +1,7 @@
 <template>
     <UserSidebar>
 
-    <v-card>
+        <v-card>
             <v-card-text class="support-content">
                 <p class="welcome-message">{{ translate('support.welcomeMessage') }}</p>
 
@@ -35,29 +35,29 @@
             </v-card-text>
         </v-card>
 
-    <v-dialog v-model="isHelpModalOpen" max-width="600px" transition="dialog-transition">
-        <v-card>
-            <v-card-title class="help-header">
-                <span>{{ translate(selectedQuestion?.title) }}</span>
-                <v-spacer></v-spacer>
-                <v-btn icon @click="closeHelpModal" class="close-btn">
-                    <v-icon>mdi-close</v-icon>
-                </v-btn>
-            </v-card-title>
+        <v-dialog v-model="isHelpModalOpen" max-width="600px" transition="dialog-transition">
+            <v-card>
+                <v-card-title class="help-header">
+                    <span>{{ translate(selectedQuestion?.title) }}</span>
+                    <v-spacer></v-spacer>
+                    <v-btn icon @click="closeHelpModal" class="close-btn">
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </v-card-title>
 
-            <v-card-text class="help-content">
-                <p>{{ translate(selectedQuestion?.answer) }}</p>
-            </v-card-text>
-        </v-card>
+                <v-card-text class="help-content">
+                    <p>{{ translate(selectedQuestion?.answer) }}</p>
+                </v-card-text>
+            </v-card>
 
-    </v-dialog>
+        </v-dialog>
     </UserSidebar>
 
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { translate } from "../../store/languageStore";
+import {ref, computed} from 'vue';
+import {translate} from "../../store/languageStore";
 import UserSidebar from './Layout.vue';
 
 const isSupportModalOpen = ref(false);
@@ -75,15 +75,15 @@ const searchQuery = ref('');
 const selectedQuestion = ref(null);
 
 const supportQuestions = ref([
-    { title: 'support.cancelGuest', answer: 'support.cancelGuestAnswer' },
-    { title: 'support.accountSettings', answer: 'support.accountSettingsAnswer' },
-    { title: 'support.refundHost', answer: 'support.refundHostAnswer' },
-    { title: 'support.hostingGoals', answer: 'support.hostingGoalsAnswer' },
-    { title: 'support.prepareListings', answer: 'support.prepareListingsAnswer' },
-    { title: 'support.payments', answer: 'support.paymentsAnswer' },
-    { title: 'support.manageExperiences', answer: 'support.manageExperiencesAnswer' },
-    { title: 'support.coHost', answer: 'support.coHostAnswer' },
-    { title: 'support.billHelp', answer: 'support.billHelpAnswer' },
+    {title: 'support.cancelGuest', answer: 'support.cancelGuestAnswer'},
+    {title: 'support.accountSettings', answer: 'support.accountSettingsAnswer'},
+    {title: 'support.refundHost', answer: 'support.refundHostAnswer'},
+    {title: 'support.hostingGoals', answer: 'support.hostingGoalsAnswer'},
+    {title: 'support.prepareListings', answer: 'support.prepareListingsAnswer'},
+    {title: 'support.payments', answer: 'support.paymentsAnswer'},
+    {title: 'support.manageExperiences', answer: 'support.manageExperiencesAnswer'},
+    {title: 'support.coHost', answer: 'support.coHostAnswer'},
+    {title: 'support.billHelp', answer: 'support.billHelpAnswer'},
 ]);
 
 const filteredQuestions = computed(() => {
@@ -103,7 +103,7 @@ const closeHelpModal = () => {
 
 const contactSupport = () => {
     const url = window.location.href;
-    const supportDetails = translate('support.contactMessage', { query: searchQuery.value });
+    const supportDetails = translate('support.contactMessage', {query: searchQuery.value});
 
     if (navigator.share) {
         navigator.share({

@@ -84,12 +84,13 @@
                 </v-form>
             </v-card-text>
         </v-card>
-    </v-dialog>v
+    </v-dialog>
+    v
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { translate } from "../../../store/languageStore";
+import {ref} from 'vue';
+import {translate} from "../../../store/languageStore";
 
 const isModalOpen = ref(false);
 const isCreateGuideModalOpen = ref(false);
@@ -142,7 +143,7 @@ const editGuide = () => {
     openCreateGuideModal();
 };
 
-defineExpose({ openModal });
+defineExpose({openModal});
 </script>
 
 <style scoped>

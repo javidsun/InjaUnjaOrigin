@@ -11,7 +11,8 @@
             <v-divider></v-divider>
 
             <v-card-text class="modal-content">
-                <p>{{ translate('giftCard.walletBalance') }}: {{ walletBalance }} {{ translate('giftCard.currency') }}</p>
+                <p>{{ translate('giftCard.walletBalance') }}: {{ walletBalance }} {{ translate('giftCard.currency')
+                    }}</p>
 
                 <v-form @submit.prevent="confirmGiftCardPurchase">
                     <v-text-field
@@ -54,7 +55,8 @@
                         <v-card-text>
                             <div class="gift-card-details">
                                 <p>{{ translate('giftCard.issueDate') }}: {{ new Date().toLocaleDateString() }}</p>
-                                <p>{{ translate('giftCard.amount') }}: {{ giftCardAmount }} {{ translate('giftCard.currency') }}</p>
+                                <p>{{ translate('giftCard.amount') }}: {{ giftCardAmount }} {{
+                                    translate('giftCard.currency') }}</p>
                                 <p>{{ translate('giftCard.giftCardRecipientLabel') }}: {{ giftCardRecipient }}</p>
                                 <p>{{ translate('giftCard.giftCardMessageLabel') }}: {{ giftCardMessage }}</p>
                                 <p>{{ translate('giftCard.expiryDate') }}: {{ expiryDate }}</p>
@@ -110,10 +112,12 @@
                         <v-list-item v-for="(card, index) in giftCards" :key="index">
                             <v-list-item-content>
                                 <v-list-item-title>
-                                    {{ translate('giftCard.amount') }}: {{ card.amount }} {{ translate('giftCard.currency') }}
+                                    {{ translate('giftCard.amount') }}: {{ card.amount }} {{
+                                    translate('giftCard.currency') }}
                                 </v-list-item-title>
                                 <v-list-item-subtitle>
-                                    {{ translate('giftCard.issueDate') }}: {{ new Date(card.date).toLocaleDateString() }} <br />
+                                    {{ translate('giftCard.issueDate') }}: {{ new Date(card.date).toLocaleDateString()
+                                    }} <br/>
                                     {{ translate('giftCard.expiryDate') }}: {{ card.expiryDate }}
                                 </v-list-item-subtitle>
                             </v-list-item-content>
@@ -131,8 +135,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { translate } from "../../../store/languageStore";
+import {ref} from 'vue';
+import {translate} from "../../../store/languageStore";
 
 const isModalOpen = ref(false);
 const isHistoryModalOpen = ref(false);
@@ -202,44 +206,45 @@ const sendGiftCard = () => {
     }
 };
 
-defineExpose({ openModal });
+defineExpose({openModal});
 </script>
 
 
 <style scoped>
-    .gift-card-details {
-        background-color: #28282f !important;
-    }
-    .gift-card-section {
-        display: flex;
-        align-items: center;
-        background-color: #3b3b3b;
-        color: white;
-        padding: 16px;
-    }
+.gift-card-details {
+    background-color: #28282f !important;
+}
 
-    .close-btn {
-        transition: transform 0.2s ease;
-    }
+.gift-card-section {
+    display: flex;
+    align-items: center;
+    background-color: #3b3b3b;
+    color: white;
+    padding: 16px;
+}
 
-    .close-btn:hover {
-        transform: rotate(90deg);
-    }
+.close-btn {
+    transition: transform 0.2s ease;
+}
+
+.close-btn:hover {
+    transform: rotate(90deg);
+}
 
 
-    .image-container {
-        margin-bottom: 1rem;
-    }
+.image-container {
+    margin-bottom: 1rem;
+}
 
-    .button-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 1.5rem;
-    }
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
 
-    .modal-content {
-        padding: 2rem;
-        background-color: #3b3b3b;
-    }
+.modal-content {
+    padding: 2rem;
+    background-color: #3b3b3b;
+}
 
-    </style>
+</style>

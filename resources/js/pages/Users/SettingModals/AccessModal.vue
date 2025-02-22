@@ -37,10 +37,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { translate } from "../../../store/languageStore";
-import { Inertia } from "@inertiajs/inertia";
+import {ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {translate} from "../../../store/languageStore";
+import {Inertia} from "@inertiajs/inertia";
 
 const isModalOpen = ref(false);
 const router = useRouter();
@@ -70,7 +70,7 @@ const updatePan = () => {
     console.log(`Pan Direction: ${panLabels[panDirection.value]}`);
 };
 
-defineExpose({ openModal });
+defineExpose({openModal});
 </script>
 
 <style scoped>

@@ -24,8 +24,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { translate } from "../../../store/languageStore";
+import {ref} from 'vue';
+import {translate} from "../../../store/languageStore";
 
 const isModalOpen = ref(false);
 
@@ -37,7 +37,7 @@ const closeModal = () => {
     isModalOpen.value = false;
 };
 
-defineExpose({ openModal });
+defineExpose({openModal});
 </script>
 
 <style scoped>

@@ -55,11 +55,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { translate } from "../../../store/languageStore";
+import {ref} from 'vue';
+import {translate} from "../../../store/languageStore";
+import {t} from "../../../store/languageStore";
 
 const isHowItWorksModalOpen = ref(false);
 
+// تغییر نام تابع به openModal
 const openModal = () => {
     isHowItWorksModalOpen.value = true;
 };
@@ -69,14 +71,14 @@ const closeHowItWorksModal = () => {
 };
 
 const faqs = ref([
-    { question: 'howItWorks.faq1Question', answer: 'howItWorks.faq1Answer' },
-    { question: 'howItWorks.faq2Question', answer: 'howItWorks.faq2Answer' },
-    { question: 'howItWorks.faq3Question', answer: 'howItWorks.faq3Answer' },
-    { question: 'howItWorks.faq4Question', answer: 'howItWorks.faq4Answer' },
-    { question: 'howItWorks.faq5Question', answer: 'howItWorks.faq5Answer' },
+    {question: 'howItWorks.faq1Question', answer: 'howItWorks.faq1Answer'},
+    {question: 'howItWorks.faq2Question', answer: 'howItWorks.faq2Answer'},
+    {question: 'howItWorks.faq3Question', answer: 'howItWorks.faq3Answer'},
+    {question: 'howItWorks.faq4Question', answer: 'howItWorks.faq4Answer'},
+    {question: 'howItWorks.faq5Question', answer: 'howItWorks.faq5Answer'},
 ]);
 
-defineExpose({ openModal });
+defineExpose({openModal});
 </script>
 
 <style scoped>

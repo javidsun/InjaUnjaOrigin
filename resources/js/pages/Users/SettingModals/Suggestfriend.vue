@@ -30,8 +30,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { translate } from "../../../store/languageStore";
+import {ref} from 'vue';
+import {translate} from "../../../store/languageStore";
 
 const isfriendModalOpen = ref(false);
 
@@ -55,7 +55,7 @@ const shareLink = () => {
         alert(t('friendInvite.shareFallback'));
     }
 };
-defineExpose({ openModal });
+defineExpose({openModal});
 
 </script>
 

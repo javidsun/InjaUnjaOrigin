@@ -293,6 +293,7 @@ defineExpose({openModal});
     size: 120px;
 }
 
+
 @media (max-width: 600px) {
     .section-title {
         font-size: 1rem;

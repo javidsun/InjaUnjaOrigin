@@ -38,9 +38,9 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { translate } from "../../../store/languageStore";
-import { useRouter } from "vue-router";
+import {ref} from "vue";
+import {translate} from "../../../store/languageStore";
+import {useRouter} from "vue-router";
 
 const navigateTo = (url) => {
     if (useRouter) {

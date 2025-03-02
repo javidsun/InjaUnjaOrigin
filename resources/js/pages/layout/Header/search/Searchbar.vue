@@ -28,15 +28,44 @@ export default {
     data() {
         return {
             activeMenu: null,
+            selectedDates: [],
         };
     },
     methods: {
         updateActiveMenu(menuName) {
             this.activeMenu = this.activeMenu === menuName ? null : menuName;
+            if (this.activeMenu) {
+                this.addClickListener();
+            } else {
+                this.removeClickListener();
+            }
         },
+        updateSelectedDates(dates) {
+            this.selectedDates = dates;
+        },
+        applyFilter() {
+            console.log("Filtering ads for dates:", this.selectedDates);
+            this.$emit("filter-ads", { dates: this.selectedDates });
+        },
+        handleClickOutside(event) {
+            if (!this.$el.contains(event.target)) {
+                this.activeMenu = null;
+                this.removeClickListener();
+            }
+        },
+        addClickListener() {
+            document.addEventListener('click', this.handleClickOutside);
+        },
+        removeClickListener() {
+            document.removeEventListener('click', this.handleClickOutside);
+        },
+    },
+    beforeDestroy() {
+        this.removeClickListener();
     },
 };
 </script>
+
 
 <style scoped>
 .search-bar-wrapper {

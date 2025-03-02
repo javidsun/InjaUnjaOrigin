@@ -9,7 +9,7 @@
       >
         <VCard class="custom-card fontsize">
           <VCardTitle class="text-h6 text-center">
-            {{ t(card.title) }}
+            {{ translate(card.title) }}
           </VCardTitle>
           <VCardText class="text-center">
             <h3 class="text-h4">{{ card.count }}</h3>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { t } from "../../../../store/languageStore";
+import { translate } from "../../../../store/languageStore";
 
 const cards = [
   {

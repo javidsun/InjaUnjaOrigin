@@ -3,9 +3,9 @@
     <v-row>
       <v-col cols="12" md="4">
         <v-card class="card-dashboard">
-          <v-card-title>{{ t('re_dashboard.conversionRate') }}</v-card-title>
+          <v-card-title>{{ translate('re_dashboard.conversionRate') }}</v-card-title>
           <v-card-text class="text1">
-            <p>{{ t('re_dashboard.conversionRateDescription') }}</p>
+            <p>{{ translate('re_dashboard.conversionRateDescription') }}</p>
             <apex-chart
                 type="pie"
                 height="360"
@@ -18,7 +18,7 @@
 
       <v-col cols="12" md="4">
         <v-card class="card-dashboard">
-          <v-card-title>{{ t('re_dashboard.revenueByCategory') }}</v-card-title>
+          <v-card-title>{{ translate('re_dashboard.revenueByCategory') }}</v-card-title>
           <v-card-text class="text1">
             <apex-chart
                 type="bar"
@@ -37,10 +37,9 @@
         </v-card>
       </v-col>
 
-      <!-- فعالیت جغرافیایی -->
-      <v-col cols="12" md="4">
+=      <v-col cols="12" md="4">
         <v-card class="card-dashboard text1">
-          <v-card-title>{{ t('re_dashboard.geoActivity') }}</v-card-title>
+          <v-card-title>{{ translate('re_dashboard.geoActivity') }}</v-card-title>
           <v-card-text>
             <apex-chart
                 type="bar"
@@ -58,19 +57,16 @@
 <script setup>
 import { ref, computed } from "vue";
 import ApexChart from "vue3-apexcharts";
-import { t } from "../../../../store/languageStore";
+import { translate } from "../../../../store/languageStore";
 
-// نرخ تبدیل
 const conversionRate = 25;
 
-// درآمد بر اساس دسته‌بندی (به صورت استاتیک)
 const revenueByCategory = ref([
   { categoryKey: "re_dashboard.Home", revenue: 5000 },
   { categoryKey: "re_dashboard.Car", revenue: 2000 },
   { categoryKey: "re_dashboard.Others", revenue: 1000 },
 ]);
 
-// شهرهای برتر (به صورت استاتیک)
 const topCities = ref([
   { cityKey: "re_dashboard.Barcelona", countryKey: "re_dashboard.Spain", bookings: 120 },
   { cityKey: "re_dashboard.Paris", countryKey: "re_dashboard.France", bookings: 110 },
@@ -94,7 +90,6 @@ const computedTopCities = computed(() =>
     }))
 );
 
-// هدر جدول
 const tableHeaders = ref([
   { textKey: "re_dashboard.category", key: "category" },
   { textKey: "re_dashboard.revenue", key: "revenue" },
@@ -107,13 +102,12 @@ const computedTableHeaders = computed(() =>
     }))
 );
 
-// داده‌های چارت
 const chartData = {
   conversionRate: {
     options: {
       chart: { id: "conversion-rate-chart", background: "transparent" },
       legend: { position: "top" },
-      labels: [t("re_dashboard.Reservation"), t("re_dashboard.Visit")],
+      labels: [translate("re_dashboard.Reservation"), translate("re_dashboard.Visit")],
     },
     series: [conversionRate, 100 - conversionRate],
   },
@@ -124,7 +118,7 @@ const chartData = {
     },
     series: [
       {
-        name: t("re_dashboard.revenue"),
+        name: translate("re_dashboard.revenue"),
         data: computedRevenueByCategory.value.map((c) => c.revenue),
       },
     ],
@@ -138,7 +132,7 @@ const chartData = {
     },
     series: [
       {
-        name: t("re_dashboard.Reservation"),
+        name: translate("re_dashboard.Reservation"),
         data: computedTopCities.value.map((city) => city.bookings),
       },
     ],

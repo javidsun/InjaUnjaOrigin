@@ -6,7 +6,7 @@
         <v-card class="card-info">
           <v-card-text>
             <h1>42</h1>
-            <h2>{{ t('warning.followUp') }}</h2>
+            <h2>{{ translate('warning.followUp') }}</h2>
 
           </v-card-text>
         </v-card>
@@ -19,7 +19,7 @@
         <v-card class="card-error">
           <v-card-text>
             <h1>8</h1>
-            <h2>{{ t('warning.cancelledReservations') }}</h2>
+            <h2>{{ translate('warning.cancelledReservations') }}</h2>
           </v-card-text>
         </v-card>
       </div>
@@ -31,7 +31,7 @@
         <v-card class="card-warning">
           <v-card-text>
             <h1>27</h1>
-            <h2>{{ t('warning.pendingRequests') }}</h2>
+            <h2>{{ translate('warning.pendingRequests') }}</h2>
           </v-card-text>
         </v-card>
       </div>
@@ -43,7 +43,7 @@
         <v-card class="card-success">
           <v-card-text>
             <h1>13</h1>
-            <h2>{{ t('warning.successfulRequests') }}</h2>
+            <h2>{{ translate('warning.successfulRequests') }}</h2>
           </v-card-text>
         </v-card>
       </div>
@@ -52,12 +52,12 @@
 </template>
 
 <script>
-import { t } from "../../../../store/languageStore";
+import { translate } from "../../../../store/languageStore";
 
 export default {
   name: "Warning",
   setup() {
-    return { t };
+    return { translate };
   },
 };
 </script>

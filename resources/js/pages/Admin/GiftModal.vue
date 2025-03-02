@@ -2,7 +2,7 @@
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
             <v-card-title class="gift-card-section">
-                <span>{{ t('giftCardTitle') }}</span>
+                <span>{{ translate('giftCardTitle') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -10,20 +10,19 @@
             </v-card-title>
             <v-divider></v-divider>
 
-            <!-- محتوای فرم خرید کارت هدیه -->
             <v-card-text class="modal-content">
                 <div class="modal-image">
                     <v-img src="/Untitled design (20) 29.png" alt="Gift Card Image" height="150px"></v-img>
                 </div>
 
                 <p class="description">
-                    {{ t('giftCardDescription') }}
+                    {{ translate('giftCardDescription') }}
                 </p>
 
                 <v-form @submit.prevent="confirmGiftCardPurchase">
                     <v-text-field
                         v-model="giftCardAmount"
-                        :label="t('giftCardAmountLabel')"
+                        :label="translate('giftCardAmountLabel')"
                         type="number"
                         required
                         outlined
@@ -32,7 +31,7 @@
 
                     <v-text-field
                         v-model="giftCardRecipient"
-                        :label="t('giftCardRecipientLabel')"
+                        :label="translate('giftCardRecipientLabel')"
                         type="email"
                         required
                         outlined
@@ -41,17 +40,17 @@
 
                     <v-textarea
                         v-model="giftCardMessage"
-                        :label="t('giftCardMessageLabel')"
+                        :label="translate('giftCardMessageLabel')"
                         outlined
                         class="mb-4"
                     ></v-textarea>
 
                     <div class="button-container">
                         <v-btn type="submit" color="primary" large>
-                            {{ t('confirmPurchase') }}
+                            {{ translate('confirmPurchase') }}
                         </v-btn>
                         <v-btn @click="closeModal" color="secondary" large class="ml-2">
-                            {{ t('cancel') }}
+                            {{ translate('cancel') }}
                         </v-btn>
                     </div>
                 </v-form>
@@ -59,11 +58,10 @@
         </v-card>
     </v-dialog>
 
-    <!-- بخش دکمه خرید کارت هدیه -->
     <div class="gift-card-section">
-        <h2 class="gift-card-title">{{ t('giftCardTitle') }}</h2>
+        <h2 class="gift-card-title">{{ translate('giftCardTitle') }}</h2>
         <v-divider></v-divider>
-        <p class="gift-card-subtitle">{{ t('giftCardSubtitle') }}</p>
+        <p class="gift-card-subtitle">{{ translate('giftCardSubtitle') }}</p>
 
         <div class="image-container">
             <v-img src="/icons8-gift-card-98.png" alt="Gift Card Image" class="gift-card-image"></v-img>
@@ -71,7 +69,7 @@
 
         <div class="button-container">
             <v-btn @click="openModal" color="primary" large>
-                {{ t('buyGiftCard') }}
+                {{ translate('buyGiftCard') }}
             </v-btn>
         </div>
 
@@ -81,7 +79,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../store/languageStore";
 import { Inertia } from "@inertiajs/inertia";
 
 const isModalOpen = ref(false);
@@ -112,7 +110,7 @@ const confirmGiftCardPurchase = () => {
 
     giftCards.value.push(newGiftCard);
 
-    console.log('کارت هدیه خریداری شد:', newGiftCard);
+    console.log('Gift card purchased:', newGiftCard);
     closeModal();
 };
 

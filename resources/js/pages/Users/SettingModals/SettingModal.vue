@@ -2,7 +2,7 @@
     <v-dialog v-model="isOpen" max-width="600px" transition="dialog-transition">
         <v-card class="modal-container">
             <v-card-title class="header">
-                <span>{{ t('setting.personalInfo') }}</span>
+                <span>{{ translate('setting.personalInfo') }}</span>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
@@ -13,13 +13,13 @@
                         <img :src="userProfileImage" alt="Profile Picture" />
                     </v-avatar>
                     <h3 class="user-name">{{ userName }}</h3>
-                    <v-chip color="blue" outlined class="verified-chip">{{ t('setting.verified') }}</v-chip>
+                    <v-chip color="blue" outlined class="verified-chip">{{ translate('setting.verified') }}</v-chip>
                 </div>
                 <v-list class="info-list">
                     <v-list-item v-for="(item, key) in user" :key="key">
                         <v-list-item-content class="list-item-content">
                             <v-icon>{{ icons[key] }}</v-icon>
-                            <v-list-item-title>{{ t(labels[key]) }}</v-list-item-title>
+                            <v-list-item-title>{{ translate(labels[key]) }}</v-list-item-title>
                             <v-list-item-subtitle v-if="!isEditing && key !== 'more'">{{ item }}</v-list-item-subtitle>
                             <v-textarea
                                 v-else-if="isEditing && key === 'more'"
@@ -41,7 +41,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-btn block @click="toggleEdit" class="edit-btn">
-                    {{ isEditing ? t("setting.save") : t("setting.edit") }}
+                    {{ isEditing ? translate("setting.save") : translate("setting.edit") }}
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -50,7 +50,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 
 const isOpen = ref(false);
 const isEditing = ref(false);
@@ -69,14 +69,14 @@ const user = ref({
 
 const labels = {
 
-    school: t('setting.school'),
-    job: t('setting.job'),
-    hobbies: t('setting.hobbies'),
-    traits: t('setting.traits'),
-    birthYear: t('setting.birthYear'),
-    languages: t('setting.languages'),
-    location: t('setting.location'),
-    more: t('setting.more'),
+    school: translate('setting.school'),
+    job: translate('setting.job'),
+    hobbies: translate('setting.hobbies'),
+    traits: translate('setting.traits'),
+    birthYear: translate('setting.birthYear'),
+    languages: translate('setting.languages'),
+    location: translate('setting.location'),
+    more: translate('setting.more'),
 };
 
 const icons = {

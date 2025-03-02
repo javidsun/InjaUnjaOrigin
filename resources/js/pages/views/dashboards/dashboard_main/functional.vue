@@ -2,7 +2,7 @@
 <template>
   <VCard class="main-card pa-4" outlined>
     <div class="dashboard-header">
-      <p class="text-body-1 mb-0 fontsize">{{ t('functional.todayPerformance') }}</p>
+      <p class="text-body-1 mb-0 fontsize">{{ translate('functional.todayPerformance') }}</p>
     </div>
     <div class="dashboard-cards">
       <VCard v-for="(item, index) in performanceStats" :key="index" class="stat-card d-flex text-secondary2 align-center " flat>
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { t } from "../../../../store/languageStore";
+import { translate } from "../../../../store/languageStore";
 
 const performanceStats = [
   { title: "functional.todayReservations", stats: '35', icon: 'mdi-calendar-check', color: 'primary' },

@@ -2,7 +2,7 @@
     <v-dialog v-model="isfriendModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
             <v-card-title class="gift-card-section">
-                <span>{{ t('friendInvite.title') }}</span>
+                <span>{{ translate('friendInvite.title') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -11,7 +11,7 @@
             <v-divider></v-divider>
 
             <v-card-text class="modal-content">
-                <p>{{ t('friendInvite.shareLink') }}</p>
+                <p>{{ translate('friendInvite.shareLink') }}</p>
 
                 <v-row>
                     <v-col cols="12">
@@ -21,7 +21,7 @@
 
                 <div class="button-container">
                     <v-btn @click="shareLink" color="primary" large>
-                        {{ t('friendInvite.shareButton') }}
+                        {{ translate('friendInvite.shareButton') }}
                     </v-btn>
                 </div>
             </v-card-text>
@@ -31,7 +31,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 
 const isfriendModalOpen = ref(false);
 
@@ -47,12 +47,11 @@ const shareLink = () => {
     const url = window.location.href;
     if (navigator.share) {
         navigator.share({
-            title: t('friendInvite.shareTitle'),
-            text: t('friendInvite.shareMessage'),
+            title: translate('friendInvite.shareTitle'),
+            text: translate('friendInvite.shareMessage'),
             url: url
         }).catch((error) => console.error("Error sharing:", error));
     } else {
-        // Fallback for browsers that do not support the Web Share API
         alert(t('friendInvite.shareFallback'));
     }
 };

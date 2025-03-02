@@ -2,7 +2,7 @@
     <v-dialog v-model="isTermsModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>
             <v-card-title class="terms-header">
-                <span class="terms-title">{{ t('terms.title') }}</span>
+                <span class="terms-title">{{ translate('terms.title') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeTermsModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -16,28 +16,27 @@
                     <v-card-text>
                         <div class="info-header">
                             <v-icon class="info-icon">mdi-book</v-icon>
-                            <span class="info-title">{{ t('terms.infoTitle') }}</span>
+                            <span class="info-title">{{ translate('terms.infoTitle') }}</span>
                         </div>
-                        <p class="info-description">{{ t('terms.infoDescriptionEEA') }}</p>
-                        <p class="info-description">{{ t('terms.infoDescriptionNonEEA') }}</p>
-                        <p class="info-description">{{ t('terms.infoDescriptionAustralia') }}</p>
+                        <p class="info-description">{{ translate('terms.infoDescriptionEEA') }}</p>
+                        <p class="info-description">{{ translate('terms.infoDescriptionNonEEA') }}</p>
+                        <p class="info-description">{{ translate('terms.infoDescriptionAustralia') }}</p>
                     </v-card-text>
                 </v-card>
 
-                <!-- بخش شرایط خدمات -->
-                <p class="section-title">{{ t('terms.sectionTitle') }}</p>
-                <p class="section-description">{{ t('terms.sectionDescription') }}</p>
-                <p class="section-update">{{ t('terms.sectionUpdate') }}</p>
+                <p class="section-title">{{translate('terms.sectionTitle') }}</p>
+                <p class="section-description">{{ translate('terms.sectionDescription') }}</p>
+                <p class="section-update">{{ translate('terms.sectionUpdate') }}</p>
 
-                <p class="thank-you">{{ t('terms.thankYou') }}</p>
+                <p class="thank-you">{{ translate('terms.thankYou') }}</p>
 
-                <p class="terms-text">{{ t('terms.termsText') }}</p>
+                <p class="terms-text">{{ translate('terms.termsText') }}</p>
 
-                <p class="table-of-contents">{{ t('terms.tableOfContents') }}</p>
+                <p class="table-of-contents">{{ translate('terms.tableOfContents') }}</p>
                 <v-list>
                     <v-list-item v-for="(item, index) in termsList" :key="index">
                         <v-list-item-content>
-                            <v-list-item-title>{{ t(item) }}</v-list-item-title>
+                            <v-list-item-title>{{ translate(item) }}</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list>
@@ -48,7 +47,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 
 const isTermsModalOpen = ref(false);
 

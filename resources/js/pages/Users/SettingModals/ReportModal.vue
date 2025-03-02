@@ -1,62 +1,51 @@
 <template>
     <v-dialog v-model="isHowItWorksModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>
-            <!-- هدر مودال -->
             <v-card-title class="how-it-works-header">
                 <v-btn icon @click="closeHowItWorksModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
-                <span class="how-it-works-title">{{ t('howItWorks.title') }}</span>
+                <span class="how-it-works-title">{{ translate('howItWorks.title') }}</span>
                 <v-spacer></v-spacer>
             </v-card-title>
             <v-divider></v-divider>
 
-            <!-- محتوای مودال -->
             <v-card-text class="how-it-works-content">
-                <!-- پیام توضیحی -->
-                <p class="description">{{ t('howItWorks.description') }}</p>
+                <p class="description">{{ translate('howItWorks.description') }}</p>
 
-                <!-- ویدیوی آموزشی ۱ -->
                 <v-card class="video-card mx-auto">
                     <v-img src="/injaunjalogin.mp4" alt="Video Thumbnail" class="video-thumbnail"></v-img>
                 </v-card>
 
-                <!-- مرحله ۱: جستجو -->
-                <p class="step-title"><strong>{{ t('howItWorks.step1Title') }}</strong></p>
-                <p class="step-description">{{ t('howItWorks.step1Description') }}</p>
+                <p class="step-title"><strong>{{ translate('howItWorks.step1Title') }}</strong></p>
+                <p class="step-description">{{ translate('howItWorks.step1Description') }}</p>
 
-                <!-- ویدیوی آموزشی ۲ -->
                 <v-card class="video-card mx-auto">
                     <v-img src="/injaunjalogin.mp4" alt="Video Thumbnail" class="video-thumbnail"></v-img>
                 </v-card>
 
-                <!-- مرحله ۲: رزرو -->
-                <p class="step-title"><strong>{{ t('howItWorks.step2Title') }}</strong></p>
-                <p class="step-description">{{ t('howItWorks.step2Description') }}</p>
+                <p class="step-title"><strong>{{ translate('howItWorks.step2Title') }}</strong></p>
+                <p class="step-description">{{ translate('howItWorks.step2Description') }}</p>
 
-                <!-- ویدیوی آموزشی ۳ -->
                 <v-card class="video-card mx-auto">
                     <v-img src="/injaunjalogin.mp4" alt="Video Thumbnail" class="video-thumbnail"></v-img>
                 </v-card>
 
-                <!-- مرحله ۳: رفتن -->
-                <p class="step-title"><strong>{{ t('howItWorks.step3Title') }}</strong></p>
-                <p class="step-description">{{ t('howItWorks.step3Description') }}</p>
+                <p class="step-title"><strong>{{ translate('howItWorks.step3Title') }}</strong></p>
+                <p class="step-description">{{ translate('howItWorks.step3Description') }}</p>
 
                 <v-divider></v-divider>
 
-                <!-- بخش پشتیبانی -->
-                <p class="support-title"><strong>{{ t('howItWorks.supportTitle') }}</strong></p>
-                <p class="support-description">{{ t('howItWorks.supportDescription') }}</p>
+                <p class="support-title"><strong>{{ translate('howItWorks.supportTitle') }}</strong></p>
+                <p class="support-description">{{ translate('howItWorks.supportDescription') }}</p>
 
-                <!-- سوالات متداول -->
                 <v-expansion-panels>
                     <v-expansion-panel v-for="(faq, index) in faqs" :key="index">
                         <v-expansion-panel-header>
-                            {{ t(faq.question) }}
+                            {{ translate(faq.question) }}
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            {{ t(faq.answer) }}
+                            {{ translate(faq.answer) }}
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                 </v-expansion-panels>
@@ -67,7 +56,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 
 const isHowItWorksModalOpen = ref(false);
 

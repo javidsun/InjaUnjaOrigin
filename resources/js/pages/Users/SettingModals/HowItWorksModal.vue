@@ -2,50 +2,50 @@
     <v-dialog v-model="isHowItWorksModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>
             <v-card-title class="how-it-works-header">
+                <span>{{ translate('howItWorks.title') }}</span>
+                <v-spacer></v-spacer>
                 <v-btn icon @click="closeHowItWorksModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
-                <span class="how-it-works-title">{{ t('howItWorks.title') }}</span>
-                <v-spacer></v-spacer>
             </v-card-title>
             <v-divider></v-divider>
 
             <v-card-text class="how-it-works-content">
-                <p class="description">{{ t('howItWorks.description') }}</p>
+                <p class="description">{{ translate('howItWorks.description') }}</p>
 
                 <v-card class="video-card mx-auto">
                     <v-img src="/injaunjalogin.mp4" alt="Video Thumbnail" class="video-thumbnail"></v-img>
                 </v-card>
 
-                <p class="step-title"><strong>{{ t('howItWorks.step1Title') }}</strong></p>
-                <p class="step-description">{{ t('howItWorks.step1Description') }}</p>
+                <p class="step-title"><strong>{{ translate('howItWorks.step1Title') }}</strong></p>
+                <p class="step-description">{{ translate('howItWorks.step1Description') }}</p>
 
                 <v-card class="video-card mx-auto">
                     <v-img src="/injaunjalogin.mp4" alt="Video Thumbnail" class="video-thumbnail"></v-img>
                 </v-card>
 
-                <p class="step-title"><strong>{{ t('howItWorks.step2Title') }}</strong></p>
-                <p class="step-description">{{ t('howItWorks.step2Description') }}</p>
+                <p class="step-title"><strong>{{ translate('howItWorks.step2Title') }}</strong></p>
+                <p class="step-description">{{ translate('howItWorks.step2Description') }}</p>
 
                 <v-card class="video-card mx-auto">
                     <v-img src="/injaunjalogin.mp4" alt="Video Thumbnail" class="video-thumbnail"></v-img>
                 </v-card>
 
-                <p class="step-title"><strong>{{ t('howItWorks.step3Title') }}</strong></p>
-                <p class="step-description">{{ t('howItWorks.step3Description') }}</p>
+                <p class="step-title"><strong>{{ translate('howItWorks.step3Title') }}</strong></p>
+                <p class="step-description">{{ translate('howItWorks.step3Description') }}</p>
 
                 <v-divider></v-divider>
 
-                <p class="support-title"><strong>{{ t('howItWorks.supportTitle') }}</strong></p>
-                <p class="support-description">{{ t('howItWorks.supportDescription') }}</p>
+                <p class="support-title"><strong>{{ translate('howItWorks.supportTitle') }}</strong></p>
+                <p class="support-description">{{ translate('howItWorks.supportDescription') }}</p>
 
                 <v-expansion-panels>
                     <v-expansion-panel v-for="(faq, index) in faqs" :key="index">
                         <v-expansion-panel-header>
-                            {{ t(faq.question) }}
+                            {{ translate(faq.question) }}
                         </v-expansion-panel-header>
                         <v-expansion-panel-content>
-                            {{ t(faq.answer) }}
+                            {{ translate(faq.answer) }}
                         </v-expansion-panel-content>
                     </v-expansion-panel>
                 </v-expansion-panels>
@@ -56,11 +56,10 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 
 const isHowItWorksModalOpen = ref(false);
 
-// تغییر نام تابع به openModal
 const openModal = () => {
     isHowItWorksModalOpen.value = true;
 };
@@ -77,7 +76,6 @@ const faqs = ref([
     { question: 'howItWorks.faq5Question', answer: 'howItWorks.faq5Answer' },
 ]);
 
-// استفاده از openModal در defineExpose
 defineExpose({ openModal });
 </script>
 

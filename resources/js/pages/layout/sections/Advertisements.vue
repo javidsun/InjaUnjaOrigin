@@ -4,7 +4,7 @@
       <div class="ad-container">
         <v-img :src="ad.image" alt="Ad Image" class="ad-image" />
         <p class="ad-text">
-            {{ t('advertisements.firstAd') }}
+            {{ translate('advertisements.firstAd') }}
         </p>
       </div>
     </v-carousel-item>
@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 const setLanguage = (lang) => {
     t(lang);
 };

@@ -2,59 +2,59 @@
     <v-dialog v-model="isModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>
             <v-card-title class="dialog-header">
-                <span>{{ t('privacySharing.title') }}</span>
-                <v-spacer></v-spacer> <!-- اینجا فضای بین عنوان و دکمه بستن را ایجاد می‌کند -->
+                <span>{{ translate('privacySharing.title') }}</span>
+                <v-spacer></v-spacer>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
             </v-card-title>
             <v-card-text class="modal-content">
-                <p class="description">{{ t('privacySharing.description') }}</p>
+                <p class="description">{{ translate('privacySharing.description') }}</p>
                 <v-divider></v-divider>
 
                 <div class="section">
-                    <h3>{{ t('privacySharing.requestData.title') }}</h3>
-                    <p>{{ t('privacySharing.requestData.description') }}</p>
+                    <h3>{{ translate('privacySharing.requestData.title') }}</h3>
+                    <p>{{ translate('privacySharing.requestData.description') }}</p>
                     <div class="button-container">
                         <v-btn @click="downloadUserData" color="primary">
-                            {{ t('privacySharing.requestData.button') }}
+                            {{ translate('privacySharing.requestData.button') }}
                         </v-btn>
                     </div>
                 </div>
                 <v-divider></v-divider>
 
                 <div class="section">
-                    <h3>{{ t('privacySharing.deleteAccount.title') }}</h3>
-                    <p>{{ t('privacySharing.deleteAccount.description') }}</p>
+                    <h3>{{ translate('privacySharing.deleteAccount.title') }}</h3>
+                    <p>{{ translate('privacySharing.deleteAccount.description') }}</p>
                     <div class="button-container">
                         <v-btn @click="deleteAccount" color="error">
-                            {{ t('privacySharing.deleteAccount.button') }}
+                            {{ translate('privacySharing.deleteAccount.button') }}
                         </v-btn>
                     </div>
                 </div>
                 <v-divider></v-divider>
 
                 <div class="section">
-                    <h3>{{ t('privacySharing.thirdPartyTools.title') }}</h3>
-                    <p>{{ t('privacySharing.thirdPartyTools.description') }}</p>
+                    <h3>{{ translate('privacySharing.thirdPartyTools.title') }}</h3>
+                    <p>{{ translate('privacySharing.thirdPartyTools.description') }}</p>
                     <div class="button-container">
                         <v-btn @click="showThirdPartyTools = true" color="primary">
-                            {{ t('privacySharing.thirdPartyTools.button') }}
+                            {{ translate('privacySharing.thirdPartyTools.button') }}
                         </v-btn>
                     </div>
 
                     <v-expand-transition>
                         <div v-if="showThirdPartyTools" class="nested-section">
-                            <p>{{ t('privacySharing.thirdPartyTools.nestedDescription') }}</p>
-                            <v-checkbox v-model="thirdPartySharing" :label="t('privacySharing.thirdPartyTools.sharingLabel')"></v-checkbox>
-                            <v-checkbox v-model="thirdPartyAnalytics" :label="t('privacySharing.thirdPartyTools.analyticsLabel')"></v-checkbox>
-                            <v-checkbox v-model="thirdPartyMarketing" :label="t('privacySharing.thirdPartyTools.marketingLabel')"></v-checkbox>
+                            <p>{{ translate('privacySharing.thirdPartyTools.nestedDescription') }}</p>
+                            <v-checkbox v-model="thirdPartySharing" :label="translate('privacySharing.thirdPartyTools.sharingLabel')"></v-checkbox>
+                            <v-checkbox v-model="thirdPartyAnalytics" :label="translate('privacySharing.thirdPartyTools.analyticsLabel')"></v-checkbox>
+                            <v-checkbox v-model="thirdPartyMarketing" :label="translate('privacySharing.thirdPartyTools.marketingLabel')"></v-checkbox>
                             <div class="button-container">
                                 <v-btn @click="saveThirdPartySettings" color="primary">
-                                    {{ t('privacySharing.thirdPartyTools.saveButton') }}
+                                    {{ translate('privacySharing.thirdPartyTools.saveButton') }}
                                 </v-btn>
                                 <v-btn @click="showThirdPartyTools = false" color="secondary">
-                                    {{ t('privacySharing.thirdPartyTools.closeButton') }}
+                                    {{ translate('privacySharing.thirdPartyTools.closeButton') }}
                                 </v-btn>
                             </div>
                         </div>
@@ -63,28 +63,28 @@
                 <v-divider></v-divider>
 
                 <div class="section">
-                    <h3>{{ t('privacySharing.sharing.title') }}</h3>
-                    <p>{{ t('privacySharing.sharing.description') }}</p>
+                    <h3>{{ translate('privacySharing.sharing.title') }}</h3>
+                    <p>{{ translate('privacySharing.sharing.description') }}</p>
                     <div class="button-container">
                         <v-btn @click="showSharing = true" color="primary">
-                            {{ t('privacySharing.sharing.button') }}
+                            {{ translate('privacySharing.sharing.button') }}
                         </v-btn>
                     </div>
 
                     <v-expand-transition>
                         <div v-if="showSharing" class="nested-section">
-                            <p>{{ t('privacySharing.sharing.nestedDescription') }}</p>
+                            <p>{{ translate('privacySharing.sharing.nestedDescription') }}</p>
                             <v-radio-group v-model="profileVisibility">
-                                <v-radio value="public" :label="t('privacySharing.sharing.publicLabel')"></v-radio>
-                                <v-radio value="private" :label="t('privacySharing.sharing.privateLabel')"></v-radio>
-                                <v-radio value="custom" :label="t('privacySharing.sharing.customLabel')"></v-radio>
+                                <v-radio value="public" :label="translate('privacySharing.sharing.publicLabel')"></v-radio>
+                                <v-radio value="private" :label="translate('privacySharing.sharing.privateLabel')"></v-radio>
+                                <v-radio value="custom" :label="translate('privacySharing.sharing.customLabel')"></v-radio>
                             </v-radio-group>
                             <div class="button-container">
                                 <v-btn @click="saveSharingSettings" color="primary">
-                                    {{ t('privacySharing.sharing.saveButton') }}
+                                    {{ translate('privacySharing.sharing.saveButton') }}
                                 </v-btn>
                                 <v-btn @click="showSharing = false" color="secondary">
-                                    {{ t('privacySharing.sharing.closeButton') }}
+                                    {{ translate('privacySharing.sharing.closeButton') }}
                                 </v-btn>
                             </div>
                         </div>
@@ -93,17 +93,17 @@
                 <v-divider></v-divider>
 
                 <div class="section">
-                    <h3>{{ t('privacySharing.services.title') }}</h3>
-                    <p>{{ t('privacySharing.services.description') }}</p>
+                    <h3>{{ translate('privacySharing.services.title') }}</h3>
+                    <p>{{ translate('privacySharing.services.description') }}</p>
                     <div class="button-container">
-                        <v-btn @click="showServices = true" color="primary">
-                            {{ t('privacySharing.services.button') }}
+                        <v-btn @click="showServices.value = true" color="primary">
+                            {{ translate('privacySharing.services.button') }}
                         </v-btn>
                     </div>
 
                     <v-expand-transition>
                         <div v-if="showServices" class="nested-section">
-                            <p>{{ t('privacySharing.services.nestedDescription') }}</p>
+                            <p>{{ translate('privacySharing.services.nestedDescription') }}</p>
                             <v-list>
                                 <v-list-item v-for="service in connectedServices" :key="service.id">
                                     <v-list-item-content>
@@ -120,8 +120,8 @@
                                 </v-list-item>
                             </v-list>
                             <div class="button-container">
-                                <v-btn @click="showServices = false" color="secondary">
-                                    {{ t('privacySharing.services.closeButton') }}
+                                <v-btn @click="showServices.value = false" color="secondary">
+                                    {{ translate('privacySharing.services.closeButton') }}
                                 </v-btn>
                             </div>
                         </div>
@@ -135,7 +135,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 
 const isModalOpen = ref(false);
 const showThirdPartyTools = ref(false);
@@ -161,7 +161,7 @@ const toggleServiceConnection = (serviceId) => {
 };
 
 const saveThirdPartySettings = () => {
-    console.log("تنظیمات ابزارهای شخص ثالث ذخیره شد:", {
+    console.log("Third-party tool settings saved:", {
         sharing: thirdPartySharing.value,
         analytics: thirdPartyAnalytics.value,
         marketing: thirdPartyMarketing.value,
@@ -169,7 +169,7 @@ const saveThirdPartySettings = () => {
 };
 
 const saveSharingSettings = () => {
-    console.log("تنظیمات اشتراک‌گذاری ذخیره شد:", profileVisibility.value);
+    console.log("Sharing settings saved:", profileVisibility.value);
 };
 
 const openModal = () => {
@@ -182,14 +182,14 @@ const closeModal = () => {
 
 const downloadUserData = () => {
     const link = document.createElement('a');
-    link.href = '/path/to/UserProfile.pdf';
+    link.href = '/UserProfile.pdf';
     link.download = 'UserProfile.pdf';
     link.click();
 };
 
 const deleteAccount = () => {
     if (confirm("Are you sure you want to delete your account?")) {
-        console.log("حساب کاربری حذف شد.");
+        console.log("Account deleted.");
     }
 };
 

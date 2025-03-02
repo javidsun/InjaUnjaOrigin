@@ -6,8 +6,8 @@
 
           <v-card class="card-info">
           <v-card-text>
-            <h1>{{ t("warningUser.subscriptionStatus2") }}</h1>
-            <h2>{{ t("warningUser.subscriptionStatus") }}</h2>
+            <h1>{{ translate("warningUser.subscriptionStatus2") }}</h1>
+            <h2>{{ translate("warningUser.subscriptionStatus") }}</h2>
           </v-card-text>
         </v-card>
       </div>
@@ -19,7 +19,7 @@
         <v-card class="card-warning">
           <v-card-text>
             <h1>5</h1>
-            <h2>{{ t("warningUser.messagesAndNotifications") }}</h2>
+            <h2>{{ translate("warningUser.messagesAndNotifications") }}</h2>
           </v-card-text>
         </v-card>
       </div>
@@ -31,7 +31,7 @@
         <v-card class="card-success">
           <v-card-text>
             <h1>12</h1>
-            <h2>{{ t("warningUser.payments") }}</h2>
+            <h2>{{ translate("warningUser.payments") }}</h2>
           </v-card-text>
         </v-card>
       </div>
@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 </script>
 
 <style scoped>

@@ -20,7 +20,7 @@
       <v-menu v-model="menuActive" class="menu_open" right>
         <v-list>
           <v-list-item @click="logout">
-            <v-list-item-title>{{ t('profile.logout') }}</v-list-item-title>
+            <v-list-item-title>{{ translate('profile.logout') }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -39,7 +39,7 @@
 import { ref, onMounted } from "vue";
 import Searchbar from "../layout/Header/search/Searchbar.vue";
 import Darkmood from "../layout/Header/Darkmood.vue";
-import { t } from "../../store/languageStore";
+import { translate } from "../../store/languageStore";
 import UserSidebar from "./UserSidebar.vue";
 import { useRouter } from 'vue-router';
 import LanguageSwitcher from "../layout/Header/LanguageSwitcher.vue";

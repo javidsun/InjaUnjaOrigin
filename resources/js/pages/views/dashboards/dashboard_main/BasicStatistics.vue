@@ -11,14 +11,14 @@
         <VIcon :color="stat.color" size="24">{{ stat.icon }}</VIcon>
         <div class="ms-3">
           <div class="text-h6 mb-1 fontsize">{{ stat.value }}</div>
-          <div class="text-secondary2 text-h6 fontsize">{{ t(stat.title) }}</div>
+          <div class="text-secondary2 text-h6 fontsize">{{ translate(stat.title) }}</div>
         </div>
       </VCard>
     </div>
   </VCard>
 </template>
 <script setup>
-import { t } from "../../../../store/languageStore";
+import { translate } from "../../../../store/languageStore";
 import { ref } from 'vue';
 
 const stats = [

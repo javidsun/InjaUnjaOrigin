@@ -2,7 +2,7 @@
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card class="modal-container">
             <v-card-title class="header">
-                <span>{{ t('payments.title') }}</span>
+                <span>{{ translate ('payments.title') }}</span>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
@@ -10,38 +10,38 @@
 
             <v-card-text>
                 <div class="payment-methods">
-                    <h3 class="section-title">{{ t('payments.paymentMethods') }}</h3>
+                    <h3 class="section-title">{{ translate('payments.paymentMethods') }}</h3>
                     <v-divider class="my-2"></v-divider>
                     <v-list>
                         <v-list-item @click="openWalletChargeModal">
                             <v-list-item-title>
                                 <v-icon class="icon">mdi-wallet</v-icon>
-                                {{ t('payments.walletCharge') }}</v-list-item-title>
+                                {{ translate('payments.walletCharge') }}</v-list-item-title>
                         </v-list-item>
                         <v-list-item @click="openOnlinePaymentModal">
 
                             <v-list-item-title>
                                 <v-icon class="icon">mdi-credit-card</v-icon>
 
-                                {{ t('payments.onlinePayment') }}</v-list-item-title>
+                                {{ translate('payments.onlinePayment') }}</v-list-item-title>
                         </v-list-item>
                     </v-list>
                 </div>
 
                 <div class="your-payments">
 
-                    <h3 class="section-title">{{ t('payments.yourPayments') }}</h3>
+                    <h3 class="section-title">{{ translate('payments.yourPayments') }}</h3>
                     <v-divider class="my-2"></v-divider>
                     <v-btn block @click="goToPage('/UserFinance')" class="action-btn">
-                        {{ t('payments.viewFinance') }}
+                        {{ translate('payments.viewFinance') }}
                     </v-btn>
                 </div>
 
                 <div class="credits-coupons">
-                    <h3 class="section-title">{{ t('payments.creditsCoupons') }}</h3>
+                    <h3 class="section-title">{{ translate('payments.creditsCoupons') }}</h3>
                     <v-divider class="my-2"></v-divider>
                     <v-btn block @click="openCouponsModal" class="action-btn">
-                        {{ t('payments.viewCoupons') }}
+                        {{ translate('payments.viewCoupons') }}
                     </v-btn>
                 </div>
             </v-card-text>
@@ -49,12 +49,12 @@
 
         <v-dialog v-model="isWalletChargeModalOpen" max-width="500px">
             <v-card>
-                <v-card-title class="dialog-header">{{ t('payments.walletCharge') }}</v-card-title>
+                <v-card-title class="dialog-header">{{ translate('payments.walletCharge') }}</v-card-title>
                 <v-card-text>
                     <v-form @submit.prevent="submitWalletCharge">
                         <v-text-field
                             v-model="chargeAmount"
-                            :label="t('payments.amount')"
+                            :label="translate('payments.amount')"
                             type="number"
                             outlined
                             dense
@@ -62,8 +62,8 @@
                         ></v-text-field>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="primary" type="submit">{{ t('payments.confirm') }}</v-btn>
-                            <v-btn color="error" @click="closeWalletChargeModal">{{ t('payments.cancel') }}</v-btn>
+                            <v-btn color="primary" type="submit">{{ translate('payments.confirm') }}</v-btn>
+                            <v-btn color="error" @click="closeWalletChargeModal">{{ translate('payments.cancel') }}</v-btn>
                         </v-card-actions>
                     </v-form>
                 </v-card-text>
@@ -72,26 +72,26 @@
 
         <v-dialog v-model="isOnlinePaymentModalOpen" max-width="500px">
             <v-card>
-                <v-card-title class="dialog-header">{{ t('payments.onlinePayment') }}</v-card-title>
+                <v-card-title class="dialog-header">{{ translate('payments.onlinePayment') }}</v-card-title>
                 <v-card-text>
                     <v-form @submit.prevent="submitOnlinePayment">
                         <v-text-field
                             v-model="cardNumber"
-                            :label="t('payments.cardNumber')"
+                            :label="translate('payments.cardNumber')"
                             outlined
                             dense
                             required
                         ></v-text-field>
                         <v-text-field
                             v-model="expiryDate"
-                            :label="t('payments.expiryDate')"
+                            :label="translate('payments.expiryDate')"
                             outlined
                             dense
                             required
                         ></v-text-field>
                         <v-text-field
                             v-model="cvv"
-                            :label="t('payments.cvv')"
+                            :label="translate('payments.cvv')"
                             type="password"
                             outlined
                             dense
@@ -99,8 +99,8 @@
                         ></v-text-field>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="primary" type="submit">{{ t('payments.confirm') }}</v-btn>
-                            <v-btn color="error" @click="closeOnlinePaymentModal">{{ t('payments.cancel') }}</v-btn>
+                            <v-btn color="primary" type="submit">{{ translate('payments.confirm') }}</v-btn>
+                            <v-btn color="error" @click="closeOnlinePaymentModal">{{ translate('payments.cancel') }}</v-btn>
                         </v-card-actions>
                     </v-form>
                 </v-card-text>
@@ -109,7 +109,7 @@
 
         <v-dialog v-model="isCouponsModalOpen" max-width="500px">
             <v-card>
-                <v-card-title class="dialog-header">{{ t('payments.coupons') }}</v-card-title>
+                <v-card-title class="dialog-header">{{ translate('payments.coupons') }}</v-card-title>
                 <v-card-text>
                     <v-list>
                         <v-list-item v-for="(coupon, index) in coupons" :key="index">
@@ -118,10 +118,10 @@
                             </v-list-item-avatar>
                             <v-list-item-content>
                                 <v-list-item-title>{{ coupon.code }}</v-list-item-title>
-                                <v-list-item-subtitle>{{ coupon.discount }}% {{ t('payments.discount') }}</v-list-item-subtitle>
+                                <v-list-item-subtitle>{{ coupon.discount }}% {{ translate('payments.discount') }}</v-list-item-subtitle>
                             </v-list-item-content>
                             <v-list-item-action>
-                                <v-btn color="primary" @click="applyCoupon(coupon)">{{ t('payments.Copy') }}</v-btn>
+                                <v-btn color="primary" @click="applyCoupon(coupon)">{{ translate('payments.Copy') }}</v-btn>
                             </v-list-item-action>
                         </v-list-item>
                     </v-list>
@@ -134,7 +134,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 import { Inertia } from "@inertiajs/inertia";
 
 const isModalOpen = ref(false);

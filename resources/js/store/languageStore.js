@@ -19,13 +19,13 @@ const setLanguage = (lang) => {
 
 setLanguage(currentLanguage.value);
 
-const t = (key) => {
+const translate = (key) => {
     console.log('Translation key:', key, 'Type:', typeof key);
 
     if (!messages.value) return key;
 
     if (typeof key !== 'string') {
-        return key; // یا یک مقدار پیش‌فرض مثل ''.
+        return key;
     }
 
     const keys = key.split('.');
@@ -42,4 +42,4 @@ const t = (key) => {
     return result || key;
 };
 
-export { currentLanguage, messages, setLanguage, t };
+export { currentLanguage, messages, setLanguage, translate };

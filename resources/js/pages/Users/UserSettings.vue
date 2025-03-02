@@ -8,57 +8,57 @@
                     </v-avatar>
                     <div class="text-content">
                         <v-list-item-title class="user-name">{{ userName }}</v-list-item-title>
-                        <v-list-item-subtitle class="profile-link">{{ t('setting.showProfile') }}</v-list-item-subtitle>
+                        <v-list-item-subtitle class="profile-link">{{ translate('setting.showProfile') }}</v-list-item-subtitle>
                     </div>
                 </v-list-item>
                 <v-divider></v-divider>
 
-                <v-list-subheader class="text1 list-item">{{ t('setting.settings') }}</v-list-subheader>
+                <v-list-subheader class="text1 list-item">{{ translate('setting.settings') }}</v-list-subheader>
                 <template v-for="(item, index) in settingsItems" :key="index">
                     <v-list-item @click="handleSettingClick(item.link)" class="list-item">
                         <v-icon class="icon">{{ item.icon }}</v-icon>
-                        <span class="text">{{ t(item.title) }}</span>
+                        <span class="text">{{ translate(item.title) }}</span>
                     </v-list-item>
                     <v-divider></v-divider>
                 </template>
-                <v-list-subheader class="text1 list-item">{{ t('setting.host') }}</v-list-subheader>
+                <v-list-subheader class="text1 list-item">{{ translate('setting.host') }}</v-list-subheader>
                 <v-list-item @click="handleSettingClick('/Guide')" class="list-item">
                     <v-list-item class="text">
                         <v-icon>mdi-book</v-icon>
-                        <v-list-item-title>{{ t('setting.guide') }}</v-list-item-title>
+                        <v-list-item-title>{{ translate('setting.guide') }}</v-list-item-title>
                     </v-list-item>
                 </v-list-item>
                 <v-divider></v-divider>
 
-                <v-list-subheader class="text1 list-item">{{ t('setting.referrals') }}</v-list-subheader>
+                <v-list-subheader class="text1 list-item">{{ translate('setting.referrals') }}</v-list-subheader>
                 <template v-for="(item, index) in referralItems" :key="index">
                     <v-list-item @click="handleSettingClick(item.link)" class="list-item">
                         <v-icon class="icon">{{ item.icon }}</v-icon>
-                        <span class="text">{{ t(item.title) }}</span>
+                        <span class="text">{{ translate(item.title) }}</span>
                     </v-list-item>
                 </template>
                 <v-divider></v-divider>
 
-                <v-list-subheader class="text1 list-item">{{ t('setting.support') }}</v-list-subheader>
+                <v-list-subheader class="text1 list-item">{{ translate('setting.support') }}</v-list-subheader>
                 <template v-for="(item, index) in supportItems" :key="index">
                     <v-list-item @click="handleSettingClick(item.link)" class="list-item">
                         <v-icon class="icon">{{ item.icon }}</v-icon>
-                        <span class="text">{{ t(item.title) }}</span>
+                        <span class="text">{{ translate(item.title) }}</span>
                     </v-list-item>
                 </template>
                 <v-divider></v-divider>
 
-                <v-list-subheader class="text1 list-item">{{ t('setting.policies') }}</v-list-subheader>
+                <v-list-subheader class="text1 list-item">{{ translate('setting.policies') }}</v-list-subheader>
                 <template v-for="(item, index) in policyItems" :key="index">
                     <v-list-item @click="handleSettingClick(item.link)" class="list-item">
                         <v-icon class="icon">{{ item.icon }}</v-icon>
-                        <span class="text">{{ t(item.title) }}</span>
+                        <span class="text">{{ translate(item.title) }}</span>
                     </v-list-item>
                 </template>
                 <v-divider></v-divider>
                 <v-list-item @click="goToPage('/login')" class="logout list-item">
                     <v-icon class="icon">mdi-logout</v-icon>
-                    <span class="text">{{ t('setting.logout') }}</span>
+                    <span class="text">{{ translate('setting.logout') }}</span>
                 </v-list-item>
 
             </v-list>
@@ -89,7 +89,7 @@ import { ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 import UserSidebar from './Layout.vue';
 import SettingModal from './SettingModals/SettingModal.vue';
-import { t } from "../../store/languageStore";
+import { translate } from "../../store/languageStore";
 import SecurityModal from './SettingModals/SecurityModal.vue';
 import PaymentsModal from './SettingModals/PaymentsModal.vue';
 import AccessModal from './SettingModals/AccessModal.vue';

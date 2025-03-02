@@ -3,11 +3,11 @@
 
     <v-card>
             <v-card-text class="support-content">
-                <p class="welcome-message">{{ t('support.welcomeMessage') }}</p>
+                <p class="welcome-message">{{ translate('support.welcomeMessage') }}</p>
 
                 <v-text-field
                     v-model="searchQuery"
-                    :placeholder="t('support.searchPlaceholder')"
+                    :placeholder="translate('support.searchPlaceholder')"
                     outlined
                     dense
                     class="search-bar"
@@ -20,16 +20,16 @@
                         @click="openHelpModal(question)"
                     >
                         <v-list-item-content>
-                            <v-list-item-title>{{ t(question.title) }}</v-list-item-title>
+                            <v-list-item-title>{{ translate(question.title) }}</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list>
 
                 <div class="contact-section">
-                    <p class="contact-title"><strong>{{ t('support.contactTitle') }}</strong></p>
-                    <p class="contact-subtitle">{{ t('support.contactSubtitle') }}</p>
+                    <p class="contact-title"><strong>{{ translate('support.contactTitle') }}</strong></p>
+                    <p class="contact-subtitle">{{ translate('support.contactSubtitle') }}</p>
                     <v-btn @click="contactSupport" color="primary" large class="contact-btn">
-                        {{ t('support.contactButton') }}
+                        {{ translate('support.contactButton') }}
                     </v-btn>
                 </div>
             </v-card-text>
@@ -38,7 +38,7 @@
     <v-dialog v-model="isHelpModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
             <v-card-title class="help-header">
-                <span>{{ t(selectedQuestion?.title) }}</span>
+                <span>{{ translate(selectedQuestion?.title) }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeHelpModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -46,7 +46,7 @@
             </v-card-title>
 
             <v-card-text class="help-content">
-                <p>{{ t(selectedQuestion?.answer) }}</p>
+                <p>{{ translate(selectedQuestion?.answer) }}</p>
             </v-card-text>
         </v-card>
 
@@ -57,7 +57,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { t } from "../../store/languageStore";
+import { translate } from "../../store/languageStore";
 import UserSidebar from './Layout.vue';
 
 const isSupportModalOpen = ref(false);
@@ -88,7 +88,7 @@ const supportQuestions = ref([
 
 const filteredQuestions = computed(() => {
     return supportQuestions.value.filter(question =>
-        t(question.title).toLowerCase().includes(searchQuery.value.toLowerCase())
+        translate(question.title).toLowerCase().includes(searchQuery.value.toLowerCase())
     );
 });
 
@@ -103,16 +103,16 @@ const closeHelpModal = () => {
 
 const contactSupport = () => {
     const url = window.location.href;
-    const supportDetails = t('support.contactMessage', { query: searchQuery.value });
+    const supportDetails = translate('support.contactMessage', { query: searchQuery.value });
 
     if (navigator.share) {
         navigator.share({
-            title: t('support.contactTitle'),
+            title: translate('support.contactTitle'),
             text: supportDetails,
             url: url,
         }).catch((error) => console.error("Error sharing:", error));
     } else {
-        alert(t('support.contactFallback'));
+        alert(translate('support.contactFallback'));
     }
 };
 

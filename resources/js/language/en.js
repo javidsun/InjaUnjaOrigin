@@ -333,7 +333,8 @@ export default {
         logout:"Log out of account",
         address:"Address",
         emergencyContact:"EmergencyContact",
-        idCard:"IdCard"
+        idCard:"IdCard",
+        passport:"Passport Image"
     },
     Ad:{
         NewAd: "New Advertisement",
@@ -466,6 +467,9 @@ export default {
         Upload_images:'Upload at least 3 images.',
         Upload_images2:'Upload up to 10 images.',
         title:'title',
+        Chat:'Chat with the host',
+        custom_discount: 'Custom Discount',
+        Search:'Search'
 
     },
     Message: {

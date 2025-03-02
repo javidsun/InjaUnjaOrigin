@@ -14,16 +14,16 @@
   <v-dialog v-model="showModal" persistent max-width="400">
       <v-card>
         <v-card-text class="text-body-1">
-          <span>{{ t("Tutorial.Step" + (currentStep + 1)) }}</span>
+          <span>{{ translate("Tutorial.Step" + (currentStep + 1)) }}</span>
         </v-card-text>
         <v-card-actions>
           <v-btn color="primary" @click="nextStep" v-if="currentStep < steps.length - 1">
-            {{ t("Tutorial.NextStep") }}
+            {{ translate("Tutorial.NextStep") }}
           </v-btn>
           <v-btn color="primary" @click="finishTutorial" v-if="currentStep === steps.length - 1">
-            {{ t("Tutorial.Finish") }}
+            {{ translate("Tutorial.Finish") }}
           </v-btn>
-          <v-btn text @click="skipTutorial">{{ t("Tutorial.Skip") }}</v-btn>
+          <v-btn text @click="skipTutorial">{{ translate("Tutorial.Skip") }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -57,7 +57,7 @@ import Footer from "../../layout/Footer.vue";
 import WarningUser from '../../Users/UserDashboard/WarningUser.vue';
 import userSpecifications from '../../Users/UserDashboard/userSpecifications.vue';
 import SpecialOffer from '../SpecialOffer.vue';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 import UserProfile from '../../Users/UserDashboard/UserProfile.vue';
 import UserReservations from '../Reserv/UserReservations.vue';
 import Layout from '../Layout.vue';
@@ -69,10 +69,10 @@ const tutorialCompleted = ref(false);
 const showModal = ref(false);
 const currentStep = ref(0);
 const steps = [
-  { id: "dashboardIcon", message: "در ده ثانیه سایت رو آموزش ببینید." },
-  { id: "userInfo", message: "این بخش اطلاعات مهم اکانت شما را نمایش می‌دهد." },
-  { id: "specialOffer", message: "پیشنهادات ویژه را از اینجا پیگیری کنید." },
-  { id: "userReservations", message: "رزروهای اخیر شما در این بخش قرار دارند." },
+  { id: "dashboardIcon", message: "Learn the site in ten seconds." },
+  { id: "userInfo", message: "This section displays important information about your account." },
+  { id: "specialOffer", message: "Follow special offers here." },
+  { id: "userReservations", message: "Your recent reservations are in this section." },
 ];
 
 const startTutorial = () => {

@@ -2,7 +2,7 @@
     <v-dialog v-model="isFeedbackModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>
             <v-card-title class="feedback-header">
-                <span class="feedback-title">{{ t('feedback.title') }}</span>
+                <span class="feedback-title">{{ translate('feedback.title') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeFeedbackModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -12,12 +12,12 @@
             <v-divider></v-divider>
 
             <v-card-text class="feedback-content">
-                <p class="description">{{ t('feedback.description') }}</p>
+                <p class="description">{{ translate('feedback.description') }}</p>
 
-                <p class="feedback-question">{{ t('feedback.feedbackQuestion') }}</p>
+                <p class="feedback-question">{{ translate('feedback.feedbackQuestion') }}</p>
                <v-divider/>
 
-                <p class="feedback-question">{{ t('feedback.selectFeedbackType') }}</p>
+                <p class="feedback-question">{{ translate('feedback.selectFeedbackType') }}</p>
 
 
                 <v-radio-group v-model="selectedFeedbackCategory">
@@ -30,16 +30,16 @@
                 </v-radio-group>
 
                 <v-btn @click="submitFeedback" color="primary" large class="submit-btn">
-                    {{ t('feedback.submitButton') }}
+                    {{ translate('feedback.submitButton') }}
                 </v-btn>
 
                 <v-divider class="my-4"></v-divider>
 
-                <p class="contact-title"><strong>{{ t('feedback.contactTitle') }}</strong></p>
-                <p class="contact-subtitle">{{ t('feedback.contactSubtitle') }}</p>
+                <p class="contact-title"><strong>{{ translate('feedback.contactTitle') }}</strong></p>
+                <p class="contact-subtitle">{{ translate('feedback.contactSubtitle') }}</p>
 
                 <v-btn @click="contactSupport" color="secondary" large class="contact-btn">
-                    {{ t('feedback.contactButton') }}
+                    {{ translate('feedback.contactButton') }}
                 </v-btn>
             </v-card-text>
         </v-card>
@@ -48,7 +48,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 
 const isFeedbackModalOpen = ref(false);
 
@@ -62,16 +62,16 @@ const closeFeedbackModal = () => {
 
 const selectedFeedbackType = ref('');
 const feedbackTypes = ref([
-    t('feedback.feedbackType1'),
-    t('feedback.feedbackType2'),
-    t('feedback.feedbackType3'),
+    translate('feedback.feedbackType1'),
+    translate('feedback.feedbackType2'),
+    translate('feedback.feedbackType3'),
 ]);
 
 const selectedFeedbackCategory = ref('');
 const feedbackCategories = ref([
-    { label: 'feedback.category1', value: 'تجربیات' },
-    { label: 'feedback.category2', value: 'میزبانی' },
-    { label: 'feedback.category3', value: 'میهمان' },
+    { label: 'feedback.category1', value: 'Experiences' },
+    { label: 'feedback.category2', value: 'Hosting' },
+    { label: 'feedback.category3', value: 'Guest' },
 ]);
 
 const submitFeedback = () => {

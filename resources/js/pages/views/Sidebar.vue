@@ -17,7 +17,7 @@
             <v-list-item-icon class="v-list-item-icon">
               <v-icon class="sidebar-icon" large>{{ item.icon }}</v-icon>
             </v-list-item-icon>
-            <v-list-item-title class="sidebar-title">{{ t(item.title) }}</v-list-item-title>
+            <v-list-item-title class="sidebar-title">{{ translate(item.title) }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list-item-group>
@@ -27,7 +27,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../store/languageStore";
+import { translate } from "../../store/languageStore";
 
 const drawer = ref(false);
 

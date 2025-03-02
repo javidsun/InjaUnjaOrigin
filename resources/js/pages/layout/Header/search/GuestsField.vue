@@ -7,14 +7,14 @@
         class="icon-img"
       />
 
-      <span class="field-text" v-show="!isMobile">{{ t('guests.title') }}</span>
+      <span class="field-text" v-show="!isMobile">{{ translate('guests.title') }}</span>
     </div>
 
     <div v-if="isActive" class="options-menu">
       <div class="guest-field">
         <div class="guest-info">
-          <span class="guest-title">{{ t('guests.adults') }}</span>
-          <span class="guest-subtitle">{{ t('guests.adultsSubtitle') }}</span>
+          <span class="guest-title">{{ translate('guests.adults') }}</span>
+          <span class="guest-subtitle">{{ translate('guests.adultsSubtitle') }}</span>
         </div>
         <div class="guest-controls">
           <button @click.stop="decrement('adults')" :disabled="adults === 0" class="control-btn">-</button>
@@ -25,8 +25,8 @@
 
       <div class="guest-field">
         <div class="guest-info">
-          <span class="guest-title">{{ t('guests.children') }}</span>
-          <span class="guest-subtitle">{{ t('guests.childrenSubtitle') }}</span>
+          <span class="guest-title">{{ translate('guests.children') }}</span>
+          <span class="guest-subtitle">{{ translate('guests.childrenSubtitle') }}</span>
         </div>
         <div class="guest-controls">
           <button @click.stop="decrement('children')" :disabled="children === 0" class="control-btn">-</button>
@@ -37,8 +37,8 @@
 
       <div class="guest-field">
         <div class="guest-info">
-          <span class="guest-title">{{ t('guests.infants') }}</span>
-          <span class="guest-subtitle">{{ t('guests.infantsSubtitle') }}</span>
+          <span class="guest-title">{{ translate('guests.infants') }}</span>
+          <span class="guest-subtitle">{{ translate('guests.infantsSubtitle') }}</span>
         </div>
         <div class="guest-controls">
           <button @click.stop="decrement('infants')" :disabled="infants === 0" class="control-btn">-</button>
@@ -49,8 +49,8 @@
 
       <div class="guest-field">
         <div class="guest-info">
-          <span class="guest-title">{{ t('guests.pets') }}</span>
-          <span class="guest-subtitle">{{ t('guests.petsSubtitle') }}</span>
+          <span class="guest-title">{{ translate('guests.pets') }}</span>
+          <span class="guest-subtitle">{{ translate('guests.petsSubtitle') }}</span>
         </div>
         <div class="guest-controls">
           <button @click.stop="decrement('pets')" :disabled="pets === 0" class="control-btn">-</button>
@@ -63,11 +63,11 @@
 </template>
 
 <script>
-import { t } from '../../../../store/languageStore';
+import { translate } from '../../../../store/languageStore';
 
 export default {
   setup() {
-    return { t };
+    return { translate };
   },
   props: {
     activeMenu: String,

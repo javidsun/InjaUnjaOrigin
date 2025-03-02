@@ -2,7 +2,7 @@
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
             <v-card-title class="dialog-header">
-                <span>{{ t('currency.title') }}</span>
+                <span>{{ translate('currency.title') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -10,13 +10,13 @@
             </v-card-title>
 
             <v-card-text class="modal-content">
-                <p>{{ t('currency.message') }}</p>
+                <p>{{ translate('currency.message') }}</p>
             </v-card-text>
 
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" @click="closeModal">
-                    {{ t('currency.closeButton') }}
+                    {{ translate('currency.closeButton') }}
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -25,7 +25,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 
 const isModalOpen = ref(false);
 

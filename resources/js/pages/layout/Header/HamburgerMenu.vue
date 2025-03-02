@@ -11,30 +11,25 @@
         <v-menu v-model="menuActive" class="menu_open">
             <v-list>
 
-<!--                <v-responsive max-width="599">-->
-<!--                    <Searchbar :showInMenu="true" />-->
-<!--                    <v-divider></v-divider>-->
-<!--                </v-responsive>-->
-
                 <v-list-item @click="navigateTo('/register')">
-                    <v-list-item-title class="H_menu">{{ t('menu.register') }}</v-list-item-title>
+                    <v-list-item-title class="H_menu">{{ translate('menu.register') }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="navigateTo('/login')">
-                    <v-list-item-title class="H_menu">{{ t('menu.login') }}</v-list-item-title>
+                    <v-list-item-title class="H_menu">{{ translate('menu.login') }}</v-list-item-title>
                 </v-list-item>
 
                 <v-divider></v-divider>
                 <v-list-item @click="navigateTo('/add-property')">
-                    <v-list-item-title class="H_menu">{{ t('menu.addProperty') }}</v-list-item-title>
+                    <v-list-item-title class="H_menu">{{ translate('menu.addProperty') }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="navigateTo('/gift-card')">
-                    <v-list-item-title class="H_menu">{{ t('menu.giftCard') }}</v-list-item-title>
+                    <v-list-item-title class="H_menu">{{ translate('menu.giftCard') }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="navigateTo('/inja-unja')">
-                    <v-list-item-title class="H_menu">{{ t('menu.injaUnja') }}</v-list-item-title>
+                    <v-list-item-title class="H_menu">{{ translate('menu.injaUnja') }}</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="navigateTo('/help-center')">
-                    <v-list-item-title class="H_menu">{{ t('menu.helpCenter') }}</v-list-item-title>
+                    <v-list-item-title class="H_menu">{{ translate('menu.helpCenter') }}</v-list-item-title>
                 </v-list-item>
             </v-list>
 
@@ -44,7 +39,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 import Searchbar from "./search/Searchbar.vue";
 import { useRouter } from "vue-router";
 

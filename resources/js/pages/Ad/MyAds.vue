@@ -3,7 +3,7 @@
         <v-container>
             <v-row>
                 <v-col cols="12">
-                    <h2 class="text-center">{{ t('Ad.MyAds') }}</h2>
+                    <h2 class="text-center">{{ translate('Ad.MyAds') }}</h2>
                 </v-col>
             </v-row>
             <v-row>
@@ -13,29 +13,29 @@
                         <v-card-title class="ad-title">{{ ad.title }}</v-card-title>
                         <v-card-subtitle class="ad-description">{{ ad.description }}</v-card-subtitle>
                         <v-card-actions>
-                            <v-btn color="primary" @click="openEditModal(ad)">{{ t('Ad.Edit') }}</v-btn>
-                            <v-btn color="error" @click="deleteAd(ad.id)">{{ t('Ad.delete') }}</v-btn>
+                            <v-btn color="primary" @click="openEditModal(ad)">{{ translate('Ad.Edit') }}</v-btn>
+                            <v-btn color="error" @click="deleteAd(ad.id)">{{ translate('Ad.delete') }}</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-col>
             </v-row>
             <v-row v-if="ads.length === 0">
                 <v-col cols="12" class="text-center">
-                    <p>{{ t('Ad.NoAdsFound') }}</p>
+                    <p>{{ translate('Ad.NoAdsFound') }}</p>
                 </v-col>
             </v-row>
 
             <v-dialog v-model="editDialog" max-width="800px">
                 <v-card class="edit-modal">
-                    <v-card-title class="modal-title">{{ t('Ad.AdsEdit') }}</v-card-title>
+                    <v-card-title class="modal-title">{{ translate('Ad.AdsEdit') }}</v-card-title>
                     <v-card-text>
-                        <v-text-field :label="t('Ad.title')" v-model="editedAd.title" outlined></v-text-field>
-                        <v-textarea :label="t('Ad.description')" v-model="editedAd.description" outlined></v-textarea>
-                        <v-text-field :label="t('Ad.property_type')" v-model="editedAd.propertyType" outlined></v-text-field>
+                        <v-text-field :label="translate('Ad.title')" v-model="editedAd.title" outlined></v-text-field>
+                        <v-textarea :label="translate('Ad.description')" v-model="editedAd.description" outlined></v-textarea>
+                        <v-text-field :label="translate('Ad.property_type')" v-model="editedAd.propertyType" outlined></v-text-field>
 
                         <v-row>
                             <v-col cols="12">
-                                <h3>{{ t('Ad.AcceptReject') }}</h3>
+                                <h3>{{ translate('Ad.AcceptReject') }}</h3>
                                 <v-file-input
                                     multiple
                                     accept="image/*"
@@ -48,7 +48,7 @@
                                         <v-card>
                                             <v-img :src="image" height="150" class="image-preview"></v-img>
                                             <v-card-actions>
-                                                <v-btn color="error" @click="removeImage(index)">{{ t('Ad.delete') }}</v-btn>
+                                                <v-btn color="error" @click="removeImage(index)">{{ translate('Ad.delete') }}</v-btn>
                                             </v-card-actions>
                                         </v-card>
                                     </v-col>
@@ -56,21 +56,21 @@
                             </v-col>
                         </v-row>
 
-                        <v-text-field :label="t('Ad.base_price')" v-model="editedAd.basePrice" type="number" outlined></v-text-field>
-                        <v-text-field :label="t('Ad.service_fee')" v-model="editedAd.serviceFee" type="number" outlined></v-text-field>
-                        <v-text-field :label="t('Ad.discount') + ' (%)'" v-model="editedAd.discountPercent" type="number" outlined></v-text-field>
-                        <v-text-field :label="t('Ad.total_price')" :value="totalPriceComputed" type="number" readonly outlined></v-text-field>
-                        <v-text-field :label="t('Ad.received_amount')" :value="finalReceivedAmountComputed" type="number" readonly outlined></v-text-field>
+                        <v-text-field :label="translate('Ad.base_price')" v-model="editedAd.basePrice" type="number" outlined></v-text-field>
+                        <v-text-field :label="translate('Ad.service_fee')" v-model="editedAd.serviceFee" type="number" outlined></v-text-field>
+                        <v-text-field :label="translate('Ad.discount') + ' (%)'" v-model="editedAd.discountPercent" type="number" outlined></v-text-field>
+                        <v-text-field :label="translate('Ad.total_price')" :value="totalPriceComputed" type="number" readonly outlined></v-text-field>
+                        <v-text-field :label="translate('Ad.received_amount')" :value="finalReceivedAmountComputed" type="number" readonly outlined></v-text-field>
 
-                        <v-checkbox v-model="editedAd.hostType" :label="t('Ad.host_as_individual')" value="individual"></v-checkbox>
-                        <v-checkbox v-model="editedAd.hostType" :label="t('Ad.host_as_business')" value="business"></v-checkbox>
-                        <v-checkbox v-model="editedAd.locationFeatures" :label="t('Ad.security_camera')" value="security_camera"></v-checkbox>
-                        <v-checkbox v-model="editedAd.locationFeatures" :label="t('Ad.sound_insulation')" value="sound_insulation"></v-checkbox>
-                        <v-checkbox v-model="editedAd.locationFeatures" :label="t('Ad.protective_weapons')" value="protective_weapons"></v-checkbox>
+                        <v-checkbox v-model="editedAd.hostType" :label="translate('Ad.host_as_individual')" value="individual"></v-checkbox>
+                        <v-checkbox v-model="editedAd.hostType" :label="translate('Ad.host_as_business')" value="business"></v-checkbox>
+                        <v-checkbox v-model="editedAd.locationFeatures" :label="translate('Ad.security_camera')" value="security_camera"></v-checkbox>
+                        <v-checkbox v-model="editedAd.locationFeatures" :label="translate('Ad.sound_insulation')" value="sound_insulation"></v-checkbox>
+                        <v-checkbox v-model="editedAd.locationFeatures" :label="translate('Ad.protective_weapons')" value="protective_weapons"></v-checkbox>
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn color="green" @click="saveEdit">{{ t('Ad.SaveExit') }}</v-btn>
-                        <v-btn color="red" @click="editDialog = false">{{ t('Ad.Cancel') }}</v-btn>
+                        <v-btn color="green" @click="saveEdit">{{ translate('Ad.SaveExit') }}</v-btn>
+                        <v-btn color="red" @click="editDialog = false">{{ translate('Ad.Cancel') }}</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -80,7 +80,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import { t } from "../../store/languageStore";
+import { translate } from "../../store/languageStore";
 import UserSidebar from '../Users/Layout.vue';
 
 const ads = ref([
@@ -117,8 +117,8 @@ const editedAd = ref({});
 const newImages = ref([]);
 
 const imageRules = [
-    (files) => !files || files.length <= 10 || t("Ad.Upload_images"),
-    (files) => !files || files.length >= 3 || t("Ad.Upload_images2"),
+    (files) => !files || files.length <= 10 || translate("Ad.Upload_images"),
+    (files) => !files || files.length >= 3 || translate("Ad.Upload_images2"),
 ];
 
 const totalPriceComputed = computed(() => {

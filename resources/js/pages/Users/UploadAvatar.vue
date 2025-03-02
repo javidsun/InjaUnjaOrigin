@@ -5,14 +5,14 @@
     </v-avatar>
     <input type="file" accept="image/*" @change="onFileChange" hidden ref="fileInput" />
     <v-btn @click="handleButtonClick" class="mt-2 btn" :color="isUploaded ? 'success' : 'primary'">
-      {{ isUploaded ? t('profile.saveChanges') : t('profile.changeAvatar') }}
+      {{ isUploaded ? translate('profile.saveChanges') : translate('profile.changeAvatar') }}
     </v-btn>
   </div>
 </template>
 
 <script setup>
 import { ref, watch } from "vue";
-import { t } from "../../store/languageStore";
+import { translate } from "../../store/languageStore";
 
 const avatar = ref("/avatar-2.png");
 const avatarPreview = ref(null);

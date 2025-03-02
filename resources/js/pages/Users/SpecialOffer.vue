@@ -4,13 +4,13 @@
       <v-col cols="12" md="3">
         <v-card class="special-offer-card" outlined>
           <v-img :src="specialOffer.image" height="200px" />
-          <v-badge color="primary" content="پیشنهاد ویژه" class="badge-title"></v-badge>
-          <v-card-title class="card-title">{{ t('SpecialOffer.Title') }}</v-card-title>
+          <v-badge color="primary" content="Special offer" class="badge-title"></v-badge>
+          <v-card-title class="card-title">{{ translate('SpecialOffer.Title') }}</v-card-title>
           <v-divider></v-divider>
           <v-card-text class="card-text">
-            <p>{{ t('SpecialOffer.Description') }}</p>
+            <p>{{ translate('SpecialOffer.Description') }}</p>
             <v-btn :to="specialOffer.link" color="secondary" outlined>
-              {{ t('SpecialOffer.ViewButton') }}
+              {{ translate('SpecialOffer.ViewButton') }}
             </v-btn>
           </v-card-text>
         </v-card>
@@ -29,8 +29,8 @@
           >
             <v-img :src="ad.image" height="350px" />
             <div class="carousel-content">
-              <h3>{{ t('AdsCarousel.ModernHouse1') }}</h3>
-              <p>{{ t('AdsCarousel.ModernHouseDescription1') }}</p>
+              <h3>{{ translate('AdsCarousel.ModernHouse1') }}</h3>
+              <p>{{ translate('AdsCarousel.ModernHouseDescription1') }}</p>
 
             </div>
           </v-carousel-item>
@@ -40,12 +40,12 @@
       <v-col cols="12" md="3">
         <v-card class="top-rated-card" outlined>
           <v-img :src="topRatedAd.image" height="200px" />
-          <v-card-title class="card-title">{{ t('TopRatedAd.Title') }}</v-card-title>
+          <v-card-title class="card-title">{{ translate('TopRatedAd.Title') }}</v-card-title>
           <v-divider></v-divider>
           <v-card-text class="card-text">
-            <p>{{ t('TopRatedAd.Description') }}</p>
+            <p>{{ translate('TopRatedAd.Description') }}</p>
             <v-btn :to="topRatedAd.link" color="secondary" outlined>
-              {{ t('TopRatedAd.ViewButton') }}
+              {{ translate('TopRatedAd.ViewButton') }}
             </v-btn>
           </v-card-text>
         </v-card>
@@ -56,7 +56,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { t } from "../../store/languageStore";
+import { translate } from "../../store/languageStore";
 
 const specialOffer = ref({
   title: "پیشنهاد ویژه برای شما",

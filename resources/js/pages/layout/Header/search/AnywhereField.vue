@@ -2,26 +2,26 @@
   <v-col class="field-wrapper" position="relative" @click="toggleMenu">
     <div class="field-content">
       <img src="/assets/images/location-icon.png" alt="Location Icon" class="icon-img" />
-      <span class="field-text" v-show="!isMobile">{{ t(selectedOption) || t('Anywhere.anywhere') }}</span>
+      <span class="field-text" v-show="!isMobile">{{ translate(selectedOption) || translate('Anywhere.anywhere') }}</span>
     </div>
 
     <div v-if="isActive" class="options-menu">
-      <v-btn @click="selectOption('Anywhere.flexible')">{{ t('Anywhere.flexible') }}</v-btn>
-      <v-btn @click="selectOption('Anywhere.italy')">{{ t('Anywhere.italy') }}</v-btn>
-      <v-btn @click="selectOption('Anywhere.spain')">{{ t('Anywhere.spain') }}</v-btn>
-      <v-btn @click="selectOption('Anywhere.france')">{{ t('Anywhere.france') }}</v-btn>
-      <v-btn @click="selectOption('Anywhere.turkey')">{{ t('Anywhere.turkey') }}</v-btn>
-      <v-btn @click="selectOption('Anywhere.unitedStates')">{{ t('Anywhere.unitedStates') }}</v-btn>
+      <v-btn @click="selectOption('Anywhere.flexible')">{{ translate('Anywhere.flexible') }}</v-btn>
+      <v-btn @click="selectOption('Anywhere.italy')">{{ translate('Anywhere.italy') }}</v-btn>
+      <v-btn @click="selectOption('Anywhere.spain')">{{ translate('Anywhere.spain') }}</v-btn>
+      <v-btn @click="selectOption('Anywhere.france')">{{ translate('Anywhere.france') }}</v-btn>
+      <v-btn @click="selectOption('Anywhere.turkey')">{{ translate('Anywhere.turkey') }}</v-btn>
+      <v-btn @click="selectOption('Anywhere.unitedStates')">{{ translate('Anywhere.unitedStates') }}</v-btn>
     </div>
   </v-col>
 </template>
 
 <script>
-import { t } from '../../../../store/languageStore';
+import { translate } from '../../../../store/languageStore';
 
 export default {
   setup() {
-    return {t};
+    return {translate};
   },
   props: {
     activeMenu: String,

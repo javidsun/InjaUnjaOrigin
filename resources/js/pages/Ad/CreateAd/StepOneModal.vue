@@ -19,31 +19,31 @@
                     <v-img v-else-if="openModal === 'thirdStepSetPrice'" src="/Untitled design (1) 13.png" contain height="100"></v-img>
                     <v-img v-else-if="openModal === 'discountModal'" src="/Untitled design (1) 14.png" contain height="100"></v-img>
 
-                    <h3 v-if="openModal === 'amenities'">{{ t('Ad.highlight_your_place') }}</h3>
-                    <h3 v-else-if="openModal === 'photos'">{{ t('Ad.add_photos_of_your_place') }}</h3>
-                    <h4 v-else-if="openModal === 'modal4'">{{ t('Ad.modal_4_title') }}</h4>
-                    <h3 class="text-primary" v-else-if="openModal === 'modalStep3'">{{ t('Ad.finalize_and_publish') }}<br>{{ t('Ad.step_three') }}</h3>
-                    <h3 v-else-if="openModal === 'Step3-1'">{{ t('Ad.HowReserve') }}</h3>
-                    <h3 class="top1" v-else-if="openModal === 'thirdStepSetPrice'">{{ t('Ad.set_your_price') }}</h3>
-                    <h3 v-else-if="openModal === 'discountModal'">{{ t('Ad.discounts') }}</h3>
-                    <h2 class="font-weight-bold text-primary font-weight-bold3"  v-else-if="openModal === 'finalStepModal'">{{ t('Ad.final_step') }}</h2>
-                    <h5  v-else-if="openModal === 'finalStepModal2'">{{ t('Ad.Request_Approval') }}</h5>
+                    <h3 v-if="openModal === 'amenities'">{{ translate('Ad.highlight_your_place') }}</h3>
+                    <h3 v-else-if="openModal === 'photos'">{{ translate('Ad.add_photos_of_your_place') }}</h3>
+                    <h4 v-else-if="openModal === 'modal4'">{{ translate('Ad.modal_4_title') }}</h4>
+                    <h3 class="text-primary" v-else-if="openModal === 'modalStep3'">{{translate('Ad.finalize_and_publish') }}<br>{{ translate('Ad.step_three') }}</h3>
+                    <h3 v-else-if="openModal === 'Step3-1'">{{ translate('Ad.HowReserve') }}</h3>
+                    <h3 class="top1" v-else-if="openModal === 'thirdStepSetPrice'">{{ translate('Ad.set_your_price') }}</h3>
+                    <h3 v-else-if="openModal === 'discountModal'">{{ translate('Ad.discounts') }}</h3>
+                    <h2 class="font-weight-bold text-primary font-weight-bold3"  v-else-if="openModal === 'finalStepModal'">{{ translate('Ad.final_step') }}</h2>
+                    <h5  v-else-if="openModal === 'finalStepModal2'">{{ translate('Ad.Request_Approval') }}</h5>
 
-                    <p class="modal-text text-info" v-if="openModal === 'amenities'">{{ t('Ad.step_two') }}<br>{{ t('Ad.step_two_description') }}</p>
-                    <p class="modal-text" v-else-if="openModal === 'photos'">{{ t('Ad.need_to_add_photos') }}</p>
-                    <p class="modal-text text-muted" v-else-if="openModal === 'modalStep3'">{{ t('Ad.final_step_description') }}</p>
-                    <p class="modal-text"  v-else-if="openModal === 'Step3-1'">{{ t('Ad.CanChange') }} </p>
-                    <p class="modal-text top1" v-else-if="openModal === 'thirdStepSetPrice'">{{ t('Ad.CanChange') }}</p>
-                    <p class="modal-text top1"  v-else-if="openModal === 'discountModal'">{{ t('Ad.Helps_highlight_your_niche') }} </p>
-                    <p class="modal-text top1"  v-else-if="openModal === 'finalStepModal'">{{ t('Ad.host_type_question') }} </p>
-                    <h2 class="modal-text  bold-red-text"  v-else-if="openModal === 'finalStepModal2'">{{ t('Ad.Awaiting_Confirmation') }} </h2>
+                    <p class="modal-text text-info" v-if="openModal === 'amenities'">{{ translate('Ad.step_two') }}<br>{{ translate('Ad.step_two_description') }}</p>
+                    <p class="modal-text" v-else-if="openModal === 'photos'">{{ translate('Ad.need_to_add_photos') }}</p>
+                    <p class="modal-text text-muted" v-else-if="openModal === 'modalStep3'">{{ translate('Ad.final_step_description') }}</p>
+                    <p class="modal-text"  v-else-if="openModal === 'Step3-1'">{{ translate('Ad.CanChange') }} </p>
+                    <p class="modal-text top1" v-else-if="openModal === 'thirdStepSetPrice'">{{ translate('Ad.CanChange') }}</p>
+                    <p class="modal-text top1"  v-else-if="openModal === 'discountModal'">{{ translate('Ad.Helps_highlight_your_niche') }} </p>
+                    <p class="modal-text top1"  v-else-if="openModal === 'finalStepModal'">{{ translate('Ad.host_type_question') }} </p>
+                    <h2 class="modal-text  bold-red-text"  v-else-if="openModal === 'finalStepModal2'">{{ translate('Ad.Awaiting_Confirmation') }} </h2>
 
                 </v-card-title>
                 <v-card v-if="openModal === 'property'"  class="top1">
                     <v-card-text class="top1" >
-                        <p class="Txt2">{{ t('Ad.Modal1_1') }}</p>
+                        <p class="Txt2">{{ translate('Ad.Modal1_1') }}</p>
                         <br>
-                        <p class="Txt2">{{ t('Ad.Modal1_2') }}</p>
+                        <p class="Txt2">{{ translate('Ad.Modal1_2') }}</p>
                         <br>
 
                         <v-row>
@@ -53,14 +53,14 @@
                                     :class="{ 'selected': selectedProperty === option.title }"
                                     @click="selectProperty(option.title)">
                                     <v-img :src="option.image" height="80"></v-img>
-                                    <p class="mt-2 Txt2">{{ t(option.title) }}</p>
+                                    <p class="mt-2 Txt2">{{ translate(option.title) }}</p>
                                 </v-card>
                             </v-col>
                         </v-row>
                     </v-card-text>
                 </v-card>
                 <v-card v-else-if="openModal === 'map'"  >
-                    <v-card-title class="text-h6 Txt2">{{ t('Ad.WhereAccommodation') }}</v-card-title>
+                    <v-card-title class="text-h6 Txt2">{{ translate('Ad.WhereAccommodation') }}</v-card-title>
                     <v-card-subtitle class="Txt2"></v-card-subtitle>
                     <v-card-text>
                         <v-text-field v-model="searchQuery" label="Search location" @keyup.enter="searchLocation"></v-text-field>
@@ -68,13 +68,13 @@
                     </v-card-text>
                 </v-card>
                 <v-card v-else-if="openModal === 'details'"  class="top1 details">
-                    <v-card-title class="text-h6 top1 Txt2">{{ t('Ad.ShareAccommodationInfo') }}</v-card-title>
+                    <v-card-title class="text-h6 top1 Txt2">{{ translate('Ad.ShareAccommodationInfo') }}</v-card-title>
                     <v-card-text>
                         <v-row>
                             <v-col v-for="(item, index) in accommodationDetails" :key="index" cols="" md="12" >
                                 <v-row align="center" justify="space-between">
                                     <v-col cols="8" class="text-center1 Txt2">
-                                        <span>{{ t(item.name) }}</span>
+                                        <span>{{ translate(item.name) }}</span>
                                     </v-col>
                                     <v-col cols="1" class="text-right Txt2">
                                         <v-btn icon @click="decrement(index)">
@@ -95,7 +95,7 @@
                     </v-card-text>
                 </v-card>
                 <template v-if="openModal === 'amenities'">
-                        <h4 class="mb-2" style="margin-top: 70px;"> {{ t('Ad.tell_guests_about_amenities') }}</h4>
+                        <h4 class="mb-2" style="margin-top: 70px;"> {{ translate('Ad.tell_guests_about_amenities') }}</h4>
                         <v-row>
                             <v-col v-for="item in amenities" :key="item.text" cols="6" sm="3">
                                 <v-card
@@ -105,11 +105,11 @@
                                     @click="toggleAmenity(item.text)"
                                 >
                                     <v-icon size="40">{{ item.icon }}</v-icon>
-                                    <p class="amenity-text">{{ t(item.text) }}</p>
+                                    <p class="amenity-text">{{ translate(item.text) }}</p>
                                 </v-card>
                             </v-col>
                         </v-row>
-                        <h4 class="mt-4">{{ t('Ad.special_amenities') }}</h4>
+                        <h4 class="mt-4">{{ translate('Ad.special_amenities') }}</h4>
                         <v-row>
                             <v-col v-for="(item, index) in specialAmenities" :key="index" cols="6" sm="3">
                                 <v-card
@@ -119,11 +119,11 @@
                                     @click="toggleAmenity(item.text)"
                                 >
                                     <v-icon size="40">{{ item.icon }}</v-icon>
-                                    <p class="amenity-text">{{ t(item.text) }}</p>
+                                    <p class="amenity-text">{{ translate(item.text) }}</p>
                                 </v-card>
                             </v-col>
                         </v-row>
-                        <h4 class="mt-4">{{ t('Ad.safety_amenities') }}</h4>
+                        <h4 class="mt-4">{{ translate('Ad.safety_amenities') }}</h4>
                         <v-row>
                             <v-col v-for="(item, index) in safetyFeatures" :key="index" cols="6" sm="3">
                                 <v-card
@@ -134,41 +134,38 @@
                                 >
                                     <v-icon size="40">{{ item.icon }}</v-icon>
                                     <br>
-                                    <p class="amenity-text">{{ t(item.text) }}</p>
+                                    <p class="amenity-text">{{ translate(item.text) }}</p>
                                 </v-card>
                             </v-col>
                         </v-row>
                     </template>
                 <template v-else-if="openModal === 'photos'">
                     <div class="rectangle">
-                        <!-- دکمه Open Gallery فقط در دسکتاپ -->
                         <v-btn
                             block
                             color="dark-gray lighten-3"
                             class="py-8 rounded-lg d-none d-md-block"
                             @click="openGallery">
                             <v-icon left class="icon-small font-weight-bold">mdi-image</v-icon>
-                            {{ t('Ad.add_photo') }}
+                            {{ translate('Ad.add_photo') }}
                         </v-btn>
 
-                        <!-- دکمه Open Camera فقط در موبایل -->
                         <v-btn
                             block
                             color="dark-gray lighten-3"
                             class="py-8 rounded-lg mt-2 d-md-none"
                             @click="openCamera">
                             <v-icon left class="icon-small font-weight-bold">mdi-camera</v-icon>
-                            {{ t('Ad.take_new_photo') }}
+                            {{ translate('Ad.take_new_photo') }}
                         </v-btn>
 
-                        <!-- دکمه Open Gallery فقط در موبایل -->
                         <v-btn
                             block
                             color="dark-gray lighten-3"
                             class="py-8 rounded-lg mt-2 d-md-none"
                             @click="openGallery">
                             <v-icon left class="icon-small font-weight-bold">mdi-image</v-icon>
-                            {{ t('Ad.add_photo') }}
+                            {{ translate('Ad.add_photo') }}
                         </v-btn>
                     </div>
 
@@ -181,8 +178,8 @@
                     </div>
                 </template>
                 <v-card v-else-if="openModal === 'title'">
-                    <h3 class="top1" >{{ t('Ad.give_title_for_accommodation') }}</h3>
-                    <p class="modal-text text-muted ">{{ t('Ad.short_title_suggestion') }}</p>
+                    <h3 class="top1" >{{ translate('Ad.give_title_for_accommodation') }}</h3>
+                    <p class="modal-text text-muted ">{{ translate('Ad.short_title_suggestion') }}</p>
 
                     <v-text-field v-model="title"
                                   max-length="32"
@@ -193,12 +190,12 @@
                     ></v-text-field>
                     <br>
                     <p class="text-left top1" :style="{ fontSize: '12px', color: characterLimitExceeded ? 'red' : 'grey' }">
-                        {{ t('Ad.max_32_characters') }}
+                        {{ translate('Ad.max_32_characters') }}
                     </p>
                     <br>
 
-                    <h3 >{{ t('Ad.create_your_description') }}</h3>
-                    <p >{{ t('Ad.share_what_makes_your_place_special') }}</p>
+                    <h3 >{{ translate('Ad.create_your_description') }}</h3>
+                    <p >{{ translate('Ad.share_what_makes_your_place_special') }}</p>
 
                     <div class="description-container">
                         <v-textarea v-model="description"
@@ -209,14 +206,14 @@
                                     @input="checkCharacterLimit2"
                         ></v-textarea>
                         <p class="text-left" :style="{ fontSize: '12px', color: characterLimitExceeded2 ? 'red' : 'grey' }">
-                            {{ t('Ad.max_441_characters') }}
+                            {{ translate('Ad.max_441_characters') }}
                         </p>
                     </div>
 
                 </v-card>
                 <template v-if="openModal === 'modal4'">
                     <div>
-                        <p style="margin-top: 50px;" class="modal-text">{{ t('Ad.modal_4_description') }}</p>
+                        <p style="margin-top: 50px;" class="modal-text">{{ translate('Ad.modal_4_description') }}</p>
                         <br>
                         <v-row  class="flex-wrap">
                             <v-col  v-for="(item, index) in modal4Options" :key="index" cols="6" sm="4">
@@ -227,7 +224,7 @@
                                     @click="toggleModal4Option(item.text)"
                                 >
                                     <v-icon size="40">{{ item.icon }}</v-icon>
-                                    <p class="amenity-text">{{ t(item.text) }}</p>
+                                    <p class="amenity-text">{{ translate(item.text) }}</p>
                                 </v-card>
                             </v-col>
                         </v-row>
@@ -245,8 +242,8 @@
                         >
                             <v-icon size="25">mdi-lightning-bolt</v-icon>
                             <v-col cols="10">
-                                <h4 class="font-weight-bold">{{ t('Ad.quickReserve') }}</h4>
-                                <p class="font-weight-bold2">{{ t('Ad.reservationAutomatically') }}</p>
+                                <h4 class="font-weight-bold">{{ translate('Ad.quickReserve') }}</h4>
+                                <p class="font-weight-bold2">{{ translate('Ad.reservationAutomatically') }}</p>
                             </v-col>
                         </v-btn>
 
@@ -260,8 +257,8 @@
                         >
                             <v-icon size="25">mdi-note-text</v-icon>
                             <v-col cols="10">
-                                <h4 class="font-weight-bold">{{ t('Ad.AcceptReject') }}</h4>
-                                <p class="font-weight-bold2">{{ t('Ad.reservationRequest') }}</p>
+                                <h4 class="font-weight-bold">{{ translate('Ad.AcceptReject') }}</h4>
+                                <p class="font-weight-bold2">{{ translate('Ad.reservationRequest') }}</p>
                             </v-col>
                         </v-btn>
                     </div>
@@ -277,83 +274,109 @@
                         </v-col>
 
                         <v-col cols="8" class="mb-0">
-                            <v-text-field v-model="basePrice" :label="t('Ad.base_price')" type="number" dense outlined class="rounded-lg"></v-text-field>
+                            <v-text-field v-model="basePrice" :label="translate('Ad.base_price')" type="number" dense outlined class="rounded-lg"></v-text-field>
                         </v-col>
                         <v-col cols="8" class="mb-0">
-                            <v-text-field v-model="serviceFee" :label="t('Ad.service_fee')" type="number" dense outlined class="rounded-lg"></v-text-field>
+                            <v-text-field v-model="serviceFee" :label="translate('Ad.service_fee')" type="number" dense outlined class="rounded-lg"></v-text-field>
                         </v-col>
                         <v-col cols="8" class="mb-0 received-amount2">
-                            <v-text-field v-model="totalPrice" :label="t('Ad.total_price')" dense outlined readonly class="rounded-lg">
+                            <v-text-field v-model="totalPrice" :label="translate('Ad.total_price')" dense outlined readonly class="rounded-lg">
                                 <template v-slot:append>
                                     <span>{{ currency }}</span>
                                 </template>
                             </v-text-field>
                         </v-col>
                         <v-col cols="8" class="mb-0 received-amount2">
-                            <v-text-field v-model="receivedAmount" :label="t('Ad.received_amount')" dense outlined readonly class="rounded-lg">
+                            <v-text-field v-model="receivedAmount" :label="translate('Ad.received_amount')" dense outlined readonly class="rounded-lg">
                                 <template v-slot:append>
                                     <span>{{ currency }}</span>
                                 </template>
                             </v-text-field>
                         </v-col>
 
-                        <discount-modal
+                        <discountModal
                             :total-price="totalPrice"
                             :currency="currency"
-                            v-model="discountModalOpen"
+                            v-model="discountModal"
                         />
                     </v-row>
 
                     <v-btn v-if="!isCustomer" block color="primary" class="py-3 mt-4 rounded-lg" @click="addExtraFee">
-                        + {{ t('Ad.add_extra_fee') }}
+                        + {{ translate('Ad.add_extra_fee') }}
                     </v-btn>
 
                     <v-row v-for="(fee, index) in extraFees" :key="index" justify="center" align="center">
                         <v-col cols="6">
-                            <v-text-field v-model="fee.title" :label="t('Ad.extra_fee_title')" dense outlined class="rounded-lg"></v-text-field>
+                            <v-text-field v-model="fee.title" :label="translate('Ad.extra_fee_title')" dense outlined class="rounded-lg"></v-text-field>
                         </v-col>
                         <v-col cols="4">
-                            <v-text-field v-model="fee.amount" type="number" :label="t('Ad.amount')" dense outlined class="rounded-lg"></v-text-field>
+                            <v-text-field v-model="fee.amount" type="number" :label="translate('Ad.amount')" dense outlined class="rounded-lg"></v-text-field>
                         </v-col>
                         <v-col cols="2" v-if="isCustomer">
                             <v-checkbox v-model="fee.selected" @change="updateFinalTotal" dense></v-checkbox>
                         </v-col>
                     </v-row>
                 </template>
-                <template v-if="openModal === 'discountModal'">
-                    <v-row justify="center">
-                        <v-col cols="12" align="center">
-                            <h1 class="font-weight-bold text-primary" style="margin-top: 10px;">
-                                {{ t('Ad.total_price') }}: {{ totalPrice - discountAmount }} €
-                            </h1>
-                        </v-col>
+                    <template v-if="openModal === 'discountModal'">
+                        <v-row justify="center">
+                            <v-col cols="12" align="center">
+                                <h1 class="font-weight-bold text-primary" style="margin-top: 10px;">
+                                    {{ totalPrice }} {{ currency }}
+                                </h1>
+                            </v-col>
 
-                        <v-col cols="12">
-                            <v-row>
-                                <v-col cols="12">
-                                    <v-card
-                                        v-for="discount in discountOptions"
-                                        :key="discount.value"
-                                        :class="{'bg-blue-lighten-4': selectedDiscounts.some(d => d.value === discount.value)}"
-                                        outlined
-                                        class="mb-2 cursor-pointer"
-                                        @click="selectDiscount(discount)"
-                                    >
-                                        <v-card-title class="font-weight-bold3 text-right">{{ t(discount.title) }}</v-card-title>
-                                        <v-card-subtitle class="text-right">{{ t(discount.description) }}</v-card-subtitle>
-                                        <v-card-actions class="justify-start">
-                                            <h1 class="text-primary">{{ discount.percent }}%</h1>
-                                        </v-card-actions>
-                                    </v-card>
-                                </v-col>
-                            </v-row>
-                        </v-col>
+                            <v-col cols="12">
+                                <v-row>
+                                    <v-col cols="12">
+                                        <v-card
+                                            v-for="discount in discountOptions"
+                                            :key="discount.value"
+                                            :class="{'bg-blue-lighten-4': selectedDiscounts.some(d => d.value === discount.value)}"
+                                            outlined
+                                            class="mb-2 cursor-pointer"
+                                            @click="selectDiscount(discount)"
+                                        >
+                                            <v-card-title class="font-weight-bold3 text-right">{{ translate(discount.title) }}</v-card-title>
+                                            <v-card-subtitle class="text-right">{{ translate(discount.description) }}</v-card-subtitle>
+                                            <v-card-actions class="justify-start">
+                                                <h1 class="text-primary">{{ discount.percent }}%</h1>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
+                            <v-btn color="primary" @click="showCustomDiscount = true">Add custom discount</v-btn>
 
-                        <v-col cols="12">
-                            <h3>  {{ t('Ad.received_amount') }}: {{ receivedAmount }} €</h3>
-                        </v-col>
-                    </v-row>
-                </template>
+                            <v-dialog v-model="showCustomDiscount" max-width="500">
+                                <v-card>
+                                    <v-card-title>Add custom discount</v-card-title>
+                                    <v-card-text>
+                                            <v-text-field v-model="customDiscountTitle" label="Discount title"></v-text-field>
+                                        <v-text-field v-model="customDiscountPercent" label="Discount percentage" type="number"></v-text-field>
+                                    </v-card-text>
+                                    <v-card-actions>
+                                        <v-btn color="primary" @click="addCustomDiscount">Add</v-btn>
+                                        <v-btn color="error" @click="showCustomDiscount = false">Cancel</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
+                            <v-list>
+                                <v-list-item v-for="(discount, index) in selectedDiscounts" :key="index">
+                                    <v-list-item-content>
+                                        <v-list-item-title>{{ discount.title }} - {{ discount.percent }}%</v-list-item-title>
+                                    </v-list-item-content>
+                                    <v-list-item-action>
+                                        <v-btn icon @click="removeDiscount(index)">
+                                            <v-icon>mdi-delete</v-icon>
+                                        </v-btn>
+                                    </v-list-item-action>
+                                </v-list-item>
+                            </v-list>
+                            <v-col cols="12">
+                                <h3>  {{translate('Ad.received_amount') }}: {{ receivedAmount }} €</h3>
+                            </v-col>
+                        </v-row>
+                    </template>
                 <template v-if="openModal === 'finalStepModal'">
                     <v-row justify="center">
                         <v-col cols="12">
@@ -361,7 +384,7 @@
                                 <v-col cols="6" class="top1 ">
                                     <v-checkbox
                                         v-model="hostType"
-                                        :label="t('Ad.host_as_individual')"
+                                        :label="translate('Ad.host_as_individual')"
 
                                         :value="'individual'"
                                     />
@@ -369,7 +392,7 @@
                                 <v-col cols="6" class="top1 ">
                                     <v-checkbox
                                         v-model="hostType"
-                                        :label="t('Ad.host_as_business')"
+                                        :label="translate('Ad.host_as_business')"
                                         :value="'business'"
                                     />
                                 </v-col>
@@ -378,26 +401,26 @@
 
                         <v-col cols="12">
                             <v-divider class="my-4" />
-                            <p >{{ t('Ad.location_features') }}</p>
+                            <p >{{ translate('Ad.location_features') }}</p>
                             <v-row >
                                 <v-col cols="6" >
                                     <v-checkbox
                                         v-model="locationFeatures"
-                                        :label="t('Ad.security_camera')"
+                                        :label="translate('Ad.security_camera')"
                                         :value="'security_camera'"
                                     />
                                 </v-col>
                                 <v-col cols="6">
                                     <v-checkbox
                                         v-model="locationFeatures"
-                                        :label="t('Ad.sound_insulation')"
+                                        :label="translate('Ad.sound_insulation')"
                                         :value="'sound_insulation'"
                                     />
                                 </v-col>
                                 <v-col cols="6">
                                     <v-checkbox
                                         v-model="locationFeatures"
-                                        :label="t('Ad.protective_weapons')"
+                                        :label="translate('Ad.protective_weapons')"
                                         :value="'protective_weapons'"
                                     />
                                 </v-col>
@@ -406,10 +429,10 @@
 
                         <v-col cols="12">
                             <v-divider class="my-4" />
-                            <h2 align="center" class="font-weight-bold3" style="color: darkred"><strong>{{ t('Ad.important_information') }}</strong></h2>
-                            <p >{{ t('Ad.cctv_prohibited') }}</p>
-                            <p>{{ t('Ad.onsite_cameras_required') }}</p>
-                            <h4 class="font-weight-bold3" style="color: #1b43ff">{{ t('Ad.follow_local_regulations') }}</h4>
+                            <h2 align="center" class="font-weight-bold3" style="color: darkred"><strong>{{ translate('Ad.important_information') }}</strong></h2>
+                            <p >{{ translate('Ad.cctv_prohibited') }}</p>
+                            <p>{{ translate('Ad.onsite_cameras_required') }}</p>
+                            <h4 class="font-weight-bold3" style="color: #1b43ff">{{ translate('Ad.follow_local_regulations') }}</h4>
                         </v-col>
                     </v-row>
                 </template>
@@ -419,7 +442,7 @@
                                 <v-col cols="12">
                                     <div class="info-container">
                                         <div class="info-box"  >
-                                            <div align="center"  style="color: #858585">{{ t('Ad.ShowHost') }}</div>
+                                            <div align="center"  style="color: #858585">{{ translate('Ad.ShowHost') }}</div>
                                             <v-row class="d-flex flex-wrap" justify="center" >
                                                     <v-card class="apartment-card top1" align="center">
                                                         <v-img :src="uploadedImage || uploadedImages[0] || '/20.jpg'" height="100px" class="apartment-img"></v-img>
@@ -432,10 +455,10 @@
                                                         <v-card-text >
                                                             <br />
                                                             <div class="price-info">
-                                                                <div style="text-decoration: line-through; color: red;">
+                                                                <div >
                                                                     {{ totalPrice }} {{ currency }}
                                                                 </div>
-                                                                <div style="color: #2fe700 ;border: black; font-weight: bold">{{ totalPrice - discountAmount }} {{ currency }}</div>
+
                                                             </div>
                                                         </v-card-text>
                                                     </v-card>
@@ -450,7 +473,7 @@
 
                     <v-row>
                         <v-col cols="12">
-                            <v-btn @click="selectProperty2" block color="primary">{{ t('Ad.Edit') }}</v-btn>
+                            <v-btn @click="selectProperty2" block color="primary">{{ translate('Ad.Edit') }}</v-btn>
                         </v-col>
                     </v-row>
 
@@ -458,57 +481,57 @@
 
                     <v-row>
                         <v-col cols="12">
-                            <p>{{ t('Ad.required_sections') }}</p>
+                            <p>{{ translate('Ad.required_sections') }}</p>
                         </v-col>
                     </v-row>
 
                     <v-row align="center" justify="center" class="selectable-item" @click="showCalendar = true">
                         <v-icon class="mr-2">mdi-calendar-month</v-icon>
-                        <h3>{{ t('Ad.Set_up_calendar') }}</h3>
+                        <h3>{{ translate('Ad.Set_up_calendar') }}</h3>
                     </v-row>
 
                     <v-dialog v-model="showCalendar" max-width="400px" centered persistent class="custom-dialog">
                         <v-card>
-                            <v-card-title>{{ t('Ad.available_dates') }}</v-card-title>
+                            <v-card-title>{{ translate('Ad.available_dates') }}</v-card-title>
                             <v-card-text>
                                 <v-date-picker v-model="selectedDates" multiple></v-date-picker>
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="primary" @click="saveDates">{{ t('Ad.SaveExit') }}</v-btn>
-                                <v-btn color="grey" text @click="showCalendar = false"> {{ t('Ad.Back') }}</v-btn>
+                                <v-btn color="primary" @click="saveDates">{{ translate('Ad.SaveExit') }}</v-btn>
+                                <v-btn color="grey" text @click="showCalendar = false"> {{ translate('Ad.Back') }}</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
 
                     <v-row>
                         <v-col cols="12">
-                            <p>{{ t('Ad.choose_available') }}</p>
+                            <p>{{ translate('Ad.choose_available') }}</p>
                         </v-col>
                     </v-row>
 
                     <v-row align="center" justify="center" class="selectable-item" @click="goNext">
-                        <h3>{{ t('Ad.Check_settings') }}</h3>
+                        <h3>{{ translate('Ad.Check_settings') }}</h3>
                     </v-row>
 
                     <v-row>
                         <v-col cols="12">
-                            <p>{{ t('Ad.Set_house_rules') }}</p>
+                            <p>{{ translate('Ad.Set_house_rules') }}</p>
                         </v-col>
                     </v-row>
                 </template>
 
                 <v-card-actions class="d-flex flex-row flex-wrap justify-end gap-2">
                     <v-btn color="grey" text class="btn-small" style="min-width: auto; padding: 4px 8px;" @click="goBack">
-                        {{ t('Ad.Back') }}
+                        {{ translate('Ad.Back') }}
                     </v-btn>
 
                     <v-btn color="grey" text class="btn-small" style="min-width: auto;
                      padding: 4px 8px;" @click="$emit('update:modelValue', false)">
-                        {{ t('Ad.SaveExit') }}
+                        {{ translate('Ad.SaveExit') }}
                     </v-btn>
                     <v-btn color="primary" class="btn-small" style="min-width: auto; padding: 4px 8px;" @click="goNext" :disabled="characterLimitExceeded">
-                        {{ t('Ad.ConfirmNext') }}
+                        {{ translate('Ad.ConfirmNext') }}
                     </v-btn>
 
                 </v-card-actions>
@@ -523,17 +546,33 @@
 
     <script setup>
     import { ref, computed, defineProps, defineEmits, watch, nextTick ,onMounted } from 'vue';
-    import { t } from "../../../store/languageStore";
+    import { translate } from "../../../store/languageStore";
     import L from "leaflet";
     import "leaflet/dist/leaflet.css";
     import { useStore } from 'vuex';
     let ads = computed(() => []);
     import MyAds from "../MyAds.vue"
     const store = useStore();
-
     const title = ref('');
     const description = ref('');
     const images = ref([]);
+    const showCustomDiscount = ref(false);
+    const addCustomDiscount = () => {
+        if (customDiscountTitle.value && customDiscountPercent.value > 0) {
+            const newDiscount = {
+                title: customDiscountTitle.value,
+                percent: parseFloat(customDiscountPercent.value),
+            };
+            selectedDiscounts.value.push(newDiscount);
+            showCustomDiscount.value = false;
+            customDiscountTitle.value = '';
+            customDiscountPercent.value = 0;
+        }
+    };
+
+    const removeDiscount = (index) => {
+        selectedDiscounts.value.splice(index, 1);
+    };
 
     onMounted(() => {
         ads = computed(() => store.getters.getAds);
@@ -546,6 +585,8 @@
     const deleteAd = (adId) => {
         store.dispatch('deleteAd', adId);
     };
+    const customDiscountTitle = ref('');
+    const customDiscountPercent = ref(0);
 
     const openModal = ref("property");
 
@@ -882,14 +923,16 @@
     const appliedDiscount = ref(0);
     const discountAmount = computed(() => {
         return selectedDiscounts.value.reduce((sum, discount) => {
-            return sum + (totalPrice.value * discount.percent / 100);
+            return (totalPrice.value * discount.percent / 100);
         }, 0);
     });
 
+    const finalTotalPrice = computed(() => totalPrice.value - discountAmount.value);
+
     const discountOptions = [
-        { value: 1, title: t("Ad.Special_discount"), description: t("Ad.OffFirstReserve"), percent: 20 },
-        { value: 2, title: t("Ad.Weekly_discount"), description: t("Ad.Off7night"), percent: 10 },
-        { value: 3, title: t("Ad.Monthly_discount"), description: t("Ad.Off28nightStay"), percent: 20 }
+        { value: 1, title: translate("Ad.Special_discount"), description: translate("Ad.OffFirstReserve"), percent: 20 },
+        { value: 2, title: translate("Ad.Weekly_discount"), description: translate("Ad.Off7night"), percent: 10 },
+        { value: 3, title: translate("Ad.Monthly_discount"), description: translate("Ad.Off28nightStay"), percent: 20 }
     ];
 
     watch(() => props.openModal, (newVal) => {
@@ -941,13 +984,13 @@
     };
 
     const selectDiscount = (discount) => {
-        const index = selectedDiscounts.value.findIndex(d => d.value === discount.value);
-        if (index === -1) {
-            selectedDiscounts.value.push(discount);
+        if (selectedDiscounts.value.some(d => d.value === discount.value)) {
+            selectedDiscounts.value = selectedDiscounts.value.filter(d => d.value !== discount.value);
         } else {
-            selectedDiscounts.value.splice(index, 1);
+            selectedDiscounts.value.push(discount);
         }
     };
+
 
     const totalPrice = computed(() => {
         let extraTotal = extraFees.value.reduce((sum, fee) => sum + (parseFloat(fee.amount) || 0), 0);
@@ -980,7 +1023,7 @@
     <style scoped>
     .modal-container {
         width: 500px !important;
-        height: 600px !important;
+        height: 700px !important;
         overflow-y: auto;
         display: flex;
         flex-direction: column;
@@ -991,6 +1034,11 @@
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
     }
+    .custom-dialog {
+        max-width: 800px !important;
+        height: 90vh !important;
+    }
+
     .modal-title {
         font-size: 18px;
         color: #555;

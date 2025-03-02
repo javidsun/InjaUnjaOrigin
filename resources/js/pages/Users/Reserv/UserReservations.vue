@@ -1,7 +1,7 @@
 <template class="cards">
   <v-card class="reservation-summary-card" outlined>
     <v-card-title>
-      {{ t("UserSidebar.RecentReservations") }}
+      {{ translate("UserSidebar.RecentReservations") }}
     </v-card-title>
     <v-card-text>
       <v-row direction="rtl">
@@ -35,7 +35,7 @@
     </v-card-text>
     <v-card-actions>
         <v-btn :to="'/MyReservations'" color="primary" outlined class="ml-auto">
-            {{ t("UserSidebar.ViewAllReservations") }}
+            {{ translate("UserSidebar.ViewAllReservations") }}
         </v-btn>
     </v-card-actions>
   </v-card>
@@ -43,32 +43,32 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../../store/languageStore.js";
+import { translate } from "../../../store/languageStore.js";
 
 const recentReservations = ref([
   {
-    title: t("UserSidebar.HouseReservation"),
+    title: translate("UserSidebar.HouseReservation"),
     date: "2025-01-01",
     icon: "mdi-home",
     color: "blue",
     image: "/ads/house.svg",
   },
   {
-    title: t("UserSidebar.CarReservation"),
+    title: translate("UserSidebar.CarReservation"),
     date: "2024-12-29",
     icon: "mdi-car",
     color: "green",
     image: "/ads/car.svg",
   },
   {
-    title: t("UserSidebar.EventReservation"),
+    title: translate("UserSidebar.EventReservation"),
     date: "2024-12-25",
     icon: "mdi-calendar",
     color: "purple",
     image: "/ads/event.svg",
   },
   {
-    title: t("UserSidebar.TravelerReservation"),
+    title: translate("UserSidebar.TravelerReservation"),
     date: "2024-12-20",
     icon: "mdi-account-group",
     color: "orange",

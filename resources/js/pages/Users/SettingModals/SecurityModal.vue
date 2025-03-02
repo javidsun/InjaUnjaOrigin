@@ -2,7 +2,7 @@
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card class="modal-container">
             <v-card-title class="header">
-                <span>{{ t('security.title') }}</span>
+                <span>{{ translate('security.title') }}</span>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
@@ -10,19 +10,19 @@
 
             <v-card-text>
                 <div class="password-section">
-                    <div class="password-label">{{ t('security.passwordLabel') }}</div>
-                    <div class="last-update">{{ t('security.lastUpdate') }}: {{ lastPasswordUpdate }}</div>
+                    <div class="password-label">{{ translate('security.passwordLabel') }}</div>
+                    <div class="last-update">{{ translate('security.lastUpdate') }}: {{ lastPasswordUpdate }}</div>
                     <v-btn color="primary" @click="openChangePasswordDialog" class="change-btn">
-                        {{ t('security.changePassword') }}
+                        {{ translate('security.changePassword') }}
                     </v-btn>
                 </div>
 
                 <v-divider class="my-4"></v-divider>
 
                 <div class="account-section">
-                    <div class="account-label">{{ t('security.accountLabel') }}</div>
+                    <div class="account-label">{{ translate('security.accountLabel') }}</div>
                     <v-btn :color="isAccountActive ? 'error' : 'success'" @click="toggleAccountStatus" class="deactivate-btn">
-                        {{ isAccountActive ? t('security.deactivateAccount') : t('security.activateAccount') }}
+                        {{ isAccountActive ? translate('security.deactivateAccount') : translate('security.activateAccount') }}
                     </v-btn>
                 </div>
             </v-card-text>
@@ -30,12 +30,12 @@
 
         <v-dialog v-model="isChangePasswordDialogOpen" max-width="500px">
             <v-card>
-                <v-card-title class="dialog-header">{{ t('security.changePassword') }}</v-card-title>
+                <v-card-title class="dialog-header">{{ translate('security.changePassword') }}</v-card-title>
                 <v-card-text>
                     <v-form @submit.prevent="submitNewPassword">
                         <v-text-field
                             v-model="currentPassword"
-                            :label="t('security.currentPassword')"
+                            :label="translate('security.currentPassword')"
                             :type="showCurrentPassword ? 'text' : 'password'"
                             :append-icon="showCurrentPassword ? 'mdi-eye-off' : 'mdi-eye'"
                             @click:append="showCurrentPassword = !showCurrentPassword"
@@ -45,7 +45,7 @@
                         ></v-text-field>
                         <v-text-field
                             v-model="newPassword"
-                            :label="t('security.newPassword')"
+                            :label="translate('security.newPassword')"
                             :type="showNewPassword ? 'text' : 'password'"
                             :append-icon="showNewPassword ? 'mdi-eye-off' : 'mdi-eye'"
                             @click:append="showNewPassword = !showNewPassword"
@@ -55,7 +55,7 @@
                         ></v-text-field>
                         <v-text-field
                             v-model="confirmNewPassword"
-                            :label="t('security.confirmNewPassword')"
+                            :label="translate('security.confirmNewPassword')"
                             :type="showConfirmPassword ? 'text' : 'password'"
                             :append-icon="showConfirmPassword ? 'mdi-eye-off' : 'mdi-eye'"
                             @click:append="showConfirmPassword = !showConfirmPassword"
@@ -65,8 +65,8 @@
                         ></v-text-field>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="primary" type="submit">{{ t('security.confirm') }}</v-btn>
-                            <v-btn color="error" @click="closeChangePasswordDialog">{{ t('security.cancel') }}</v-btn>
+                            <v-btn color="primary" type="submit">{{ translate('security.confirm') }}</v-btn>
+                            <v-btn color="error" @click="closeChangePasswordDialog">{{ translate('security.cancel') }}</v-btn>
                         </v-card-actions>
                     </v-form>
                 </v-card-text>
@@ -79,7 +79,7 @@
                 <v-card-text class="message-text">{{ messageContent }}</v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="isMessageModalOpen = false">{{ t('security.ok') }}</v-btn>
+                    <v-btn color="primary" @click="isMessageModalOpen = false">{{ translate('security.ok') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -88,12 +88,12 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 
 const isModalOpen = ref(false);
 const isChangePasswordDialogOpen = ref(false);
 const isMessageModalOpen = ref(false);
-const lastPasswordUpdate = ref(t('security.oneMonthAgo'));
+const lastPasswordUpdate = ref(translate('security.oneMonthAgo'));
 const isAccountActive = ref(true);
 const currentPassword = ref('');
 const newPassword = ref('');
@@ -129,21 +129,21 @@ const resetPasswordFields = () => {
 
 const submitNewPassword = () => {
     if (newPassword.value !== confirmNewPassword.value) {
-        showMessage(t('security.error'), t('security.passwordMismatch'));
+        showMessage(translate('security.error'), translate('security.passwordMismatch'));
         return;
     }
     lastPasswordUpdate.value = new Date().toLocaleString('en');
-    showMessage(t('security.success'), t('security.passwordChanged'));
+    showMessage(translate('security.success'), translate('security.passwordChanged'));
     closeChangePasswordDialog();
 };
 
 const toggleAccountStatus = () => {
-    const action = isAccountActive.value ? t('security.deactivate') : t('security.activate');
-    const confirmMessage = t('security.confirmAccountAction').replace('{action}', action);
+    const action = isAccountActive.value ? translate('security.deactivate') : translate('security.activate');
+    const confirmMessage = translate('security.confirmAccountAction').replace('{action}', action);
     if (confirm(confirmMessage)) {
         isAccountActive.value = !isAccountActive.value;
-        const successMessage = t('security.accountActionSuccess').replace('{action}', action);
-        showMessage(t('security.success'), successMessage);
+        const successMessage = translate('security.accountActionSuccess').replace('{action}', action);
+        showMessage(translate('security.success'), successMessage);
     }
 };
 

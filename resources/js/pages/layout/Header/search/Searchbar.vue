@@ -1,15 +1,14 @@
 <template>
     <v-row app dense class="search">
         <v-row dense class="search-bar-wrapper rounded-border">
-            <v-btn class="search-btn">
-
+            <v-btn class="search-btn" @click="applyFilter">
                 <v-icon color="blue lighten-1" size="28">
                     mdi-magnify
                 </v-icon>
             </v-btn>
 
             <AnywhereField :activeMenu="activeMenu" @update-active-menu="updateActiveMenu" />
-            <AnyweekField :activeMenu="activeMenu" @update-active-menu="updateActiveMenu" />
+            <AnyweekField :activeMenu="activeMenu" @update-active-menu="updateActiveMenu" @dates-selected="updateSelectedDates" />
             <GuestsField :activeMenu="activeMenu" @update-active-menu="updateActiveMenu" />
         </v-row>
     </v-row>
@@ -29,15 +28,44 @@ export default {
     data() {
         return {
             activeMenu: null,
+            selectedDates: [],
         };
     },
     methods: {
         updateActiveMenu(menuName) {
             this.activeMenu = this.activeMenu === menuName ? null : menuName;
+            if (this.activeMenu) {
+                this.addClickListener();
+            } else {
+                this.removeClickListener();
+            }
         },
+        updateSelectedDates(dates) {
+            this.selectedDates = dates;
+        },
+        applyFilter() {
+            console.log("Filtering ads for dates:", this.selectedDates);
+            this.$emit("filter-ads", { dates: this.selectedDates });
+        },
+        handleClickOutside(event) {
+            if (!this.$el.contains(event.target)) {
+                this.activeMenu = null;
+                this.removeClickListener();
+            }
+        },
+        addClickListener() {
+            document.addEventListener('click', this.handleClickOutside);
+        },
+        removeClickListener() {
+            document.removeEventListener('click', this.handleClickOutside);
+        },
+    },
+    beforeDestroy() {
+        this.removeClickListener();
     },
 };
 </script>
+
 
 <style scoped>
 .search-bar-wrapper {
@@ -80,8 +108,6 @@ export default {
     }
     .search-bar-wrapper {
         display: none;
-
     }
-
 }
 </style>

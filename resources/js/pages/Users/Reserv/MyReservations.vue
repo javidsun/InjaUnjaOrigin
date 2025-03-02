@@ -6,7 +6,7 @@
             <v-col cols="12">
                 <v-card class="mb-4" outlined>
                     <v-card-title class="text-h5 title">
-                        {{ t("UserReservation.AllReservations") }}
+                        {{ translate("UserReservation.AllReservations") }}
                     </v-card-title>
                 </v-card>
             </v-col>
@@ -48,7 +48,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { t } from "../../../store/languageStore.js";
+import { translate } from "../../../store/languageStore.js";
 import UserSidebar from '../Layout.vue';
 
 const reservations = ref([

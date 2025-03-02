@@ -22,8 +22,8 @@
               <span v-else>{{ avatarText(item.fullName) }}</span>
             </VAvatar>
             <div class="d-flex flex-column">
-              <span class="text-h6 font-weight-medium">{{ t(item.fullName) }}</span>
-              <span class="text-sm text-medium-emphasis">@{{ t(item.username) }}</span>
+              <span class="text-h6 font-weight-medium">{{ translate(item.fullName) }}</span>
+              <span class="text-sm text-medium-emphasis">@{{ translate(item.username) }}</span>
             </div>
           </div>
         </template>
@@ -35,20 +35,20 @@
                 size="22"
             />
             <div class="text-capitalize text-high-emphasis">
-              {{ t(`userinfo.${item.role}`) }}
+              {{ translate(`userinfo.${item.role}`) }}
             </div>
           </div>
         </template>
         <template #item.plan="{ item }">
-          <span class="text-capitalize text-high-emphasis">{{ t(`userinfo.${item.currentPlan}`) }}</span>
+          <span class="text-capitalize text-high-emphasis">{{ translate(`userinfo.${item.currentPlan}`) }}</span>
         </template>
         <template #item.status="{ item }">
           <VChip
-              :color="resolveUserStatusVariant(t(item.status))"
+              :color="resolveUserStatusVariant(translate(item.status))"
               size="small"
               class="text-capitalize"
           >
-            {{ t(`userinfo.${item.status}`) }}
+            {{ translate(`userinfo.${item.status}`) }}
           </VChip>
         </template>
       </VDataTable>
@@ -57,7 +57,7 @@
 </template>
 
 <script setup>
-import { t } from "../../../../store/languageStore";
+import { translate } from "../../../../store/languageStore";
 
 const avatar1 = './public/avatar-1.png';
 const avatar2 = './public/avatar-2.png';

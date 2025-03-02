@@ -2,7 +2,7 @@
     <v-dialog v-model="ispolicyModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>
             <v-card-title class="policy-header">
-                <span class="policy-title">{{ t('policy.title') }}</span>
+                <span class="policy-title">{{ translate('policy.title') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closePolicyModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -13,41 +13,41 @@
 
             <v-card-text class="policy-content text-center">
                 <div class="policy-section">
-                    <h3 class="section-title">{{ t('policy.privacyPolicyTitle') }}</h3>
-                    <p class="section-description">{{ t('policy.privacyPolicyDescription') }}</p>
+                    <h3 class="section-title">{{ translate('policy.privacyPolicyTitle') }}</h3>
+                    <p class="section-description">{{ translate('policy.privacyPolicyDescription') }}</p>
                 </div>
                 <v-divider></v-divider>
 
                 <div class="policy-section">
-                    <h3 class="section-title">{{ t('policy.supplementaryDocumentsTitle') }}</h3>
+                    <h3 class="section-title">{{ translate('policy.supplementaryDocumentsTitle') }}</h3>
                     <ul class="document-list">
-                        <li>{{ t('policy.outsideUS') }}</li>
-                        <li>{{ t('policy.stateSupplements') }}</li>
-                        <li>{{ t('policy.cookiePolicy') }}</li>
-                        <li>{{ t('policy.enterpriseCustomers') }}</li>
-                        <li>{{ t('policy.chinaPrivacySupplement') }}</li>
-                        <li>{{ t('policy.colombiaOnly') }}</li>
-                        <li>{{ t('policy.turkeyOnly') }}</li>
-                        <li>{{ t('policy.dac7Notice') }}</li>
+                        <li>{{ translate('policy.outsideUS') }}</li>
+                        <li>{{ translate('policy.stateSupplements') }}</li>
+                        <li>{{ translate('policy.cookiePolicy') }}</li>
+                        <li>{{ translate('policy.enterpriseCustomers') }}</li>
+                        <li>{{ translate('policy.chinaPrivacySupplement') }}</li>
+                        <li>{{ translate('policy.colombiaOnly') }}</li>
+                        <li>{{ translate('policy.turkeyOnly') }}</li>
+                        <li>{{ translate('policy.dac7Notice') }}</li>
                     </ul>
                 </div>
                 <v-divider></v-divider>
 
                 <div class="policy-section">
-                    <h3 class="section-title">{{ t('policy.relatedArticlesTitle') }}</h3>
-                    <p class="section-description">{{ t('policy.relatedArticlesDescription') }}</p>
+                    <h3 class="section-title">{{translate ('policy.relatedArticlesTitle') }}</h3>
+                    <p class="section-description">{{ translate ('policy.relatedArticlesDescription') }}</p>
                 </div>
                 <v-divider></v-divider>
 
                 <div class="policy-section">
-                    <h3 class="section-title">{{ t('policy.hostSectionTitle') }}</h3>
-                    <p class="section-description">{{ t('policy.hostSectionDescription') }}</p>
+                    <h3 class="section-title">{{ translate('policy.hostSectionTitle') }}</h3>
+                    <p class="section-description">{{ translate('policy.hostSectionDescription') }}</p>
                 </div>
                 <v-divider></v-divider>
 
                 <div class="policy-section">
-                    <h3 class="section-title">{{ t('policy.termsUpdatesTitle') }}</h3>
-                    <p class="section-description">{{ t('policy.termsUpdatesDescription') }}</p>
+                    <h3 class="section-title">{{ translate('policy.termsUpdatesTitle') }}</h3>
+                    <p class="section-description">{{ translate('policy.termsUpdatesDescription') }}</p>
                 </div>
             </v-card-text>
         </v-card>
@@ -56,7 +56,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 
 const ispolicyModalOpen = ref(false);
 

@@ -3,10 +3,10 @@
     <v-row justify="center" align="center">
       <v-col cols="12" class="text-center">
         <h2 class="welcome-text">
-          {{ t("UserProfile.WelcomeMessage", { userName: userName }) }}
+          {{ translate("UserProfile.WelcomeMessage", { userName: userName }) }}
         </h2>
         <p class="status-text">
-          {{ t("UserProfile.StatusMessage", { userReservationsCount: userReservationsCount }) }}
+          {{ translate("UserProfile.StatusMessage", { userReservationsCount: userReservationsCount }) }}
         </p>
       </v-col>
     </v-row>
@@ -15,7 +15,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 
 const userName = ref("reza");
 const userReservationsCount = ref(2);

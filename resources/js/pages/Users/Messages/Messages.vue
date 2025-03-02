@@ -1,20 +1,20 @@
 <template>
     <UserSidebar class="back">
         <v-container class="messages-container">
-            <v-btn color="primary" @click="newMessageDialog = true" aria-label="ارسال پیام جدید">
-                {{ t('Message.NewMessage') }}
+            <v-btn color="primary" @click="newMessageDialog = true" aria-label="Send new message">
+                {{ translate('Message.NewMessage') }}
             </v-btn>
 
             <v-dialog v-model="newMessageDialog" max-width="500px">
                 <v-card class="modal1">
-                    <v-card-title>{{ t('Message.NewMessage') }}</v-card-title>
+                    <v-card-title>{{ translate('Message.NewMessage') }}</v-card-title>
                     <v-card-text>
-                        <v-select v-model="newMessageType" :items="categories2" item-value="type" item-text="title" :label="t('Message.SelectCategory')"></v-select>
-                        <v-text-field v-model="newMessageUsername" :label="t('Message.Username')" dense outlined v-if="newMessageType === 'host' || newMessageType === 'guest'"></v-text-field>
-                        <v-text-field v-model="newMessageText" :label="t('Message.MessageText')" dense outlined></v-text-field>
+                        <v-select v-model="newMessageType" :items="categories2" item-value="type" item-text="title" :label="translate('Message.SelectCategory')"></v-select>
+                        <v-text-field v-model="newMessageUsername" :label="translate('Message.Username')" dense outlined v-if="newMessageType === 'host' || newMessageType === 'guest'"></v-text-field>
+                        <v-text-field v-model="newMessageText" :label="translate('Message.MessageText')" dense outlined></v-text-field>
                         <v-file-input
                             @change="handleImageUpload"
-                            :label="t('Message.Image_selection')"
+                            :label="translate('Message.Image_selection')"
                             dense
                             outlined
                             accept="image/*">
@@ -22,8 +22,8 @@
                         <v-img v-if="previewImage" :src="previewImage" class="preview-image"></v-img>
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn color="primary" @click="sendNewMessage" :disabled="!newMessageText || (newMessageType !== 'support' && !newMessageUsername)">{{ t('Message.SendMessage') }}</v-btn>
-                        <v-btn text @click="newMessageDialog = false">{{ t('housescontent.close') }}</v-btn>
+                        <v-btn color="primary" @click="sendNewMessage" :disabled="!newMessageText || (newMessageType !== 'support' && !newMessageUsername)">{{ translate('Message.SendMessage') }}</v-btn>
+                        <v-btn text @click="newMessageDialog = false">{{ translate('housescontent.close') }}</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -55,7 +55,7 @@
                             <v-list-item-content>
                                 <v-list-item-title>{{ message.sender }}</v-list-item-title>
                                 <v-list-item-subtitle :class="{'approved': message.approved, 'pending': !message.approved}">
-                                    {{ message.preview }}
+                                    {{ sanitizeMessage(message.preview) }}
                                 </v-list-item-subtitle>
                             </v-list-item-content>
                             <v-list-item-action>
@@ -63,7 +63,7 @@
                                 <span :class="{'approved': message.approved, 'pending': !message.approved}">
                                     {{ message.status }}
                                 </span>
-                                <v-btn class="message-time2" color="red" @click.stop="closeMessage(message)">{{ t('Message.Close') }}</v-btn>
+                                <v-btn class="message-time2" color="red" @click.stop="closeMessage(message)">{{ translate('Message.Close') }}</v-btn>
                             </v-list-item-action>
                         </v-list-item>
                     </v-list>
@@ -74,30 +74,30 @@
                 <v-card v-if="selectedMessage">
                     <v-card-title>{{ selectedMessage.sender }}</v-card-title>
                     <v-card-text>
-                        {{ selectedMessage.fullText }}
+                        {{ sanitizeMessage(selectedMessage.fullText) }}
                         <div v-if="selectedMessage.image">
                             <v-img v-if="selectedMessage.image" :src="selectedMessage.image" class="message-image"></v-img>
                         </div>
                         <div v-if="selectedMessage.replies">
                             <hr>
                             <div v-for="(reply, index) in selectedMessage.replies" :key="index" class="reply">
-                                <p>{{ reply.text }} <span class="reply-time">{{ reply.time }}</span></p>
+                                <p>{{ sanitizeMessage(reply.text) }} <span class="reply-time">{{ reply.time }}</span></p>
                                 <v-img v-if="reply.image" :src="reply.image" class="reply-image"></v-img>
                             </div>
                         </div>
                     </v-card-text>
                     <v-card-actions>
-                        <v-text-field v-model="replyText" :label="t('Message.Reply')" dense outlined :disabled="selectedMessage.closed"></v-text-field>
+                        <v-text-field v-model="replyText" :label="translate('Message.Reply')" dense outlined :disabled="selectedMessage.closed"></v-text-field>
                         <v-file-input
                             @change="handleReplyImageUpload"
-                            :label="t('Message.Image_selection')"
+                            :label="translate('Message.Image_selection')"
                             dense
                             outlined
                             accept="image/*">
                         </v-file-input>
                         <v-img v-if="replyPreviewImage" :src="replyPreviewImage" class="preview-image"></v-img>
-                        <v-btn color="primary" @click="sendReply" :disabled="selectedMessage.closed">{{ t('Message.SendMessage') }}</v-btn>
-                        <v-btn text @click="selectedMessage = null">{{ t('housescontent.close') }}</v-btn>
+                        <v-btn color="primary" @click="sendReply" :disabled="selectedMessage.closed">{{ translate('Message.SendMessage') }}</v-btn>
+                        <v-btn text @click="selectedMessage = null">{{ translate('housescontent.close') }}</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -107,11 +107,11 @@
 
 <script>
 import UserSidebar from '../Layout.vue';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 
 export default {
     setup() {
-        return { t };
+        return { translate };
     },
     components: {
         UserSidebar,
@@ -131,15 +131,15 @@ export default {
             replyText: "",
             replyImage: null,
             categories: [
-                { title: t("all"), type: "all" },
-                { title: t("host"), type: "host" },
-                { title: t("guest"), type: "guest" },
-                { title: t("support"), type: "support" }
+                { title: translate("all"), type: "all" },
+                { title: translate("host"), type: "host" },
+                { title: translate("guest"), type: "guest" },
+                { title: translate("support"), type: "support" }
             ],
             categories2: [
-                { title: t("host"), type: "host" },
-                { title: t("guest"), type: "guest" },
-                { title: t("support"), type: "support" }
+                { title: translate("host"), type: "host" },
+                { title: translate("guest"), type: "guest" },
+                { title: translate("support"), type: "support" }
             ],
 
             messages: [
@@ -174,7 +174,7 @@ export default {
             const file = event.target.files[0];
             if (file) {
                 if (this.previewImage) {
-                    URL.revokeObjectURL(this.previewImage); // برای جلوگیری از نشست حافظه آزاد کردن قبلی
+                    URL.revokeObjectURL(this.previewImage);
                 }
                 this.previewImage = URL.createObjectURL(file);
                 this.newMessageImage = file;
@@ -212,11 +212,12 @@ export default {
         },
         sendNewMessage() {
             if (this.newMessageText.trim() && this.newMessageType) {
+                const sanitizedText = this.sanitizeMessage(this.newMessageText);
                 const newMessage = {
                     sender: "you",
-                    avatar: "default-avatar.png",
-                    preview: this.newMessageText.slice(0, 20) + "...",
-                    fullText: this.newMessageText,
+                    avatar: "avatar1.svg",
+                    preview: sanitizedText.slice(0, 20) + "...",
+                    fullText: sanitizedText,
                     image: this.previewImage,
                     time: new Date().toLocaleTimeString(),
                     type: this.newMessageType,
@@ -233,13 +234,19 @@ export default {
             }
         },
 
+        sanitizeMessage(message) {
+            message = message.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, '***');
+            message = message.replace(/(\+|0)?9\d{9}/g, '***');
+            return message;
+        },
         sendReply() {
             if (this.replyText.trim() && this.selectedMessage && !this.selectedMessage.closed) {
                 if (!this.selectedMessage.replies) {
                     this.selectedMessage.replies = [];
                 }
+                const sanitizedText = this.sanitizeMessage(this.replyText);
                 this.selectedMessage.replies.push({
-                    text: this.replyText,
+                    text: sanitizedText,
                     image: this.replyImage && this.replyImage.length > 0 ? URL.createObjectURL(this.replyImage[0]) : null,
                     time: new Date().toLocaleTimeString(),
                 });

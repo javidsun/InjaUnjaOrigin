@@ -17,7 +17,7 @@
                         <v-list-item-icon class="v-list-item-icon">
                             <v-icon class="sidebar-icon" large>{{ item.icon }}</v-icon>
                         </v-list-item-icon>
-                        <v-list-item-title class="sidebar-title">{{ t(item.title) }}</v-list-item-title>
+                        <v-list-item-title class="sidebar-title">{{ translate(item.title) }}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list-item-group>
@@ -29,7 +29,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../store/languageStore";
+import { translate } from "../../store/languageStore";
 import { useRouter } from 'vue-router';
 import { Inertia } from '@inertiajs/inertia';
 
@@ -47,19 +47,19 @@ const setActivePage = (page) => {
   activePage.value = page;
 };
 const menuItems = [
-  { title: "UserSidebar.UserDashboard", icon: "mdi-home", page: "UserDashboard", link: "/UserDashboard" },
-  { title: "UserSidebar.createAdForm", icon: "mdi-home", page: "createAdForm", link: "/createAdForm" },
-  { title: "UserSidebar.UserProfile", icon: "mdi-account-multiple", page: "UserProfile", link: "/UserProfile" },
-  { title: "UserSidebar.UserReservations", icon: "mdi-home", page: "MyReservations", link: "/MyReservations" },
-  { title: "UserSidebar.MyAds", icon: "mdi-home", page: "MyAds", link: "/MyAds" },
-  { title: "UserSidebar.houses", icon: "mdi-home-city-outline", page: "houses", link: "/houses" },
-  { title: "UserSidebar.vehicles", icon: "mdi-car", page: "vehicles", link: "/vehicles" },
-  { title: "UserSidebar.events", icon: "mdi-calendar", page: "events", link: "/events" },
-  { title: "UserSidebar.travelers", icon: "mdi-account-group", page: "travelers", link: "/travelers" },
-  { title: "UserSidebar.Messages", icon: "mdi-bell", page: "Messages", link: "/Messages" },
-  { title: "UserSidebar.UserFinance", icon: "mdi-file-chart", page: "UserFinance", link: "/UserFinance" },
-  { title: "UserSidebar.UserSettings", icon: "mdi-cog", page: "UserSettings", link: "/UserSettings" },
-  { title: "UserSidebar.Support", icon: "mdi-currency-usd", page: "Support", link: "/Support" },
+    { title: "UserSidebar.UserDashboard", icon: "mdi-view-dashboard", page: "UserDashboard", link: "/UserDashboard" },
+    { title: "UserSidebar.createAdForm", icon: "mdi-plus-box", page: "createAdForm", link: "/createAdForm" },
+    { title: "UserSidebar.UserProfile", icon: "mdi-account", page: "UserProfile", link: "/UserProfile" },
+    { title: "UserSidebar.UserReservations", icon: "mdi-calendar-check", page: "MyReservations", link: "/MyReservations" },
+    { title: "UserSidebar.MyAds", icon: "mdi-format-list-bulleted", page: "MyAds", link: "/MyAds" },
+    { title: "UserSidebar.houses", icon: "mdi-home-city", page: "houses", link: "/houses" },
+    { title: "UserSidebar.vehicles", icon: "mdi-car", page: "vehicles", link: "/vehicles" },
+    { title: "UserSidebar.events", icon: "mdi-calendar-star", page: "events", link: "/events" },
+    { title: "UserSidebar.travelers", icon: "mdi-account-group", page: "travelers", link: "/travelers" },
+    { title: "UserSidebar.Messages", icon: "mdi-message", page: "Messages", link: "/Messages" },
+    { title: "UserSidebar.UserFinance", icon: "mdi-finance", page: "UserFinance", link: "/UserFinance" },
+    { title: "UserSidebar.UserSettings", icon: "mdi-cog", page: "UserSettings", link: "/UserSettings" },
+    { title: "UserSidebar.Support", icon: "mdi-help-circle", page: "Support", link: "/Support" },
 ];
 
 </script>

@@ -2,7 +2,7 @@
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
             <v-card-title class="dialog-header">
-                <span>{{ t('access.title') }}</span>
+                <span>{{ translate('access.title') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -11,16 +11,16 @@
 
             <v-card-text>
                 <div class="control-section">
-                    <div class="control-label">{{ t('access.zoomControl') }}</div>
+                    <div class="control-label">{{ translate('access.zoomControl') }}</div>
                     <v-slider v-model="zoomLevel" :min="1" :max="10" @input="updateZoom" thumb-label></v-slider>
                 </div>
 
                 <div class="hint-text">
-                    {{ t('access.zoomHint') }}
+                    {{ translate('access.zoomHint') }}
                 </div>
 
                 <div class="control-section">
-                    <div class="control-label">{{ t('access.panControl') }}</div>
+                    <div class="control-label">{{ translate('access.panControl') }}</div>
                     <v-slider v-model="panDirection" :min="0" :max="3" @input="updatePan" thumb-label>
                         <template v-slot:thumb-label="{ value }">
                             {{ panLabels[value] }}
@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="hint-text">
-                    {{ t('access.panHint') }}
+                    {{ translate('access.panHint') }}
                 </div>
             </v-card-text>
         </v-card>
@@ -39,7 +39,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { t } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore";
 import { Inertia } from "@inertiajs/inertia";
 
 const isModalOpen = ref(false);

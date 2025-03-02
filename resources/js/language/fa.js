@@ -338,7 +338,8 @@ export default {
         logout: "خروج از حساب",
         address: "آدرس",
         emergencyContact: "تماس اضطراری",
-        idCard: "شماره کارت"
+        idCard: "شماره کارت",
+        passport:"عکس پاسپورت"
     },
     Ad: {
         NewAd: "آگهی جدید",
@@ -469,7 +470,9 @@ export default {
         Upload_images: 'حداقل 3 تصویر بارگذاری کنید',
         Upload_images2: 'حداکثر 10 تصویر بارگذاری کنید',
         title: 'عنوان',
-
+        Chat:'چت با میزبان',
+        custom_discount: 'تخفیف سفارشی',
+        Search:'جستجو'
     },
     Message: {
         NewMessage: "ارسال پیام جدید",

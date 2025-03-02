@@ -2,20 +2,20 @@
     <UserSidebar class="back">
         <v-container class="payments-container">
             <v-tabs v-model="tab" background-color="primary" dark align-tabs="center">
-                <v-tab value="all">{{ t('Finance.all') }}</v-tab>
-                <v-tab value="cancelled">{{ t('Finance.cancelled') }}</v-tab>
-                <v-tab value="processing">{{ t('Finance.processing') }}</v-tab>
-                <v-tab value="successful">{{ t('Finance.successful') }}</v-tab>
+                <v-tab value="all">{{ translate('Finance.all') }}</v-tab>
+                <v-tab value="cancelled">{{ translate('Finance.cancelled') }}</v-tab>
+                <v-tab value="processing">{{ translate('Finance.processing') }}</v-tab>
+                <v-tab value="successful">{{ translate('Finance.successful') }}</v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
                 <v-tab-item value="all">
                     <v-data-table :headers="headers" :items="filteredPayments" class="elevation-1 payment-table">
                         <template v-slot:item.actions="{ item }">
-                            <v-btn color="primary" @click="showDetails(item)">{{ t('Finance.Details') }}</v-btn>
+                            <v-btn color="primary" @click="showDetails(item)">{{ translate('Finance.Details') }}</v-btn>
                         </template>
                         <template v-slot:item.status="{ item }">
-                            <span :class="getStatusClass(item.status)">{{ t('Finance.' + item.status) }}</span>
+                            <span :class="getStatusClass(item.status)">{{ translate('Finance.' + item.status) }}</span>
                         </template>
                     </v-data-table>
                 </v-tab-item>
@@ -23,52 +23,52 @@
 
             <v-dialog v-model="dialog" max-width="500px">
                 <v-card class="payment-details-card modal1">
-                    <v-card-title class="details-title">{{ t('Finance.paymentDetails') }}</v-card-title>
+                    <v-card-title class="details-title">{{ translate('Finance.paymentDetails') }}</v-card-title>
                     <v-card-text>
-                        <p><strong>{{ t('Finance.id') }}:</strong> {{ selectedPayment.id }}</p>
-                        <p><strong>{{ t('Finance.amount') }}:</strong> {{ finalAmount }} {{ t('housescontent.Euro') }}</p>
-                        <p><strong>{{ t('Finance.status') }}:</strong> <span :class="getStatusClass(selectedPayment.status)">{{ t('Finance.' + selectedPayment.status) }}</span></p>
+                        <p><strong>{{ translate('Finance.id') }}:</strong> {{ selectedPayment.id }}</p>
+                        <p><strong>{{ translate('Finance.amount') }}:</strong> {{ finalAmount }} {{ translate('housescontent.Euro') }}</p>
+                        <p><strong>{{ translate('Finance.status') }}:</strong> <span :class="getStatusClass(selectedPayment.status)">{{ translate('Finance.' + selectedPayment.status) }}</span></p>
 
                         <v-divider class="my-4"></v-divider>
-                        <v-card-title class="details-subtitle">{{ t('Finance.paymentDetails') }}</v-card-title>
+                        <v-card-title class="details-subtitle">{{ translate('Finance.paymentDetails') }}</v-card-title>
 
                         <v-card-text>
                             <v-row>
-                                <v-col cols="6">{{ t('Finance.totalAmount') }}:</v-col>
-                                <v-col cols="6" class="text-right">{{ totalAmount }} {{ t('housescontent.Euro') }}</v-col>
+                                <v-col cols="6">{{ translate('Finance.totalAmount') }}:</v-col>
+                                <v-col cols="6" class="text-right">{{ totalAmount }} {{ translate('housescontent.Euro') }}</v-col>
                             </v-row>
                             <v-row>
-                                <v-col cols="6">{{ t('Finance.extraFee') }}:</v-col>
-                                <v-col cols="6" class="text-right">{{ extraFee }} {{ t('housescontent.Euro') }}</v-col>
+                                <v-col cols="6">{{ translate('Finance.extraFee') }}:</v-col>
+                                <v-col cols="6" class="text-right">{{ extraFee }} {{ translate('housescontent.Euro') }}</v-col>
                             </v-row>
                             <v-row>
-                                <v-col cols="6">{{ t('Finance.tax') }} (10%):</v-col>
-                                <v-col cols="6" class="text-right">{{ tax }} {{ t('housescontent.Euro') }}</v-col>
+                                <v-col cols="6">{{ translate('Finance.tax') }} (10%):</v-col>
+                                <v-col cols="6" class="text-right">{{ tax }} {{ translate('housescontent.Euro') }}</v-col>
                             </v-row>
                             <v-row>
-                                <v-col cols="6" class="font-weight-bold">{{ t('Finance.finalAmount') }}:</v-col>
-                                <v-col cols="6" class="text-right font-weight-bold">{{ finalAmount }} {{ t('housescontent.Euro') }}</v-col>
+                                <v-col cols="6" class="font-weight-bold">{{ translate('Finance.finalAmount') }}:</v-col>
+                                <v-col cols="6" class="text-right font-weight-bold">{{ finalAmount }} {{ translate('housescontent.Euro') }}</v-col>
                             </v-row>
                         </v-card-text>
 
                         <v-divider class="my-4"></v-divider>
-                        <v-card-title class="details-subtitle">{{ t('Finance.paymentMethod') }}</v-card-title>
+                        <v-card-title class="details-subtitle">{{ translate('Finance.paymentMethod') }}</v-card-title>
                         <v-card-text>
-                            <p><strong>{{ t('Finance.paymentMethod') }}:</strong> {{ selectedPaymentMethod }}</p>
+                            <p><strong>{{ translate('Finance.paymentMethod') }}:</strong> {{ selectedPaymentMethod }}</p>
                         </v-card-text>
 
                         <v-divider class="my-4"></v-divider>
                         <v-card-title class="details-subtitle">{{ t('Finance.locationDetails') }}</v-card-title>
                         <v-card-text>
-                            <p><strong>{{ t('Finance.location') }}:</strong> {{ selectedFinance.location }}</p>
-                            <p><strong>{{ t('Finance.host') }}:</strong> {{ selectedFinance.host }}</p>
-                            <p><strong>{{ t('Finance.rating') }}:</strong> {{ selectedFinance.rating }}</p>
-                            <p><strong>{{ t('Finance.type') }}:</strong> {{ selectedFinance.type }}</p>
-                            <p><strong>{{ t('Finance.period') }}:</strong> {{ selectedFinance.period }}</p>
+                            <p><strong>{{ translate('Finance.location') }}:</strong> {{ selectedFinance.location }}</p>
+                            <p><strong>{{ translate('Finance.host') }}:</strong> {{ selectedFinance.host }}</p>
+                            <p><strong>{{ translate('Finance.rating') }}:</strong> {{ selectedFinance.rating }}</p>
+                            <p><strong>{{ translate('Finance.type') }}:</strong> {{ selectedFinance.type }}</p>
+                            <p><strong>{{ translate('Finance.period') }}:</strong> {{ selectedFinance.period }}</p>
                         </v-card-text>
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn color="primary" @click="dialog = false">{{ t('Finance.close') }}</v-btn>
+                        <v-btn color="primary" @click="dialog = false">{{ translate('Finance.close') }}</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -80,11 +80,11 @@
 import UserSidebar from './Layout.vue';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { t } from "../../store/languageStore";
+import { translate } from "../../store/languageStore";
 
 export default {
     setup() {
-        return { t };
+        return { translate };
     },
     components: {
         UserSidebar,
@@ -97,10 +97,10 @@ export default {
             selectedPaymentMethod: 'Credit card',
             tab: 'all',
             headers: [
-                { text: t('Finance.id'), value: 'id' },
-                { text: t('Finance.finalAmount'), value: 'finalAmount' },
-                { text: t('Finance.status'), value: 'status' },
-                { text: t('Finance.actions'), value: 'actions', sortable: false }
+                { text: translate('Finance.id'), value: 'id' },
+                { text: translate('Finance.finalAmount'), value: 'finalAmount' },
+                { text: translate('Finance.status'), value: 'status' },
+                { text: translate('Finance.actions'), value: 'actions', sortable: false }
             ],
             payments: [
                 { id: 12554, status: 'successful', financeId: 0 },
@@ -233,16 +233,16 @@ export default {
             const doc = new jsPDF();
 
             doc.setFontSize(18);
-            doc.text(t('Finance.successfulPayments'), 10, 10);
+            doc.text(translate('Finance.successfulPayments'), 10, 10);
 
             const tableData = successfulPayments.map(payment => [
                 payment.id,
                 `${payment.finalAmount} یورو`,
-                t('Finance.' + payment.status)
+                translate('Finance.' + payment.status)
             ]);
 
             doc.autoTable({
-                head: [[t('Finance.id'), t('Finance.finalAmount'), t('Finance.status')]],
+                head: [[translate('Finance.id'), translate('Finance.finalAmount'), translate('Finance.status')]],
                 body: tableData,
                 startY: 20,
                 theme: 'grid',

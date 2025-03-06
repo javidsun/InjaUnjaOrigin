@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.0.96/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/roboto@latest/index.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@3.3.7/lib/styles/main.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Vite + Vue</title>
+</head>
+<body>
+<script>
+    const savedTheme = localStorage.getItem("theme") || "light"; // Default to light mode
+    document.body.className = savedTheme === "dark" ? "dark-mode" : "light-mode";
+</script>
+<div id="app"></div>
+<script type="module" src="/resources/js/app.js"></script>
+</body>
+</html>

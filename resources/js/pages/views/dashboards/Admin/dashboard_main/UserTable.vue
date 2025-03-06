@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <VCard class="dashboard-card">
       <VDataTable
-          :headers="headers.map(header => ({ ...header, text:  t(`userinfo.${header.title}`) }))"
+          :headers="headers.map(header => ({ ...header, text:  translate(`userinfo.${header.title}`) }))"
 
           :items="userData"
           item-value="id"
@@ -57,16 +57,16 @@
 </template>
 
 <script setup>
-import { translate } from "../../../../store/languageStore";
+import { translate } from "../../../../../store/languageStore.js";
 
-const avatar1 = './public/avatar-1.png';
-const avatar2 = './public/avatar-2.png';
-const avatar3 = './public/avatar-3.png';
-const avatar4 = './public/avatar-4.png';
-const avatar5 = './public/avatar-5.png';
-const avatar6 = './public/avatar-6.png';
-const avatar7 = './public/avatar-7.png';
-const avatar8 = './public/avatar-8.png';
+const avatar1 = './avatar1.svg';
+const avatar2 = './avatar2.svg';
+const avatar3 = './avatar3.svg';
+const avatar4 = './avatar4.svg';
+const avatar5 = './avatar1.svg';
+const avatar6 = './avatar1.svg';
+const avatar7 = './avatar-1.png';
+const avatar8 = './avatar-2.png';
 const headers = [
   {
     title: "user",

@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { translate } from "../../../../store/languageStore";
+import { translate } from "../../../../../store/languageStore.js";
 
 const cards = [
   {
@@ -45,7 +45,7 @@ const cards = [
 </script>
 
 <style scoped>
-@import '../../../../../../resources/css/@core/template/lib/@layouts/styles/cards.scss';
+@import '../../../../../../css/@core/template/lib/@layouts/styles/cards.scss';
 
 .custom-card {
   background-color: var(--backgroundcards3-color--groups) !important;

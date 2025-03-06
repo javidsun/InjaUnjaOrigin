@@ -57,12 +57,12 @@ import Footer from "../../../layout/Footer.vue";
 import Sidebar from "../../Sidebar.vue";
 const imageUrl = '/illustration-1.png';
 const imageUrl2 = '/illustration-2.png';
-import warning from '../../dashboards/dashboard_main/warning.vue'
-import BasicStatistics from '../../dashboards/dashboard_main/BasicStatistics.vue'
-import Report from '../Sidebar_sections/Reports.vue'
-import Services from '../../dashboards/dashboard_main/Services.vue'
-import functional from '../../dashboards/dashboard_main/functional.vue'
-import UserTable from '../../dashboards/dashboard_main/UserTable.vue'
+import warning from './dashboard_main/warning.vue'
+import BasicStatistics from './dashboard_main/BasicStatistics.vue'
+import Report from './Sidebar_sections/Reports.vue'
+import Services from './dashboard_main/Services.vue'
+import functional from './dashboard_main/functional.vue'
+import UserTable from './dashboard_main/UserTable.vue'
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

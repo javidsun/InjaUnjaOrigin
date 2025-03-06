@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { translate } from "../../../../store/languageStore";
+import { translate } from "../../../../../store/languageStore.js";
 
 export default {
   name: "Warning",
@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style scoped>
-@import '../../../../../../resources/css/@core/template/lib/@layouts/styles/cards.scss';
+@import '../../../../../../css/@core/template/lib/@layouts/styles/cards.scss';
 
 .card-container {
   padding-top: 50px;

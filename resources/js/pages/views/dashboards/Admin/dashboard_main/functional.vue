@@ -9,7 +9,7 @@
         <VIcon :color="item.color" size="24">{{ item.icon }}</VIcon>
         <div class="ms-3">
           <div class="text-h6 mb-1 fontsize">{{ item.stats }}</div>
-          <div class="text-body-6 text-h6 text-secondary2  fontsize">{{ t(item.title) }}</div>
+          <div class="text-body-6 text-h6 text-secondary2  fontsize">{{ translate(item.title) }}</div>
         </div>
       </VCard>
     </div>
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { translate } from "../../../../store/languageStore";
+import { translate } from "../../../../../store/languageStore.js";
 
 const performanceStats = [
   { title: "functional.todayReservations", stats: '35', icon: 'mdi-calendar-check', color: 'primary' },
@@ -27,7 +27,7 @@ const performanceStats = [
 </script>
 
 <style >
-@import '../../../../../../resources/css/@core/template/lib/@layouts/styles/cards.scss';
+@import '../../../../../../css/@core/template/lib/@layouts/styles/cards.scss';
 
 .text-body-1{
   font-size: 20px !important;

@@ -18,7 +18,7 @@
   </VCard>
 </template>
 <script setup>
-import { translate } from "../../../../store/languageStore";
+import { translate } from "../../../../../store/languageStore.js";
 import { ref } from 'vue';
 
 const stats = [
@@ -31,7 +31,7 @@ const stats = [
 
 <style>
 
-@import '../../../../../../resources/css/@core/template/lib/@layouts/styles/cards.scss';
+@import '../../../../../../css/@core/template/lib/@layouts/styles/cards.scss';
 
 .main-card2 {
   height: 100%;

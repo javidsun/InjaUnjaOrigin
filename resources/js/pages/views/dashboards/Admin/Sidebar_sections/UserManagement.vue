@@ -31,7 +31,7 @@ import Searchbar from "../../../../components/layout/Header/search/Searchbar.vue
 import Darkmood from "../../../../components/layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../../../components/layout/Header/LanguageSwitcher.vue";
 import Footer from "../../../../components/layout/Footer.vue";
-import Sidebar from "../../Sidebar.vue";
+import Sidebar from "../../../Sidebar.vue";
 
 const isDarkMode = ref(true);
 const drawer = ref(true);

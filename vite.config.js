@@ -7,7 +7,7 @@ import path from 'path';
 export default defineConfig({
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, 'resources/js'),  // Assicurati che il percorso punti alla cartella giusta
+            '@': path.resolve(__dirname, 'resources/js'),
         },
     },
     plugins: [

@@ -144,6 +144,8 @@ export default {
         login: 'وارد شوید',
         or: 'یا',
         fillAllFields: 'لطفا تمام فیلدها را پر کنید.',
+        name:'نام و نام خانوادگی',
+        confirmEmail:'تایید ایمیل'
 
     },
     login: {
@@ -159,16 +161,28 @@ export default {
         newUser: "اکانت ندارید؟",
         createAccount: "اکانت بسازید",
         or: "یا",
+        emailRequired: 'ایمیل الزامی است',
+        emailInvalid: 'ایمیل معتبر نیست',
+        passwordRequired: 'رمز عبور الزامی است',
+        passwordLength: 'رمز عبور باید حداقل ۸ کاراکتر باشد',
+        fillAllFields: 'لطفاً تمام فیلدها را پر کنید',
+        loginSuccess: 'ورود با موفقیت انجام شد',
+        loginError: 'خطا در ورود. لطفاً دوباره تلاش کنید.',
+        passwordResetSent: 'دستورالعمل‌های بازنشانی رمز عبور ارسال شد.',
+        socialLoginStarted: 'ورود با {provider} آغاز شد.',
+        close: 'بستن',
+        tooManyAttempts: 'تلاش‌های زیاد برای ورود. لطفاً بعداً تلاش کنید.',
     },
     forgotPassword: {
-        greeting: "فراموشی رمز عبور؟",
-        instruction: "ایمیل خود را وارد کنید تا دستورالعمل بازیابی رمز عبور برای شما ارسال شود.",
+        greeting: "فراموشی رمز عبور",
+        instruction: "ایمیل خود را وارد کنید تا لینک بازیابی را دریافت کنید.",
         email: "ایمیل",
-        emailPlaceholder: "مثال: johndoe@email.com",
+        emailPlaceholder: "ایمیل خود را وارد کنید",
         sendResetLink: "ارسال لینک بازیابی",
         backToLogin: "بازگشت به صفحه ورود",
-        fillAllFields: "لطفاً ایمیل خود را وارد کنید.",
-        resetLinkSent: "لینک بازیابی به ایمیل شما ارسال شد.",
+        fillAllFields: "لطفاً تمامی فیلدها را پر کنید.",
+        resetLinkSent: "لینک بازیابی ارسال شد!",
+
     },
     verifyEmail: {
         greeting: 'ایمیل خود را تأیید کنید ✉️',
@@ -1196,6 +1210,13 @@ export default {
         termsUpdatesTitle: 'درباره به‌روزرسانی‌های شرایط ما',
         termsUpdatesDescription: 'لطفاً این اطلاعات را درباره به‌روزرسانی‌های شرایط ما مرور کنید.',
     },
+    injaunja:{
+        title:'اینجا اونجا',
+        description:'اینجا اونجا یک استارتاپ نوآورانه است که بر روی خدمات مبتنی بر مکان تمرکز دارد...',
+        teamTitle:'تیم ما',
+
+    },
+
 };
 
 

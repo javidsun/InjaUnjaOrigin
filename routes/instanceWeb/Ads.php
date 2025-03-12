@@ -35,3 +35,5 @@ Route::post('/api/reservations', [ReservationController::class, 'createReservati
 Route::post('/api/bookings/{id}/confirm', [BookingController::class, 'confirmBooking'])->middleware('auth:api');
 Route::post('/api/bookings/{id}/cancel', [BookingController::class, 'cancelBooking'])->middleware('auth:api');
 
+
+

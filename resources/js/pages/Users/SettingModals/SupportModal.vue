@@ -70,6 +70,7 @@ import { ref, computed } from 'vue';
 import { translate } from "@/store/languageStore.js";
 
 
+
 const isSupportModalOpen = ref(false);
 
 const openModal = () => {

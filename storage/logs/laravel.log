@@ -10219,3 +10219,10 @@
 [stacktrace]
 #0 {main}
 "} 
+[2025-03-12 08:37:06] local.INFO: Ads.php  
+[2025-03-12 08:37:06] local.INFO: Setting.php  
+[2025-03-12 08:37:06] local.INFO: auth.php  
+[2025-03-12 08:37:06] local.INFO: dashboards.php  
+[2025-03-12 08:37:06] local.INFO: frontend.php  
+[2025-03-12 08:37:06] local.INFO: general.php  
+[2025-03-12 08:37:06] local.INFO: public.php  

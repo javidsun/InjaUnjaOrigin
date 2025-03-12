@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="openRegisterDialog" >
+    <v-dialog v-model="openRegisterDialog">
         <v-container class="container__register">
             <v-row align="center" justify="center">
                 <v-col cols="12" sm="8" md="6" lg="4">
@@ -93,7 +93,7 @@ export default {
             password: '',
             showPassword: false,
             loading: false,
-            logo:null,
+            logo: null,
             error: null,
         };
     },
@@ -101,8 +101,8 @@ export default {
         this.logo = InjaUnjaLogo;
     },
     methods: {
-        coseDialog(){
-          this.$emit('closeRegisterDialog');
+        coseDialog() {
+            this.$emit('closeRegisterDialog');
         },
         async register() {
             this.loading = true;
@@ -114,11 +114,11 @@ export default {
                 password: this.password,
                 password_confirmation: this.password, // Per la conferma in Laravel
             };
-            console.log('form data sarebe : : : ',formData);
+            console.log('form data sarebe : : : ', formData);
 
             try {
                 await apiService.axiosToBackend().get('/sanctum/csrf-cookie');
-                const response =await apiService.axiosToBackend().post('/api/register', formData);
+                const response = await apiService.axiosToBackend().post('/api/register', formData);
 
                 if (response.data.success) {
                     console.log('Registrazione completata:', response.data);

@@ -57,7 +57,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import ApexChart from "vue3-apexcharts";
-import { translate } from "../../../../store/languageStore";
+import { translate } from "../../../store/languageStore.js";
 
 const conversionRate = 25;
 
@@ -78,15 +78,15 @@ const topCities = ref([
 const computedRevenueByCategory = computed(() =>
     revenueByCategory.value.map((item) => ({
       ...item,
-      category: t(item.categoryKey),
+      category: translate(item.categoryKey),
     }))
 );
 
 const computedTopCities = computed(() =>
     topCities.value.map((item) => ({
       ...item,
-      city: t(item.cityKey),
-      country: t(item.countryKey),
+      city: translate(item.cityKey),
+      country: translate(item.countryKey),
     }))
 );
 
@@ -98,7 +98,7 @@ const tableHeaders = ref([
 const computedTableHeaders = computed(() =>
     tableHeaders.value.map((header) => ({
       ...header,
-      text: t(header.textKey),
+      text: translate(header.textKey),
     }))
 );
 

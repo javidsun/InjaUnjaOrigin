@@ -102,6 +102,8 @@ export default {
         login: 'Login',
         or: 'or',
         fillAllFields: 'Please fill all fields.',
+        name:'First name & Last Name',
+        confirmEmail:'confirmEmail'
     },
     login: {
         greeting: 'Accommodation, vehicle and tourist tour',
@@ -116,17 +118,29 @@ export default {
         newUser: "New here?",
         createAccount: "Create an account",
         or: "or",
+        emailRequired: "Email is required",
+        emailInvalid: "Invalid email address",
+        passwordRequired: "Password is required",
+        passwordLength: "Password must be at least 8 characters long",
+        fillAllFields: "Please fill in all fields",
+        loginSuccess: "Login successful",
+        loginError: "Login failed. Please try again.",
+        passwordResetSent: "Password reset instructions have been sent.",
+        socialLoginStarted: "Login with {provider} started.",
+        close: "Close",
+        tooManyAttempts: "Too many login attempts. Please try again later."
     },
     forgotPassword: {
-        greeting: "Forgot Password?",
-        instruction: "Enter your email and we'll send you instructions to reset your password.",
-        email: "Email",
-        emailPlaceholder: "johndoe@email.com",
-        sendResetLink: "Send Reset Link",
-        backToLogin: "Back to login",
-        fillAllFields: "Please fill in your email address.",
-        resetLinkSent: "Reset link has been sent to your email.",
+        greeting: 'فراموشی رمز عبور',
+        instruction: 'ایمیل خود را وارد کنید تا لینک بازیابی را دریافت کنید.',
+        email: 'ایمیل',
+        emailPlaceholder: 'ایمیل خود را وارد کنید',
+        sendResetLink: 'ارسال لینک بازیابی',
+        backToLogin: 'بازگشت به صفحه ورود',
+        fillAllFields: 'لطفاً تمامی فیلدها را پر کنید.',
+        resetLinkSent: 'لینک بازیابی ارسال شد!',
     },
+
     verifyEmail: {
         greeting: 'Verify Your Email ✉️',
         instructions:
@@ -886,5 +900,11 @@ export default {
         hostSectionDescription: 'Create a Unique Danish Code. As of October 31, 2023, the Danish tax authorities (Skat.dk) have disabled the ability to create a new unique code. Hosts are able to…',
         termsUpdatesTitle: 'About Our Terms Updates',
         termsUpdatesDescription: 'Please review this information about our terms updates.',
+    },
+    injaunja:{
+        title:'InjaUnja',
+        description:'InjaUnja is an innovative startup focused on location-based services...',
+        teamTitle:'Our Team',
+
     },
 };

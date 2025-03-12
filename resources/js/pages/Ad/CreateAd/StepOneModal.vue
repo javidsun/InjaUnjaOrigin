@@ -13,11 +13,12 @@
                 <v-card class="modal-container">
                 <v-card-title class="text-center modal-title">
                     <v-img v-if="openModal === 'amenities'" src="/Untitled design (1) 10.png" contain height="100"></v-img>
-                    <v-img class="modal-img" v-else-if="openModal === 'photos'" src="/Untitled design (8) 2.png" contain height="100"></v-img>
+                    <v-img class="modal-img" v-else-if="openModal === 'photos'" src="/photos.png" contain height="100"></v-img>
+                    <v-img class="modal-img" v-else-if="openModal === 'modal4'" src="/Untitled design (2) 14.png" contain height="100"></v-img>
                     <v-img v-else-if="openModal === 'modalStep3'" src="/Untitled design (1) 10.png" contain height="200"></v-img>
                     <v-img v-else-if="openModal === 'Step3-1'" src="/Untitled design (1) 14.png" contain height="150"></v-img>
                     <v-img v-else-if="openModal === 'thirdStepSetPrice'" src="/Untitled design (1) 13.png" contain height="100"></v-img>
-                    <v-img v-else-if="openModal === 'discountModal'" src="/Untitled design (1) 14.png" contain height="100"></v-img>
+                    <v-img v-else-if="openModal === 'discountModal'" src="/Untitled design (1) 13.png" contain height="100"></v-img>
 
                     <h3 v-if="openModal === 'amenities'">{{ translate('Ad.highlight_your_place') }}</h3>
                     <h3 v-else-if="openModal === 'photos'">{{ translate('Ad.add_photos_of_your_place') }}</h3>
@@ -336,6 +337,8 @@
                                             class="mb-2 cursor-pointer"
                                             @click="selectDiscount(discount)"
                                         >
+                                            <br>
+                                            <br>
                                             <v-card-title class="font-weight-bold3 text-right">{{ translate(discount.title) }}</v-card-title>
                                             <v-card-subtitle class="text-right">{{ translate(discount.description) }}</v-card-subtitle>
                                             <v-card-actions class="justify-start">

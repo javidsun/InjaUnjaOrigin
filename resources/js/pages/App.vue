@@ -86,7 +86,7 @@ watch(isDarkMode, (newValue) => {
     --v-surface: #ecf1ff;
     --backgroundcards-color--groups: #2a2a3a;
     --backgroundcards2-color--groups: #cccccc;
-    --backgroundcards3-color--groups: #3b3b3b;
+    --backgroundcards3-color--groups: #a3b1be;
     --text-card-color--groups: #cccccc;
     --backgroundcards-color--profile: #2c294f;
     --border-color:#2a2a3b;

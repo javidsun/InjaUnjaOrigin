@@ -36,6 +36,7 @@
         "vue3-apexcharts": "^1.8.0",
         "vue3-snackbar": "^2.4.0",
         "vuetify": "^3.7.11",
-        "vuex": "^4.1.0"
+        "vuex": "^4.1.0",
+        "xlsx": "^0.18.5"
     }
 }

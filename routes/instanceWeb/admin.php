@@ -38,9 +38,6 @@ Route::get('/Finance', function () {
 Route::get('/Notifications', function () {
     return Inertia::render('Admin/Sidebar_sections/Notifications');
 });
-Route::get('/PaymentReports', function () {
-    return Inertia::render('Admin/Sidebar_sections/PaymentReports');
-});
 Route::get('/Reports', function () {
     return Inertia::render('Admin/Sidebar_sections/Reports');
 });
@@ -56,4 +53,9 @@ Route::get('/SupportSystem', function () {
 Route::get('/UserManagement', function () {
     return Inertia::render('Admin/Sidebar_sections/UserManagement');
 });
-
+    Route::get('/AdsHouse', function () {
+    return Inertia::render('Admin/Sidebar_sections/AdsHouse');
+});
+Route::get('/CancellationsDetails', function () {
+    return Inertia::render('Admin/Sidebar_sections/CancellationsDetails');
+});

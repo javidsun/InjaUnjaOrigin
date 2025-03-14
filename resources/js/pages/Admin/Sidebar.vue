@@ -17,7 +17,7 @@
                       <v-list-item-icon class="v-list-item-icon">
                           <v-icon class="sidebar-icon" large>{{ item.icon }}</v-icon>
                       </v-list-item-icon>
-                      <v-list-item-title class="sidebar-title">{{ translate(item.title) }}</v-list-item-title>
+                      <v-list-item-title class="sidebar-title sidebar2">{{ translate(item.title) }}</v-list-item-title>
                   </v-list-item-content>
               </v-list-item>
           </v-list-item-group>
@@ -49,15 +49,15 @@ const menuItems = [
     { title: "sidebar.dashboard", icon: "mdi-home", page: "AdminDashboard", link: "/AdminDashboard" },
     { title: "sidebar.userManagement", icon: "mdi-account-multiple", page: "UserManagement", link: "/UserManagement" },
     { title: "sidebar.ads", icon: "mdi-home", page: "ads_management", link: "/ads_management" },
-    { title: "sidebar.houses", icon: "mdi-home-city-outline", page: "houses", link: "/dashboard/houses" },
-    { title: "sidebar.vehicles", icon: "mdi-car", page: "vehicles", link: "/dashboard/vehicles" },
-    { title: "sidebar.events", icon: "mdi-calendar", page: "events", link: "/dashboard/events" },
-    { title: "sidebar.travelers", icon: "mdi-account-group", page: "travelers", link: "/dashboard/travelers" },
+    { title: "sidebar.houses", icon: "mdi-home-city-outline", page: "houses", link: "/AdsHouse" },
+    { title: "sidebar.vehicles", icon: "mdi-car", page: "vehicles", link: "/vehicles" },
+    { title: "sidebar.events", icon: "mdi-calendar", page: "events", link: "/events" },
+    { title: "sidebar.travelers", icon: "mdi-account-group", page: "travelers", link: "/travelers" },
+    { title: "sidebar.finance", icon: "mdi-currency-usd", page: "Finance", link: "/Finance" },
+    { title: "sidebar.reserv", icon: "mdi-calendar-check", page: "ReservationManagement", link: "/ReservationManagement" },
     { title: "sidebar.analytics", icon: "mdi-chart-areaspline", page: "Analytics", link: "/Analytics" },
     { title: "sidebar.notifications", icon: "mdi-bell", page: "Notifications", link: "/Notifications" },
-    { title: "sidebar.reports", icon: "mdi-file-chart", page: "PaymentReports", link: "/PaymentReports" },
-    { title: "sidebar.settings", icon: "mdi-cog", page: "Settings", link: "/Settings" },
-    { title: "sidebar.finance", icon: "mdi-currency-usd", page: "Finance", link: "/Finance" },
+    { title: "sidebar.SupportSystem", icon: "mdi-headset", page: "SupportSystem", link: "/SupportSystem" },
 
 ];
 
@@ -102,6 +102,9 @@ const menuItems = [
     max-width: 150px;
     font-size: 10px;
   }
+    .sidebar2{
+        font-size: 12px;
+    }
 }
 
 .dark-mode {

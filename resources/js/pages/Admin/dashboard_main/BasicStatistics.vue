@@ -32,7 +32,11 @@ const stats = [
 <style>
 
 @import '../../../../css/@core/template/lib/@layouts/styles/cards.scss';
-
+@media (max-width: 950px) {
+    .fontsize {
+        font-size: 12px!important;
+    }
+}
 .main-card2 {
   height: 100%;
   width: 100%;

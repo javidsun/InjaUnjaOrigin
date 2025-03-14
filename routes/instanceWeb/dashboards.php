@@ -8,7 +8,7 @@ Route::get('/dashboard', function () {
 });
 
 Route::get('/AdminDashboard', function () {
-    return Inertia::render('views/dashboards/Admin/AdminDashboard');
+    return Inertia::render('Admin/AdminDashboard');
 });
 
 Route::get('/UserDashboard', function () {

@@ -1,11 +1,11 @@
-<template class="main">
-    <UserSidebar>
-        <v-container fluid class="d-flex ">
-            <v-container class="content text-center">
+<template class="main Container">
+    <UserSidebar class="d-flex Container">
+        <v-container fluid class="d-flex Container">
+            <v-container class="Container text-center">
             <v-btn icon @click="$router.go(-1)" class="back-btn">
                 <v-icon>mdi-arrow-right</v-icon>
             </v-btn>
-            <h2 class="text-h5 font-weight-bold ">{{ translate('Ad.NewAd') }}</h2>
+            <h2 class="text-h5 Txt font-weight-bold ">{{ translate('Ad.NewAd') }}</h2>
             <br>
             <p class="text-body-2 Txt">{{ translate('Ad.SelectOption') }}</p>
 
@@ -23,11 +23,12 @@
                     </v-card>
                 </v-col>
                 <v-col cols="4" sm="6" md="3">
-                    <v-card class="option-card Txt2" @click="comingSoon">
+                    <v-card class="option-card Txt2" @click="showCompanionModal = true">
                         <v-img src="/Untitled design (1) 12.png" contain height="100"></v-img>
                         <v-btn class="mt-2 option-card2 Txt2 " block>{{ translate('Ad.Companion') }}</v-btn>
                     </v-card>
                 </v-col>
+
             </v-row>
         </v-container>
         </v-container>
@@ -35,6 +36,10 @@
         <StepOneModal
             :modelValue="StepOne"
             @update:modelValue="StepOne = $event"
+        />
+        <Companion
+            :modelValue="showCompanionModal"
+            @update:modelValue="showCompanionModal = $event"
         />
 
         <Footer />
@@ -49,8 +54,10 @@ import Footer from '../layout/Footer.vue';
 import StepOneModal from './CreateAd/StepOneModal.vue';
 import { translate } from "../../store/languageStore";
 import UserSidebar from '../Users/Layout.vue';
+import Companion from './CreateAd/Companion.vue';
 
 const StepOne = ref(false);
+const showCompanionModal = ref(false);
 
 const comingSoon = () => {
     alert("Coming soon!");

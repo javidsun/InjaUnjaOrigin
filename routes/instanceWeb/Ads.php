@@ -25,6 +25,7 @@ Route::get('/MyReservations', function () {
     return Inertia::render('Users/Reserv/MyReservations');
 });
 
+
 Route::get('/api/categories', [CategoryController::class, 'getCategories']);
 Route::get('/api/ads', [AdController::class, 'getAds']);
 Route::post('/api/ads', [AdController::class, 'createAd']);

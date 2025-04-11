@@ -351,12 +351,16 @@ export default {
         ModernHouse1: "خانه مدرن شماره 1",
         ModernHouseDescription1: "خانه‌ای مدرن با امکانات کامل.",
         ModernHouse2: "خانه زیبا شماره 2",
-        ModernHouseDescription2: "مکانی آرام و زیبا برای اقامت."
+        ModernHouseDescription2: "مکانی آرام و زیبا برای اقامت.",
+        Companion: "همسفر",
+        House: "اقامتگاه"
+
     },
     TopRatedAd: {
-        Title: "خانه برتر",
-        Description: "این خانه بیشترین امتیاز را دریافت کرده است.",
+        Title: "برترین اقامتگاه",
+        Description: "اقامتگاه‌های برتر با بهترین امتیازات را مشاهده کنید.",
         ViewButton: "مشاهده"
+
     },
 
     profile: {
@@ -1574,6 +1578,47 @@ export default {
         "9": "اکتبر",
         "10": "نوامبر",
         "11": "دسامبر"
+    },
+    CompanionAd: {
+        DefaultTitle: "همسفر مورد نظر خود را پیدا کنید",
+        DefaultDescription: "به دنبال همسفر برای سفر بعدی خود هستید؟ اینجا می‌توانید همسفر مناسب خود را پیدا کنید.",
+        ViewButton: "مشاهده"
+    },
+    companioncontent: {
+        list: "لیست همراهان",
+        map: "نقشه",
+        no_companions: "همراهی با این مشخصات یافت نشد",
+        seeMore: "مشاهده بیشتر",
+        map_title: "همراهان سفر روی نقشه",
+        contact_title: "تماس با همراه",
+        destination: "مقصد:",
+        dates: "تاریخ‌های سفر:",
+        budget: "بودجه:",
+        travel_style: "سبک سفر:",
+        message_label: "پیام شما",
+        send_request: "ارسال درخواست",
+        close: "بستن",
+        detail_title: "جزئیات همراه",
+        user: "کاربر:",
+        gender: "جنسیت:",
+        style: "سبک:",
+        description: "توضیحات:",
+        contact: "تماس",
+        contact_form: "فرم تماس",
+        login_required: "برای تماس با همراهان باید وارد شوید",
+        error_occurred: "خطایی رخ داد",
+        type_message: "پیامتان را بنویسید",
+        no_messages:"پیامی ارسال نشده",
+        categories: {
+            all: "همه",
+            backpacker: "کوله گردی",
+            family: "خانوادگی",
+            couple: "زوج",
+            business: "تجاری",
+            adventure: "ماجراجویی",
+            luxury: "لوکس",
+            cultural: "فرهنگی"
+        }
     },
 };
 

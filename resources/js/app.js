@@ -1,8 +1,8 @@
 import '../css/app.css';
 import './bootstrap';
 
-import { createApp, h } from 'vue';
-import { createInertiaApp, Link } from '@inertiajs/vue3';
+import {createApp, h} from 'vue';
+import {createInertiaApp, Link} from '@inertiajs/vue3';
 import vuetify from '../js/pages/plugins/vuetify/vuetify.js';
 import pinia from '../js/pages/plugins/pinia/index';
 import App from "../js/pages/App.vue";
@@ -35,8 +35,8 @@ createInertiaApp({
         }
         return page();
     },
-    setup({ el, App, props, plugin }) {
-        const vue = createApp({ render: () => h(App, props) })
+    setup({el, App, props, plugin}) {
+        const vue = createApp({render: () => h(App, props)})
             .use(plugin)
             .use(vuetify)
             .use(pinia)

@@ -6,7 +6,7 @@
             <v-list-item v-for="ad in filteredAds" :key="ad.id" @click="$router.push(`/ads/${ad.id}`)">
                 <v-list-item-content>
                     <v-list-item-title>{{ ad.title }}</v-list-item-title>
-                    <v-list-item-subtitle>{{ ad.price }} تومان</v-list-item-subtitle>
+                    <v-list-item-subtitle>{{ ad.price }} Euro</v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
         </v-list>

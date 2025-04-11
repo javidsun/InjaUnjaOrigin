@@ -55,7 +55,7 @@ const menuItems = [
     { title: "UserSidebar.houses", icon: "mdi-home-city", page: "houses", link: "/houses" },
     { title: "UserSidebar.vehicles", icon: "mdi-car", page: "vehicles", link: "/vehicles" },
     { title: "UserSidebar.events", icon: "mdi-calendar-star", page: "events", link: "/events" },
-    { title: "UserSidebar.travelers", icon: "mdi-account-group", page: "travelers", link: "/travelers" },
+    { title: "UserSidebar.travelers", icon: "mdi-account-group", page: "travelersAds", link: "/travelersAds" },
     { title: "UserSidebar.Messages", icon: "mdi-message", page: "Messages", link: "/Messages" },
     { title: "UserSidebar.UserFinance", icon: "mdi-finance", page: "UserFinance", link: "/UserFinance" },
     { title: "UserSidebar.UserSettings", icon: "mdi-cog", page: "UserSettings", link: "/UserSettings" },

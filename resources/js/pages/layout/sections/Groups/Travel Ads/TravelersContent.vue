@@ -1,16 +1,5 @@
 <template>
-    <UserSidebar>
-
-    <v-container >
-        <v-snackbar v-model="showSnackbar" :color="snackbarColor" timeout="3000">
-            {{ snackbarMessage }}
-            <template v-slot:action="{ attrs }">
-                <v-btn text v-bind="attrs" @click="showSnackbar = false">
-                    {{ translate('close') }}
-                </v-btn>
-            </template>
-        </v-snackbar>
-
+    <v-container :class="{ 'expanded-container': isExpanded }">
         <v-row>
             <v-col cols="12" class="d-flex justify-end">
                 <v-btn icon @click="toggleExpand">
@@ -23,17 +12,16 @@
             <v-col cols="12">
                 <v-tabs vertical v-model="tab" class="pt-1">
                     <v-tab>
-                        <v-icon left>mdi-account-group</v-icon>
-                        {{ translate('companioncontent.list') }}
+                        <v-icon left>mdi-home</v-icon>
+                        {{ translate('housescontent.list') }}
                     </v-tab>
                     <v-tab>
                         <v-icon left>mdi-map</v-icon>
-                        {{ translate('companioncontent.map') }}
+                        {{ translate('housescontent.map') }}
                     </v-tab>
                 </v-tabs>
             </v-col>
         </v-row>
-
 
         <v-row class="ad-container">
             <v-col cols="12" v-show="tab === 0">
@@ -49,7 +37,6 @@
                                     v-on="on"
                                 >
                                     <img :src="icon.src" alt="Icon" class="icon-img" />
-                                    <span class="mt-1">{{ translate(`companioncontent.categories.${icon.name}`) }}</span>
                                 </v-btn>
                             </template>
                             <span>{{ translate(`companioncontent.categories.${icon.name}`) }}</span>
@@ -103,15 +90,18 @@
                                     {{ translateTravelStyle(item.travelStyle) }}
                                 </v-chip>
                             </v-card-text>
+
                             <v-card-actions class="justify-space-between">
-                                <v-btn color="primary" @click.stop="openContactModal(item)" small>
+                                <v-btn class="btncolor" @click.stop="openReservationModal(item)">
+                                    {{ translate('housescontent.Quick_booking') }}
+                                </v-btn>
+                                <v-btn class="btncolor2" @click.stop="openContactModal(item)" small>
                                     {{ translate('companioncontent.contact') }}
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-col>
                 </v-row>
-
 
                 <v-row v-if="filteredCompanions.length === 0">
                     <v-col cols="12" class="d-flex justify-center">
@@ -142,6 +132,154 @@
             </v-col>
         </v-row>
 
+        <v-dialog v-model="showReservationModal" max-width="600px">
+            <v-card class="Ads">
+                <v-card-title class="headline primary--text text-center">
+                    {{ translate('housescontent.Reservation_request') }}
+                </v-card-title>
+
+                <v-card-text>
+                    <v-row>
+                        <v-col cols="4">
+                            <v-img :src="selectedCompanion?.image" height="200px" class="rounded-lg"></v-img>
+                        </v-col>
+                        <v-col cols="8" class="AdsSetting">
+                            <v-card-subtitle class="AdsSetting2 text-h6 text-right">{{ selectedCompanion?.user.name || "Uncertain" }}</v-card-subtitle>
+                            <p class="AdsSetting2 text-body-1 text-right"><strong>{{ translate('housescontent.Location') }}</strong> {{ selectedCompanion?.destination || "نامشخص" }}</p>
+                            <p class="AdsSetting2 text-body-1 text-right"><strong>{{ translate('companioncontent.dates') }}</strong> {{ selectedCompanion?.travelDates || "نامشخص" }}</p>
+                            <p class="AdsSetting2 text-body-1 text-right"><strong>{{ translate('companioncontent.budget') }}</strong> {{ selectedCompanion?.budget || "0" }} €</p>
+                        </v-col>
+                    </v-row>
+
+                    <v-divider class="my-4"></v-divider>
+                    <h3 class="font-weight-bold mt-4 text-h5 text-center">{{ translate('housescontent.Your_details') }}</h3>
+                    <v-row>
+                        <v-col cols="6">
+                            <p class="text-body-1">{{ reservation?.startDate || "?" }} to {{ reservation?.endDate || "?" }}</p>
+                        </v-col>
+                        <v-col cols="6" class="text-right">
+                            <v-btn @click="showCalendar = true" outlined>{{ translate('housescontent.Edit_date') }}</v-btn>
+                        </v-col>
+                    </v-row>
+
+                    <v-dialog v-model="showCalendar" max-width="400px" centered persistent class="custom-dialog">
+                        <v-card>
+                            <v-card-title class="headline primary--text">{{ translate('Ad.available_dates') }}</v-card-title>
+                            <v-card-text>
+                                <v-date-picker v-model="selectedDates" multiple></v-date-picker>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="primary" @click="saveDates">{{ translate('Ad.SaveExit') }}</v-btn>
+                                <v-btn color="grey" text @click="showCalendar = false">{{ translate('Ad.Back') }}</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+
+                    <v-row>
+                        <v-col cols="6">
+                            <p class="text-body-1">{{ reservation?.guests || 1 }} {{ translate('housescontent.Guest') }} - {{ reservation?.name || "?" }}</p>
+                        </v-col>
+                        <v-col cols="6" class="d-flex justify-end">
+                            <v-btn @click="editGuests" outlined> {{ translate('housescontent.Edit') }}</v-btn>
+                        </v-col>
+                    </v-row>
+
+                    <v-dialog v-model="showEditGuestsModal" max-width="400px">
+                        <v-card>
+                            <v-card-title class="headline primary--text text-center">{{ translate('housescontent.Edit_guest2') }}</v-card-title>
+                            <v-card-text>
+                                <v-row>
+                                    <v-col cols="12">
+                                        <v-text-field
+                                            v-model="reservation.name"
+                                            :label="translate('housescontent.Guest_name')"
+                                            outlined
+                                        ></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12">
+                                        <v-text-field
+                                            v-model="reservation.guests"
+                                            :label="translate('housescontent.Guest_number')"
+                                            type="number"
+                                            min="1"
+                                            outlined
+                                        ></v-text-field>
+                                    </v-col>
+                                </v-row>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-btn color="primary" @click="saveGuestInfo">{{ translate('housescontent.Save') }}</v-btn>
+                                <v-btn color="error" @click="showEditGuestsModal = false">{{ translate('housescontent.close') }}</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+
+                    <v-divider class="my-4"></v-divider>
+                    <h3 class="font-weight-bold mt-4 text-h5 text-center">
+                        {{ translate('housescontent.Payment_Details') }}
+                    </h3>
+
+                    <v-row>
+                        <v-col cols="6">
+                            <p class="text-body-1">{{ translate('housescontent.Service_Fee') }}</p>
+                        </v-col>
+                        <v-col cols="6" class="text-right">
+                            <p class="text-body-1">15.00 {{ translate('housescontent.Euro') }}</p>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="6">
+                            <p class="text-body-1">{{ translate('housescontent.Tax_10') }}</p>
+                        </v-col>
+                        <v-col cols="6" class="text-right">
+                            <p class="text-body-1">1.50 {{ translate('housescontent.Euro') }}</p>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="6">
+                            <p class="font-weight-bold text-h6">{{ translate('housescontent.Total_Amount') }} ({{ translate('housescontent.Euro') }})</p>
+                        </v-col>
+                        <v-col cols="6" class="text-right">
+                            <p class="font-weight-bold text-h6">16.50 {{ translate('housescontent.Euro') }}</p>
+                        </v-col>
+                    </v-row>
+
+                    <v-divider class="my-4"></v-divider>
+                    <h3 class="font-weight-bold mt-4 text-h5 text-center">{{ translate('housescontent.Pay_with') }}</h3>
+                    <v-row>
+                        <v-col cols="4">
+                            <v-btn @click="selectedPayment = 'credit'" class="d-flex align-center" color="primary" outlined>
+                                <v-icon left>mdi-credit-card</v-icon>Credit card
+                            </v-btn>
+                        </v-col>
+                        <v-col cols="4">
+                            <v-btn @click="selectedPayment = 'paypal'" class="d-flex align-center" color="primary" outlined>
+                                <v-icon left>mdi-paypal</v-icon>PayPal
+                            </v-btn>
+                        </v-col>
+                        <v-col cols="4">
+                            <v-btn @click="selectedPayment = 'maestro'" class="d-flex align-center" color="primary" outlined>
+                                <v-icon left>mdi-bank</v-icon>Maestro
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                    <v-divider class="my-4"></v-divider>
+                    <p class="text-body-1 text-center">{{ translate('housescontent.Free') }}</p>
+                    <v-divider class="my-4"></v-divider>
+                    <v-row>
+                        <v-col cols="6" class="text-left">
+                            <v-btn color="primary" @click="confirmReservation">{{ translate('housescontent.Payment') }}</v-btn>
+                        </v-col>
+                        <v-col cols="6" class="text-right">
+                            <v-btn color="error" @click="closeReservationModal">{{ translate('housescontent.close') }}</v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
         <v-dialog v-model="showContactModal" max-width="600px">
             <v-card class="companion-contact-card">
                 <v-card-title class="headline primary--text text-center">
@@ -196,18 +334,20 @@
                                 class="message-input"
                                 @keydown.enter.exact.prevent="sendMessage"
                             ></v-textarea>
+
                         </v-form>
                     </div>
 
                     <v-divider class="my-4"></v-divider>
 
                     <v-row>
-                        <v-col cols="6" class="text-left">
-                            <v-btn color="primary" @click="sendMessage" :loading="sendingRequest">
+                        <v-col cols="6" >
+                            <v-btn  color="primary" @click="sendMessage" :loading="sendingRequest">
                                 {{ translate('companioncontent.send_request') }}
                             </v-btn>
                         </v-col>
                         <v-col cols="6" class="text-right">
+
                             <v-btn color="error" @click="closeContactModal" depressed>
                                 {{ translate('companioncontent.close') }}
                             </v-btn>
@@ -253,7 +393,6 @@
             </v-card>
         </v-dialog>
     </v-container>
-    </UserSidebar>
 
 </template>
 
@@ -263,7 +402,6 @@ import CompanionMap from "./CompanionMap.vue";
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
-import UserSidebar from '../../../../Users/Layout.vue';
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -279,15 +417,25 @@ export default {
 
     components: {
         CompanionMap,
-        UserSidebar,
 
     },
     data() {
         return {
+            showReservationModal: false,
             showSnackbar: false,
             snackbarMessage: '',
             snackbarColor: 'success',
-
+            selectedPayment: null,
+            reservation: {
+                startDate: "2025-04-10",
+                endDate: "2025-04-15",
+                guests: 1,
+                name: "",
+                days: 5,
+            },
+            selectedDates: [],
+            showCalendar: false,
+            showEditGuestsModal: false,
             map: null,
             originQuery: '',
             destinationQuery: '',
@@ -320,7 +468,6 @@ export default {
                 female: '/map-marker-female.png',
                 neutral: '/map-marker-origin.png'
             },
-
             selectedTravelStyle: null,
             travelIcons: [
                 { name: 'backpacker', src: '/Travel 009.png' },
@@ -457,13 +604,91 @@ export default {
             }
             return this.chatMessages[this.selectedCompanionId];
         }
-
     },
     methods: {
+        openReservationModal(companion) {
+            this.selectedCompanion = companion;
+            this.showReservationModal = true;
+
+
+            if (companion.travelDates) {
+                const dates = companion.travelDates.match(/\d{4} [A-Za-z]+ \d{1,2}-\d{1,2}/);
+                if (dates) {
+                    const [year, month, dayRange] = dates[0].split(' ');
+                    const [startDay, endDay] = dayRange.split('-');
+
+                    this.reservation.startDate = `${year}-${this.getMonthNumber(month)}-${startDay.padStart(2, '0')}`;
+                    this.reservation.endDate = `${year}-${this.getMonthNumber(month)}-${endDay.padStart(2, '0')}`;
+
+                    const start = new Date(this.reservation.startDate);
+                    const end = new Date(this.reservation.endDate);
+                    this.reservation.days = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+                }
+            }
+        },
+
+        getMonthNumber(monthName) {
+            const months = {
+                'January': '01', 'February': '02', 'March': '03', 'April': '04', 'May': '05', 'June': '06',
+                'July': '07', 'August': '08', 'September': '09', 'October': '10', 'November': '11', 'December': '12'
+            };
+            return months[monthName] || '01';
+        },
+
+        closeReservationModal() {
+            this.showReservationModal = false;
+        },
+
+        saveDates() {
+            if (this.selectedDates.length >= 2) {
+                this.selectedDates.sort();
+                this.reservation.startDate = this.selectedDates[0];
+                this.reservation.endDate = this.selectedDates[this.selectedDates.length - 1];
+
+                const start = new Date(this.reservation.startDate);
+                const end = new Date(this.reservation.endDate);
+                this.reservation.days = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+            }
+            this.showCalendar = false;
+        },
+
+        editGuests() {
+            this.showEditGuestsModal = true;
+        },
+
+        saveGuestInfo() {
+            this.showEditGuestsModal = false;
+        },
+
+        confirmReservation() {
+            this.showNotification('Reservation confirmed successfully!');
+            this.showReservationModal = false;
+        },
         showNotification(message, color = 'success') {
             this.snackbarMessage = message;
             this.snackbarColor = color;
             this.showSnackbar = true;
+        },
+
+        translateGender(gender) {
+            return gender === 'male' ? 'مرد' : gender === 'female' ? 'زن' : 'مهم نیست';
+        },
+
+        translateTravelStyle(style) {
+            return this.translate(`companioncontent.categories.${style}`) || style;
+        },
+
+        getGenderColor(gender) {
+            return gender === 'female' ? 'pink' : gender === 'male' ? 'blue' : 'grey';
+        },
+
+        toggleExpand() {
+            this.isExpanded = !this.isExpanded;
+            this.$emit('expand', this.isExpanded);
+        },
+
+        closeCompanionContent() {
+            this.$emit('close');
         },
         formatMessageTime(timestamp) {
             if (!timestamp) return '';
@@ -585,26 +810,9 @@ export default {
             return this.markerIcons.neutral;
         },
 
-        translateGender(gender) {
-            return gender === 'male' ? 'مرد' : gender === 'female' ? 'زن' : 'مهم نیست';
-        },
-
-        translateTravelStyle(style) {
-            return this.translate(`companioncontent.categories.${style}`) || style;
-        },
-
-        getGenderColor(gender) {
-            return gender === 'female' ? 'pink' : gender === 'male' ? 'blue' : 'grey';
-        },
-
         closeChatModal() {
             this.showChatModal = false;
             this.newMessage = '';
-        },
-
-        toggleExpand() {
-            this.isExpanded = !this.isExpanded;
-            this.$emit('expand', this.isExpanded);
         },
 
         sendMessage() {
@@ -658,17 +866,36 @@ export default {
             this.showContactModal = false;
             this.newMessage = '';
         },
-        closeCompanionContent() {
-            this.$emit('close');
-        }
+
     },
     mounted() {
         this.filteredCompanions = this.companions;
     }
 };
+
 </script>
 
 <style scoped>
+.Ads {
+    border-radius: 15px;
+}
+
+.AdsSetting {
+    direction: rtl;
+    text-align: right;
+}
+
+.AdsSetting2 {
+    direction: rtl;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.expanded-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
 .companion-card {
     background-color: var(--sidebar-background-color);
     color: var(--text-color);
@@ -909,5 +1136,13 @@ export default {
     .companion-card-container {
         padding: 8px;
     }
+
 }
+.btncolor{
+    background-color: #0f5b1e;
+}
+.btncolor2{
+    background-color: #033d6b;
+}
+
 </style>

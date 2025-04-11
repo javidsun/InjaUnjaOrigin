@@ -4,7 +4,7 @@
             <v-col cols="12" md="3">
                 <v-card class="special-offer-card" outlined>
                     <v-img :src="companionAds[0]?.image || '/ads/companion-default.jpg'" height="200px" />
-                    <v-badge color="primary" content="همسفر" class="badge-title"></v-badge>
+                    <v-badge color="primary" content="Companion" class="badge-title"></v-badge>
                     <v-card-title class="card-title">{{ companionAds[0]?.title || translate('CompanionAd.DefaultTitle') }}</v-card-title>
                     <v-divider></v-divider>
                     <v-card-text class="card-text">
@@ -68,42 +68,80 @@ const specialOffer = ref({
 });
 
 const companionAds = ref([
+
+
     {
-        title: "همسفر برای تور اروپای مرکزی",
-        description: "سفر 10 روزه به آلمان، اتریش و مجارستان",
-        image: "/1010.png",
-        link: "/companion/europe/1",
-        type: "companion",
-        details: {
-            date: "15 ژوئن تا 25 ژوئن 2023",
-            budget: "1200 یورو",
-            gender: "مرد"
-        }
-    },
-    {
-        title: "همسفر برای سفر به ایتالیا",
-        description: "به دنبال همسفر زن برای سفر به رم و فلورانس",
-        image: "/1020.png",
-        link: "/companion/europe/2",
-        type: "companion",
-        details: {
-            date: "1 سپتامبر 2023",
-            budget: "800 یورو",
-            gender: "زن"
-        }
-    },
-    {
-        title: "کوچ سرفینگ در اسپانیا",
-        description: "تجربه زندگی با locals در بارسلون ",
+        id: 2,
+        destination: "Rome, Italy",
+        user: {
+            name: "Ali",
+            age: 32,
+            gender: "male",
+            rating: 4.9
+        },
+        travelDates: "2025 Feb 11-15",
+        budget: "1500",
+        travelStyle: "cultural",
+        description: "Interested in history and architecture, looking for a travel companion to visit museums and historical monuments",
         image: "/1030.png",
-        link: "/companion/europe/3",
-        type: "companion",
-        details: {
-            date: "تمام تابستان 2023",
-            budget: "500 یورو",
-            gender: "مهم نیست"
-        }
-    }
+        images: ["/1010.png"],
+        coordinates: [41.9028, 12.4964],
+        personalityTraits: ["Culturated", "polite", "orderly"]
+    },
+    {
+        id: 3,
+        destination: "Barcelona, Spain",
+        user: {
+            name: "Nazanin",
+            age: 25,
+            gender: "female",
+            rating: 4.5
+        },
+        travelDates: "All Summer",
+        budget: "800",
+        travelStyle: "backpacker",
+        description: "Looking for a travel companion to experience local life and couch surfing",
+        image: "/1020.png",
+        images: ["/1020.png"],
+        coordinates: [41.3851, 2.1734],
+        personalityTraits: ["Adventurous", "Intimate", "Flexible"]
+    },
+    {
+        id: 4,
+        destination: "Amsterdam, Netherlands",
+        user: {
+            name: "Reza",
+            age: 35,
+            gender: "male",
+            rating: 4.8
+        },
+        travelDates: "2025 JUN 20-30",
+        budget: "2000",
+        travelStyle: "business",
+        description: "Business trip with free time for sightseeing, suitable for professional travelers",
+        image: "/1010.png",
+        images: ["/1010.png"],
+        coordinates: [52.3676, 4.9041],
+        personalityTraits: ["professional", "regular", "moderate"]
+    },
+    {
+        id: 5,
+        destination: "Vienna, Austria",
+        user: {
+            name: "Taraneh",
+            age: 30,
+            gender: "female",
+            rating: 4.9
+        },
+        travelDates: "2025 MAY 01-15",
+        budget: "1800",
+        travelStyle: "luxury",
+        description: "Looking for a female travel companion to stay in luxury hotels and fine restaurants",
+        image: "/1030.png",
+        images: ["/1030.png"],
+        coordinates: [48.2082, 16.3738],
+        personalityTraits: ["entertaining", "hospitable", "classy"]
+    },
 ]);
 
 const houseAds = ref([
@@ -145,12 +183,10 @@ const houseAds = ref([
     }
 ]);
 
-// ترکیب اگهی‌های خانه و همسفر برای اسلایدشو
 const combinedAds = computed(() => {
-    // ترکیب تصادفی
     return [...companionAds.value, ...houseAds.value]
         .sort(() => Math.random() - 0.5)
-        .slice(0, 5); // نمایش 5 اگهی در اسلایدشو
+        .slice(0, 5);
 });
 
 const topRatedAd = ref({

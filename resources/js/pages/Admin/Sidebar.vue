@@ -52,7 +52,7 @@ const menuItems = [
     { title: "sidebar.houses", icon: "mdi-home-city-outline", page: "houses", link: "/AdsHouse" },
     { title: "sidebar.vehicles", icon: "mdi-car", page: "vehicles", link: "/vehicles" },
     { title: "sidebar.events", icon: "mdi-calendar", page: "events", link: "/events" },
-    { title: "sidebar.travelers", icon: "mdi-account-group", page: "travelers", link: "/travelers" },
+    { title: "sidebar.travelers", icon: "mdi-account-group", page: "AdsTraveler", link: "/AdsTraveler" },
     { title: "sidebar.finance", icon: "mdi-currency-usd", page: "Finance", link: "/Finance" },
     { title: "sidebar.reserv", icon: "mdi-calendar-check", page: "ReservationManagement", link: "/ReservationManagement" },
     { title: "sidebar.analytics", icon: "mdi-chart-areaspline", page: "Analytics", link: "/Analytics" },

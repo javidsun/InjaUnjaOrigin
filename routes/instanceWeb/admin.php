@@ -59,3 +59,6 @@ Route::get('/UserManagement', function () {
 Route::get('/CancellationsDetails', function () {
     return Inertia::render('Admin/Sidebar_sections/CancellationsDetails');
 });
+Route::get('/AdsTraveler', function () {
+    return Inertia::render('Admin/Sidebar_sections/AdsTraveler');
+});

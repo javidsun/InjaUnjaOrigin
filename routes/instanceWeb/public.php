@@ -15,9 +15,14 @@ Route::get('/vehicles', function () {
 Route::get('/events', function () {
     return Inertia::render('layout/sections/Groups/Event Ads/EventsContent');
 });
+Route::get('/travelersAds', function () {
+    return Inertia::render('Users/Reserv/CompanionAds');
+});
+
 Route::get('/travelers', function () {
     return Inertia::render('layout/sections/Groups/Travel Ads/TravelersContent');
 });
+
 Route::get('/Messages', function () {
     return Inertia::render('Users/Messages/Messages');
 });

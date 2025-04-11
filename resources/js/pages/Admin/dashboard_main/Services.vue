@@ -43,7 +43,7 @@ const cards = [
     {
         title: "Services.travel",
         count: 20,
-        route: null,
+        route: "/AdsTraveler",
     }
 ];
 

@@ -7,7 +7,7 @@ import vuetify from '../js/pages/plugins/vuetify/vuetify.js';
 import pinia from '../js/pages/plugins/pinia/index';
 import App from "../js/pages/App.vue";
 import 'vuetify/dist/vuetify.min.css';
-import store from './store'; // Import Vuex Store
+import store from './store';
 
 const app = createApp(App);
 app.use(store);

@@ -300,12 +300,15 @@ export default {
         ModernHouse1: "Modern House 1",
         ModernHouseDescription1: "A Modern Home with Full Amenities.",
         ModernHouse2: "Beautiful House 2",
-        ModernHouseDescription2: "A Quiet and Beautiful Place to Stay."
+        ModernHouseDescription2: "A Quiet and Beautiful Place to Stay.",
+        Companion: "Companion",
+        House: "Housing"
     },
     TopRatedAd: {
-        Title: "Top House",
-        Description: "This home has received the highest ratings.",
+        Title: "Top Rated Accommodation",
+        Description: "View top-rated accommodations with the best ratings.",
         ViewButton: "View"
+
     },
     profile: {
         editProfile: "Edit Profile",
@@ -1267,5 +1270,48 @@ export default {
         "9": "October",
         "10": "November",
         "11": "December"
+    },
+
+    CompanionAd: {
+        DefaultTitle: "Find Your Travel Companion",
+        DefaultDescription: "Looking for a companion for your next trip? You can find the right companion here.",
+        ViewButton: "View"
+    },
+    companioncontent: {
+        list: "Companion List",
+        map: "Map",
+        no_companions: "No companions found",
+        seeMore: "See More",
+        map_title: "Travel Companions on Map",
+        contact_title: "Contact Companion",
+        destination: "Destination:",
+        dates: "Travel Dates:",
+        budget: "Budget:",
+        travel_style: "Travel Style:",
+        message_label: "Your Message",
+        send_request: "Send Request",
+        close: "Close",
+        detail_title: "Companion Details",
+        user: "User:",
+        gender: "Gender:",
+        style: "Style:",
+        description: "Description:",
+        contact: "Contact",
+        contact_form: "Contact Form",
+        login_required: "You need to login to contact companions",
+        error_occurred: "An error occurred",
+        type_message: "Type Message",
+        no_messages:"no Messages",
+
+        categories: {
+            all: "All",
+            backpacker: "Backpacker",
+            family: "Family",
+            couple: "Couple",
+            business: "Business",
+            adventure: "adventure",
+            luxury: "luxury",
+            cultural: "cultural"
+        }
     },
 };

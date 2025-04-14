@@ -77,6 +77,27 @@
             </v-card-title>
             <v-card-text>
                 <v-text-field
+                    v-model="originSearch"
+                    :label="translate('Ad.SearchOrigin')"
+                    outlined
+                    clearable
+                    @input="searchOriginLocation"
+                    class="mb-4"
+                ></v-text-field>
+
+                <v-list v-if="originSearchResults.length > 0" class="mb-4">
+                    <v-list-item
+                        v-for="(result, index) in originSearchResults"
+                        :key="'origin-'+index"
+                        @click="selectOriginLocation(result)"
+                    >
+                        <v-list-item-content>
+                            <v-list-item-title>{{ result.display_name }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list>
+
+                <v-text-field
                     v-model="destinationSearch"
                     :label="translate('Ad.SearchDestination')"
                     outlined
@@ -87,7 +108,7 @@
                 <v-list v-if="searchResults.length > 0">
                     <v-list-item
                         v-for="(result, index) in searchResults"
-                        :key="index"
+                        :key="'dest-'+index"
                         @click="selectLocation(result)"
                     >
                         <v-list-item-content>
@@ -104,10 +125,15 @@
                     </v-chip>
                 </div>
 
-                <v-alert v-if="userLocation" type="info" class="mb-2">
+                <v-alert v-if="userLocation && !selectedOrigin" type="info" class="mb-2">
                     <v-icon left>mdi-map-marker</v-icon>
                     {{ translate('Ad.Origin') }}: {{ translate('Ad.YourCurrentLocation') }}
                     <span v-if="userLocationAddress">({{ userLocationAddress }})</span>
+                </v-alert>
+
+                <v-alert v-if="selectedOrigin" type="info" class="mb-2">
+                    <v-icon left>mdi-map-marker</v-icon>
+                    {{ translate('Ad.Origin') }}: {{ selectedOrigin.display_name }}
                 </v-alert>
 
                 <v-alert v-if="selectedDestination" type="info">
@@ -115,6 +141,7 @@
                     {{ translate('Ad.Destination') }}: {{ selectedDestination.display_name }}
                 </v-alert>
             </v-card-text>
+
             <v-card-actions class="d-flex justify-end gap-2">
                 <v-btn color="grey" text @click="goBack">
                     <v-icon left>mdi-arrow-left</v-icon>
@@ -812,7 +839,7 @@
                             </div>
                             <v-btn
                                 text
-                                @click="confirmTravelDates"
+                                @click="clearSelectedDates"
                                 color="error"
                                 small
                                 block
@@ -1088,15 +1115,8 @@ import { useDisplay } from 'vuetify'
 const { smAndUp } = useDisplay()
 const props = defineProps(["modelValue"]);
 const emit = defineEmits(["update:modelValue"]);
-
 const showComingSoon = ref(false);
 const currentStep = ref(0);
-
-const showModal = computed({
-    get: () => props.modelValue,
-    set: (value) => emit("update:modelValue", value),
-});
-
 const showStep1 = ref(false);
 const showStep2 = ref(false);
 const showStep3 = ref(false);
@@ -1115,10 +1135,59 @@ const maxDate = ref(new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString
 const showStep14 = ref(false);
 const showEssentialTipsModal = ref(false);
 const showStep15 = ref(false);
-let routeLine = null;
-let distance = ref(null);
+const showStep6 = ref(false);
+const uploadedPhotos = ref([]);
+const photoDescription = ref('');
+const fileInput = ref(null);
 const userLocationAddress = ref(null);
 const userName ="UserName";
+const originSearch = ref("");
+const originSearchResults = ref([]);
+const selectedOrigin = ref(null);
+const showStep7 = ref(false);
+const travelPlanText = ref('');
+const uploadedPlanFile = ref(null);
+const uploadedPlanFilePreview = ref(null);
+const planFileInput = ref(null);
+const maleCompanionCount = ref(0);
+const femaleCompanionCount = ref(0);
+const anyGenderCompanionCount = ref(0);
+const currentCompanionCount = ref(0);
+const neededCompanionCount = ref(0);
+const destinationSearch = ref("");
+const searchResults = ref([]);
+const selectedDestination = ref(null);
+const travelChecklistText = ref('');
+const uploadedChecklistFile = ref(null);
+const uploadedChecklistFilePreview = ref(null);
+const checklistFileInput = ref(null);
+let map = null;
+let marker = null;
+let userLocationMarker = null;
+let userLocation = ref(null);
+let routeLine = null;
+let distance = ref(null);
+
+
+const showModal = computed({
+    get: () => props.modelValue,
+    set: (value) => emit("update:modelValue", value),
+});
+
+
+const confirmTravelDates = () => {
+    console.log('Selected travel dates:', selectedDates.value);
+    setActiveModal(15);
+};
+
+const clearSelectedDates = () => {
+    selectedDates.value = [];
+};
+
+const confirmSafetyGuidelines = () => {
+    console.log('Safety guidelines confirmed');
+    setActiveModal(currentStep.value + 1);
+};
 
 const confirmAdditionalDescription = () => {
     console.log('Additional description:', additionalDescription.value);
@@ -1194,13 +1263,6 @@ const resetAllModals = () => {
 };
 
 
-const maleCompanionCount = ref(0);
-const femaleCompanionCount = ref(0);
-const anyGenderCompanionCount = ref(0);
-
-const currentCompanionCount = ref(0);
-const neededCompanionCount = ref(0);
-
 const confirmTravelStyle = () => {
     if (!selectedStyle.value) {
         styleError.value = true;
@@ -1245,13 +1307,7 @@ const confirmBudget = () => {
         budget: budgetAmount.value
     });
 };
-const destinationSearch = ref("");
-const searchResults = ref([]);
-const selectedDestination = ref(null);
-let map = null;
-let marker = null;
-let userLocationMarker = null;
-let userLocation = ref(null);
+
 
 const confirmDestination = () => {
     setActiveModal(currentStep.value + 1);
@@ -1334,6 +1390,10 @@ const selectLocation = (location) => {
     }
 };
 const initMap = async () => {
+    await nextTick();
+    const mapElement = document.getElementById('destinationMap');
+    if (!mapElement || mapElement._leaflet_id) return;
+
     if (map) {
         map.remove();
         map = null;
@@ -1341,12 +1401,6 @@ const initMap = async () => {
         userLocationMarker = null;
         routeLine = null;
     }
-
-    await nextTick();
-
-    const mapElement = document.getElementById('destinationMap');
-    if (!mapElement) return;
-
     map = L.map('destinationMap', {
         zoomControl: true,
         doubleClickZoom: true,
@@ -1361,7 +1415,7 @@ const initMap = async () => {
 
     map.setView([35.6892, 51.3890], 13);
 
-    if (navigator.geolocation) {
+    if (navigator.geolocation && !selectedOrigin.value) {
         navigator.geolocation.getCurrentPosition(
             async (position) => {
                 const userLatLng = L.latLng(
@@ -1400,10 +1454,19 @@ const initMap = async () => {
                 maximumAge: 0
             }
         );
+    } else if (selectedOrigin.value) {
+        const latLng = L.latLng(parseFloat(selectedOrigin.value.lat), parseFloat(selectedOrigin.value.lon));
+        userLocation.value = latLng;
+        map.setView(latLng, 13);
+
+        if (selectedDestination.value) {
+            drawRoute(latLng, L.latLng(selectedDestination.value.lat, selectedDestination.value.lon));
+        }
     } else {
         console.error("Geolocation is not supported by this browser.");
         updateSelectedLocation(35.6892, 51.3890);
     }
+
 
     map.on('click', async (e) => {
         const { lat, lng } = e.latlng;
@@ -1569,11 +1632,6 @@ const confirmPersonalityTraits = () => {
     setActiveModal(currentStep.value + 1);
 };
 
-const showStep6 = ref(false);
-const uploadedPhotos = ref([]);
-const photoDescription = ref('');
-const fileInput = ref(null);
-
 const triggerFileInput = () => {
     fileInput.value.click();
 };
@@ -1604,13 +1662,6 @@ const removePhoto = (index) => {
     uploadedPhotos.value.splice(index, 1);
 };
 
-
-
-const showStep7 = ref(false);
-const travelPlanText = ref('');
-const uploadedPlanFile = ref(null);
-const uploadedPlanFilePreview = ref(null);
-const planFileInput = ref(null);
 
 const triggerPlanFileInput = () => {
     planFileInput.value.click();
@@ -1677,6 +1728,7 @@ const confirmTravelPlan = () => {
 const saveState = () => {
     localStorage.setItem('travelCompanionState', JSON.stringify({
         currentStep: currentStep.value,
+        selectedOrigin: selectedOrigin.value,
         selectedDestination: selectedDestination.value,
         selectedStyle: selectedStyle.value,
         budgetAmount: budgetAmount.value,
@@ -1688,11 +1740,12 @@ const saveState = () => {
 };
 
 const loadState = () => {
-
     const savedState = localStorage.getItem('travelCompanionState');
     if (savedState) {
         const state = JSON.parse(savedState);
         currentStep.value = state.currentStep;
+        selectedOrigin.value = state.selectedOrigin || null;
+        selectedDestination.value = state.selectedDestination;
         selectedDestination.value = state.selectedDestination;
         selectedStyle.value = state.selectedStyle;
         budgetAmount.value = state.budgetAmount;
@@ -1709,11 +1762,6 @@ onMounted(() => {
         setActiveModal(currentStep.value || 1);
     }
 });
-
-const travelChecklistText = ref('');
-const uploadedChecklistFile = ref(null);
-const uploadedChecklistFilePreview = ref(null);
-const checklistFileInput = ref(null);
 
 const triggerChecklistFileInput = () => {
     checklistFileInput.value.click();
@@ -1864,15 +1912,7 @@ const essentialTips = ref([
     'Ad.Tip3',
     // ... سایر نکات
 ]);
-const confirmTravelDates = () => {
-    console.log('Selected travel dates:', selectedDates.value);
-    setActiveModal(15);
-};
 
-const confirmSafetyGuidelines = () => {
-    console.log('Safety guidelines confirmed');
-    setActiveModal(currentStep.value + 1);
-};
 
 const showEssentialTips = () => {
     showEssentialTipsModal.value = true;
@@ -1903,6 +1943,60 @@ const finalConfirmAndPublish = () => {
 
     saveAndExit();
 };
+const searchOriginLocation = async () => {
+    if (originSearch.value.length < 3) {
+        originSearchResults.value = [];
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `https://nominatim.openstreetmap.org/search?format=json&q=${originSearch.value}&limit=5`
+        );
+        const data = await response.json();
+        originSearchResults.value = data;
+    } catch (error) {
+        console.error("Error searching origin location:", error);
+        originSearchResults.value = [];
+    }
+};
+
+const selectOriginLocation = (location) => {
+    selectedOrigin.value = {
+        display_name: location.display_name,
+        lat: location.lat,
+        lon: location.lon
+    };
+    originSearch.value = location.display_name;
+    originSearchResults.value = [];
+
+    if (map) {
+        const latLng = L.latLng(parseFloat(location.lat), parseFloat(location.lon));
+
+        if (userLocationMarker) {
+            map.removeLayer(userLocationMarker);
+        }
+
+        userLocationMarker = L.marker(latLng, {
+            icon: L.divIcon({
+                className: 'user-location-marker',
+                html: '<div style="background-color: #4285F4; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+            })
+        }).addTo(map)
+            .bindPopup(translate('Ad.SelectedOrigin')).openPopup();
+
+        userLocation.value = latLng;
+
+        if (selectedDestination.value) {
+            drawRoute(latLng, L.latLng(selectedDestination.value.lat, selectedDestination.value.lon));
+        }
+    }
+};
+
+
+
 </script>
 
 <style scoped>

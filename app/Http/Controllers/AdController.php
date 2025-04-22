@@ -40,4 +40,17 @@ class AdController extends Controllers
         $ad->delete();
         return response()->json(['message' => 'Ad deleted successfully']);
     }
+
+    public function getAdById($id)
+    {
+        $ad = Ad::findOrFail($id);
+        return response()->json($ad);
+    }
+    public function getMyAds(Request $request)
+    {
+        $user = $request->user();
+        $ads = Ad::where('user_id', $user->id)->get();
+        return response()->json($ads);
+    }
+
 }

@@ -1,0 +1,62 @@
+{
+    "paymentMethods": {
+        "walletCharge": {
+            "endpoint": "/api/wallet/charge",
+            "method": "POST",
+            "request": {
+                "amount": "number",
+                "currency": "string (optional, default: IRR)"
+            },
+            "response": {
+                "success": "boolean",
+                "transactionId": "string",
+                "newBalance": "number"
+            }
+        },
+        "onlinePayment": {
+            "endpoint": "/api/payment/online",
+            "method": "POST",
+            "request": {
+                "cardNumber": "string (16 digit)",
+                "expiryDate": "string (MM/YY)",
+                "cvv": "string (3-4 digit)",
+                "amount": "number"
+            },
+            "response": {
+                "success": "boolean",
+                "paymentId": "string",
+                "receiptUrl": "string (optional)"
+            }
+        }
+    },
+    "coupons": {
+        "endpoint": "/api/user/coupons",
+        "method": "GET",
+        "response": {
+            "coupons": [
+                {
+                    "code": "string",
+                    "discount": "number",
+                    "expiryDate": "string (YYYY-MM-DD)",
+                    "isActive": "boolean"
+                }
+            ]
+        }
+    },
+    "userFinance": {
+        "endpoint": "/api/user/finance",
+        "method": "GET",
+        "response": {
+            "balance": "number",
+            "transactions": [
+                {
+                    "id": "string",
+                    "amount": "number",
+                    "type": "string (charge/payment/refund)",
+                    "date": "string (YYYY-MM-DD HH:MM:SS)",
+                    "status": "string (pending/completed/failed)"
+                }
+            ]
+        }
+    }
+}

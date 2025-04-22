@@ -1,0 +1,79 @@
+{
+    "user": {
+        "name": "Zahra Azizi",
+        "email": "zahra@example.com",
+        "profileImage": "/avatar-2.png"
+    },
+    "profileInfo": [
+        {
+            "label": "profile.username",
+            "value": "",
+            "icon": "mdi-account",
+            "status": "confirmed",
+            "required": true
+        },
+        {
+            "label": "profile.billingEmail",
+            "value": "",
+            "icon": "mdi-email",
+            "status": "confirmed",
+            "required": true
+        },
+        {
+            "label": "profile.passport",
+            "value": null,
+            "icon": "mdi-card-account-details",
+            "status": "not confirmed",
+            "required": true
+        },
+        {
+            "label": "profile.contact",
+            "value": "",
+            "icon": "mdi-phone",
+            "status": "confirmed",
+            "required": true
+        },
+        {
+            "label": "profile.taxId",
+            "value": "",
+            "icon": "mdi-numeric",
+            "status": "confirmed",
+            "required": false
+        },
+        {
+            "label": "profile.language",
+            "value": "",
+            "icon": "mdi-translate",
+            "status": "confirmed",
+            "required": false
+        },
+        {
+            "label": "profile.country",
+            "value": "",
+            "icon": "mdi-map-marker",
+            "status": "confirmed",
+            "required": false
+        },
+        {
+            "label": "profile.address",
+            "value": "",
+            "icon": "mdi-map-marker",
+            "status": "Awaiting confirmation",
+            "required": false
+        },
+        {
+            "label": "profile.emergencyContact",
+            "value": "",
+            "icon": "mdi-phone",
+            "status": "Awaiting confirmation",
+            "required": false
+        },
+        {
+            "label": "profile.idCard",
+            "value": "",
+            "icon": "mdi-card-account-details",
+            "status": "not confirmed",
+            "required": false
+        }
+    ]
+}

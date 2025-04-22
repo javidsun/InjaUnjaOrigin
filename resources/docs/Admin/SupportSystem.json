@@ -1,0 +1,37 @@
+{
+    "support_messages": [
+        {
+            "id": 1,
+            "sender": "Ali Alavi",
+            "recipient": "Admin",
+            "date": "2025-03-13",
+            "content": "I need help with my account.",
+            "status": "unresolved"
+        },
+        {
+            "id": 2,
+            "sender": "Sara Ahmadi",
+            "recipient": "Admin",
+            "date": "2025-03-12",
+            "content": "How can I reset my password?",
+            "status": "resolved"
+        }
+    ],
+    "users": [
+        {
+            "id": 1,
+            "name": "Ali Alavi",
+            "email": "ali@example.com"
+        },
+        {
+            "id": 2,
+            "name": "Sara Ahmadi",
+            "email": "sara@example.com"
+        },
+        {
+            "id": 3,
+            "name": "Majid Reshadat",
+            "email": "majid@example.com"
+        }
+    ]
+}

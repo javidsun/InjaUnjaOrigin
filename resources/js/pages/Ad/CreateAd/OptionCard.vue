@@ -1,3 +1,6 @@
+<!--فایل  OptionCard.js در services      فایل   OptionCard.json در پوشه docs -->
+
+
 <template>
     <v-container class="text-center">
         <v-btn icon @click="$router.go(-1)" class="back-btn">

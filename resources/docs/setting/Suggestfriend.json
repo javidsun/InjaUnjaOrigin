@@ -1,0 +1,13 @@
+{
+    "description": "This is a static component for friend invitation. No backend data is required.",
+    "frontend_data": {
+        "title": "Invite Your Friends",
+        "shareLink": "Share this link with your friends to invite them:",
+        "shareButton": "Share Link",
+        "shareTitle": "Join me on this amazing platform!",
+        "shareMessage": "I'm using this great service and thought you might like it too!"
+    },
+    "backend_expectation": {
+        "note": "This component is purely frontend and static. No API calls are made."
+    }
+}

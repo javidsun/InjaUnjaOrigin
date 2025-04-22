@@ -1,0 +1,47 @@
+{
+    "conversionRate": {
+        "value": 25,
+        "labels": ["re_dashboard.Reservation", "re_dashboard.Visit"]
+    },
+    "revenueByCategory": [
+        {
+            "categoryKey": "re_dashboard.Home",
+            "revenue": 5000
+        },
+        {
+            "categoryKey": "re_dashboard.Car",
+            "revenue": 2000
+        },
+        {
+            "categoryKey": "re_dashboard.Others",
+            "revenue": 1000
+        }
+    ],
+    "topCities": [
+        {
+            "cityKey": "re_dashboard.Barcelona",
+            "countryKey": "re_dashboard.Spain",
+            "bookings": 120
+        },
+        {
+            "cityKey": "re_dashboard.Paris",
+            "countryKey": "re_dashboard.France",
+            "bookings": 110
+        },
+        {
+            "cityKey": "re_dashboard.Rome",
+            "countryKey": "re_dashboard.Italy",
+            "bookings": 100
+        },
+        {
+            "cityKey": "re_dashboard.Berlin",
+            "countryKey": "re_dashboard.Germany",
+            "bookings": 90
+        },
+        {
+            "cityKey": "re_dashboard.Amsterdam",
+            "countryKey": "re_dashboard.Netherlands",
+            "bookings": 80
+        }
+    ]
+}

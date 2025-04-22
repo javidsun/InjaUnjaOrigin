@@ -1,0 +1,62 @@
+{
+    "dashboard": {
+        "header": {
+            "logo": "/assets/images/inja-unja.png",
+            "searchPlaceholder": "Search...",
+            "darkMode": true,
+            "languageOptions": ["en", "fa"]
+        },
+        "sidebar": {
+            "items": [
+                {
+                    "title": "Dashboard",
+                    "icon": "mdi-view-dashboard",
+                    "route": "/dashboard"
+                },
+                {
+                    "title": "Users",
+                    "icon": "mdi-account-group",
+                    "route": "/users"
+                },
+                {
+                    "title": "Settings",
+                    "icon": "mdi-cog",
+                    "route": "/settings"
+                }
+            ]
+        },
+        "mainContent": {
+            "cards": [
+                {
+                    "type": "warning",
+                    "title": "Important Notice",
+                    "content": "System maintenance scheduled for tomorrow."
+                },
+                {
+                    "type": "statistics",
+                    "title": "Basic Statistics",
+                    "metrics": ["users", "visits", "requests"]
+                },
+                {
+                    "type": "functional",
+                    "title": "Quick Actions",
+                    "actions": ["refresh", "export", "settings"]
+                },
+                {
+                    "type": "services",
+                    "title": "Services Status",
+                    "services": ["API", "Database", "Storage"]
+                },
+                {
+                    "type": "userTable",
+                    "title": "User Management",
+                    "columns": ["ID", "Name", "Email", "Role", "Actions"]
+                }
+            ]
+        },
+        "footer": {
+            "copyright": "© 2023 Admin Dashboard",
+            "version": "1.0.0"
+        }
+    }
+}

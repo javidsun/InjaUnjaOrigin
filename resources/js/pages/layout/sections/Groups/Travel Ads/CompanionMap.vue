@@ -1,3 +1,6 @@
+<!--فایل  CompanionMap.js در services      فایل   CompanionMap.json در پوشه docs -->
+
+
 <template>
     <div id="companion-map-container">
         <div id="companionMap" class="map-container"></div>

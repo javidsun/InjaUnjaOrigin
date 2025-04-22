@@ -1,0 +1,30 @@
+{
+    "user": {
+        "name": "string",
+        "email": "string",
+        "role": "string",
+        "active": "boolean"
+    },
+    "userList": [
+        {
+            "id": "number",
+            "name": "string",
+            "email": "string",
+            "role": "string",
+            "active": "boolean"
+        }
+    ],
+    "activityHistory": [
+        {
+            "id": "number",
+            "activity": "string",
+            "date": "string",
+            "status": "string"
+        }
+    ],
+    "roles": [
+        "Normal User",
+        "Host",
+        "Admin"
+    ]
+}

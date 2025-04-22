@@ -1,3 +1,5 @@
+<!--فایل  FeedbackModal.js در services      فایل   FeedbackModal.json در پوشه docs -->
+
 <template>
     <v-dialog v-model="isFeedbackModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>

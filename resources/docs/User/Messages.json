@@ -1,0 +1,97 @@
+{
+    "messages": [
+        {
+            "sender": "آرش",
+            "avatar": "avatar-2.png",
+            "preview": "سلام، چندتا سوال بابت اجاره اتاق داشتم. می خواس...",
+            "fullText": "سلام، چندتا سوال ببت اجاره اتاق داشتم. می خواس... ",
+            "time": "1:10:10 PM",
+            "type": "host",
+            "approved": true,
+            "status": "تایید شد. یک اتاق برای اجاره در یک خانه دو خوابه"
+        },
+        {
+            "sender": "مریم",
+            "avatar": "avatar-1.png",
+            "preview": "سلام، برای سفر به سوئیس و این تور جنگل می تونم...",
+            "fullText": "سلام، برای سفر به سوئیس و این تور جنگل می تونم...",
+            "time": "10:28:25 AM",
+            "type": "guest",
+            "approved": false,
+            "status": "تایید نشده. یک اتاق برای اجاره در یک خانه دو خوابه"
+        },
+        {
+            "sender": "کیارش",
+            "avatar": "avatar3.svg",
+            "preview": "وقت بخیر، من و دوستم دنبال دو نفر همسفر می گر...",
+            "fullText": "وقت بخیر، من و دوستم دنبال دو نفر همسفر می گر...",
+            "time": "01/03/2024",
+            "type": "guest",
+            "approved": true,
+            "status": "تایید شد. جستجوی همسفر برای رفتن به سیسیل"
+        },
+        {
+            "sender": "میترا",
+            "avatar": "avatar4.svg",
+            "preview": "وقت بخیر، من دوشنبه میرسم ونیز با چندتا از دوس...",
+            "fullText": "وقت بخیر، من دوشنبه میرسم ونیز با چندتا از دوس...",
+            "time": "02/02/2024",
+            "type": "host",
+            "approved": true,
+            "status": "تایید شد. تور لیدر در شهر ونیز با ۸ سال سابقه"
+        },
+        {
+            "sender": "پشتیبان InjaOnja",
+            "avatar": "inja-unja.png",
+            "preview": "شما، مراحل بازپرداخت را انجام دادم. تشکر",
+            "fullText": "شما، مراحل بازپرداخت را انجام دادم. تشکر",
+            "time": "01/02/2024",
+            "type": "support",
+            "approved": false,
+            "status": "پایان"
+        },
+        {
+            "sender": "پشتیبان InjaOnja",
+            "avatar": "inja-unja.png",
+            "preview": "مراحل جا به جایی را انجام دادم.",
+            "fullText": "مراحل جا به جایی را انجام دادم.",
+            "time": "5:17:04 PM",
+            "type": "support",
+            "approved": false,
+            "status": "پایان",
+            "closed": true
+        }
+    ],
+    "categories": [
+        {
+            "title": "همه",
+            "type": "all"
+        },
+        {
+            "title": "میزبان",
+            "type": "host"
+        },
+        {
+            "title": "مهمان",
+            "type": "guest"
+        },
+        {
+            "title": "پشتیبانی",
+            "type": "support"
+        }
+    ],
+    "messageTypes": [
+        {
+            "title": "میزبان",
+            "type": "host"
+        },
+        {
+            "title": "مهمان",
+            "type": "guest"
+        },
+        {
+            "title": "پشتیبانی",
+            "type": "support"
+        }
+    ]
+}

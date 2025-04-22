@@ -1,0 +1,63 @@
+{
+    "userInfo": {
+        "warning": "This section displays important information about your account",
+        "data": {
+            "name": "John Doe",
+            "email": "john@example.com",
+            "status": "active"
+        }
+    },
+    "userSpecifications": {
+        "description": "User specifications and details",
+        "data": {
+            "age": 32,
+            "gender": "male",
+            "preferences": {
+                "language": "en",
+                "theme": "dark"
+            }
+        }
+    },
+    "specialOffer": {
+        "description": "Special offers for the user",
+        "data": [
+            {
+                "id": 1,
+                "title": "Summer Discount",
+                "discount": "20%",
+                "validUntil": "2023-08-31"
+            }
+        ]
+    },
+    "userReservations": {
+        "description": "User's recent reservations",
+        "data": [
+            {
+                "id": 123,
+                "date": "2023-07-15",
+                "destination": "Paris",
+                "status": "confirmed"
+            }
+        ]
+    },
+    "tutorial": {
+        "steps": [
+            {
+                "id": "dashboardIcon",
+                "message": "Learn the site in ten seconds."
+            },
+            {
+                "id": "userInfo",
+                "message": "This section displays important information about your account."
+            },
+            {
+                "id": "specialOffer",
+                "message": "Follow special offers here."
+            },
+            {
+                "id": "userReservations",
+                "message": "Your recent reservations are in this section."
+            }
+        ]
+    }
+}

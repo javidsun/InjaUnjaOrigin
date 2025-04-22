@@ -1,3 +1,6 @@
+<!--فایل  ReportModal.js در services      فایل   ReportModal.json در پوشه docs -->
+
+
 <template>
     <v-dialog v-model="isHowItWorksModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>
@@ -80,7 +83,6 @@ const faqs = ref([
 
 defineExpose({openModal});
 </script>
-
 
 <style scoped>
 .how-it-works-header {

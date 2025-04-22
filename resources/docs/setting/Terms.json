@@ -1,0 +1,42 @@
+{
+    "title": "Terms and Conditions",
+    "infoTitle": "Important Information",
+    "infoDescriptionEEA": "For users in the European Economic Area (EEA)...",
+    "infoDescriptionNonEEA": "For users outside the EEA...",
+    "infoDescriptionAustralia": "For users in Australia...",
+    "sectionTitle": "Terms of Service",
+    "sectionDescription": "These terms govern your use of our platform...",
+    "sectionUpdate": "Last updated: 2023-10-01",
+    "thankYou": "Thank you for using our service!",
+    "termsText": "Please read these terms carefully...",
+    "tableOfContents": "Table of Contents",
+    "guestConditions": [
+        "Guest condition 1: ...",
+        "Guest condition 2: ...",
+        "Guest condition 3: ..."
+    ],
+    "hostConditions": [
+        "Host condition 1: ...",
+        "Host condition 2: ...",
+        "Host condition 3: ...",
+        "Host condition 4: ..."
+    ],
+    "generalConditions": [
+        "General condition 1: ...",
+        "General condition 2: ...",
+        "General condition 3: ...",
+        "General condition 4: ...",
+        "General condition 5: ...",
+        "General condition 6: ...",
+        "General condition 7: ...",
+        "General condition 8: ...",
+        "General condition 9: ...",
+        "General condition 10: ...",
+        "General condition 11: ...",
+        "General condition 12: ...",
+        "General condition 13: ...",
+        "General condition 14: ...",
+        "General condition 15: ...",
+        "General condition 16: ..."
+    ]
+}

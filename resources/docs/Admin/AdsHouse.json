@@ -1,0 +1,30 @@
+{
+    "title": "آگهی خانه نمونه",
+    "description": "این یک آگهی نمونه برای خانه است",
+    "price": 1500000000,
+    "location": {
+        "city": "تهران",
+        "district": "ستارخان",
+        "address": "خیابان شهید علی‌محمدی، پلاک ۱۲"
+    },
+    "features": {
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "area": 150,
+        "yearBuilt": 1395,
+        "hasParking": true,
+        "hasElevator": true
+    },
+    "images": [
+        "image1.jpg",
+        "image2.jpg",
+        "image3.jpg"
+    ],
+    "contact": {
+        "name": "زهرا محمدی",
+        "phone": "09123456789",
+        "email": "zahra@example.com"
+    },
+    "isActive": true,
+    "createdAt": "2023-05-15T10:30:00Z"
+}

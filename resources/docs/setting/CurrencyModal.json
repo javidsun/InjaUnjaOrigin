@@ -1,0 +1,22 @@
+{
+    "title": "Currency Selection",
+    "message": "Please select your preferred currency from the list below.",
+    "closeButton": "Close",
+    "currencies": [
+        {
+            "code": "USD",
+            "name": "US Dollar",
+            "symbol": "$"
+        },
+        {
+            "code": "EUR",
+            "name": "Euro",
+            "symbol": "€"
+        },
+        {
+            "code": "IRR",
+            "name": "Iranian Rial",
+            "symbol": "﷼"
+        }
+    ]
+}

@@ -1,3 +1,5 @@
+<!--فایل  GiftModal.js در services      فایل   GiftModal.json در پوشه docs -->
+
 <template>
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
@@ -210,7 +212,6 @@ const sendGiftCard = () => {
 
 defineExpose({openModal});
 </script>
-
 
 <style scoped>
 .gift-card-details {

@@ -18,17 +18,25 @@ class AuthController
         $this->authServices ??= app(AuthServicesContract::class);
     }
 
-    public function register(Request $request): DtoControllerResponse
+    public function register(Request $request): DTOControllerResponse
     {
         try {
-            Log::info('arriva a questo punto o no ? ? ??  ?');
-            //$this->authServices = $request->attributes->get('authService');
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|string|min:6|confirmed',
+            ]);
 
-            //$Authtype = $request->input('message', 'Messaggio di test');
             $authResponse = $this->authServices->register($request);
             $user = $authResponse->getSingleItem();
 
-            return new DtoControllerResponse(success: true , payload: $user->createToken('API TOKEN')->plainTextToken,httpStatus: 200,message: 'registrazione completata');
+            return new DTOControllerResponse(
+                success: true,
+                payload: $user->createToken('API TOKEN')->plainTextToken,
+                httpStatus: 200,
+                message: 'Registration was successful.'
+            );
+
         } catch (\Exception $e) {
             return new DTOControllerResponse(success: false, httpStatus: 500, message: $e->getMessage());
         }
@@ -39,16 +47,26 @@ class AuthController
     public function login(Request $request): DTOControllerResponse
     {
         try {
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required|min:6',
+            ]);
+
             if (!Auth::attempt($request->only('email', 'password'))) {
-                throw new Exception('Auth Attempt to login but invalid credentials');
+                return new DTOControllerResponse(success: false, httpStatus: 401, message: 'The information entered is incorrect.');
             }
-            Log::info('request sarebbe '.var_export($request->all(),true));
+
             $authResponse = $this->authServices->login($request);
             $user = $authResponse->getSingleItem();
 
-            return new DTOControllerResponse(success: true,payload: ['user'=>$user , 'token'=>$user->createToken('API TOKEN')->plainTextToken], httpStatus: 200, message: 'Login completata');
+            return new DTOControllerResponse(
+                success: true,
+                payload: ['user' => $user, 'token' => $user->createToken('API TOKEN')->plainTextToken],
+                httpStatus: 200,
+                message: 'Login successful.'
+            );
 
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return new DTOControllerResponse(success: false, httpStatus: 500, message: $e->getMessage());
         }
     }

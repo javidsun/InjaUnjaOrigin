@@ -1,0 +1,105 @@
+{
+    "get_ads": {
+        "url": "/api/admin/ads",
+        "method": "GET",
+        "response": {
+            "success": true,
+            "data": [
+                {
+                    "id": 1,
+                    "title": "آپارتمان لوکس",
+                    "description": "آپارتمان مبله با ویو دریا",
+                    "category": "آپارتمان",
+                    "basePrice": 1000000,
+                    "serviceFee": 100000,
+                    "discountPercent": 10,
+                    "hostType": ["individual"],
+                    "locationFeatures": ["security_camera"],
+                    "status": "Awaiting_confirmation",
+                    "images": ["/ads/special-offer.jpg", "/ads/house1.jpg"],
+                    "type": "house"
+                },
+                {
+                    "id": 2,
+                    "title": "ویلا در شمال",
+                    "description": "ویلا با استخر و باغچه",
+                    "category": "ویلا",
+                    "basePrice": 2000000,
+                    "serviceFee": 200000,
+                    "discountPercent": 15,
+                    "hostType": ["business"],
+                    "locationFeatures": ["sound_insulation"],
+                    "status": "Awaiting_confirmation",
+                    "images": ["/ads/top-rated.jpg", "/ads/house2.jpg"],
+                    "type": "house"
+                }
+            ]
+        }
+    },
+    "create_ad": {
+        "url": "/api/admin/ads",
+        "method": "POST",
+        "request": {
+            "title": "عنوان آگهی",
+            "description": "توضیحات آگهی",
+            "category": "دسته بندی",
+            "basePrice": 1000000,
+            "serviceFee": 100000,
+            "discountPercent": 10,
+            "hostType": ["individual"],
+            "locationFeatures": ["security_camera"],
+            "active": true,
+            "images": ["image_url1.jpg", "image_url2.jpg"],
+            "type": "house"
+        },
+        "response": {
+            "success": true,
+            "data": {
+                "id": 3,
+                "message": "آگهی با موفقیت ایجاد شد"
+            }
+        }
+    },
+    "update_ad": {
+        "url": "/api/admin/ads/:id",
+        "method": "PUT",
+        "request": {
+            "title": "عنوان آگهی ویرایش شده",
+            "description": "توضیحات آگهی ویرایش شده",
+            "category": "دسته بندی ویرایش شده",
+            "basePrice": 1500000,
+            "serviceFee": 150000,
+            "discountPercent": 15,
+            "hostType": ["business"],
+            "locationFeatures": ["sound_insulation"],
+            "active": false,
+            "images": ["new_image_url.jpg"]
+        },
+        "response": {
+            "success": true,
+            "data": {
+                "message": "آگهی با موفقیت ویرایش شد"
+            }
+        }
+    },
+    "approve_ad": {
+        "url": "/api/admin/ads/:id/approve",
+        "method": "PATCH",
+        "response": {
+            "success": true,
+            "data": {
+                "message": "آگهی با موفقیت تایید شد"
+            }
+        }
+    },
+    "reject_ad": {
+        "url": "/api/admin/ads/:id/reject",
+        "method": "PATCH",
+        "response": {
+            "success": true,
+            "data": {
+                "message": "آگهی با موفقیت رد شد"
+            }
+        }
+    }
+}

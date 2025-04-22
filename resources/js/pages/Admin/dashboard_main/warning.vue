@@ -1,3 +1,7 @@
+<!--فایل  warning.js در services      فایل   warning.json در پوشه docs -->
+
+
+
 <template>
     <v-row class="gy-4">
         <v-col cols="12" sm="6" md="3">

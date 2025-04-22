@@ -1,0 +1,45 @@
+{
+    "analytics": {
+        "reservations_this_month": {
+            "value": 123,
+            "description": "Total reservations made in current month"
+        },
+        "average_host_income": {
+            "value": 2500,
+            "description": "Average income per host in euros",
+            "currency": "€"
+        },
+        "approval_rate": {
+            "value": 85,
+            "description": "Percentage of approved reservations",
+            "unit": "%"
+        },
+        "cancellation_rate": {
+            "value": 12,
+            "description": "Percentage of cancelled reservations",
+            "unit": "%"
+        },
+        "conversion_rate": {
+            "value": 25,
+            "description": "Conversion rate percentage",
+            "unit": "%"
+        },
+        "revenue_by_category": [
+            {
+                "category": "Home",
+                "revenue": 5000,
+                "currency": "€"
+            },
+            {
+                "category": "Car",
+                "revenue": 2000,
+                "currency": "€"
+            },
+            {
+                "category": "Others",
+                "revenue": 1000,
+                "currency": "€"
+            }
+        ]
+    }
+}

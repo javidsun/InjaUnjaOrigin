@@ -1,0 +1,49 @@
+{
+    "support": {
+        "welcomeMessage": "How can we help you?",
+        "searchPlaceholder": "Search help articles...",
+        "contactTitle": "Still need help?",
+        "contactSubtitle": "Our team is happy to assist you",
+        "contactButton": "Contact Support",
+        "contactMessage": "I need help with: {query}",
+        "contactFallback": "Please contact us via email at support@example.com",
+        "questions": [
+            {
+                "title": "support.cancelGuest",
+                "answer": "support.cancelGuestAnswer"
+            },
+            {
+                "title": "support.accountSettings",
+                "answer": "support.accountSettingsAnswer"
+            },
+            {
+                "title": "support.refundHost",
+                "answer": "support.refundHostAnswer"
+            },
+            {
+                "title": "support.hostingGoals",
+                "answer": "support.hostingGoalsAnswer"
+            },
+            {
+                "title": "support.prepareListings",
+                "answer": "support.prepareListingsAnswer"
+            },
+            {
+                "title": "support.payments",
+                "answer": "support.paymentsAnswer"
+            },
+            {
+                "title": "support.manageExperiences",
+                "answer": "support.manageExperiencesAnswer"
+            },
+            {
+                "title": "support.coHost",
+                "answer": "support.coHostAnswer"
+            },
+            {
+                "title": "support.billHelp",
+                "answer": "support.billHelpAnswer"
+            }
+        ]
+    }
+}

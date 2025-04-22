@@ -1,3 +1,4 @@
+<!--فایل  BasicStatistics.js در services      فایل   BasicStatistics.json در پوشه docs -->
 
 <template>
   <VCard class="main-card2 pa-4" outlined>

@@ -55,7 +55,7 @@ import UserSidebar from '../Layout.vue';
 
 const reservations = ref([
     {
-        title: t("HouseReservation"),
+        title: translate("HouseReservation"),
         date: "2025-01-01",
         icon: "mdi-home",
         color: "blue",
@@ -63,7 +63,7 @@ const reservations = ref([
         description: "رزرو خانه برای تاریخ 2025-01-01"
     },
     {
-        title: t("CarReservation"),
+        title: translate("CarReservation"),
         date: "2024-12-29",
         icon: "mdi-car",
         color: "green",
@@ -71,7 +71,7 @@ const reservations = ref([
         description: "رزرو ماشین برای تاریخ 2024-12-29"
     },
     {
-        title: t("EventReservation"),
+        title: translate("EventReservation"),
         date: "2024-12-25",
         icon: "mdi-calendar",
         color: "purple",
@@ -79,7 +79,7 @@ const reservations = ref([
         description: "رزرو بلیط رویداد برای تاریخ 2024-12-25"
     },
     {
-        title: t("TravelerReservation"),
+        title: translate("TravelerReservation"),
         date: "2024-12-20",
         icon: "mdi-account-group",
         color: "orange",

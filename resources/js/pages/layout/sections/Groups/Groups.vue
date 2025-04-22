@@ -1,19 +1,3 @@
-<script setup>
-import { ref } from "vue";
-
-defineProps({
-  groupImages: Array,
-});
-
-const emit = defineEmits(["selectGroup"]);
-
-const selectedGroup = ref(null);
-
-const selectGroup = (index) => {
-  selectedGroup.value = index;
-  emit("selectGroup", index); // ارسال مقدار به والد
-};
-</script>
 
 <template>
   <v-row class="group-row">
@@ -32,6 +16,23 @@ const selectGroup = (index) => {
     </v-col>
   </v-row>
 </template>
+
+<script setup>
+import { ref } from "vue";
+
+defineProps({
+    groupImages: Array,
+});
+
+const emit = defineEmits(["selectGroup"]);
+
+const selectedGroup = ref(null);
+
+const selectGroup = (index) => {
+    selectedGroup.value = index;
+    emit("selectGroup", index);
+};
+</script>
 
 <style scoped>
 .group-row {

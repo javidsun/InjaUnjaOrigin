@@ -1,0 +1,14 @@
+{
+    "subscriptionStatus": {
+        "title": "وضعیت اشتراک",
+        "description": "اشتراک شما فعال است"
+    },
+    "messagesCount": {
+        "count": 5,
+        "title": "پیام‌ها و اعلان‌ها"
+    },
+    "paymentsCount": {
+        "count": 12,
+        "title": "پرداخت‌ها"
+    }
+}

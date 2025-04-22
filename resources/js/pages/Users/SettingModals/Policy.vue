@@ -1,3 +1,6 @@
+<!--فایل  Policy.js در services      فایل   Policy.json در پوشه docs -->
+
+
 <template>
     <v-dialog v-model="ispolicyModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>

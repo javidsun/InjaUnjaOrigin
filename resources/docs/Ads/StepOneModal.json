@@ -1,0 +1,178 @@
+{
+    "propertyTypes": [
+        {
+            "title": "Ad.home",
+            "image": "/home-icon.png"
+        },
+        {
+            "title": "Ad.apartment",
+            "image": "/apartment-icon.png"
+        },
+        {
+            "title": "Ad.furniture",
+            "image": "/furniture-icon.png"
+        },
+        {
+            "title": "Ad.bed",
+            "image": "/bed-icon.png"
+        },
+        {
+            "title": "Ad.Camper",
+            "image": "/car-icon.png"
+        },
+        {
+            "title": "Ad.travelTent",
+            "image": "/tent-icon.png"
+        },
+        {
+            "title": "Ad.container",
+            "image": "/container.png"
+        },
+        {
+            "title": "Ad.Treehouse",
+            "image": "/Treehouse.png"
+        }
+    ],
+    "accommodationDetails": [
+        {
+            "name": "Ad.Guest",
+            "value": 1
+        },
+        {
+            "name": "Ad.Room",
+            "value": 1
+        },
+        {
+            "name": "Ad.bed",
+            "value": 1
+        },
+        {
+            "name": "Ad.Bathroom",
+            "value": 1
+        }
+    ],
+    "modal4Options": [
+        {
+            "text": "Ad.peaceful",
+            "icon": "mdi-home-heart"
+        },
+        {
+            "text": "Ad.unique",
+            "icon": "mdi-flower"
+        },
+        {
+            "text": "Ad.family_favorite",
+            "icon": "mdi-heart"
+        },
+        {
+            "text": "Ad.unique_style",
+            "icon": "mdi-palette"
+        },
+        {
+            "text": "Ad.center",
+            "icon": "mdi-map-marker"
+        },
+        {
+            "text": "Ad.spacious",
+            "icon": "mdi-home-variant"
+        }
+    ],
+    "amenities": [
+        {
+            "text": "Ad.wifi",
+            "icon": "mdi-wifi"
+        },
+        {
+            "text": "Ad.television",
+            "icon": "mdi-television"
+        },
+        {
+            "text": "Ad.kitchen",
+            "icon": "mdi-silverware-fork-knife"
+        },
+        {
+            "text": "Ad.washing_machine",
+            "icon": "mdi-washing-machine"
+        },
+        {
+            "text": "Ad.free_parking",
+            "icon": "mdi-parking"
+        },
+        {
+            "text": "Ad.paid_parking",
+            "icon": "mdi-currency-usd"
+        },
+        {
+            "text": "Ad.air_conditioning",
+            "icon": "mdi-air-conditioner"
+        },
+        {
+            "text": "Ad.work_space",
+            "icon": "mdi-desk"
+        }
+    ],
+    "specialAmenities": [
+        {
+            "text": "Ad.pool",
+            "icon": "mdi-pool"
+        },
+        {
+            "text": "Ad.yard",
+            "icon": "mdi-tree"
+        },
+        {
+            "text": "Ad.barbecue",
+            "icon": "mdi-grill"
+        },
+        {
+            "text": "Ad.patio",
+            "icon": "mdi-patio-heater"
+        },
+        {
+            "text": "Ad.gym",
+            "icon": "mdi-dumbbell"
+        },
+        {
+            "text": "Ad.sea_access",
+            "icon": "mdi-wave"
+        }
+    ],
+    "safetyFeatures": [
+        {
+            "text": "Ad.smoke_alarm",
+            "icon": "mdi-smoke-detector"
+        },
+        {
+            "text": "Ad.fire_extinguisher",
+            "icon": "mdi-fire-extinguisher"
+        },
+        {
+            "text": "Ad.first_aid_kit",
+            "icon": "mdi-plus-circle"
+        },
+        {
+            "text": "Ad.carbon_monoxide_alarm",
+            "icon": "mdi-molecule-co"
+        }
+    ],
+    "discountOptions": [
+        {
+            "value": 1,
+            "title": "Ad.Special_discount",
+            "description": "Ad.OffFirstReserve",
+            "percent": 20
+        },
+        {
+            "value": 2,
+            "title": "Ad.Weekly_discount",
+            "description": "Ad.Off7night",
+            "percent": 10
+        },
+        {
+            "value": 3,
+            "title": "Ad.Monthly_discount",
+            "description": "Ad.Off28nightStay",
+            "percent": 20
+        }
+    ]
+}

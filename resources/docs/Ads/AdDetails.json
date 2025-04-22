@@ -1,0 +1,25 @@
+{
+    "id": "123",
+    "title": "Sample Ad Title",
+    "description": "This is a detailed description of the advertisement.",
+    "image": "https://example.com/image.jpg",
+    "price": 100,
+    "comments": [
+        {
+            "id": "1",
+            "user": {
+                "id": "user1",
+                "name": "John Doe"
+            },
+            "content": "This is a great product!"
+        },
+        {
+            "id": "2",
+            "user": {
+                "id": "user2",
+                "name": "Jane Smith"
+            },
+            "content": "I'm interested in this item."
+        }
+    ]
+}

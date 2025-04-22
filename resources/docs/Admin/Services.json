@@ -1,0 +1,24 @@
+{
+    "services": [
+        {
+            "title": "Services.house",
+            "count": 45,
+            "route": "/AdsHouse"
+        },
+        {
+            "title": "Services.car",
+            "count": 12,
+            "route": null
+        },
+        {
+            "title": "Services.event",
+            "count": 7,
+            "route": null
+        },
+        {
+            "title": "Services.travel",
+            "count": 20,
+            "route": "/AdsTraveler"
+        }
+    ]
+}

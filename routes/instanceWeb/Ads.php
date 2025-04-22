@@ -24,5 +24,7 @@ Route::get('/MyReservations', function () {
 
 
 
+Route::get('/api/ads/{id}', [AdController::class, 'getAdById']);
+Route::get('/api/my-ads', [AdController::class, 'getMyAds'])->middleware('auth:api');
 
 

@@ -1,0 +1,96 @@
+{
+    "payments": [
+        {
+            "id": 12554,
+            "status": "successful",
+            "financeId": 0,
+            "paymentMethod": "credit_card",
+            "createdAt": "2023-05-15T10:30:00Z"
+        },
+        {
+            "id": 25462,
+            "status": "cancelled",
+            "financeId": 1,
+            "paymentMethod": "paypal",
+            "createdAt": "2023-06-20T14:45:00Z"
+        },
+        {
+            "id": 84355,
+            "status": "processing",
+            "financeId": 2,
+            "paymentMethod": "bank_transfer",
+            "createdAt": "2023-07-10T09:15:00Z"
+        },
+        {
+            "id": 92554,
+            "status": "cancelled",
+            "financeId": 3,
+            "paymentMethod": "credit_card",
+            "createdAt": "2023-08-05T16:20:00Z"
+        },
+        {
+            "id": 98545,
+            "status": "successful",
+            "financeId": 4,
+            "paymentMethod": "credit_card",
+            "createdAt": "2023-09-12T11:10:00Z"
+        }
+    ],
+    "financeItems": [
+        {
+            "location": "بروکسل،بلژیک",
+            "host": "میزبان آرمین",
+            "rating": 4.8,
+            "price": 28,
+            "period": "شبانه",
+            "type": "home",
+            "image": "rectangle-720.png",
+            "coordinates": [50.8503, 4.3517],
+            "extraFee": 5
+        },
+        {
+            "location": "آنتورپ،بلژیک",
+            "host": "مالک کامیاب",
+            "rating": 5,
+            "price": 18,
+            "period": "روزانه",
+            "type": "apartment",
+            "image": "rectangle-750.png",
+            "coordinates": [50.8549, 4.3479],
+            "extraFee": 8
+        },
+        {
+            "location": "بروکسل،بلژیک",
+            "host": "مالک کامیاب",
+            "rating": 5,
+            "price": 10,
+            "period": "روزانه",
+            "type": "apartment",
+            "image": "rectangle-750.png",
+            "coordinates": [50.8549, 4.3479],
+            "extraFee": 20
+        },
+        {
+            "location": "بروکسل،بلژیک",
+            "host": "میزبان سام",
+            "rating": 3.8,
+            "price": 22,
+            "type": "bed",
+            "period": "شبانه",
+            "image": "rectangle-2210.png",
+            "coordinates": [50.8521, 4.3459],
+            "extraFee": 5
+        },
+        {
+            "location": "بروکسل،بلژیک",
+            "host": "مالک کامیاب",
+            "rating": 5,
+            "price": 25,
+            "type": "tent",
+            "period": "روزانه",
+            "image": "rectangle-2200.png",
+            "coordinates": [50.8535, 4.3498],
+            "extraFee": 10
+        }
+    ]
+}

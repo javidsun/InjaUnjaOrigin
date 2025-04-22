@@ -1,3 +1,6 @@
+<!--فایل  SecurityModal.js در services      فایل   SecurityModal.json در پوشه docs -->
+
+
 <template>
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card class="modal-container">

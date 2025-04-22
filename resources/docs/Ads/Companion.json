@@ -1,0 +1,214 @@
+{
+    "createCompanionListing": {
+        "description": "Create a new travel companion listing",
+        "request": {
+            "method": "POST",
+            "url": "/api/companions",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer {token}"
+            },
+            "body": {
+                "origin": {
+                    "display_name": "Tehran, Iran",
+                    "lat": "35.6892",
+                    "lon": "51.3890"
+                },
+                "destination": {
+                    "display_name": "Paris, France",
+                    "lat": "48.8566",
+                    "lon": "2.3522"
+                },
+                "travelDates": ["2023-12-15", "2023-12-20"],
+                "travelStyle": "adventure",
+                "budget": 1500,
+                "personalityTraits": ["friendly", "adventurous", "punctual"],
+                "currentCompanions": 2,
+                "neededCompanions": 3,
+                "genderPreferences": {
+                    "male": 1,
+                    "female": 1,
+                    "any": 1
+                },
+                "photos": [
+                    {
+                        "url": "https://example.com/photo1.jpg",
+                        "description": "Our last adventure"
+                    }
+                ],
+                "travelPlan": {
+                    "text": "We plan to visit museums and try local cuisine",
+                    "file": null
+                },
+                "additionalDescription": "Looking for fun people to share this adventure with!"
+            }
+        },
+        "response": {
+            "status": 201,
+            "body": {
+                "id": "12345",
+                "message": "Companion listing created successfully"
+            }
+        }
+    },
+    "getCompanionListing": {
+        "description": "Get a companion listing by ID",
+        "request": {
+            "method": "GET",
+            "url": "/api/companions/12345",
+            "headers": {
+                "Authorization": "Bearer {token}"
+            }
+        },
+        "response": {
+            "status": 200,
+            "body": {
+                "id": "12345",
+                "userId": "user123",
+                "origin": {
+                    "display_name": "Tehran, Iran",
+                    "lat": "35.6892",
+                    "lon": "51.3890"
+                },
+                "destination": {
+                    "display_name": "Paris, France",
+                    "lat": "48.8566",
+                    "lon": "2.3522"
+                },
+                "travelDates": ["2023-12-15", "2023-12-20"],
+                "travelStyle": "adventure",
+                "budget": 1500,
+                "personalityTraits": ["friendly", "adventurous", "punctual"],
+                "currentCompanions": 2,
+                "neededCompanions": 3,
+                "genderPreferences": {
+                    "male": 1,
+                    "female": 1,
+                    "any": 1
+                },
+                "photos": [
+                    {
+                        "id": "photo1",
+                        "url": "https://example.com/photo1.jpg",
+                        "description": "Our last adventure"
+                    }
+                ],
+                "travelPlan": {
+                    "text": "We plan to visit museums and try local cuisine",
+                    "file": null
+                },
+                "additionalDescription": "Looking for fun people to share this adventure with!",
+                "createdAt": "2023-11-01T10:30:00Z",
+                "updatedAt": "2023-11-01T10:30:00Z"
+            }
+        }
+    },
+    "updateCompanionListing": {
+        "description": "Update a companion listing",
+        "request": {
+            "method": "PUT",
+            "url": "/api/companions/12345",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer {token}"
+            },
+            "body": {
+                "neededCompanions": 2,
+                "additionalDescription": "Updated description"
+            }
+        },
+        "response": {
+            "status": 200,
+            "body": {
+                "message": "Companion listing updated successfully"
+            }
+        }
+    },
+    "deleteCompanionListing": {
+        "description": "Delete a companion listing",
+        "request": {
+            "method": "DELETE",
+            "url": "/api/companions/12345",
+            "headers": {
+                "Authorization": "Bearer {token}"
+            }
+        },
+        "response": {
+            "status": 204
+        }
+    },
+    "searchCompanionListings": {
+        "description": "Search for companion listings",
+        "request": {
+            "method": "GET",
+            "url": "/api/companions/search",
+            "headers": {
+                "Authorization": "Bearer {token}"
+            },
+            "query": {
+                "destination": "Paris",
+                "startDate": "2023-12-01",
+                "endDate": "2023-12-31",
+                "travelStyle": "adventure",
+                "minBudget": 1000,
+                "maxBudget": 2000
+            }
+        },
+        "response": {
+            "status": 200,
+            "body": [
+                {
+                    "id": "12345",
+                    "userId": "user123",
+                    "destination": {
+                        "display_name": "Paris, France",
+                        "lat": "48.8566",
+                        "lon": "2.3522"
+                    },
+                    "travelDates": ["2023-12-15", "2023-12-20"],
+                    "travelStyle": "adventure",
+                    "budget": 1500,
+                    "currentCompanions": 2,
+                    "neededCompanions": 3,
+                    "createdAt": "2023-11-01T10:30:00Z"
+                }
+            ]
+        }
+    },
+    "uploadCompanionPhotos": {
+        "description": "Upload photos for a companion listing",
+        "request": {
+            "method": "POST",
+            "url": "/api/companions/12345/photos",
+            "headers": {
+                "Content-Type": "multipart/form-data",
+                "Authorization": "Bearer {token}"
+            },
+            "body": "FormData with photo files and optional descriptions"
+        },
+        "response": {
+            "status": 201,
+            "body": {
+                "photos": [
+                    {
+                        "id": "photo2",
+                        "url": "https://example.com/photo2.jpg"
+                    }
+                ]
+            }
+        }
+    },
+    "deleteCompanionPhoto": {
+        "description": "Delete a photo from a companion listing",
+        "request": {
+            "method": "DELETE",
+            "url": "/api/companions/12345/photos/photo1",
+            "headers": {
+                "Authorization": "Bearer {token}"
+            }
+        },
+        "response": {
+            "status": 204
+        }
+    }
+}

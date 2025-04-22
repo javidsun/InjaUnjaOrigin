@@ -1,3 +1,4 @@
+<!--فایل  functional.js در services      فایل   functional.json در پوشه docs -->
 
 <template>
   <VCard class="main-card pa-4" outlined>

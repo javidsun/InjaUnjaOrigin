@@ -1,0 +1,10 @@
+{
+    "giftCard": {
+        "amount": 50,
+        "recipient": "recipient@example.com",
+        "message": "Enjoy your gift!",
+        "walletBalance": 150,
+        "expiryDate": "2023-12-31",
+        "currency": "USD"
+    }
+}

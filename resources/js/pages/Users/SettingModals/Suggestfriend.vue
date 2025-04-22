@@ -1,3 +1,5 @@
+<!--فایل  Suggestfriend.js در services      فایل   Suggestfriend.json در پوشه docs -->
+
 <template>
     <v-dialog v-model="isfriendModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>

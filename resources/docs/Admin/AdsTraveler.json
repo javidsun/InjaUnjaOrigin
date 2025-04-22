@@ -1,0 +1,40 @@
+{
+    "ads": [
+        {
+            "id": 1,
+            "title": "سفر به شمال",
+            "description": "سفر گروهی به رامسر - ۳ روزه",
+            "origin": "تهران",
+            "destination": "رامسر",
+            "departureDate": "1403/05/15",
+            "returnDate": "1403/05/18",
+            "capacity": 4,
+            "availableSeats": 2,
+            "price": 1500000,
+            "image": "/assets/images/north-trip.jpg",
+            "user": {
+                "name": "محمد رضایی",
+                "rating": 4.5,
+                "avatar": "/assets/avatars/user1.jpg"
+            }
+        },
+        {
+            "id": 2,
+            "title": "سفر به اصفهان",
+            "description": "سفر به اصفهان با توقف در کاشان",
+            "origin": "تهران",
+            "destination": "اصفهان",
+            "departureDate": "1403/06/01",
+            "returnDate": "1403/06/05",
+            "capacity": 3,
+            "availableSeats": 1,
+            "price": 2000000,
+            "image": "/assets/images/esfahan-trip.jpg",
+            "user": {
+                "name": "زهرا محمدی",
+                "rating": 4.8,
+                "avatar": "/assets/avatars/user2.jpg"
+            }
+        }
+    ]
+}

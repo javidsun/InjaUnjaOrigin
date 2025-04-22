@@ -1,3 +1,5 @@
+<!--فایل  PaymentsModal.js در services      فایل   PaymentsModal.json در پوشه docs -->
+
 <template>
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card class="modal-container">
@@ -213,6 +215,7 @@ const submitOnlinePayment = () => {
 
 defineExpose({openModal});
 </script>
+
 <style scoped>
 .modal-container {
     border-radius: 15px !important;

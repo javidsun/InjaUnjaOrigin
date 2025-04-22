@@ -1,0 +1,33 @@
+{
+    "searchQuery": "بروکسل،بلژیک",
+    "selectedCenter": {
+        "lat": 50.8503,
+        "lng": 4.3517
+    },
+    "apartments": [
+        {
+            "id": 1,
+            "location": "بروکسل،بلژیک",
+            "host": "میزبان آرمین",
+            "rating": 4.8,
+            "price": 28,
+            "period": "شبانه",
+            "type": "home",
+            "image": "rectangle-720.png",
+            "coordinates": [50.8503, 4.3517],
+            "extraFee": 5
+        },
+        {
+            "id": 2,
+            "location": "بروکسل،بلژیک",
+            "host": "میزبان آرمین",
+            "rating": 4.8,
+            "price": 28,
+            "period": "شبانه",
+            "type": "home",
+            "image": "rectangle-720.png",
+            "coordinates": [50.8503, 4.3517],
+            "extraFee": 5
+        }
+    ]
+}

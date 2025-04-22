@@ -1,3 +1,5 @@
+<!--فایل  HousesContent.js در services      فایل   HousesContent.json در پوشه docs -->
+
 <template>
     <v-container :class="{ 'expanded-container': isExpanded }">
         <v-row>
@@ -328,7 +330,6 @@
 
     </v-container>
 </template>
-
 
 <script>
 import {translate} from "@/store/languageStore";

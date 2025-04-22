@@ -1,3 +1,6 @@
+<!--فایل  HowItWorksModal.js در services      فایل   HowItWorksModal.json در پوشه docs -->
+
+
 <template>
     <v-dialog v-model="isHowItWorksModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>

@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -25,3 +25,14 @@ Route::get('/verify-email', function () {
 Route::get('/forgot-password', function () {
     return Inertia::render('layout/menu_component/forgot-password');
 })->name('forgot-password');
+
+
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/api/register', [AuthController::class, 'register']);
+Route::post('/api/login', [AuthController::class, 'login']);
+Route::middleware('auth:api')->get('/api/user', [AuthController::class, 'me']);
+Route::post('/api/forgot-password', [AuthController::class, 'sendResetLink']);
+Route::post('/api/reset-password', [AuthController::class, 'resetPassword']);
+Route::post('/api/verify-email', [AuthController::class, 'verifyEmail']);
+Route::post('/api/two-factor', [AuthController::class, 'verifyTwoFactor']);

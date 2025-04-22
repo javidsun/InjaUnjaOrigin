@@ -1,3 +1,6 @@
+<!--فایل  SettingModal.js در services      فایل   SettingModal.json در پوشه docs -->
+
+
 <template class="modal">
     <v-dialog v-model="isOpen" max-width="600px" transition="dialog-transition">
         <v-card class="modal-container">

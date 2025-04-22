@@ -1,0 +1,127 @@
+{
+    "travelers": [
+        {
+            "id": 1,
+            "destination": "Paris, France",
+            "user": {
+                "name": "Sara",
+                "age": 28,
+                "gender": "female",
+                "rating": 4.7
+            },
+            "travelDates": "2025 April 10-15",
+            "budget": "1200",
+            "travelStyle": "backpacker",
+            "description": "Looking for a female travel companion for an economical trip to Paris and visiting cultural attractions",
+            "image": "/1010.png",
+            "images": ["/1010.png", "/1020.png"],
+            "coordinates": [48.8566, 2.3522],
+            "personalityTraits": ["Cultural", "Thrifty", "Independent"]
+        },
+        {
+            "id": 2,
+            "destination": "Rome, Italy",
+            "user": {
+                "name": "Ali",
+                "age": 32,
+                "gender": "male",
+                "rating": 4.9
+            },
+            "travelDates": "2025 Feb 11-15",
+            "budget": "1500",
+            "travelStyle": "cultural",
+            "description": "Interested in history and architecture, looking for a travel companion to visit museums and historical monuments",
+            "image": "/1030.png",
+            "images": ["/1010.png"],
+            "coordinates": [41.9028, 12.4964],
+            "personalityTraits": ["Culturated", "polite", "orderly"]
+        },
+        {
+            "id": 3,
+            "destination": "Barcelona, Spain",
+            "user": {
+                "name": "Nazanin",
+                "age": 25,
+                "gender": "female",
+                "rating": 4.5
+            },
+            "travelDates": "All Summer",
+            "budget": "800",
+            "travelStyle": "backpacker",
+            "description": "Looking for a travel companion to experience local life and couch surfing",
+            "image": "/1020.png",
+            "images": ["/1020.png"],
+            "coordinates": [41.3851, 2.1734],
+            "personalityTraits": ["Adventurous", "Intimate", "Flexible"]
+        },
+        {
+            "id": 4,
+            "destination": "Amsterdam, Netherlands",
+            "user": {
+                "name": "Reza",
+                "age": 35,
+                "gender": "male",
+                "rating": 4.8
+            },
+            "travelDates": "2025 JUN 20-30",
+            "budget": "2000",
+            "travelStyle": "business",
+            "description": "Business trip with free time for sightseeing, suitable for professional travelers",
+            "image": "/1010.png",
+            "images": ["/1010.png"],
+            "coordinates": [52.3676, 4.9041],
+            "personalityTraits": ["professional", "regular", "moderate"]
+        },
+        {
+            "id": 5,
+            "destination": "Vienna, Austria",
+            "user": {
+                "name": "Taraneh",
+                "age": 30,
+                "gender": "female",
+                "rating": 4.9
+            },
+            "travelDates": "2025 MAY 01-15",
+            "budget": "1800",
+            "travelStyle": "luxury",
+            "description": "Looking for a female travel companion to stay in luxury hotels and fine restaurants",
+            "image": "/1030.png",
+            "images": ["/1030.png"],
+            "coordinates": [48.2082, 16.3738],
+            "personalityTraits": ["entertaining", "hospitable", "classy"]
+        },
+        {
+            "id": 6,
+            "destination": "Berlin, Germany",
+            "user": {
+                "name": "Amir",
+                "age": 27,
+                "gender": "male",
+                "rating": 4.6
+            },
+            "travelDates": "2025 April 01-15",
+            "budget": "1000",
+            "travelStyle": "adventure",
+            "description": "Interested in adventure tours and nature tourism",
+            "image": "/1020.png",
+            "images": ["/1010.png"],
+            "coordinates": [52.5200, 13.4050],
+            "personalityTraits": ["Adventurous", "Lively", "Intimate"]
+        }
+    ],
+    "travelIcons": [
+        { "name": "backpacker", "src": "/Travel 009.png" },
+        { "name": "family", "src": "/family.png" },
+        { "name": "couple", "src": "/couple.png" },
+        { "name": "business", "src": "/business.png" },
+        { "name": "adventure", "src": "/adventure.png" },
+        { "name": "luxury", "src": "/luxury.png" }
+    ],
+    "markerIcons": {
+        "origin": "/map-marker-origin.png",
+        "destination": "/map-marker-destination.png",
+        "male": "/map-marker-male.png",
+        "female": "/map-marker-female.png",
+        "neutral": "/map-marker-origin.png"
+    }
+}

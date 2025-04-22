@@ -1,0 +1,40 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "fullName": "Galasasen Slixby",
+            "username": "gslixby0",
+            "email": "gslixby0@abc.net.au",
+            "role": "editor",
+            "status": "inactive",
+            "avatar": "avatar1.svg"
+        },
+        {
+            "id": 2,
+            "fullName": "Halsey Redmore",
+            "username": "hredmore1",
+            "email": "hredmore1@imgur.com",
+            "role": "author",
+            "status": "pending",
+            "avatar": "avatar2.svg"
+        },
+        {
+            "id": 3,
+            "fullName": "Marjory Sicely",
+            "username": "msicely2",
+            "email": "msicely2@who.int",
+            "role": "maintainer",
+            "status": "active",
+            "avatar": "avatar3.svg"
+        },
+        {
+            "id": 4,
+            "fullName": "Cyrill Risby",
+            "username": "crisby3",
+            "email": "crisby3@wordpress.com",
+            "role": "admin",
+            "status": "inactive",
+            "avatar": "avatar4.svg"
+        }
+    ]
+}

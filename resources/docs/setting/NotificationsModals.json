@@ -1,0 +1,22 @@
+{
+    "notifications": {
+        "recognition": true,
+        "insights": true,
+        "pricing": true,
+        "hosting": true,
+        "news": true,
+        "regulations": true,
+        "inspiration": true,
+        "tripPlanning": true,
+        "injaonjaNews": true,
+        "feedback": true,
+        "tripRegulations": true,
+        "allOffers": true,
+        "accountActivity": true,
+        "activityList": true,
+        "guestPolicies": true,
+        "hostPolicies": true,
+        "reminders": true,
+        "messages": true
+    }
+}

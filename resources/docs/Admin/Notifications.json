@@ -1,0 +1,30 @@
+{
+    "sendReservationNotification": {
+        "users": ["string"],
+        "message": "string"
+    },
+    "sendSystemAlert": {
+        "hosts": ["string"],
+        "message": "string"
+    },
+    "saveDraft": {
+        "type": "reservation|system_alert",
+        "recipients": ["string"],
+        "message": "string"
+    },
+    "markAsRead": {
+        "notificationId": "string"
+    },
+    "deleteNotification": {
+        "notificationId": "string"
+    },
+    "editDraft": {
+        "draftId": "string"
+    },
+    "sendDraft": {
+        "draftId": "string"
+    },
+    "deleteDraft": {
+        "draftId": "string"
+    }
+}

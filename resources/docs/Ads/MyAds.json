@@ -1,0 +1,30 @@
+{
+    "ads": [
+        {
+            "id": 1,
+            "title": "آپارتمان زیبا در تهران",
+            "description": "آپارتمان ۲ خوابه در منطقه خوب تهران",
+            "images": ["/ads/special-offer.jpg", "/ads/house1.jpg"],
+            "propertyType": "آپارتمان",
+            "basePrice": 1000000,
+            "serviceFee": 100000,
+            "discountPercent": 10,
+            "category": "house",
+            "hostType": ["individual"],
+            "locationFeatures": ["security_camera"]
+        },
+        {
+            "id": 2,
+            "title": "ویلای لوکس در شمال",
+            "description": "ویلای ۳ خوابه با استخر خصوصی",
+            "images": ["/ads/top-rated.jpg", "/ads/house2.jpg"],
+            "propertyType": "ویلا",
+            "basePrice": 2000000,
+            "serviceFee": 200000,
+            "discountPercent": 15,
+            "category": "house",
+            "hostType": ["business"],
+            "locationFeatures": ["sound_insulation"]
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+{
+    "email": "zahra@example.com",
+    "password": "securePassword123",
+    "remember": true,
+    "selected_dates": [
+        "2025-04-20",
+        "2025-04-21"
+    ]
+}

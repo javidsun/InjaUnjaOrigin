@@ -1,3 +1,5 @@
+<!--فایل  accessService.js در services      فایل   AccessModal.json در پوشه docs -->
+
 <template>
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>

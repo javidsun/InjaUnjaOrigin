@@ -1,0 +1,42 @@
+{
+    "ads": [
+        {
+            "id": 1,
+            "title": "آپارتمان 80 متری در تهران",
+            "price": 250000,
+            "category_id": 1,
+            "description": "آپارتمان نوساز در منطقه خوب تهران",
+            "image": "/images/ads/apartment1.jpg"
+        },
+        {
+            "id": 2,
+            "title": "ویلا 200 متری در شمال",
+            "price": 500000,
+            "category_id": 2,
+            "description": "ویلا با نمای دریایی و امکانات کامل",
+            "image": "/images/ads/villa1.jpg"
+        },
+        {
+            "id": 3,
+            "title": "مغازه 50 متری در مرکز شهر",
+            "price": 350000,
+            "category_id": 3,
+            "description": "مغازه با موقعیت تجاری عالی",
+            "image": "/images/ads/shop1.jpg"
+        }
+    ],
+    "categories": [
+        {
+            "id": 1,
+            "name": "آپارتمان"
+        },
+        {
+            "id": 2,
+            "name": "ویلا"
+        },
+        {
+            "id": 3,
+            "name": "مغازه"
+        }
+    ]
+}

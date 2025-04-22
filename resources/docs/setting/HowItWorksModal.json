@@ -1,0 +1,36 @@
+{
+    "howItWorks": {
+        "title": "How It Works",
+        "description": "Here's a step-by-step guide to using our platform",
+        "step1Title": "Step 1: Create an Account",
+        "step1Description": "Sign up with your email and create a password",
+        "step2Title": "Step 2: Complete Your Profile",
+        "step2Description": "Add your personal information and preferences",
+        "step3Title": "Step 3: Start Exploring",
+        "step3Description": "Begin searching for travel companions or housing options",
+        "supportTitle": "Need Help?",
+        "supportDescription": "Check out our frequently asked questions",
+        "faqs": [
+            {
+                "question": "How do I reset my password?",
+                "answer": "You can reset your password by clicking 'Forgot Password' on the login page"
+            },
+            {
+                "question": "Is my personal information secure?",
+                "answer": "Yes, we use industry-standard encryption to protect your data"
+            },
+            {
+                "question": "How do I contact support?",
+                "answer": "You can reach us through the contact form in your account settings"
+            },
+            {
+                "question": "Can I change my travel preferences later?",
+                "answer": "Yes, you can update your preferences anytime in your profile"
+            },
+            {
+                "question": "What payment methods do you accept?",
+                "answer": "We accept all major credit cards and PayPal"
+            }
+        ]
+    }
+}

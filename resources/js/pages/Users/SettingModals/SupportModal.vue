@@ -1,3 +1,6 @@
+<!--فایل  SupportModal.js در services      فایل   SupportModal.json در پوشه docs -->
+
+
 <template>
     <v-dialog v-model="isSupportModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>

@@ -1,12 +1,3 @@
-<script setup>
-import { ref } from "vue";
-
-const props = defineProps({
-  accessImages: Array,
-});
-
-const isHovered = ref(false);
-</script>
 
 <template>
   <div
@@ -32,6 +23,16 @@ const isHovered = ref(false);
     </v-row>
   </div>
 </template>
+
+<script setup>
+import { ref } from "vue";
+
+const props = defineProps({
+    accessImages: Array,
+});
+
+const isHovered = ref(false);
+</script>
 
 <style scoped>
 .access-container {

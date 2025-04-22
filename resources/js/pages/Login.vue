@@ -1,3 +1,5 @@
+<!--فایل  authService.js در services      فایل   login_payload.json در پوشه docs -->
+
 <template>
     <v-dialog v-model="loginDialogIsOpen" max-width="500px" @click:outside="closeDialog">
         <v-container class="container__login">
@@ -38,7 +40,7 @@
                                     :label="translate('login.password')"
                                     :placeholder="translate('login.passwordPlaceholder')"
                                     prepend-icon="mdi-lock"
-                                    @click:append="isPasswordVisible = !isPasswordVisible"
+                                    @click:append="isPasswordVisible.value = !isPasswordVisible.value"
                                     required
                                     outlined
                                     dense
@@ -55,7 +57,7 @@
 
                         <v-card-text>
                             <v-dialog v-model="modalActive" max-width="500px">
-                                <component :is="selectedComponent" @close="modalActive = false"></component>
+                                <component :is="selectedComponent" @close="modalActive.value = false"></component>
                             </v-dialog>
                             <v-list-item @click="openModal(goToForgotPassword)">
                                 <v-list-item-title>{{ translate("login.forgotPassword") }}</v-list-item-title>
@@ -114,6 +116,7 @@ import InjaUnjaLogo from "../../../public/inja-unja.png";
 import { translate } from "../store/languageStore";
 import Register from "./RegisterUser.vue";
 import ForgotPassword from "./layout/menu_component/forgot-password.vue";
+import { login } from '../services/general/authService.js';
 
 export default {
     //TODO : is option but modify const
@@ -145,7 +148,7 @@ export default {
             loginDialogIsOpen.value = true;
         };
 
-        const handleLogin = () => {
+        const handleLogin = async () => {
             emailErrors.value = "";
             passwordErrors.value = "";
 
@@ -161,13 +164,27 @@ export default {
             }
 
             loading.value = true;
-            setTimeout(() => {
+
+            try {
+                await login({
+                    email: form.value.email,
+                    password: form.value.password,
+                    remember: form.value.remember,
+                });
+
                 snackbar.text = translate("login.loginSuccess");
                 snackbar.color = "success";
                 snackbar.show = true;
-            }, 1500);
 
-            loading.value = false;
+                loginDialogIsOpen.value = false;
+            } catch (error) {
+                snackbar.text = translate("login.loginFailed");
+                snackbar.color = "error";
+                snackbar.show = true;
+                loginAttempts.value += 1;
+            } finally {
+                loading.value = false;
+            }
         };
 
         const closeDialog = () => {

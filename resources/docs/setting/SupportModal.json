@@ -1,0 +1,51 @@
+{
+    "support": {
+        "title": "پشتیبانی",
+        "welcomeMessage": "چگونه می‌توانیم به شما کمک کنیم؟",
+        "searchPlaceholder": "جستجو در سوالات متداول...",
+        "contactTitle": "هنوز پاسخ خود را پیدا نکرده‌اید؟",
+        "contactSubtitle": "تیم پشتیبانی ما آماده کمک به شماست",
+        "contactButton": "تماس با پشتیبانی",
+        "contactMessage": "سوال من: {query}",
+        "contactFallback": "لطفاً از طریق ایمیل یا تلفن با پشتیبانی تماس بگیرید",
+
+        "questions": [
+            {
+                "title": "support.cancelGuest",
+                "answer": "support.cancelGuestAnswer"
+            },
+            {
+                "title": "support.accountSettings",
+                "answer": "support.accountSettingsAnswer"
+            },
+            {
+                "title": "support.refundHost",
+                "answer": "support.refundHostAnswer"
+            },
+            {
+                "title": "support.hostingGoals",
+                "answer": "support.hostingGoalsAnswer"
+            },
+            {
+                "title": "support.prepareListings",
+                "answer": "support.prepareListingsAnswer"
+            },
+            {
+                "title": "support.payments",
+                "answer": "support.paymentsAnswer"
+            },
+            {
+                "title": "support.manageExperiences",
+                "answer": "support.manageExperiencesAnswer"
+            },
+            {
+                "title": "support.coHost",
+                "answer": "support.coHostAnswer"
+            },
+            {
+                "title": "support.billHelp",
+                "answer": "support.billHelpAnswer"
+            }
+        ]
+    }
+}

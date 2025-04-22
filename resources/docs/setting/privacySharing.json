@@ -1,0 +1,80 @@
+{
+    "downloadUserData": {
+        "method": "GET",
+        "url": "/api/user/data",
+        "response": {
+            "file": "UserProfile.pdf",
+            "status": "success"
+        }
+    },
+    "deleteAccount": {
+        "method": "DELETE",
+        "url": "/api/user/account",
+        "body": {
+            "confirmation": true
+        },
+        "response": {
+            "message": "Account deleted successfully",
+            "status": "success"
+        }
+    },
+    "thirdPartySettings": {
+        "method": "POST",
+        "url": "/api/user/privacy/third-party",
+        "body": {
+            "sharing": false,
+            "analytics": false,
+            "marketing": false
+        },
+        "response": {
+            "message": "Third-party settings updated",
+            "status": "success"
+        }
+    },
+    "profileVisibility": {
+        "method": "POST",
+        "url": "/api/user/privacy/visibility",
+        "body": {
+            "visibility": "public"
+        },
+        "response": {
+            "message": "Visibility settings updated",
+            "status": "success"
+        }
+    },
+    "connectedServices": {
+        "method": "GET",
+        "url": "/api/user/connected-services",
+        "response": [
+            {
+                "id": 1,
+                "name": "Google",
+                "description": "Connect to the account Google",
+                "connected": true
+            },
+            {
+                "id": 2,
+                "name": "Facebook",
+                "description": "Connect to the account Facebook",
+                "connected": true
+            },
+            {
+                "id": 3,
+                "name": "Twitter",
+                "description": "Connect to the account Twitter",
+                "connected": true
+            }
+        ]
+    },
+    "toggleServiceConnection": {
+        "method": "POST",
+        "url": "/api/user/connected-services/:id",
+        "body": {
+            "connected": true
+        },
+        "response": {
+            "message": "Service connection updated",
+            "status": "success"
+        }
+    }
+}

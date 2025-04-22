@@ -1,0 +1,49 @@
+// docs/createAdForm.json
+{
+    "description": "This JSON structure represents the data format expected by the backend for creating new ads.",
+    "accommodation": {
+        "title": "string",
+        "description": "string",
+        "type": "string (apartment, house, room, etc.)",
+        "location": {
+            "city": "string",
+            "address": "string",
+            "coordinates": {
+                "lat": "number",
+                "lng": "number"
+            }
+        },
+        "amenities": "array of strings",
+        "price": "number",
+        "currency": "string",
+        "availableFrom": "date string",
+        "availableTo": "date string",
+        "photos": "array of image URLs or base64 strings"
+    },
+    "companion": {
+        "title": "string",
+        "description": "string",
+        "travelFrom": "string",
+        "travelTo": "string",
+        "travelDate": "date string",
+        "preferences": {
+            "gender": "string (optional)",
+            "ageRange": {
+                "min": "number (optional)",
+                "max": "number (optional)"
+            },
+            "otherPreferences": "string (optional)"
+        }
+    },
+    "vehicle": {
+        "title": "string",
+        "description": "string",
+        "type": "string (car, motorcycle, etc.)",
+        "seats": "number",
+        "travelFrom": "string",
+        "travelTo": "string",
+        "travelDate": "date string",
+        "price": "number",
+        "currency": "string"
+    }
+}

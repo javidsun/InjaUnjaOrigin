@@ -1,3 +1,5 @@
+<!--فایل  ContentSection.js در services      فایل   ContentSection.json در پوشه docs -->
+
 <template>
     <v-row class="content-section">
         <v-col cols="12" md="7" class="move-down">
@@ -37,6 +39,12 @@ import TravelersContent from "./Groups/Travel Ads/TravelersContent.vue";
 import HousesContent from "./Groups/House Ads/HousesContent.vue";
 import VehiclesContent from "./Groups/Vehicles Ads/VehiclesContent.vue";
 import EventsContent from "./Groups/Event Ads/EventsContent.vue";
+import {
+    getContentSectionData,
+    getGroupData,
+    getAdvertisementData,
+    getMainBannerData
+} from "../../../services/general/ContentSection.js";
 
 const images = {
     mainBanner: "untitled-design-5-110.png",

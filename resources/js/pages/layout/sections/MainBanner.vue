@@ -1,14 +1,16 @@
-<script setup>
-const props = defineProps({
-  bannerImage: String,
-});
-</script>
+
 
 <template>
   <div class="main-banner">
     <v-img :src="bannerImage" alt="Main Banner" />
   </div>
 </template>
+
+<script setup>
+const props = defineProps({
+    bannerImage: String,
+});
+</script>
 
 <style>
 @media (max-width: 960px) {

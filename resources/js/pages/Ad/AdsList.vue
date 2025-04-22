@@ -1,3 +1,6 @@
+<!--فایل  AdsList.js در services      فایل   AdsList.json در پوشه docs -->
+
+
 <template>
     <div>
         <h2>آگهی‌های موجود</h2>
@@ -17,7 +20,7 @@
 // TODO  : composition --> option  &  const & warning & errore
 
 import { ref, onMounted } from "vue";
-import adService from "../../services/adService";
+import adService from "../../services/Ads/AdDetails.JS";
 import CategoryFilter from "../Ad/CategoryFilter.vue";
 
 const ads = ref([]);

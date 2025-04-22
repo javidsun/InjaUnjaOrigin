@@ -1,0 +1,119 @@
+{
+    "getPaymentStats": {
+        "description": "Get payment statistics including best/worst users",
+        "response": {
+            "bestUser": {
+                "userId": 123,
+                "userName": "John Doe",
+                "successfulAttempts": 15,
+                "unsuccessfulAttempts": 2
+            },
+            "worstUser": {
+                "userId": 456,
+                "userName": "Jane Smith",
+                "successfulAttempts": 3,
+                "unsuccessfulAttempts": 8
+            },
+            "monthlyStats": {
+                "totalPayments": 42,
+                "successfulPayments": 38,
+                "failedPayments": 4
+            }
+        }
+    },
+    "getPayments": {
+        "description": "Get list of payments",
+        "request": {
+            "page": 1,
+            "limit": 10,
+            "status": "successful|unsuccessful|all",
+            "sortBy": "date|amount",
+            "sortOrder": "asc|desc"
+        },
+        "response": {
+            "payments": [
+                {
+                    "id": 1,
+                    "userId": 123,
+                    "userName": "John Doe",
+                    "amount": 100.50,
+                    "currency": "EUR",
+                    "date": "2023-02-01",
+                    "status": "successful",
+                    "failedAttempts": 0
+                }
+            ],
+            "total": 42,
+            "page": 1,
+            "limit": 10
+        }
+    },
+    "getRefundRequests": {
+        "description": "Get list of refund requests",
+        "request": {
+            "page": 1,
+            "limit": 10,
+            "status": "pending|approved|rejected|all",
+            "sortBy": "date|amount",
+            "sortOrder": "asc|desc"
+        },
+        "response": {
+            "requests": [
+                {
+                    "id": 1,
+                    "userId": 123,
+                    "userName": "John Doe",
+                    "amount": 50.00,
+                    "currency": "EUR",
+                    "originalPaymentId": 5,
+                    "requestDate": "2023-02-05",
+                    "status": "pending",
+                    "reason": "Product not received"
+                }
+            ],
+            "total": 5,
+            "page": 1,
+            "limit": 10
+        }
+    },
+    "sendMessage": {
+        "description": "Send message to user",
+        "request": {
+            "message": "Your payment was successful!",
+            "image": "base64_encoded_image_optional"
+        },
+        "response": {
+            "success": true,
+            "messageId": "msg_12345"
+        }
+    },
+    "blockUser": {
+        "description": "Block user due to payment issues",
+        "request": {
+            "note": "User had 5 failed payment attempts"
+        },
+        "response": {
+            "success": true,
+            "blockedUntil": "2023-03-01"
+        }
+    },
+    "approveRefund": {
+        "description": "Approve refund request",
+        "request": {
+            "note": "Approved after verification"
+        },
+        "response": {
+            "success": true,
+            "newPaymentId": 42
+        }
+    },
+    "rejectRefund": {
+        "description": "Reject refund request",
+        "request": {
+            "note": "Rejected - product was delivered"
+        },
+        "response": {
+            "success": true
+        }
+    }
+}

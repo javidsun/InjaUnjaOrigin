@@ -1,3 +1,6 @@
+<!--فایل  AdDetails.js در services      فایل   AdDetails.json در پوشه docs -->
+
+
 <template>
     <div v-if="ad">
         <h2>{{ ad.title }}</h2>
@@ -22,7 +25,7 @@
 
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
-import adService from "../../services/adService";
+import adService from "../../services/Ads/AdsList.js";
 
 const route = useRoute();
 const ad = ref(null);

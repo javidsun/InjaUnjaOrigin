@@ -1,0 +1,79 @@
+{
+    "specialOffer": {
+        "title": "پیشنهاد ویژه اروپا",
+        "description": "ویلاهای لوکس در جنوب فرانسه با تخفیف ویژه",
+        "image": "/ads/europe-special.jpg",
+        "link": "/europe/offers"
+    },
+    "companionAds": [
+        {
+            "id": 2,
+            "destination": "Rome, Italy",
+            "user": {
+                "name": "Ali",
+                "age": 32,
+                "gender": "male",
+                "rating": 4.9
+            },
+            "travelDates": "2025 Feb 11-15",
+            "budget": "1500",
+            "travelStyle": "cultural",
+            "description": "Interested in history and architecture, looking for a travel companion to visit museums and historical monuments",
+            "image": "/1030.png",
+            "images": ["/1010.png"],
+            "coordinates": [41.9028, 12.4964],
+            "personalityTraits": ["Culturated", "polite", "orderly"]
+        },
+        {
+            "id": 3,
+            "destination": "Barcelona, Spain",
+            "user": {
+                "name": "Nazanin",
+                "age": 25,
+                "gender": "female",
+                "rating": 4.5
+            },
+            "travelDates": "All Summer",
+            "budget": "800",
+            "travelStyle": "backpacker",
+            "description": "Looking for a travel companion to experience local life and couch surfing",
+            "image": "/1020.png",
+            "images": ["/1020.png"],
+            "coordinates": [41.3851, 2.1734],
+            "personalityTraits": ["Adventurous", "Intimate", "Flexible"]
+        }
+    ],
+    "houseAds": [
+        {
+            "title": "آپارتمان در مرکز پاریس",
+            "description": "آپارتمان 2 خوابه نزدیک برج ایفل - امکانات کامل",
+            "image": "/rectangle-720.png",
+            "link": "/europe/housing/1",
+            "type": "house",
+            "details": {
+                "price": "95 یورو در شب",
+                "location": "پاریس، فرانسه",
+                "amenities": ["واي فاي", "تهويه مطبوع", "آشپزخانه مجهز"]
+            }
+        },
+        {
+            "title": "ویلا در ساحل آلگاروه",
+            "description": "ویلای خصوصی با استخر و دسترسی مستقیم به ساحل",
+            "image": "/rectangle-2210.png",
+            "link": "/europe/housing/2",
+            "type": "house",
+            "details": {
+                "price": "180 یورو در شب",
+                "location": "آلگاروه، پرتغال",
+                "amenities": ["استخر خصوصی", "پارکينگ", "آشپزخانه حرفه اي"]
+            }
+        }
+    ],
+    "topRatedAd": {
+        "title": "برترین اقامتگاه اروپا 2023",
+        "description": "هتل بوتیک در ونیز با امتیاز 4.9 از 5",
+        "image": "/rectangle-2200.png",
+        "link": "/europe/top-rated",
+        "type": "house"
+    }
+}

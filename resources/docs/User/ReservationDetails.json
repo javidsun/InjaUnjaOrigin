@@ -1,0 +1,11 @@
+{
+    "reservation": {
+        "id": 1,
+        "title": "رزرو خانه",
+        "date": "2025-01-01",
+        "icon": "mdi-home",
+        "color": "blue",
+        "image": "/ads/house.svg",
+        "description": "رزرو خانه برای تاریخ 2025-01-01"
+    }
+}

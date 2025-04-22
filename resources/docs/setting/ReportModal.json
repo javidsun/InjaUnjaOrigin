@@ -1,0 +1,39 @@
+{
+    "title": "How It Works",
+    "description": "This modal explains how the reporting system works",
+    "steps": [
+        {
+            "title": "Step 1: Select the issue",
+            "description": "Choose the type of problem you want to report",
+            "video": "/path/to/video1.mp4"
+        },
+        {
+            "title": "Step 2: Provide details",
+            "description": "Add more information about the issue",
+            "video": "/path/to/video2.mp4"
+        },
+        {
+            "title": "Step 3: Submit report",
+            "description": "Review and send your report",
+            "video": "/path/to/video3.mp4"
+        }
+    ],
+    "support": {
+        "title": "Need help?",
+        "description": "Check our frequently asked questions"
+    },
+    "faqs": [
+        {
+            "question": "How long does it take to process a report?",
+            "answer": "Reports are usually processed within 24-48 hours."
+        },
+        {
+            "question": "Can I edit my report after submission?",
+            "answer": "No, once submitted you cannot edit the report."
+        },
+        {
+            "question": "Will I be notified about the report status?",
+            "answer": "Yes, you'll receive email notifications."
+        }
+    ]
+}

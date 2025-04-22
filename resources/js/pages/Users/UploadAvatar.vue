@@ -1,3 +1,5 @@
+<!--فایل  UploadAvatar.js در services      فایل   UploadAvatar.json در پوشه docs -->
+
 <template>
   <div class="upload-avatar">
     <v-avatar size="200px">

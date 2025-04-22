@@ -1,0 +1,10 @@
+{
+    "changePassword": {
+        "currentPassword": "currentUserPassword123",
+        "newPassword": "newSecurePassword456",
+        "confirmNewPassword": "newSecurePassword456"
+    },
+    "toggleAccountStatus": {
+        "isActive": false
+    }
+}

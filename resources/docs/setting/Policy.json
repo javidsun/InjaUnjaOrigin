@@ -1,0 +1,22 @@
+{
+    "policy": {
+        "title": "Privacy Policy and Terms",
+        "privacyPolicyTitle": "Privacy Policy",
+        "privacyPolicyDescription": "Our Privacy Policy explains how we collect, use, and share your personal data.",
+        "supplementaryDocumentsTitle": "Supplementary Documents",
+        "outsideUS": "Outside the US",
+        "stateSupplements": "State Supplements",
+        "cookiePolicy": "Cookie Policy",
+        "enterpriseCustomers": "Enterprise Customers",
+        "chinaPrivacySupplement": "China Privacy Supplement",
+        "colombiaOnly": "Colombia Only",
+        "turkeyOnly": "Turkey Only",
+        "dac7Notice": "DAC7 Notice",
+        "relatedArticlesTitle": "Related Articles",
+        "relatedArticlesDescription": "Additional information about our policies and terms.",
+        "hostSectionTitle": "Host Section",
+        "hostSectionDescription": "Specific policies for hosts using our platform.",
+        "termsUpdatesTitle": "Terms Updates",
+        "termsUpdatesDescription": "Information about recent updates to our terms and policies."
+    }
+}

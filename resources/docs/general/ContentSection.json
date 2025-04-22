@@ -1,0 +1,42 @@
+{
+    "contentSection": {
+        "mainBanner": {
+            "image": "untitled-design-5-110.png",
+            "altText": "Main banner image"
+        },
+        "groups": [
+            {
+                "image": "untitled-design-20-250.png",
+                "altText": "Travelers group",
+                "component": "TravelersContent"
+            },
+            {
+                "image": "untitled-design-20-230.png",
+                "altText": "Houses group",
+                "component": "HousesContent"
+            },
+            {
+                "image": "untitled-design-20-240.png",
+                "altText": "Vehicles group",
+                "component": "VehiclesContent"
+            },
+            {
+                "image": "Untitled design (10) 8.png",
+                "altText": "Events group",
+                "component": "EventsContent"
+            }
+        ],
+        "advertisements": [
+            {
+                "image": "untitled-design-18-60.png",
+                "text": "First advertisement text",
+                "link": "#"
+            },
+            {
+                "image": "untitled-design-19-20.png",
+                "text": "Second advertisement text",
+                "link": "#"
+            }
+        ]
+    }
+}

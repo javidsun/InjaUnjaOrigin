@@ -1,0 +1,20 @@
+{
+    "data": {
+        "followUp": {
+            "count": 42,
+            "title": "warning.followUp"
+        },
+        "successfulRequests": {
+            "count": 13,
+            "title": "warning.successfulRequests"
+        },
+        "pendingRequests": {
+            "count": 27,
+            "title": "warning.pendingRequests"
+        },
+        "cancelledReservations": {
+            "count": 8,
+            "title": "warning.cancelledReservations"
+        }
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "email": "zahra@example.com",
+    "password": "securePassword123",
+    "remember": true,
+    "verification_code": "123456"
+}

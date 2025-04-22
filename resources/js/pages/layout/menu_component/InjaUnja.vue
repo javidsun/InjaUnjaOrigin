@@ -4,24 +4,23 @@
             {{ translate("injaunja.title") }}
         </v-card-title>
 
-       <v-card-text class="text-body-1 text-center">
+        <v-card-text class="text-body-1 text-center">
             <p>{{ translate("injaunja.description") }}</p>
         </v-card-text>
 
-       <h2 class="text-h5 text-center mt-8 mb-4">
+        <h2 class="text-h5 text-center mt-8 mb-4">
             {{ translate("injaunja.teamTitle") }}
         </h2>
 
         <div class="team-members">
             <div v-for="(member, index) in team" :key="index" class="team-member">
                 <v-avatar size="100" class="mb-3">
-                    <img :src="member.image" :alt="member.name" />
+                    <img :src="member.image" :alt="member.name" class="team-image"/>
                 </v-avatar>
                 <h3 class="text-h6">{{ member.name }}</h3>
                 <p class="text-body-2">{{ member.role }}</p>
             </div>
         </div>
-
     </v-card>
 </template>
 
@@ -48,7 +47,6 @@ const closeModal = () => {
     dialog.value = false;
 };
 defineExpose({ openModal });
-
 </script>
 
 <style scoped>
@@ -58,7 +56,6 @@ defineExpose({ openModal });
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
 
 .team-members {
     display: flex;
@@ -80,5 +77,12 @@ defineExpose({ openModal });
 
 .team-member p {
     color: #666;
+}
+
+.team-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
 }
 </style>

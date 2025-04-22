@@ -1,3 +1,6 @@
+<!--فایل  AnywhereField.js در services      فایل   AnywhereField.json در پوشه docs -->
+
+
 <template>
   <v-col class="field-wrapper" position="relative" @click="toggleMenu">
     <div class="field-content">
@@ -41,11 +44,13 @@ export default {
     toggleMenu() {
       this.$emit("update-active-menu", this.isActive ? null : "anywhere");
     },
-    selectOption(option) {
-      this.selectedOption = option;
-      this.$emit("update-active-menu", null);
-    },
-    checkScreenSize() {
+      selectOption(option) {
+          this.selectedOption = option;
+          this.$emit("location-selected", this.selectedOption);
+          this.$emit("update-active-menu", null);
+      },
+
+      checkScreenSize() {
       this.isMobile = window.innerWidth <= 950;
     },
   },

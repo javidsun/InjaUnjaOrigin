@@ -1,0 +1,22 @@
+{
+    "performanceStats": [
+        {
+            "title": "functional.todayReservations",
+            "stats": "35",
+            "icon": "mdi-calendar-check",
+            "color": "primary"
+        },
+        {
+            "title": "functional.dailyRevenue",
+            "stats": "1.5M",
+            "icon": "mdi-cash",
+            "color": "success"
+        },
+        {
+            "title": "functional.newUsers",
+            "stats": "45",
+            "icon": "mdi-account-plus",
+            "color": "warning"
+        }
+    ]
+}

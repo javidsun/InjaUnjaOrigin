@@ -1,3 +1,6 @@
+<!--فایل  ReservationDetails.js در services      فایل   ReservationDetails.json در پوشه docs -->
+
+
 <template >
     <UserSidebar>
         <v-container fluid class="back">
@@ -94,8 +97,6 @@ onMounted(() => {
     reservation.value = reservations.value.find((r) => r.id === reservationId.value) || {};
 });
 </script>
-
-
 
 <style scoped>
 .details-card {

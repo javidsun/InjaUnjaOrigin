@@ -1,0 +1,13 @@
+{
+    "layout": {
+        "isDarkMode": true,
+        "drawer": true,
+        "userProfileImage": "/avatar-2.png",
+        "menuItems": [
+            {
+                "title": "profile.logout",
+                "action": "logout"
+            }
+        ]
+    }
+}

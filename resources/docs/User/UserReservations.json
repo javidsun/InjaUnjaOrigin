@@ -1,0 +1,36 @@
+{
+    "reservations": [
+        {
+            "title": "HouseReservation",
+            "date": "2025-01-01",
+            "icon": "mdi-home",
+            "color": "blue",
+            "image": "/ads/house.svg",
+            "link": "/houses"
+        },
+        {
+            "title": "CarReservation",
+            "date": "2024-12-29",
+            "icon": "mdi-car",
+            "color": "green",
+            "image": "/ads/car.svg",
+            "link": "/vehicles"
+        },
+        {
+            "title": "EventReservation",
+            "date": "2024-12-25",
+            "icon": "mdi-calendar",
+            "color": "purple",
+            "image": "/ads/event.svg",
+            "link": "/events"
+        },
+        {
+            "title": "TravelerReservation",
+            "date": "2024-12-20",
+            "icon": "mdi-account-group",
+            "color": "orange",
+            "image": "/ads/firend.svg",
+            "link": "/travelers"
+        }
+    ]
+}

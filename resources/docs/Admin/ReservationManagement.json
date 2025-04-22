@@ -1,0 +1,42 @@
+{
+    "reservationDetails": {
+        "total": 123,
+        "successful": 100,
+        "pending": 20,
+        "failed": 3
+    },
+    "reservations": [
+        {
+            "title": "HouseReservation",
+            "date": "2025-01-01",
+            "icon": "mdi-home",
+            "color": "blue",
+            "image": "/ads/house.svg",
+            "amount": "120 Euro"
+        },
+        {
+            "title": "CarReservation",
+            "date": "2024-12-29",
+            "icon": "mdi-car",
+            "color": "green",
+            "image": "/ads/car.svg",
+            "amount": "50 Euro"
+        },
+        {
+            "title": "EventReservation",
+            "date": "2024-12-25",
+            "icon": "mdi-calendar",
+            "color": "purple",
+            "image": "/ads/event.svg",
+            "amount": "20 Euro"
+        },
+        {
+            "title": "TravelerReservation",
+            "date": "2024-12-20",
+            "icon": "mdi-account-group",
+            "color": "orange",
+            "image": "/ads/firend.svg",
+            "amount": "80 Euro"
+        }
+    ]
+}

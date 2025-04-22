@@ -1,0 +1,91 @@
+{
+    "houses": [
+        {
+            "id": 1,
+            "location": "بروکسل،بلژیک",
+            "host": "میزبان آرمین",
+            "rating": "4.8",
+            "price": "28",
+            "period": "شبانه",
+            "type": "home",
+            "image": "rectangle-720.png",
+            "coordinates": [50.8503, 4.3517],
+            "extraFee": 5
+        },
+        {
+            "id": 2,
+            "location": "بروکسل،بلژیک",
+            "host": "میزبان آرمین",
+            "rating": "4.8",
+            "price": "28",
+            "period": "شبانه",
+            "type": "home",
+            "image": "rectangle-720.png",
+            "coordinates": [50.8503, 4.3517],
+            "extraFee": 5
+        },
+        {
+            "id": 3,
+            "location": "آنتورپ،بلژیک",
+            "host": "مالک کامیاب",
+            "rating": "5",
+            "price": "18",
+            "period": "روزانه",
+            "type": "apartment",
+            "image": "rectangle-750.png",
+            "coordinates": [50.8549, 4.3479],
+            "extraFee": 8
+        },
+        {
+            "id": 4,
+            "location": "بروکسل،بلژیک",
+            "host": "مالک کامیاب",
+            "rating": "5",
+            "price": "10",
+            "period": "روزانه",
+            "type": "apartment",
+            "image": "rectangle-750.png",
+            "coordinates": [50.8549, 4.3479],
+            "extraFee": 20
+        },
+        {
+            "id": 5,
+            "location": "بروکسل،بلژیک",
+            "host": "میزبان سام",
+            "rating": "3.8",
+            "price": "22",
+            "type": "bed",
+            "period": "شبانه",
+            "image": "rectangle-2210.png",
+            "coordinates": [50.8521, 4.3459],
+            "extraFee": 5
+        },
+        {
+            "id": 6,
+            "location": "بروکسل،بلژیک",
+            "host": "مالک کامیاب",
+            "rating": "5",
+            "price": "25",
+            "type": "tent",
+            "period": "روزانه",
+            "image": "rectangle-2200.png",
+            "coordinates": [50.8535, 4.3498],
+            "extraFee": 10
+        }
+    ],
+    "icons": [
+        { "name": "home", "src": "/home-icon.png" },
+        { "name": "apartment", "src": "/apartment-icon.png" },
+        { "name": "furniture", "src": "/furniture-icon.png" },
+        { "name": "bed", "src": "/bed-icon.png" },
+        { "name": "car", "src": "/car-icon.png" },
+        { "name": "tent", "src": "/tent-icon.png" }
+    ],
+    "reservation": {
+        "startDate": "2023-10-01",
+        "endDate": "2023-10-05",
+        "guests": 2,
+        "name": "نام رزرو کننده",
+        "days": 4
+    }
+}

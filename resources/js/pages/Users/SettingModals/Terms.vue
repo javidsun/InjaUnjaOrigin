@@ -1,3 +1,5 @@
+<!--فایل  Terms.js در services      فایل   Terms.json در پوشه docs -->
+
 <template>
     <v-dialog v-model="isTermsModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>

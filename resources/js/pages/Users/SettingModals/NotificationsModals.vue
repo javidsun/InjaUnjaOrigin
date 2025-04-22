@@ -1,3 +1,5 @@
+<!--فایل  NotificationsModals.js در services      فایل   NotificationsModals.json در پوشه docs -->
+
 <template>
     <v-dialog v-model="isModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>

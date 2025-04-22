@@ -1,3 +1,6 @@
+<!--فایل  guide.js در services      فایل   guide.json در پوشه docs -->
+
+
 <template>
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>

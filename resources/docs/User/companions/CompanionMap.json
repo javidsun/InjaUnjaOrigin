@@ -1,0 +1,26 @@
+{
+    "companions": [
+        {
+            "id": 1,
+            "destination": "تهران",
+            "travelDates": "1402/05/10 - 1402/05/20",
+            "coordinates": [35.6892, 51.3890],
+            "user": {
+                "name": "زهرا محمدی",
+                "age": 28,
+                "gender": "female"
+            }
+        },
+        {
+            "id": 2,
+            "destination": "اصفهان",
+            "travelDates": "1402/06/01 - 1402/06/10",
+            "coordinates": [32.6546, 51.6680],
+            "user": {
+                "name": "علی رضایی",
+                "age": 32,
+                "gender": "male"
+            }
+        }
+    ]
+}

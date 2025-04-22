@@ -1,3 +1,6 @@
+<!--فایل  privacySharing.js در services      فایل   privacySharing.json در پوشه docs -->
+
+
 <template>
     <v-dialog v-model="isModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>

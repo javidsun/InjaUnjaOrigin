@@ -1,3 +1,6 @@
+<!--فایل  Companion.js در services      فایل   Companion.json در پوشه docs -->
+
+
 <template>
     <v-dialog v-model="showModal" max-width="600px" persistent>
         <v-card>

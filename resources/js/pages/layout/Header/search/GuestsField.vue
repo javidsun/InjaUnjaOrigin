@@ -1,3 +1,6 @@
+<!--فایل  GuestsField.js در services      فایل   GuestsField.json در پوشه docs -->
+
+
 <template>
   <v-col class="field-wrapper" position="relative">
     <div class="field-content" @click="toggleMenu">
@@ -58,12 +61,15 @@
           <button @click.stop="increment('pets')" class="control-btn">+</button>
         </div>
       </div>
+        <v-btn @click="submitGuests" color="primary">Ok</v-btn>
+
     </div>
   </v-col>
 </template>
 
 <script>
 import { translate } from '../../../../store/languageStore';
+import { sendGuestData } from '../../../../services/general/search/GuestsField.js';
 
 export default {
   setup() {
@@ -99,7 +105,21 @@ export default {
     checkScreenSize() {
       this.isMobile = window.innerWidth <= 950;
     },
-  },
+      async submitGuests() {
+          const payload = {
+              adults: this.adults,
+              children: this.children,
+              infants: this.infants,
+              pets: this.pets,
+          };
+          try {
+              const result = await sendGuestData(payload);
+              console.log('Success:', result);
+          } catch (err) {
+              console.error('Error:', err);
+          }
+      }
+      },
   mounted() {
     this.checkScreenSize();
     window.addEventListener("resize", this.checkScreenSize);

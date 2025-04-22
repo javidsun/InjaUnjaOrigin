@@ -1,0 +1,5 @@
+{
+    "amount": 100,
+    "recipient": "recipient@example.com",
+    "message": "Happy Birthday!"
+}

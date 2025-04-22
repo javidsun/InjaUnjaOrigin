@@ -1,0 +1,90 @@
+{
+    "user": {
+        "email": "zahra@example.com",
+        "profileImage": "/avatar-2.png",
+        "name": "Zahra Azizi"
+    },
+    "settings": [
+        {
+            "title": "setting.personalInfo",
+            "icon": "mdi-account",
+            "link": "/SettingModal"
+        },
+        {
+            "title": "setting.loginSecurity",
+            "icon": "mdi-security",
+            "link": "/SecurityModal"
+        },
+        {
+            "title": "setting.payments",
+            "icon": "mdi-credit-card",
+            "link": "/PaymentsModal"
+        },
+        {
+            "title": "setting.access",
+            "icon": "mdi-lock",
+            "link": "/AccessModal"
+        },
+        {
+            "title": "setting.currency",
+            "icon": "mdi-currency-eur",
+            "link": "/CurrencyModal"
+        },
+        {
+            "title": "setting.notifications",
+            "icon": "mdi-bell",
+            "link": "/NotificationsModals"
+        },
+        {
+            "title": "setting.privacySharing",
+            "icon": "mdi-lock-outline",
+            "link": "/PrivacySharing"
+        }
+    ],
+    "referrals": [
+        {
+            "title": "setting.giftCard",
+            "icon": "mdi-gift",
+            "link": "/GiftModal"
+        },
+        {
+            "title": "setting.referHost",
+            "icon": "mdi-account-group",
+            "link": "/Suggestfriend"
+        }
+    ],
+    "support": [
+        {
+            "title": "setting.supportCenter",
+            "icon": "mdi-headset",
+            "link": "/SupportModal"
+        },
+        {
+            "title": "setting.reportIssues",
+            "icon": "mdi-alert",
+            "link": "/ReportModal"
+        },
+        {
+            "title": "setting.howItWorks",
+            "icon": "mdi-information",
+            "link": "/HowItWorksModal"
+        },
+        {
+            "title": "setting.feedback",
+            "icon": "mdi-comment",
+            "link": "/FeedbackModal"
+        }
+    ],
+    "policies": [
+        {
+            "title": "setting.termsOfService",
+            "icon": "mdi-file-document",
+            "link": "/Terms"
+        },
+        {
+            "title": "setting.privacyPolicy",
+            "icon": "mdi-lock-check",
+            "link": "/Policy"
+        }
+    ]
+}

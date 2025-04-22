@@ -2,48 +2,50 @@
 
 namespace App\Services\AuthServices;
 
-use App\DTOs\Service\DTOServiceResponse;
+use App\Constant\AuthConst\UserJson;
 use App\Models\User;
-use App\Services\IService\AuthServicesContract;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
-class AuthServicesWithPassword implements AuthServicesContract
+
+class AuthServicesWithPassword
 {
 
-    public function register(Request $request):DTOServiceResponse{
-
-        try {
-            Log::info('arriva a questo punto o no ? ? ??  ?');
-
-            $user =User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]);
-            return new DTOServiceResponse(success:true,singleItem: $user , statusCode: 200);
-        }catch (\Exception $exception){
-            return new DTOServiceResponse(success:false,singleItem: null , statusCode: 500);
-        }
+    public function register(Request $request): JsonResponse
+    {
+        $user = User::create([
+            UserJson::NAME => $request->name,
+            UserJson::EMAIL => $request->email,
+            UserJson::PASSWORD => Hash::make($request->password),
+        ]);
+        return response()->json([UserJson::MESSAGE => 'registrazione eseguita con successo', UserJson::USER => $user]);
     }
 
-    /**
-     * @throws \Exception
-     */
-    public function login(Request $request): DTOServiceResponse
+    public function login(string $emailValidated , string $passwordValidated): JsonResponse
     {
-        try {
-            if (!Auth::attempt($request->only('email', 'password'))) {
-                throw new \Exception('Invalid credentials');
-            }
-            //$user = Auth::user();
-            //return $user->createToken('API Token')->plainTextToken;
-            $user = User::where('email',$request->email)->first();
-            return new DTOServiceResponse(success: true , singleItem: $user , statusCode: 200);
-        }catch (\Exception $exception){
-            return new DTOServiceResponse(success:false,singleItem: null , statusCode: 500);
+        $user = User::where(UserJson::EMAIL, $emailValidated)->first();
+
+        if (!$user || !Hash::check($passwordValidated, $user->password)) {
+            return response()->json([UserJson::MESSAGE => 'Credenziali non valide'], 401);
         }
+        $token = $user->createToken('auth_token');
+        Log::info('token sarebbe '.var_export($token, true));
+
+        return response()->json([
+            UserJson::SUCCESS => true,
+            UserJson::MESSAGE => 'Login effettuato con successo',
+            UserJson::USER => [
+                UserJson::ID => $user->id,
+                UserJson::EMAIL => $user->email,
+            ],
+            UserJson::TOKEN => $token->plainTextToken,
+        ], 200);
+    }
+    public function logout(Request $request): JsonResponse
+    {
+        $request->user()->tokens()->delete();
+        return response()->json(['message' => 'Logout effettuato con successo']);
     }
 }

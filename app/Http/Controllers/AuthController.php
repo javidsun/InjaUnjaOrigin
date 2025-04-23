@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\DTOs\Controller\DTOControllerResponse;
-use App\Models\User;
 use App\Services\IService\AuthServicesContract;
-use Dotenv\Validator;
-use Illuminate\Http\JsonResponse;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use mysql_xdevapi\Exception;
 
 
 class AuthController

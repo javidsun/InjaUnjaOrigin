@@ -36,18 +36,12 @@
 
 <script setup>
 import { ref, shallowRef, nextTick } from "vue";
-import { translate } from "../../../store/languageStore";
+import { translate } from "@/store/languageStore.js";
 import RegisterUser from "../../RegisterUser.vue";
 import Login from "../../Login.vue";
 import GiftModal from "../../layout/menu_component/GiftCardatFirst.vue";
 import InjaUnja from "../../layout/menu_component/InjaUnja.vue";
 import HelpCenter from "../../Users/SettingModals/SupportModal.vue";
-
-const isSupportModalOpen = ref(false);
-
-const closeSupportModal = () => {
-    isSupportModalOpen.value = false;
-};
 
 
 const menuActive = ref(false);
@@ -59,6 +53,7 @@ const openModal = async (component) => {
     console.log("Opening modal for component:", component);
     selectedComponent.value = component;
     modalActive.value = true;
+
 
     await nextTick();
 
@@ -82,7 +77,8 @@ const menuItems = [
     { title: "menu.injaUnja", icon: "mdi-map-marker", component: InjaUnja },
     { title: "menu.helpCenter", icon: "mdi-help-circle", component: HelpCenter }
 ];
-defineExpose({ openModal });
+defineExpose({
+    openModal });
 </script>
 
 

@@ -30,3 +30,6 @@ yarn-error.log
 storage/logs/laravel.log
 
 
+/storage/logs/*
+!/storage/logs/.gitignore
+

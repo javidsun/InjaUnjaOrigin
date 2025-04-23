@@ -20,3 +20,7 @@ yarn-error.log
 /.idea
 /.vscode
 /.zed
+/storage/framework/views/*
+!/storage/framework/views/.gitignore
+/laravel.log
+

@@ -1107,8 +1107,10 @@
 </template>
 
 <script setup>
+// TODO  : composition --> option  &  const & warning & errore
+
 import { ref, computed, defineProps, defineEmits, onMounted, onBeforeUnmount, nextTick } from "vue";
-import { translate } from "../../../store/languageStore";
+import { translate } from "@/store/languageStore.js";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useDisplay } from 'vuetify'

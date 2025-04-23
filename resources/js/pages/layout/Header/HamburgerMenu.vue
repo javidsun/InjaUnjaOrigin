@@ -35,6 +35,8 @@
 </template>
 
 <script setup>
+// TODO  : composition --> option  &  const & warning & errore
+
 import {ref, shallowRef, nextTick} from "vue";
 import {translate} from "@/store/languageStore.js";
 import RegisterUser from "../../RegisterUser.vue";

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { translate } from '../../../../store/languageStore';
+import { translate } from '@/store/languageStore.js';
 
 export default {
     setup() {

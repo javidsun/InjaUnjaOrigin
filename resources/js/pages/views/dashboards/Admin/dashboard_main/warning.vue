@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { translate } from "../../../../../store/languageStore.js";
+import { translate } from "@/store/languageStore.js";
 
 export default {
   name: "Warning",

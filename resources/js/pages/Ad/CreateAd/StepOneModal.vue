@@ -580,6 +580,8 @@
 
 
 <script setup>
+// TODO  : composition --> option  &  const & warning & errore
+
 import {ref, computed, defineProps, defineEmits, watch, nextTick, onMounted} from 'vue';
 import {translate} from "@/store/languageStore.js";
 import L from "leaflet";

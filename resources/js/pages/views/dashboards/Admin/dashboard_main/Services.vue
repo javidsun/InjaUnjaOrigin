@@ -22,7 +22,8 @@
 </template>
 
 <script setup>
-import { translate } from "../../../../../store/languageStore.js";
+//TODO : composition --> option & const & error warning
+import { translate } from "@/store/languageStore.js";
 
 const cards = [
   {

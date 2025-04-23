@@ -140,8 +140,10 @@
 
 
 <script setup>
+//TODO : composition --> option & const & error warning
+
 import {ref} from 'vue';
-import {translate} from "../../../store/languageStore";
+import {translate} from "@/store/languageStore.js";
 
 const isModalOpen = ref(false);
 const showThirdPartyTools = ref(false);

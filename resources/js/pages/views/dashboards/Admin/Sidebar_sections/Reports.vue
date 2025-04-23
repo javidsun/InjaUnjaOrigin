@@ -55,9 +55,11 @@
 </template>
 
 <script setup>
+//TODO : composition --> option & const & error warning
+
 import { ref, computed } from "vue";
 import ApexChart from "vue3-apexcharts";
-import { translate } from "../../../../../store/languageStore.js";
+import { translate } from "@/store/languageStore.js";
 
 const conversionRate = 25;
 

@@ -124,13 +124,15 @@
 </template>
 
 <script setup>
+// TODO  : composition --> option  &  const & warning & errore
+
 import Sidebar from "../Sidebar.vue";
 import { ref, computed } from 'vue';
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
-import { translate } from "../../../store/languageStore";
+import { translate } from "@/store/languageStore.js";
 const isMobile = computed(() => window.innerWidth <= 600);
 
 const userDialog = ref(false);

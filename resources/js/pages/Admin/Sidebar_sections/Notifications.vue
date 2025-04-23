@@ -193,12 +193,14 @@
 </template>
 
 <script setup>
+// TODO  : composition --> option  &  const & warning & errore
+
 import { ref, computed } from 'vue';
 import Sidebar from "../Sidebar.vue";
 import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
-import { translate } from "../../../store/languageStore";
+import { translate } from "@/store/languageStore.js";
 
 const drawer = ref(true);
 

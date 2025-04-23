@@ -18,6 +18,8 @@
 </template>
 
 <script setup>
+// TODO  : composition --> option  &  const & warning & errore
+
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import adService from "../../services/adService";

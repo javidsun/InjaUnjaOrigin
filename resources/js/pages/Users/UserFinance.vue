@@ -88,10 +88,11 @@
 </template>
 
 <script>
+//TODO : composition --> option & const & error warning
+
 import UserSidebar from './Layout.vue';
 import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
-import {translate} from "../../store/languageStore";
+import {translate} from "@/store/languageStore.js";
 
 export default {
     setup() {

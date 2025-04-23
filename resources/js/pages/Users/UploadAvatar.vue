@@ -11,8 +11,10 @@
 </template>
 
 <script setup>
+//TODO : composition --> option & const & error warning
+
 import { ref, watch } from "vue";
-import { translate } from "../../store/languageStore";
+import { translate } from "@/store/languageStore.js";
 
 const avatar = ref("/avatar-2.png");
 const avatarPreview = ref(null);

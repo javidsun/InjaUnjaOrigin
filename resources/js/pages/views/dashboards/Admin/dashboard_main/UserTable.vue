@@ -57,7 +57,8 @@
 </template>
 
 <script setup>
-import { translate } from "../../../../../store/languageStore.js";
+// TODO  : composition --> optino & const e without error
+import { translate } from "@/store/languageStore.js";
 
 const avatar1 = './avatar1.svg';
 const avatar2 = './avatar2.svg';

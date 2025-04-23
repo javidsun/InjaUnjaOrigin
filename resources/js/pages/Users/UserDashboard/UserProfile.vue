@@ -115,6 +115,8 @@
 </template>
 
 <script setup>
+//TODO : composition --> option & const & error warning
+
 import {ref, onMounted} from "vue";
 import Layout from "../Layout.vue";
 import Footer from "../../layout/Footer.vue";

@@ -56,8 +56,10 @@
 </template>
 
 <script setup>
+//TODO : composition --> option & const & error warning
+
 import {ref, computed} from 'vue';
-import {translate} from "../../store/languageStore";
+import {translate} from "@/store/languageStore.js";
 import UserSidebar from './Layout.vue';
 
 const isSupportModalOpen = ref(false);

@@ -116,6 +116,7 @@ import Register from "./RegisterUser.vue";
 import ForgotPassword from "./layout/menu_component/forgot-password.vue";
 
 export default {
+    //TODO : is option but modify const
     name: "Login",
     setup(_, { emit }) {
         const modalActive = ref(false);

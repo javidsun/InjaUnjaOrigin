@@ -121,7 +121,6 @@
 </template>
 
 <script>
-import {defineComponent} from "vue";
 import AppDrawer from "@/pages/layout/AppDrawer.vue";
 import DefaultLogo from "@/assets/images/logo.png"
 import Login from "@/pages/Login.vue";

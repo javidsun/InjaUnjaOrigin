@@ -8,7 +8,7 @@ Route::get('/dashboard', function () {
 });
 
 Route::get('/AdminDashboard', function () {
-    return Inertia::render('views/dashboards/Admin/AdminDashboard');
+    return Inertia::render('Admin/AdminDashboard');
 });
 
 Route::get('/UserDashboard', function () {
@@ -18,6 +18,14 @@ Route::get('/UserDashboard', function () {
 Route::get('/UserProfile', function () {
     return Inertia::render('Users/UserDashboard/UserProfile');
 });
+
+Route::get('/MyReservations', function () {
+    return Inertia::render('Users/Reserv/MyReservations');
+})->name('MyReservations');
+
+Route::get('/ReservationDetails/{id}', function ($id) {
+    return Inertia::render('Users/Reserv/ReservationDetails', ['id' => $id]);
+})->name('ReservationDetails');
 
 Route::get('/MyReservations', function () {
     return Inertia::render('Users/Reserv/MyReservations');

@@ -13,7 +13,7 @@
         <v-container fluid class="user-profile">
             <v-row class="profile-header">
                 <v-col cols="12" class="text-center">
-                    <UploadAvatar />
+                    <UploadAvatar/>
 
                     <h2 class="user-name">{{ userName }}</h2>
                     <p class="user-email">{{ userEmail }}</p>
@@ -35,7 +35,8 @@
                     <v-form v-if="isEditing" @submit.prevent="saveProfile" class="profile-info3">
                         <v-list class="profile-info3">
 
-                            <v-list-item v-for="(item, index) in editableInfo" :key="index" class="fade-in profile-info">
+                            <v-list-item v-for="(item, index) in editableInfo" :key="index"
+                                         class="fade-in profile-info">
                                 <v-list-item-content>
                                     <v-list-item-title class="edit">
                                         {{ translate(item.label) }}:
@@ -70,7 +71,7 @@
                                 </v-list-item-content>
                             </v-list-item>
                         </v-list>
-                        <v-btn color="success" type="submit" >{{ translate('profile.saveChanges') }}</v-btn>
+                        <v-btn color="success" type="submit">{{ translate('profile.saveChanges') }}</v-btn>
                     </v-form>
                     <v-list v-else class="profile-info3">
                         <v-list-item v-for="(item, index) in userInfo" :key="index" class="fade-in profile-info">
@@ -114,10 +115,10 @@
 </template>
 
 <script setup>
-import { ref , onMounted } from "vue";
+import {ref, onMounted} from "vue";
 import Layout from "../Layout.vue";
 import Footer from "../../layout/Footer.vue";
-import { translate } from "../../../store/languageStore";
+import {translate} from "@/store/languageStore.js";
 import UploadAvatar from "../UploadAvatar.vue";
 
 const userProfileImage = ref("/avatar-2.png");
@@ -125,16 +126,16 @@ const userName = ref("Zahra Azizi");
 const userEmail = ref("zahra@example.com");
 
 const userInfo = ref([
-    { label: "profile.username", value: "", icon: "mdi-account", status: "confirmed" },
-    { label: "profile.billingEmail", value: "", icon: "mdi-email", status: "confirmed" },
-    { label: "profile.passport", value: null, icon: "mdi-card-account-details", status: "not confirmed" },
-    { label: "profile.contact", value: "", icon: "mdi-phone", status: "confirmed" },
-    { label: "profile.taxId", value: "", icon: "mdi-numeric", status: "confirmed" },
-    { label: "profile.language", value: "", icon: "mdi-translate", status: "confirmed" },
-    { label: "profile.country", value: "", icon: "mdi-map-marker", status: "confirmed" },
-    { label: "profile.address", value: "", icon: "mdi-map-marker", status: "Awaiting confirmation" },
-    { label: "profile.emergencyContact", value: "", icon: "mdi-phone", status: "Awaiting confirmation" },
-    { label: "profile.idCard", value: "", icon: "mdi-card-account-details", status: "not confirmed" },
+    {label: "profile.username", value: "", icon: "mdi-account", status: "confirmed"},
+    {label: "profile.billingEmail", value: "", icon: "mdi-email", status: "confirmed"},
+    {label: "profile.passport", value: null, icon: "mdi-card-account-details", status: "not confirmed"},
+    {label: "profile.contact", value: "", icon: "mdi-phone", status: "confirmed"},
+    {label: "profile.taxId", value: "", icon: "mdi-numeric", status: "confirmed"},
+    {label: "profile.language", value: "", icon: "mdi-translate", status: "confirmed"},
+    {label: "profile.country", value: "", icon: "mdi-map-marker", status: "confirmed"},
+    {label: "profile.address", value: "", icon: "mdi-map-marker", status: "Awaiting confirmation"},
+    {label: "profile.emergencyContact", value: "", icon: "mdi-phone", status: "Awaiting confirmation"},
+    {label: "profile.idCard", value: "", icon: "mdi-card-account-details", status: "not confirmed"},
 ]);
 
 const passportFile = ref(null);
@@ -186,7 +187,7 @@ const editProfile = () => {
     if (isEditing.value) {
         editableInfo.value = userInfo.value.map(item => {
             if (item.label === "profile.passport" && item.preview) {
-                return { ...item, preview: item.preview };
+                return {...item, preview: item.preview};
             }
             return item;
         });
@@ -197,7 +198,7 @@ const saveProfile = () => {
     const missingFields = editableInfo.value.filter(item => requiredFields.includes(item.label) && (!item.value || item.value === null));
 
     if (!passportFile.value) {
-        missingFields.push({ label: "profile.passport" });
+        missingFields.push({label: "profile.passport"});
     }
 
     if (missingFields.length > 0) {
@@ -315,10 +316,12 @@ const getValidationRules = (label) => {
         font-size: 14px !important;
         font-family: "2 Baran", serif;
     }
+
     .profile-info .v-text-field {
         min-width: 100%;
     }
 }
+
 @media (max-width: 320px) {
     .profile-actions {
         font-size: 10px !important;
@@ -415,6 +418,7 @@ const getValidationRules = (label) => {
 .btn_success {
     max-width: 10% !important;
 }
+
 .passport-preview {
     max-width: 100px;
     max-height: 100px;
@@ -422,7 +426,8 @@ const getValidationRules = (label) => {
     border-radius: 5px;
     border: 1px solid #ccc;
 }
-.edit{
+
+.edit {
     max-width: 250px;
     min-width: 250px;
 }

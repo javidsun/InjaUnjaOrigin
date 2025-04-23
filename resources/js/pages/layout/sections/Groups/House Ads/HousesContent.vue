@@ -32,7 +32,7 @@
                             tile
                             @click="filterApartments(icon.name)"
                         >
-                            <img :src="icon.src" alt="Icon" class="icon-img" />
+                            <img :src="icon.src" alt="Icon" class="icon-img"/>
                         </v-btn>
                     </v-col>
                 </v-row>
@@ -52,7 +52,7 @@
                                 {{ item.host }}
                             </v-card-subtitle>
                             <v-card-text class="apartment-text">
-                                <br />
+                                <br/>
                                 {{ item.price }} {{ item.period }}
                             </v-card-text>
                             <v-btn color="primary" @click.stop="openReservationModal(item)">
@@ -70,7 +70,8 @@
                             {{ translate('Ad.Chat') }}: {{ selectedHost }}
                         </v-card-title>
                         <v-card-text>
-                            <div v-for="(message, index) in chatMessages[selectedApartmentId]" :key="index" class="message">
+                            <div v-for="(message, index) in chatMessages[selectedApartmentId]" :key="index"
+                                 class="message">
                                 <strong>{{ message.sender }}:</strong> {{ message.text }}
                             </div>
                             <v-textarea
@@ -110,7 +111,7 @@
             <v-col cols="12" v-if="tab === 1">
                 <v-card>
                     <v-card-title>Map</v-card-title>
-                    <HousesMap :apartments="filteredApartments" />
+                    <HousesMap :apartments="filteredApartments"/>
                 </v-card>
             </v-col>
         </v-row>
@@ -127,42 +128,53 @@
                             <v-img :src="selectedApartment?.image" height="200px" class="rounded-lg"></v-img>
                         </v-col>
                         <v-col cols="8" class="AdsSetting">
-                            <v-card-subtitle class="AdsSetting2 text-h6 text-right">{{ selectedApartment?.host || "Uncertain" }}</v-card-subtitle>
-                            <p class="AdsSetting2 text-body-1 text-right"><strong>{{ translate('housescontent.Location') }}</strong> {{ selectedApartment?.location || "نامشخص" }}</p>
-                            <p class="AdsSetting2 text-body-1 text-right"><strong>{{ translate('housescontent.Owner') }}</strong> {{ selectedApartment?.host || "نامشخص" }}</p>
-                            <p class="AdsSetting2 text-body-1 text-right"><strong>{{ translate('housescontent.Price') }} </strong> {{ selectedApartment?.price || "0" }} یورو</p>
+                            <v-card-subtitle class="AdsSetting2 text-h6 text-right">{{ selectedApartment?.host ||
+                                "Uncertain" }}
+                            </v-card-subtitle>
+                            <p class="AdsSetting2 text-body-1 text-right"><strong>{{ translate('housescontent.Location')
+                                }}</strong> {{ selectedApartment?.location || "نامشخص" }}</p>
+                            <p class="AdsSetting2 text-body-1 text-right"><strong>{{ translate('housescontent.Owner')
+                                }}</strong> {{ selectedApartment?.host || "نامشخص" }}</p>
+                            <p class="AdsSetting2 text-body-1 text-right"><strong>{{ translate('housescontent.Price')
+                                }} </strong> {{ selectedApartment?.price || "0" }} یورو</p>
                         </v-col>
                     </v-row>
 
                     <v-divider class="my-4"></v-divider>
-                    <h3 class="font-weight-bold mt-4 text-h5 text-center">{{ translate('housescontent.Your_details') }}</h3>
+                    <h3 class="font-weight-bold mt-4 text-h5 text-center">{{ translate('housescontent.Your_details')
+                        }}</h3>
                     <v-row>
                         <v-col cols="6">
-                            <p class="text-body-1">{{ reservation?.startDate || "?" }} to {{ reservation?.endDate || "?" }}</p>
+                            <p class="text-body-1">{{ reservation?.startDate || "?" }} to {{ reservation?.endDate || "?"
+                                }}</p>
                         </v-col>
                         <v-col cols="6" class="text-right">
-                            <v-btn @click="showCalendar = true"  outlined>{{ translate('housescontent.Edit_date') }}</v-btn>
+                            <v-btn @click="showCalendar = true" outlined>{{ translate('housescontent.Edit_date') }}
+                            </v-btn>
                         </v-col>
 
                     </v-row>
 
                     <v-dialog v-model="showCalendar" max-width="400px" centered persistent class="custom-dialog">
                         <v-card>
-                            <v-card-title class="headline primary--text">{{ translate('Ad.available_dates') }}</v-card-title>
+                            <v-card-title class="headline primary--text">{{ translate('Ad.available_dates') }}
+                            </v-card-title>
                             <v-card-text>
                                 <v-date-picker v-model="selectedDates" multiple></v-date-picker>
                             </v-card-text>
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="primary" @click="saveDates">{{ translate('Ad.SaveExit') }}</v-btn>
-                                <v-btn color="grey" text @click="showCalendar = false">{{ translate('Ad.Back') }}</v-btn>
+                                <v-btn color="grey" text @click="showCalendar = false">{{ translate('Ad.Back') }}
+                                </v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
 
                     <v-row>
                         <v-col cols="6">
-                            <p class="text-body-1">{{ reservation?.guests || 1 }} {{ translate('housescontent.Guest') }} - {{ reservation?.name || "?" }}</p>
+                            <p class="text-body-1">{{ reservation?.guests || 1 }} {{ translate('housescontent.Guest') }}
+                                - {{ reservation?.name || "?" }}</p>
                         </v-col>
                         <v-col cols="6" class="d-flex justify-end">
                             <v-btn @click="editGuests" outlined> {{ translate('housescontent.Edit') }}</v-btn>
@@ -171,7 +183,9 @@
 
                     <v-dialog v-model="showEditGuestsModal" max-width="400px">
                         <v-card>
-                            <v-card-title class="headline primary--text text-center">{{ translate('housescontent.Edit_guest2') }}</v-card-title>
+                            <v-card-title class="headline primary--text text-center">{{
+                                translate('housescontent.Edit_guest2') }}
+                            </v-card-title>
                             <v-card-text>
                                 <v-row>
                                     <v-col cols="12">
@@ -193,8 +207,11 @@
                                 </v-row>
                             </v-card-text>
                             <v-card-actions>
-                                <v-btn color="primary" @click="saveGuestInfo">{{ translate('housescontent.Save') }}</v-btn>
-                                <v-btn color="error" @click="showEditGuestsModal = false">{{ translate('housescontent.close') }}</v-btn>
+                                <v-btn color="primary" @click="saveGuestInfo">{{ translate('housescontent.Save') }}
+                                </v-btn>
+                                <v-btn color="error" @click="showEditGuestsModal = false">{{
+                                    translate('housescontent.close') }}
+                                </v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -207,7 +224,8 @@
 
                     <v-row>
                         <v-col cols="6">
-                            <p class="text-body-1">{{ translate('housescontent.Project_Cost') }} * {{ translate('housescontent.Reserved_Days') }}</p>
+                            <p class="text-body-1">{{ translate('housescontent.Project_Cost') }} * {{
+                                translate('housescontent.Reserved_Days') }}</p>
                         </v-col>
                         <v-col cols="6" class="text-right">
                             <p class="text-body-1">{{ basePrice || "0" }} {{ translate('housescontent.Euro') }}</p>
@@ -219,7 +237,8 @@
                             <p class="text-body-1">{{ translate('housescontent.Extra_Fee_Owner') }}</p>
                         </v-col>
                         <v-col cols="6" class="text-right">
-                            <p class="text-body-1">{{ selectedApartment?.extraFee || 0 }} {{ translate('housescontent.Euro') }}</p>
+                            <p class="text-body-1">{{ selectedApartment?.extraFee || 0 }} {{
+                                translate('housescontent.Euro') }}</p>
                         </v-col>
                     </v-row>
 
@@ -234,7 +253,8 @@
 
                     <v-row>
                         <v-col cols="6">
-                            <p class="font-weight-bold text-h6">{{ translate('housescontent.Total_Amount') }} ({{ translate('housescontent.Euro') }})</p>
+                            <p class="font-weight-bold text-h6">{{ translate('housescontent.Total_Amount') }} ({{
+                                translate('housescontent.Euro') }})</p>
                         </v-col>
                         <v-col cols="6" class="text-right">
                             <p class="font-weight-bold text-h6">{{ total }} {{ translate('housescontent.Euro') }}</p>
@@ -243,21 +263,28 @@
 
 
                     <v-divider class="my-4"></v-divider>
-                    <h3 class="font-weight-bold mt-4 text-h5 AdsSetting text-center">{{ translate('housescontent.Pay_with') }}</h3>
+                    <h3 class="font-weight-bold mt-4 text-h5 AdsSetting text-center">{{
+                        translate('housescontent.Pay_with') }}</h3>
                     <v-row>
                         <v-col cols="4">
-                            <v-btn @click="selectedPayment = 'credit'" class="d-flex align-center" color="primary" outlined>
-                                <v-icon left>mdi-credit-card</v-icon>Credit card
+                            <v-btn @click="selectedPayment = 'credit'" class="d-flex align-center" color="primary"
+                                   outlined>
+                                <v-icon left>mdi-credit-card</v-icon>
+                                Credit card
                             </v-btn>
                         </v-col>
                         <v-col cols="4">
-                            <v-btn @click="selectedPayment = 'paypal'" class="d-flex align-center" color="primary" outlined>
-                                <v-icon left>mdi-paypal</v-icon>PayPal
+                            <v-btn @click="selectedPayment = 'paypal'" class="d-flex align-center" color="primary"
+                                   outlined>
+                                <v-icon left>mdi-paypal</v-icon>
+                                PayPal
                             </v-btn>
                         </v-col>
                         <v-col cols="4">
-                            <v-btn @click="selectedPayment = 'maestro'" class="d-flex align-center" color="primary" outlined>
-                                <v-icon left>mdi-bank</v-icon>Maestro
+                            <v-btn @click="selectedPayment = 'maestro'" class="d-flex align-center" color="primary"
+                                   outlined>
+                                <v-icon left>mdi-bank</v-icon>
+                                Maestro
                             </v-btn>
                         </v-col>
                     </v-row>
@@ -276,7 +303,7 @@
                 </v-card-text>
             </v-card>
         </v-dialog>
-        <v-dialog v-model="showDetail" max-width="800px" >
+        <v-dialog v-model="showDetail" max-width="800px">
             <v-card class="Ads">
                 <v-card-title class="headline">{{ translate('housescontent.Ad_details') }}</v-card-title>
                 <v-card-text>
@@ -286,7 +313,8 @@
                         </v-col>
                         <v-col cols="6" class="AdsSetting">
                             <p><strong>Owner's name:</strong> {{ selectedApartment?.host || "Uncertain" }}</p>
-                            <p><strong>Price:</strong> {{ selectedApartment?.price || "Uncertain" }} {{ selectedApartment?.period || "Uncertain" }}</p>
+                            <p><strong>Price:</strong> {{ selectedApartment?.price || "Uncertain" }} {{
+                                selectedApartment?.period || "Uncertain" }}</p>
                             <p><strong>Location:</strong> {{ selectedApartment?.location || "Uncertain" }}</p>
                             <p><strong>Property type:</strong> {{ selectedApartment?.type || "Uncertain" }}</p>
                         </v-col>
@@ -303,13 +331,13 @@
 
 
 <script>
-import { translate } from "../../../../../store/languageStore";
+import {translate} from "@/store/languageStore";
 import HousesMap from "./HousesMap.vue";
 import UserSidebar from '../../../../Users/Layout.vue';
 
 export default {
     setup() {
-        return { translate };
+        return {translate};
     },
 
     components: {
@@ -339,12 +367,12 @@ export default {
             tab: 0,
             selectedType: null,
             icons: [
-                { name: 'home', src: '/home-icon.png' },
-                { name: 'apartment', src: '/apartment-icon.png' },
-                { name: 'furniture', src: '/furniture-icon.png' },
-                { name: 'bed', src: '/bed-icon.png' },
-                { name: 'car', src: '/car-icon.png' },
-                { name: 'tent', src: '/tent-icon.png' },
+                {name: 'home', src: '/home-icon.png'},
+                {name: 'apartment', src: '/apartment-icon.png'},
+                {name: 'furniture', src: '/furniture-icon.png'},
+                {name: 'bed', src: '/bed-icon.png'},
+                {name: 'car', src: '/car-icon.png'},
+                {name: 'tent', src: '/tent-icon.png'},
             ],
             apartments: [
                 {
@@ -385,7 +413,7 @@ export default {
                 },
 
                 {
-                    id:4,
+                    id: 4,
                     location: "بروکسل،بلژیک",
                     host: "مالک کامیاب",
                     rating: "5",
@@ -599,6 +627,7 @@ export default {
     background-color: var(--sidebar-background-color);
     color: var(--text-color);
 }
+
 .icon-btn {
     transition: transform 0.3s ease;
     background-color: var(--background-color);
@@ -606,6 +635,7 @@ export default {
     height: 50px;
 
 }
+
 .message {
     margin-bottom: 10px;
     padding: 10px;
@@ -620,9 +650,11 @@ export default {
 .v-card {
     border-radius: 12px;
 }
+
 .icon-btn:hover {
     transform: scale(1.1);
 }
+
 .icon-img {
     width: 50px;
     height: 50px;
@@ -637,6 +669,7 @@ export default {
 .v-container {
     transition: all 0.3s ease;
 }
+
 .v-container.expanded {
     max-width: 100%;
     margin: 0 auto;
@@ -646,13 +679,15 @@ export default {
     height: 85vh;
     width: 100%;
 }
-.AdsSetting{
+
+.AdsSetting {
     margin-top: 30px;
     margin-bottom: 10px;
     padding-top: 10px;
     alignment: center;
 }
-.AdsSetting2{
+
+.AdsSetting2 {
     margin-top: 15px;
 
 }
@@ -677,6 +712,7 @@ export default {
     font-size: 16px;
     color: #ece3e3;
 }
+
 .expanded-container {
     max-width: 100% !important;
     margin: 0 !important;

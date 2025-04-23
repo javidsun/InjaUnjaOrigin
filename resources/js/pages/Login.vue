@@ -1,12 +1,13 @@
 <template>
-    <v-dialog v-model="loginDialogIsOpen" >
+    <v-dialog v-model="loginDialogIsOpen" max-width="500px" @click:outside="closeDialog">
         <v-container class="container__login">
             <v-row align="center" justify="center">
-                <v-col cols="12" sm="8" md="6" lg="4">
+                <v-col cols="12" sm="8" md="6" lg="12">
                     <v-card class="elevation-12 rounded-lg" border>
                         <div class="d-flex justify-end align-center" style="padding-top: 10px">
-                            <v-icon class="mr-2" @click="coseDialog">mdi-close</v-icon>
+                            <v-icon class="mr-2" @click="closeDialog">mdi-close</v-icon>
                         </div>
+
                         <div class="d-flex align-center justify-center mt-1">
                             <v-img
                                 :src="logo"
@@ -15,46 +16,77 @@
                                 contain
                             />
                         </div>
+
                         <v-card-text>
-                            <v-form @submit.prevent="login" ref="form">
+                            <v-form @submit.prevent="handleLogin" ref="form">
                                 <v-text-field
-                                    v-model="email"
-                                    :rules="emailRules"
-                                    label="Email"
+                                    v-model="form.email"
+                                    :label="translate('login.email')"
+                                    :placeholder="translate('login.emailPlaceholder')"
                                     prepend-icon="mdi-email"
                                     required
-                                    @keyup="resetLoginAttempts"
+                                    outlined
+                                    dense
+                                    :error-messages="emailErrors"
+                                    @input="clearEmailError"
                                 ></v-text-field>
+
                                 <v-text-field
-                                    v-model="password"
-                                    :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                    :rules="passwordRules"
-                                    :type="showPassword ? 'text' : 'password'"
-                                    label="Password"
+                                    v-model="form.password"
+                                    :append-icon="isPasswordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                                    :type="isPasswordVisible ? 'text' : 'password'"
+                                    :label="translate('login.password')"
+                                    :placeholder="translate('login.passwordPlaceholder')"
                                     prepend-icon="mdi-lock"
-                                    @click:append="showPassword = !showPassword"
+                                    @click:append="isPasswordVisible = !isPasswordVisible"
                                     required
-                                    @keyup="resetLoginAttempts"
+                                    outlined
+                                    dense
+                                    :error-messages="passwordErrors"
+                                    @input="clearPasswordError"
                                 ></v-text-field>
+
                                 <v-checkbox
-                                    v-model="rememberMe"
-                                    label="Ricordami"
+                                    v-model="form.remember"
+                                    :label="translate('login.rememberMe')"
                                 ></v-checkbox>
                             </v-form>
                         </v-card-text>
-                        <v-card-actions>
-                            <v-btn text @click="forgotPassword">Password Dimenticata?</v-btn>
-                            <v-spacer></v-spacer>
-                            <v-btn color="primary" @click="login" :loading="loading" :disabled="loginAttempts >= 5">
-                                Accedi
+
+                        <v-card-text>
+                            <v-dialog v-model="modalActive" max-width="500px">
+                                <component :is="selectedComponent" @close="modalActive = false"></component>
+                            </v-dialog>
+                            <v-list-item @click="openModal(goToForgotPassword)">
+                                <v-list-item-title>{{ translate("login.forgotPassword") }}</v-list-item-title>
+                            </v-list-item>
+                            <v-btn
+                                color="primary"
+                                class="login-btn"
+                                @click="handleLogin"
+                                :loading="loading"
+                                :disabled="loginAttempts >= 5"
+                            >
+                                {{ translate('login.login') }}
                             </v-btn>
-                        </v-card-actions>
-                        <v-card-text v-if="loginAttempts >= 5" class="text-center red--text">
-                            Troppi tentativi di accesso. Riprova più tardi.
                         </v-card-text>
+
+                        <v-card-text v-if="loginAttempts >= 5" class="text-center red--text">
+                            {{ translate('login.tooManyAttempts') }}
+                        </v-card-text>
+
+                        <v-card-text class="text-center mt-4 form2 fontsize3 font">
+                            <p>
+                                {{ translate('login.newUser') }}
+                                <v-btn @click="openModal(goToRegister)" style="color: #4cc8ff" class="fontsize3">
+                                    {{ translate('login.createAccount') }}
+                                </v-btn>
+                            </p>
+                        </v-card-text>
+
                         <v-divider></v-divider>
                         <v-card-text class="text-center">
-                            <p class="text-body-2 mb-3">Oppure accedi con</p>
+                            <p class="text-body-2 mb-3">{{ translate('login.or') }}</p>
                             <v-btn icon="mdi-google" color="red" variant="text" class="mx-2" @click="socialLogin('google')"></v-btn>
                             <v-btn icon="mdi-facebook" color="blue" variant="text" class="mx-2" @click="socialLogin('facebook')"></v-btn>
                             <v-btn icon="mdi-twitter" color="light-blue" variant="text" class="mx-2" @click="socialLogin('twitter')"></v-btn>
@@ -63,10 +95,13 @@
                     </v-card>
                 </v-col>
             </v-row>
+
             <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout">
                 {{ snackbar.text }}
                 <template v-slot:actions>
-                    <v-btn color="white" @click="snackbar.show = false">Chiudi</v-btn>
+                    <v-btn color="white" @click="snackbar.show = false">
+                        {{ translate('login.close') }}
+                    </v-btn>
                 </template>
             </v-snackbar>
         </v-container>
@@ -74,150 +109,127 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue';
-import { useTheme } from 'vuetify';
-import InjaUnjaLogo from "@/assets/images/logo1.png"
-import apiService from "@/globalServices/apiService.js";
+import { ref, reactive } from "vue";
+import InjaUnjaLogo from "../../../public/inja-unja.png";
+import { translate } from "../store/languageStore";
+import Register from "./RegisterUser.vue";
+import ForgotPassword from "./layout/menu_component/forgot-password.vue";
 
 export default {
     name: "Login",
-    props: {
+    setup(_, { emit }) {
+        const modalActive = ref(false);
+        const selectedComponent = ref(null);
+        const form = ref({
+            email: "",
+            password: "",
+            remember: false,
+        });
+        const loginDialogIsOpen = ref(true);
+        const isPasswordVisible = ref(false);
+        const loading = ref(false);
+        const logo = ref(InjaUnjaLogo);
+        const loginAttempts = ref(0);
+        const snackbar = reactive({
+            show: false,
+            text: "",
+            color: "",
+            timeout: 3000,
+        });
 
-    },
-    data() {
+        const emailErrors = ref("");
+        const passwordErrors = ref("");
+
+        const openLoginDialog = () => {
+            loginDialogIsOpen.value = true;
+        };
+
+        const handleLogin = () => {
+            emailErrors.value = "";
+            passwordErrors.value = "";
+
+            if (!form.value.email) {
+                emailErrors.value = translate("login.emailRequired");
+            }
+            if (!form.value.password) {
+                passwordErrors.value = translate("login.passwordRequired");
+            }
+
+            if (emailErrors.value || passwordErrors.value) {
+                return;
+            }
+
+            loading.value = true;
+            setTimeout(() => {
+                snackbar.text = translate("login.loginSuccess");
+                snackbar.color = "success";
+                snackbar.show = true;
+            }, 1500);
+
+            loading.value = false;
+        };
+
+        const closeDialog = () => {
+            loginDialogIsOpen.value = false;
+        };
+        const openModal = (component) => {
+            modalActive.value = false;
+            selectedComponent.value = component;
+            modalActive.value = true;
+        };
+
+        const goToForgotPassword = () => {
+            selectedComponent.value = ForgotPassword;
+            modalActive.value = true;
+        };
+
+        const goToRegister = () => {
+            selectedComponent.value = Register;
+            modalActive.value = true;
+        };
+
         return {
-            loginDialogIsOpen: true ,
-            email: '',
-            password: '',
-            showPassword: false,
-            loading: false,
-            logo: null,
-            error: null,
-            rememberMe: false,
-            loginAttempts: 0,
-            theme: useTheme(),
-            snackbar: reactive({
-                show: false,
-                text: '',
-                color: '',
-                timeout: 3000,
-            }),
+            loginDialogIsOpen,
+            openLoginDialog,
+            form,
+            isPasswordVisible,
+            loading,
+            logo,
+            loginAttempts,
+            snackbar,
+            emailErrors,
+            passwordErrors,
+            handleLogin,
+            closeDialog,
+            goToForgotPassword,
+            goToRegister,
+            openModal,
+            translate,
+            modalActive,
+            selectedComponent,
         };
     },
-    created() {
-        this.logo = InjaUnjaLogo;
-    },
-    methods: {
-        async login() {
-            this.loading = true;
-            this.error = null;
-
-            const formData = {
-                email: this.email,
-                password: this.password,
-            };
-
-            try {
-                // Richiesta del token CSRF
-                await apiService.axiosToBackend().get('/sanctum/csrf-cookie');
-                const response = await apiService.axiosToBackend().post('/api/login', formData);
-
-                if (response.data.success) {
-                    console.log('Login completato:', response.data);
-                    // Redirigi alla dashboard
-                    this.$router.push('/dashboard');
-                } else {
-                    this.error = response.data.message;
-                }
-            } catch (error) {
-                if (error.response && error.response.status === 401) {
-                    this.error = 'Credenziali errate. Controlla email e password.';
-                } else {
-                    this.error = 'Errore durante il login. Riprova più tardi.';
-                }
-                console.error('Errore durante il login:', error);
-            } finally {
-                this.loading = false;
-            }
-        },
-        coseDialog(){
-            this.$emit('closeDialog');
-        },
-        toggleTheme() {
-            this.theme.global.name.value = this.theme.global.current.value.dark ? 'light' : 'dark';
-        },
-        resetLoginAttempts() {
-            if (this.loginAttempts >= 5) {
-                setTimeout(() => {
-                    this.loginAttempts = 0;
-                }, 300000); // Reset dopo 5 minuti
-            }
-        },
-        /*async login() {
-            const { valid } = await this.form.value.validate();
-
-            if (valid) {
-                this.loading = true;
-                this.loginAttempts++;
-
-                try {
-                    await new Promise(resolve => setTimeout(resolve, 1500)); // Simula una richiesta di login
-                    if (Math.random() > 0.7) {
-                        throw new Error('Login failed');
-                    }
-                    this.snackbar.text = 'Accesso effettuato con successo!';
-                    this.snackbar.color = 'success';
-                    this.snackbar.show = true;
-
-                    if (this.rememberMe) {
-                        localStorage.setItem('userEmail', this.email);
-                    }
-                } catch (error) {
-                    console.error('Login error:', error);
-                    this.snackbar.text = 'Errore durante l\'accesso. Riprova.';
-                    this.snackbar.color = 'error';
-                    this.snackbar.show = true;
-                } finally {
-                    this.loading = false;
-                }
-            }
-        },*/
-        forgotPassword() {
-            this.snackbar.text = 'Istruzioni per il reset della password inviate.';
-            this.snackbar.color = 'info';
-            this.snackbar.show = true;
-        },
-        socialLogin(provider) {
-            this.snackbar.text = `Accesso con ${provider} iniziato.`;
-            this.snackbar.color = 'info';
-            this.snackbar.show = true;
-        }
-    },
-    mounted() {
-        const savedEmail = localStorage.getItem('userEmail');
-        if (savedEmail) {
-            this.email = savedEmail;
-            this.rememberMe = true;
-        }
-    },
-    computed: {
-        emailRules() {
-            return [
-                v => !!v || 'L\'email è obbligatoria',
-                v => /.+@.+\..+/.test(v) || 'L\'email deve essere valida',
-            ];
-        },
-        passwordRules() {
-            return [
-                v => !!v || 'La password è obbligatoria',
-                v => v.length >= 8 || 'La password deve essere lunga almeno 8 caratteri',
-            ];
-        }
-    }
 };
 </script>
 
 <style scoped lang="scss">
+.login-btn {
+    width: 70%;
+    height: 50px;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    margin-left: 70px;
+    &:hover {
+        background-color: #1e88e5 !important;
+        transform: scale(1.05);
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+}
+
 .container__login {
     .v-card {
         transition: all 0.3s ease-in-out;

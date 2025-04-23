@@ -15,7 +15,7 @@
                 <p class="description">{{ translate('feedback.description') }}</p>
 
                 <p class="feedback-question">{{ translate('feedback.feedbackQuestion') }}</p>
-               <v-divider/>
+                <v-divider/>
 
                 <p class="feedback-question">{{ translate('feedback.selectFeedbackType') }}</p>
 
@@ -47,8 +47,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { translate } from "../../../store/languageStore";
+import {ref} from 'vue';
+import {translate} from "../../../store/languageStore";
 
 const isFeedbackModalOpen = ref(false);
 
@@ -69,9 +69,9 @@ const feedbackTypes = ref([
 
 const selectedFeedbackCategory = ref('');
 const feedbackCategories = ref([
-    { label: 'feedback.category1', value: 'Experiences' },
-    { label: 'feedback.category2', value: 'Hosting' },
-    { label: 'feedback.category3', value: 'Guest' },
+    {label: 'feedback.category1', value: 'Experiences'},
+    {label: 'feedback.category2', value: 'Hosting'},
+    {label: 'feedback.category3', value: 'Guest'},
 ]);
 
 const submitFeedback = () => {
@@ -80,7 +80,7 @@ const submitFeedback = () => {
 
 const contactSupport = () => {
     const url = window.location.href;
-    const supportDetails = t('support.contactMessage', { query: selectedFeedbackType.value });
+    const supportDetails = t('support.contactMessage', {query: selectedFeedbackType.value});
 
     if (navigator.share) {
         navigator.share({
@@ -93,7 +93,7 @@ const contactSupport = () => {
     }
 };
 
-defineExpose({ openModal });
+defineExpose({openModal});
 </script>
 
 <style scoped>

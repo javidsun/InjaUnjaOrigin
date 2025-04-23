@@ -4,11 +4,12 @@
             <v-list>
                 <v-list-item @click="goToPage('/UserProfile')" class="profile-section list-item">
                     <v-avatar size="50" class="avatar">
-                        <img :src="userProfileImage" alt="Profile Picture" />
+                        <img :src="userProfileImage" alt="Profile Picture"/>
                     </v-avatar>
                     <div class="text-content">
                         <v-list-item-title class="user-name">{{ userName }}</v-list-item-title>
-                        <v-list-item-subtitle class="profile-link">{{ translate('setting.showProfile') }}</v-list-item-subtitle>
+                        <v-list-item-subtitle class="profile-link">{{ translate('setting.showProfile') }}
+                        </v-list-item-subtitle>
                     </div>
                 </v-list-item>
                 <v-divider></v-divider>
@@ -63,33 +64,33 @@
 
             </v-list>
         </v-card>
-        <SettingModal ref="settingModal" />
-        <SecurityModal ref="securityModal" />
-        <PaymentsModal ref="paymentsModal" />
-        <AccessModal ref="accessModal" />
-        <CurrencyModal ref="currencyModal" />
-        <NotificationsModals ref="notificationsModals" />
-        <PrivacySharing ref="privacysharing" />
-        <Guide ref="guide" />
-        <GiftModal ref="giftModal" />
-        <Suggestfriend ref="suggestfriend" />
-        <SupportModal ref="supportModal" />
-        <ReportModal ref="reportModal" />
-        <HowItWorksModal ref="howItWorksModal" />
-        <FeedbackModal ref="feedbackModal" />
-        <Terms ref="terms" />
-        <Policy ref="policy" />
+        <SettingModal ref="settingModal"/>
+        <SecurityModal ref="securityModal"/>
+        <PaymentsModal ref="paymentsModal"/>
+        <AccessModal ref="accessModal"/>
+        <CurrencyModal ref="currencyModal"/>
+        <NotificationsModals ref="notificationsModals"/>
+        <PrivacySharing ref="privacysharing"/>
+        <Guide ref="guide"/>
+        <GiftModal ref="giftModal"/>
+        <Suggestfriend ref="suggestfriend"/>
+        <SupportModal ref="supportModal"/>
+        <ReportModal ref="reportModal"/>
+        <HowItWorksModal ref="howItWorksModal"/>
+        <FeedbackModal ref="feedbackModal"/>
+        <Terms ref="terms"/>
+        <Policy ref="policy"/>
 
 
     </UserSidebar>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { Inertia } from '@inertiajs/inertia';
+import {ref} from 'vue';
+import {Inertia} from '@inertiajs/inertia';
 import UserSidebar from './Layout.vue';
 import SettingModal from './SettingModals/SettingModal.vue';
-import { translate } from "../../store/languageStore";
+import {translate} from "@/store/languageStore.js";
 import SecurityModal from './SettingModals/SecurityModal.vue';
 import PaymentsModal from './SettingModals/PaymentsModal.vue';
 import AccessModal from './SettingModals/AccessModal.vue';
@@ -157,11 +158,11 @@ const handleSettingClick = (link) => {
         suggestfriend.value.openModal();
     } else if (link === '/SupportModal') {
         supportModal.value.openModal();
-    }else if (link === '/ReportModal') {
+    } else if (link === '/ReportModal') {
         reportModal.value.openModal();
     } else if (link === '/HowItWorksModal') {
         howItWorksModal.value.openModal();
-    }else if (link === '/FeedbackModal') {
+    } else if (link === '/FeedbackModal') {
         feedbackModal.value.openModal();
     } else if (link === '/Terms') {
         terms.value.openModal();
@@ -175,32 +176,32 @@ const userProfileImage = ref('/avatar-2.png');
 const userName = ref('Zahra Azizi');
 
 const settingsItems = [
-    { title: "setting.personalInfo", icon: "mdi-account", link: "/SettingModal" },
-    { title: "setting.loginSecurity", icon: "mdi-security", link: "/SecurityModal" },
-    { title: "setting.payments", icon: "mdi-credit-card", link: "/PaymentsModal" },
-    { title: "setting.access", icon: "mdi-lock", link: "/AccessModal" },
-    { title: "setting.currency", icon: "mdi-currency-eur", link: "/CurrencyModal" },
-    { title: "setting.notifications", icon: "mdi-bell", link: "/NotificationsModals" },
-    { title: "setting.privacySharing", icon: "mdi-lock-outline", link: "/PrivacySharing" }
+    {title: "setting.personalInfo", icon: "mdi-account", link: "/SettingModal"},
+    {title: "setting.loginSecurity", icon: "mdi-security", link: "/SecurityModal"},
+    {title: "setting.payments", icon: "mdi-credit-card", link: "/PaymentsModal"},
+    {title: "setting.access", icon: "mdi-lock", link: "/AccessModal"},
+    {title: "setting.currency", icon: "mdi-currency-eur", link: "/CurrencyModal"},
+    {title: "setting.notifications", icon: "mdi-bell", link: "/NotificationsModals"},
+    {title: "setting.privacySharing", icon: "mdi-lock-outline", link: "/PrivacySharing"}
 ];
 
 const referralItems = [
-    { title: "setting.giftCard", icon: "mdi-gift", link: "/GiftModal" },
-    { title: "setting.referHost", icon: "mdi-account-group", link: "/Suggestfriend" }
+    {title: "setting.giftCard", icon: "mdi-gift", link: "/GiftModal"},
+    {title: "setting.referHost", icon: "mdi-account-group", link: "/Suggestfriend"}
 ];
 
 const supportItems = [
-    { title: "setting.supportCenter", icon: "mdi-headset", link: "/SupportModal" },
-    { title: "setting.reportIssues", icon: "mdi-alert", link: "/ReportModal" },
-    { title: "setting.howItWorks", icon: "mdi-information", link: "/HowItWorksModal" },
-    { title: "setting.feedback", icon: "mdi-comment", link: "/FeedbackModal" }
+    {title: "setting.supportCenter", icon: "mdi-headset", link: "/SupportModal"},
+    {title: "setting.reportIssues", icon: "mdi-alert", link: "/ReportModal"},
+    {title: "setting.howItWorks", icon: "mdi-information", link: "/HowItWorksModal"},
+    {title: "setting.feedback", icon: "mdi-comment", link: "/FeedbackModal"}
 ];
 
 const policyItems = [
-    { title: "setting.termsOfService", icon: "mdi-file-document", link: "/Terms" },
-    { title: "setting.privacyPolicy", icon: "mdi-lock-check", link: "/Policy" }
+    {title: "setting.termsOfService", icon: "mdi-file-document", link: "/Terms"},
+    {title: "setting.privacyPolicy", icon: "mdi-lock-check", link: "/Policy"}
 ];
- </script>
+</script>
 
 <style scoped>
 .settings-container {
@@ -221,7 +222,7 @@ const policyItems = [
     gap: 10px;
     padding: 20px;
     background-color: #b7b5b5;
-    border-radius: 15px!important;
+    border-radius: 15px !important;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 100%;
 
@@ -235,6 +236,7 @@ const policyItems = [
     height: 60px;
     margin-left: 25px;
 }
+
 .list-item {
     display: flex;
     justify-content: center;
@@ -252,6 +254,7 @@ const policyItems = [
 .text1:hover {
     color: #0076ff;
 }
+
 .icon {
     font-size: 24px;
     color: #858585;
@@ -287,9 +290,10 @@ const policyItems = [
     font-size: 22px;
     font-weight: bold;
     padding: 10px 0;
-    text-align: center!important;
+    text-align: center !important;
 
 }
+
 .logout {
     display: flex;
     align-items: center;

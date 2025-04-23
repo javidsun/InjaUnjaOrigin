@@ -15,15 +15,15 @@
 
 import Header from './layout/Header/Header.vue';
 import Footer from './layout/Footer.vue';
-import ContentSection from './layout/sections/ContentSection.vue';
+import ContentSection from "@/pages/layout/sections/ContentSection.vue";
 
 export default {
         name: 'Home2',
 
         components: {
+            ContentSection,
         Header,
         Footer,
-        ContentSection,
 
     },
 };

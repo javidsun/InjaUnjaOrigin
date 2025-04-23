@@ -46,8 +46,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { translate } from "../../../store/languageStore";
+import {ref} from 'vue';
+import {translate} from "../../../store/languageStore";
 
 const isTermsModalOpen = ref(false);
 
@@ -85,7 +85,7 @@ const termsList = ref([
     'terms.generalConditions16',
 ]);
 
-defineExpose({ openModal });
+defineExpose({openModal});
 </script>
 
 <style scoped>

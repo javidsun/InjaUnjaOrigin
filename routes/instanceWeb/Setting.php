@@ -51,3 +51,9 @@ Route::get('/Terms', function () {
 Route::get('/Policy', function () {
     return Inertia::render('Users/SettingModals/Policy');
 });
+Route::get('/InjaUnja', function () {
+    return Inertia::render('layout/menu_component/InjaUnja');
+});
+Route::get('/GiftCardatFirst', function () {
+    return Inertia::render('layout/menu_component/GiftCardatFirst');
+});

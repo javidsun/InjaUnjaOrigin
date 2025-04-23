@@ -1,7 +1,7 @@
 <template>
     <v-col class="field-wrapper" position="relative">
         <div class="field-content" @click="showCalendar = true">
-            <img src="/assets/images/calendar-icon.png"  class="icon-img" />
+            <img src="/assets/images/calendar-icon.png" alt="Calendar Icon" class="icon-img" />
             <span class="field-text" v-show="!isMobile">{{ translate('Anyweek.anyweek') }}</span>
         </div>
 

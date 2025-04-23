@@ -7,7 +7,7 @@
     },
     "devDependencies": {
         "autoprefixer": "^10.4.20",
-        "axios": "^1.7.7",
+        "axios": "^1.8.4",
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.47",
@@ -33,9 +33,11 @@
         "vue-i18n": "^9.14.1",
         "vue-router": "^4.5.0",
         "vue-sidebar-menu": "^5.4.2",
+        "vue-toastification": "^2.0.0-rc.5",
         "vue3-apexcharts": "^1.8.0",
         "vue3-snackbar": "^2.4.0",
         "vuetify": "^3.7.11",
-        "vuex": "^4.1.0"
+        "vuex": "^4.1.0",
+        "xlsx": "^0.18.5"
     }
 }

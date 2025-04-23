@@ -1,18 +1,18 @@
 import '../css/app.css';
 import './bootstrap';
 
-import { createApp, h } from 'vue';
-import { createInertiaApp, Link } from '@inertiajs/vue3';
+import {createApp, h} from 'vue';
+import {createInertiaApp, Link} from '@inertiajs/vue3';
 import vuetify from '../js/pages/plugins/vuetify/vuetify.js';
 import pinia from '../js/pages/plugins/pinia/index';
 import App from "../js/pages/App.vue";
 import 'vuetify/dist/vuetify.min.css';
+import apiService from "@/globalServices/apiService.js";
 import store from './store'; // Import Vuex Store
 
 const app = createApp(App);
 app.use(store);
 app.mount('#app');
-
 const start = window.performance.now();
 
 const savedState = sessionStorage.getItem("piniaAppState");
@@ -25,6 +25,7 @@ window.addEventListener("beforeunload", () => {
 });
 
 createInertiaApp({
+
     resolve: async name => {
         const pages = import.meta.glob('./pages/**/*.vue');
         let page = await pages[`./pages/${name}.vue`];
@@ -34,8 +35,8 @@ createInertiaApp({
         }
         return page();
     },
-    setup({ el, App, props, plugin }) {
-        const vue = createApp({ render: () => h(App, props) })
+    setup({el, App, props, plugin}) {
+        const vue = createApp({render: () => h(App, props)})
             .use(plugin)
             .use(vuetify)
             .use(pinia)
@@ -48,3 +49,4 @@ createInertiaApp({
 
 const end = window.performance.now();
 const duration = end - start;
+

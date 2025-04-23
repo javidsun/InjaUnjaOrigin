@@ -57,7 +57,7 @@ import Footer from "../../layout/Footer.vue";
 import WarningUser from '../../Users/UserDashboard/WarningUser.vue';
 import userSpecifications from '../../Users/UserDashboard/userSpecifications.vue';
 import SpecialOffer from '../SpecialOffer.vue';
-import { translate } from "../../../store/languageStore";
+import { translate } from "@/store/languageStore.js";
 import UserProfile from '../../Users/UserDashboard/UserProfile.vue';
 import UserReservations from '../Reserv/UserReservations.vue';
 import Layout from '../Layout.vue';

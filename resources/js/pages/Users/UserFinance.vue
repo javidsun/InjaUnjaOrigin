@@ -26,8 +26,11 @@
                     <v-card-title class="details-title">{{ translate('Finance.paymentDetails') }}</v-card-title>
                     <v-card-text>
                         <p><strong>{{ translate('Finance.id') }}:</strong> {{ selectedPayment.id }}</p>
-                        <p><strong>{{ translate('Finance.amount') }}:</strong> {{ finalAmount }} {{ translate('housescontent.Euro') }}</p>
-                        <p><strong>{{ translate('Finance.status') }}:</strong> <span :class="getStatusClass(selectedPayment.status)">{{ translate('Finance.' + selectedPayment.status) }}</span></p>
+                        <p><strong>{{ translate('Finance.amount') }}:</strong> {{ finalAmount }} {{
+                            translate('housescontent.Euro') }}</p>
+                        <p><strong>{{ translate('Finance.status') }}:</strong> <span
+                            :class="getStatusClass(selectedPayment.status)">{{ translate('Finance.' + selectedPayment.status) }}</span>
+                        </p>
 
                         <v-divider class="my-4"></v-divider>
                         <v-card-title class="details-subtitle">{{ translate('Finance.paymentDetails') }}</v-card-title>
@@ -35,26 +38,34 @@
                         <v-card-text>
                             <v-row>
                                 <v-col cols="6">{{ translate('Finance.totalAmount') }}:</v-col>
-                                <v-col cols="6" class="text-right">{{ totalAmount }} {{ translate('housescontent.Euro') }}</v-col>
+                                <v-col cols="6" class="text-right">{{ totalAmount }} {{ translate('housescontent.Euro')
+                                    }}
+                                </v-col>
                             </v-row>
                             <v-row>
                                 <v-col cols="6">{{ translate('Finance.extraFee') }}:</v-col>
-                                <v-col cols="6" class="text-right">{{ extraFee }} {{ translate('housescontent.Euro') }}</v-col>
+                                <v-col cols="6" class="text-right">{{ extraFee }} {{ translate('housescontent.Euro')
+                                    }}
+                                </v-col>
                             </v-row>
                             <v-row>
                                 <v-col cols="6">{{ translate('Finance.tax') }} (10%):</v-col>
-                                <v-col cols="6" class="text-right">{{ tax }} {{ translate('housescontent.Euro') }}</v-col>
+                                <v-col cols="6" class="text-right">{{ tax }} {{ translate('housescontent.Euro') }}
+                                </v-col>
                             </v-row>
                             <v-row>
                                 <v-col cols="6" class="font-weight-bold">{{ translate('Finance.finalAmount') }}:</v-col>
-                                <v-col cols="6" class="text-right font-weight-bold">{{ finalAmount }} {{ translate('housescontent.Euro') }}</v-col>
+                                <v-col cols="6" class="text-right font-weight-bold">{{ finalAmount }} {{
+                                    translate('housescontent.Euro') }}
+                                </v-col>
                             </v-row>
                         </v-card-text>
 
                         <v-divider class="my-4"></v-divider>
                         <v-card-title class="details-subtitle">{{ translate('Finance.paymentMethod') }}</v-card-title>
                         <v-card-text>
-                            <p><strong>{{ translate('Finance.paymentMethod') }}:</strong> {{ selectedPaymentMethod }}</p>
+                            <p><strong>{{ translate('Finance.paymentMethod') }}:</strong> {{ selectedPaymentMethod }}
+                            </p>
                         </v-card-text>
 
                         <v-divider class="my-4"></v-divider>
@@ -80,11 +91,11 @@
 import UserSidebar from './Layout.vue';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { translate } from "../../store/languageStore";
+import {translate} from "../../store/languageStore";
 
 export default {
     setup() {
-        return { translate };
+        return {translate};
     },
     components: {
         UserSidebar,
@@ -97,17 +108,17 @@ export default {
             selectedPaymentMethod: 'Credit card',
             tab: 'all',
             headers: [
-                { text: translate('Finance.id'), value: 'id' },
-                { text: translate('Finance.finalAmount'), value: 'finalAmount' },
-                { text: translate('Finance.status'), value: 'status' },
-                { text: translate('Finance.actions'), value: 'actions', sortable: false }
+                {text: translate('Finance.id'), value: 'id'},
+                {text: translate('Finance.finalAmount'), value: 'finalAmount'},
+                {text: translate('Finance.status'), value: 'status'},
+                {text: translate('Finance.actions'), value: 'actions', sortable: false}
             ],
             payments: [
-                { id: 12554, status: 'successful', financeId: 0 },
-                { id: 25462, status: 'cancelled', financeId: 1 },
-                { id: 84355, status: 'processing', financeId: 2 },
-                { id: 92554, status: 'cancelled', financeId: 3 },
-                { id: 98545, status: 'successful', financeId: 4 },
+                {id: 12554, status: 'successful', financeId: 0},
+                {id: 25462, status: 'cancelled', financeId: 1},
+                {id: 84355, status: 'processing', financeId: 2},
+                {id: 92554, status: 'cancelled', financeId: 3},
+                {id: 98545, status: 'successful', financeId: 4},
             ],
             Finance: [
                 {
@@ -246,8 +257,8 @@ export default {
                 body: tableData,
                 startY: 20,
                 theme: 'grid',
-                styles: { font: 'tahoma', fontStyle: 'normal', halign: 'center' },
-                headStyles: { fillColor: [76, 175, 80] },
+                styles: {font: 'tahoma', fontStyle: 'normal', halign: 'center'},
+                headStyles: {fillColor: [76, 175, 80]},
             });
 
             doc.save('successful_payments.pdf');
@@ -255,7 +266,6 @@ export default {
     },
 };
 </script>
-
 
 
 <style scoped>
@@ -272,6 +282,7 @@ export default {
 .v-tab:hover {
     background-color: rgba(255, 255, 255, 0.2);
 }
+
 .payment-table {
     border-radius: 12px;
     overflow: hidden;
@@ -285,6 +296,7 @@ export default {
 .v-btn:hover {
     transform: scale(1.05);
 }
+
 .payment-details-card {
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
@@ -350,3 +362,6 @@ export default {
     font-weight: bold;
 }
 </style>
+<script setup lang="ts">
+import UserSidebar from "@/pages/Users/UserSidebar.vue";
+</script>

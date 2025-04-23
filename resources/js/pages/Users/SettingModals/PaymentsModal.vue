@@ -16,14 +16,16 @@
                         <v-list-item @click="openWalletChargeModal">
                             <v-list-item-title>
                                 <v-icon class="icon">mdi-wallet</v-icon>
-                                {{ translate('payments.walletCharge') }}</v-list-item-title>
+                                {{ translate('payments.walletCharge') }}
+                            </v-list-item-title>
                         </v-list-item>
                         <v-list-item @click="openOnlinePaymentModal">
 
                             <v-list-item-title>
                                 <v-icon class="icon">mdi-credit-card</v-icon>
 
-                                {{ translate('payments.onlinePayment') }}</v-list-item-title>
+                                {{ translate('payments.onlinePayment') }}
+                            </v-list-item-title>
                         </v-list-item>
                     </v-list>
                 </div>
@@ -63,7 +65,8 @@
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="primary" type="submit">{{ translate('payments.confirm') }}</v-btn>
-                            <v-btn color="error" @click="closeWalletChargeModal">{{ translate('payments.cancel') }}</v-btn>
+                            <v-btn color="error" @click="closeWalletChargeModal">{{ translate('payments.cancel') }}
+                            </v-btn>
                         </v-card-actions>
                     </v-form>
                 </v-card-text>
@@ -100,7 +103,8 @@
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="primary" type="submit">{{ translate('payments.confirm') }}</v-btn>
-                            <v-btn color="error" @click="closeOnlinePaymentModal">{{ translate('payments.cancel') }}</v-btn>
+                            <v-btn color="error" @click="closeOnlinePaymentModal">{{ translate('payments.cancel') }}
+                            </v-btn>
                         </v-card-actions>
                     </v-form>
                 </v-card-text>
@@ -118,10 +122,12 @@
                             </v-list-item-avatar>
                             <v-list-item-content>
                                 <v-list-item-title>{{ coupon.code }}</v-list-item-title>
-                                <v-list-item-subtitle>{{ coupon.discount }}% {{ translate('payments.discount') }}</v-list-item-subtitle>
+                                <v-list-item-subtitle>{{ coupon.discount }}% {{ translate('payments.discount') }}
+                                </v-list-item-subtitle>
                             </v-list-item-content>
                             <v-list-item-action>
-                                <v-btn color="primary" @click="applyCoupon(coupon)">{{ translate('payments.Copy') }}</v-btn>
+                                <v-btn color="primary" @click="applyCoupon(coupon)">{{ translate('payments.Copy') }}
+                                </v-btn>
                             </v-list-item-action>
                         </v-list-item>
                     </v-list>
@@ -132,10 +138,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { translate } from "../../../store/languageStore";
-import { Inertia } from "@inertiajs/inertia";
+import {ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {translate} from "../../../store/languageStore";
+import {Inertia} from "@inertiajs/inertia";
 
 const isModalOpen = ref(false);
 const isWalletChargeModalOpen = ref(false);
@@ -146,8 +152,8 @@ const cardNumber = ref('');
 const expiryDate = ref('');
 const cvv = ref('');
 const coupons = ref([
-    { code: 'SUMMER2023', discount: 5, image: '/coupon1.jpg' },
-    { code: 'WINTER2023', discount: 10, image: '/coupon3.jpg' },
+    {code: 'SUMMER2023', discount: 5, image: '/coupon1.jpg'},
+    {code: 'WINTER2023', discount: 10, image: '/coupon3.jpg'},
 ]);
 
 const applyCoupon = (coupon) => {
@@ -203,7 +209,7 @@ const submitOnlinePayment = () => {
     closeOnlinePaymentModal();
 };
 
-defineExpose({ openModal });
+defineExpose({openModal});
 </script>
 <style scoped>
 .modal-container {
@@ -281,10 +287,13 @@ defineExpose({ openModal });
     justify-content: flex-end;
     gap: 8px;
 }
-.icon{
+
+.icon {
     color: #8c9eff;
     size: 120px;
 }
+
+
 @media (max-width: 600px) {
     .section-title {
         font-size: 1rem;

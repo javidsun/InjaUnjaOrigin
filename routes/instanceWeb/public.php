@@ -9,16 +9,20 @@ Route::get('/houses', function () {
 });
 
 Route::get('/vehicles', function () {
-    return Inertia::render('layout/sections/Groups/Travel Ads/TravelersContent');
+    return Inertia::render('layout/sections/Groups/Vehicles Ads/VehiclesContent');
 });
 
 Route::get('/events', function () {
     return Inertia::render('layout/sections/Groups/Event Ads/EventsContent');
 });
+Route::get('/travelersAds', function () {
+    return Inertia::render('Users/Reserv/CompanionAds');
+});
 
 Route::get('/travelers', function () {
-    return Inertia::render('layout/sections/Groups/Vehicles Ads/VehiclesContent');
+    return Inertia::render('layout/sections/Groups/Travel Ads/TravelersContent');
 });
+
 Route::get('/Messages', function () {
     return Inertia::render('Users/Messages/Messages');
 });

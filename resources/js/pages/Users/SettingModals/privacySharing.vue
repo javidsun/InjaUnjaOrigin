@@ -46,9 +46,12 @@
                     <v-expand-transition>
                         <div v-if="showThirdPartyTools" class="nested-section">
                             <p>{{ translate('privacySharing.thirdPartyTools.nestedDescription') }}</p>
-                            <v-checkbox v-model="thirdPartySharing" :label="translate('privacySharing.thirdPartyTools.sharingLabel')"></v-checkbox>
-                            <v-checkbox v-model="thirdPartyAnalytics" :label="translate('privacySharing.thirdPartyTools.analyticsLabel')"></v-checkbox>
-                            <v-checkbox v-model="thirdPartyMarketing" :label="translate('privacySharing.thirdPartyTools.marketingLabel')"></v-checkbox>
+                            <v-checkbox v-model="thirdPartySharing"
+                                        :label="translate('privacySharing.thirdPartyTools.sharingLabel')"></v-checkbox>
+                            <v-checkbox v-model="thirdPartyAnalytics"
+                                        :label="translate('privacySharing.thirdPartyTools.analyticsLabel')"></v-checkbox>
+                            <v-checkbox v-model="thirdPartyMarketing"
+                                        :label="translate('privacySharing.thirdPartyTools.marketingLabel')"></v-checkbox>
                             <div class="button-container">
                                 <v-btn @click="saveThirdPartySettings" color="primary">
                                     {{ translate('privacySharing.thirdPartyTools.saveButton') }}
@@ -75,9 +78,12 @@
                         <div v-if="showSharing" class="nested-section">
                             <p>{{ translate('privacySharing.sharing.nestedDescription') }}</p>
                             <v-radio-group v-model="profileVisibility">
-                                <v-radio value="public" :label="translate('privacySharing.sharing.publicLabel')"></v-radio>
-                                <v-radio value="private" :label="translate('privacySharing.sharing.privateLabel')"></v-radio>
-                                <v-radio value="custom" :label="translate('privacySharing.sharing.customLabel')"></v-radio>
+                                <v-radio value="public"
+                                         :label="translate('privacySharing.sharing.publicLabel')"></v-radio>
+                                <v-radio value="private"
+                                         :label="translate('privacySharing.sharing.privateLabel')"></v-radio>
+                                <v-radio value="custom"
+                                         :label="translate('privacySharing.sharing.customLabel')"></v-radio>
                             </v-radio-group>
                             <div class="button-container">
                                 <v-btn @click="saveSharingSettings" color="primary">
@@ -134,8 +140,8 @@
 
 
 <script setup>
-import { ref } from 'vue';
-import { translate } from "../../../store/languageStore";
+import {ref} from 'vue';
+import {translate} from "../../../store/languageStore";
 
 const isModalOpen = ref(false);
 const showThirdPartyTools = ref(false);
@@ -147,9 +153,9 @@ const thirdPartyMarketing = ref(false);
 const profileVisibility = ref("public");
 
 const connectedServices = ref([
-    { id: 1, name: "Google", description: "Connect to the account Google", connected: true },
-    { id: 2, name: "Facebook", description: "Connect to the account Facebook", connected: true },
-    { id: 3, name: "Twitter", description: "Connect to the account Twitter", connected: true },
+    {id: 1, name: "Google", description: "Connect to the account Google", connected: true},
+    {id: 2, name: "Facebook", description: "Connect to the account Facebook", connected: true},
+    {id: 3, name: "Twitter", description: "Connect to the account Twitter", connected: true},
 ]);
 
 const toggleServiceConnection = (serviceId) => {
@@ -193,7 +199,7 @@ const deleteAccount = () => {
     }
 };
 
-defineExpose({ openModal });
+defineExpose({openModal});
 </script>
 
 

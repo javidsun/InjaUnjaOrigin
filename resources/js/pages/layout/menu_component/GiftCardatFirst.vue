@@ -58,29 +58,12 @@
         </v-card>
     </v-dialog>
 
-    <div class="gift-card-section">
-        <h2 class="gift-card-title">{{ translate('giftCardTitle') }}</h2>
-        <v-divider></v-divider>
-        <p class="gift-card-subtitle">{{ translate('giftCardSubtitle') }}</p>
 
-        <div class="image-container">
-            <v-img src="/icons8-gift-card-98.png" alt="Gift Card Image" class="gift-card-image"></v-img>
-        </div>
-
-        <div class="button-container">
-            <v-btn @click="openModal" color="primary" large>
-                {{ translate('buyGiftCard') }}
-            </v-btn>
-        </div>
-
-
-    </div>
 </template>
 
 <script setup>
-import {ref} from 'vue';
-import {translate} from "../../store/languageStore";
-import {Inertia} from "@inertiajs/inertia";
+import { ref } from 'vue';
+import { translate } from "@/store/languageStore.js";
 
 const isModalOpen = ref(false);
 

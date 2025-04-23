@@ -27,4 +27,6 @@ yarn-error.log
 !/storage/logs/.gitignore
 !/storage/logs
 !/storage/logs/laravel.log
+storage/logs/laravel.log
+
 

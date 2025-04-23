@@ -33,3 +33,6 @@ storage/logs/laravel.log
 /storage/logs/*
 !/storage/logs/.gitignore
 
+/storage/logs/*
+!/storage/logs/.gitignore
+

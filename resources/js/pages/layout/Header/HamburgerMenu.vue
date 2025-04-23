@@ -52,6 +52,21 @@ const navigateTo = (url) => {
 
 const menuActive = ref(false);
 const router = useRouter();
+const closeModal = () => {
+    modalActive.value = false;
+    selectedComponent.value = null;
+};
+
+const menuItems = [
+    {title: "menu.register", icon: "mdi-account-plus", component: RegisterUser},
+    {title: "menu.login", icon: "mdi-login", component: Login},
+    {title: "menu.giftCard", icon: "mdi-gift", component: GiftModal},
+    {title: "menu.injaUnja", icon: "mdi-map-marker", component: InjaUnja},
+    {title: "menu.helpCenter", icon: "mdi-help-circle", component: HelpCenter}
+];
+defineExpose({
+    openModal
+});
 </script>
 
 <style scoped>

@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\JsonResponse;
 
-class OAuthController extends Controllers
+class OAuthController
 {
 
     public function __construct(protected ?AuthServicesContract $authServices = null)

@@ -1,30 +1,27 @@
-<!--فایل  verify-email.json در پوشه docs -->
-
 <template>
     <v-app class="back">
-        <Header />
-        <br>
-        <br>
-        <br>
+        <Header/>
+        <br><br><br>
 
         <div class="auth-wrapper d-flex align-center justify-center pa-4">
             <VCard class="auth-card pa-6 purple-background" style="max-width: 400px;">
                 <VCardText class="text-center">
-                    <div class="logo-container form">
+                    <div class="logo-container">
                         <img src="/assets/images/inja-unja.png" alt="Logo" class="logo-image" />
                     </div>
-                    <h4 class="mb-1 font fontsize">
+                    <h4 class="mb-1 font fontsiz">
                         {{ translate('verifyEmail.greeting') }}
                     </h4>
                     <p class="font fontsize2">
                         {{ translate('verifyEmail.instructions') }}
                     </p>
                 </VCardText>
+
                 <div class="mt-4"></div>
                 <div class="mt-4"></div>
                 <div class="mt-4"></div>
 
-                <VForm @submit.prevent="handleResend" class="form_Style">
+                <VForm @submit.prevent="handleResendVerification" class="form_Style">
                     <VRow>
                         <VCol cols="12" class="form font form_Style">
                             <VTextField
@@ -36,8 +33,7 @@
                                 type="email"
                             />
                         </VCol>
-
-                        <VCol cols="12" class="form2 ">
+                        <VCol cols="12" class="form2">
                             <VBtn block type="submit" class="font buttonfont1" color="light-purple">
                                 {{ translate('verifyEmail.resend') }}
                             </VBtn>
@@ -58,34 +54,37 @@
     </v-app>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
-
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { translate } from "@/store/languageStore.js";
+<script>
 import Header from '../Header/Header.vue';
-import { resendVerificationEmail } from '../../../services/general/authService.js';
+import { translate } from "@/store/languageStore";
 
-const router = useRouter();
+export default {
+    name: 'VerifyEmail',
+    components: {
+        Header
+    },
+    data() {
+        return {
+            email: ''
+        };
+    },
+    methods: {
+        translate,
 
-const email = ref('');
+        async handleResendVerification() {
+            if (!this.email) {
+                alert(this.translate('verifyEmail.emailRequired'));
+                return;
+            }
 
-const handleResend = async () => {
-    if (!email.value) {
-        alert('Please enter your email.');
-        return;
+            try {
+                // Todo: call your email service
+                alert(this.translate('verifyEmail.resendSuccess'));
+            } catch (error) {
+                alert(this.translate('verifyEmail.resendError'));
+            }
+        }
     }
-    try {
-        await resendVerificationEmail(email.value);
-        alert('Confirmation email has been resent.');
-    } catch (error) {
-        alert('Error sending confirmation email.');
-    }
-};
-
-const goToHome = () => {
-    router.push('/');
 };
 </script>
 

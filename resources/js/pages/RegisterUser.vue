@@ -79,7 +79,6 @@
 </template>
 
 <script>
-import apiService from "@/globalServices/apiService.js";
 import InjaUnjaLogo from "@/assets/images/logo1.png"
 
 export default {

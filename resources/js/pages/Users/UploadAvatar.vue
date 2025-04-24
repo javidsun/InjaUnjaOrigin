@@ -59,8 +59,4 @@ watch(avatar, (newAvatar) => {
   height: 50%;
   border-radius: 50%;
 }
-.v-btn  {
-  display: block;
-  margin: 0 auto 0;
-}
 </style>

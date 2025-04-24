@@ -21,6 +21,10 @@ class User extends Authenticate
         'name',
         'email',
         'password',
+        'google_id',
+        'twitter_id',
+        'facebook_id',
+        'apple_id',
     ];
 
     /**
@@ -32,6 +36,7 @@ class User extends Authenticate
         'password',
         'remember_token',
     ];
+
 
 
     /**

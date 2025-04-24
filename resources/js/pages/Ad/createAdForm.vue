@@ -48,11 +48,12 @@
 </template>
 
 <script setup>
+// TODO  : composition --> option  &  const & warning & errore
+
 import { ref } from "vue";
-import Header from '../layout/Header/Header.vue';
 import Footer from '../layout/Footer.vue';
 import StepOneModal from './CreateAd/StepOneModal.vue';
-import { translate } from "../../store/languageStore";
+import { translate } from "@/store/languageStore.js";
 import UserSidebar from '../Users/Layout.vue';
 import Companion from './CreateAd/Companion.vue';
 

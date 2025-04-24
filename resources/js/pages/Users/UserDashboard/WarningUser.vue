@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { translate } from "../../../store/languageStore";
+import { translate } from "@/store/languageStore.js";
 </script>
 
 <style scoped>

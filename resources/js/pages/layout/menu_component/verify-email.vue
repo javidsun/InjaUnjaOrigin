@@ -59,9 +59,11 @@
 </template>
 
 <script setup>
+// TODO  : composition --> option  &  const & warning & errore
+
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { translate } from "../../../store/languageStore";
+import { translate } from "@/store/languageStore.js";
 import Header from '../Header/Header.vue';
 import { resendVerificationEmail } from '../../../services/general/authService.js';
 

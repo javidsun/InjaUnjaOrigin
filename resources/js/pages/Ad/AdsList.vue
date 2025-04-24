@@ -14,6 +14,8 @@
 </template>
 
 <script setup>
+// TODO  : composition --> option  &  const & warning & errore
+
 import { ref, onMounted } from "vue";
 import adService from "../../services/adService";
 import CategoryFilter from "../Ad/CategoryFilter.vue";

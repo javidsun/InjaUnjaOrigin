@@ -118,29 +118,6 @@ defineExpose({openModal});
     transform: rotate(90deg);
 }
 
-.gift-card-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-}
-
-.gift-card-subtitle {
-    font-size: 1rem;
-    color: #666;
-    margin-bottom: 1rem;
-}
-
-.gift-card-image {
-    max-width: 20%;
-    height: auto;
-    border-radius: 8px;
-    margin: 1rem 0;
-}
-
-.image-container {
-    margin-bottom: 1rem;
-}
-
 .button-container {
     display: flex;
     justify-content: center;
@@ -152,12 +129,6 @@ defineExpose({openModal});
     background-color: #3b3b3b;
 }
 
-.dialog-header {
-    background-color: #3f51b5;
-    color: white;
-    padding: 1rem;
-}
-
 .close-btn {
     color: white;
 }
@@ -167,16 +138,4 @@ defineExpose({openModal});
     text-align: center;
 }
 
-.v-dialog--active {
-    z-index: 9999;
-}
-
-.dialog-transition-enter-active,
-.dialog-transition-leave-active {
-    transition: opacity 0.3s ease;
-}
-
-.dialog-transition-enter, .dialog-transition-leave-to {
-    opacity: 0;
-}
 </style>

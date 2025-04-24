@@ -48,6 +48,8 @@
 </template>
 
 <script setup>
+// TODO  : composition --> option  &  const & warning & errore
+
 import {ref, computed} from 'vue';
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 import Searchbar from "../../../layout/Header/search/Searchbar.vue";

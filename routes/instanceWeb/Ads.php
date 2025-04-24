@@ -22,15 +22,5 @@ Route::get('/MyReservations', function () {
 });
 
 
-/*Route::get('/api/categories', [CategoryController::class, 'getCategories']);
-Route::get('/api/ads', [AdController::class, 'getAds']);
-Route::post('/api/ads', [AdController::class, 'createAd']);
-Route::delete('/api/ads/{id}', [AdController::class, 'deleteAd']);
-Route::middleware('auth:api')->get('/user', [UserController::class, 'getUserDetails']);
-Route::get('/api/reservations', [ReservationController::class, 'getUserReservations'])->middleware('auth:api');
-Route::post('/api/reservations', [ReservationController::class, 'createReservation'])->middleware('auth:api');
-Route::post('/api/bookings/{id}/confirm', [BookingController::class, 'confirmBooking'])->middleware('auth:api');
-Route::post('/api/bookings/{id}/cancel', [BookingController::class, 'cancelBooking'])->middleware('auth:api');*/
-
 
 

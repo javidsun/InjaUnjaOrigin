@@ -47,8 +47,10 @@
 </template>
 
 <script setup>
+//TODO : composition --> option & const & error warning
+
 import { ref } from "vue";
-import { translate } from "../../../store/languageStore.js";
+import { translate } from "@/store/languageStore.js";
 import UserSidebar from '../Layout.vue';
 
 const reservations = ref([

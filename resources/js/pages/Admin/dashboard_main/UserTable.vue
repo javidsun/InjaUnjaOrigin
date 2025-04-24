@@ -57,7 +57,9 @@
 </template>
 
 <script setup>
-import { translate } from "../../../store/languageStore.js";
+// TODO  : composition --> option  &  const & warning & errore
+//TODO : avatar ha az png --> svg
+import { translate } from "@/store/languageStore.js";
 
 const avatar1 = './avatar1.svg';
 const avatar2 = './avatar2.svg';

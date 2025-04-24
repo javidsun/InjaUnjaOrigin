@@ -36,6 +36,8 @@
 </template>
 
 <script setup>
+//TODO : composition --> option & const & error warning
+
 import {ref, onMounted} from "vue";
 import Searchbar from "../layout/Header/search/Searchbar.vue";
 import Darkmood from "../layout/Header/Darkmood.vue";

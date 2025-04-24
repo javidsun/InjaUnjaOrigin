@@ -51,8 +51,4 @@ body {
     color: var(--text-color);
     transition: background-color 0.3s, color 0.3s;
 }
-
-.footer {
-    flex-shrink: 0;
-}
 </style>

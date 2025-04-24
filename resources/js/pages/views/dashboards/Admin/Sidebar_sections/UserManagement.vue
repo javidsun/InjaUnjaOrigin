@@ -25,6 +25,8 @@
 </template>
 
 <script setup>
+//TODO : composition --> option & const & error warning
+
 import { ref } from "vue";
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 import Searchbar from "../../../../components/layout/Header/search/Searchbar.vue";
@@ -35,10 +37,6 @@ import Sidebar from "../../../Sidebar.vue";
 
 const isDarkMode = ref(true);
 const drawer = ref(true);
-
-const toggleDarkMode = () => {
-  isDarkMode.value = !isDarkMode.value;
-};
 
 const props = defineProps({
   navItems: {

@@ -4,6 +4,7 @@ import './bootstrap';
 import {createApp, h} from 'vue';
 import {createInertiaApp, Link} from '@inertiajs/vue3';
 import vuetify from '../js/pages/plugins/vuetify/vuetify.js';
+import { translate, currentLanguage } from "@/store/languageStore.js";
 import pinia from '../js/pages/plugins/pinia/index';
 import App from "../js/pages/App.vue";
 import 'vuetify/dist/vuetify.min.css';

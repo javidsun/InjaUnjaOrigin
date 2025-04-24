@@ -18,8 +18,9 @@
   </VCard>
 </template>
 <script setup>
-import { translate } from "../../../store/languageStore.js";
-import { ref } from 'vue';
+// TODO  : composition --> option  &  const & warning & errore
+
+import { translate } from "@/store/languageStore.js";
 
 const stats = [
   { title:"Basics.activeUsers", value: '1,200', icon: 'mdi-account', color: 'primary' },

@@ -52,6 +52,8 @@
   </Layout>
 </template>
 <script setup>
+//TODO : composition --> option & const & error warning
+
 import { ref, nextTick } from 'vue';
 import Footer from "../../layout/Footer.vue";
 import WarningUser from '../../Users/UserDashboard/WarningUser.vue';

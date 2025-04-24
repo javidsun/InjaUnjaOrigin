@@ -17,7 +17,9 @@
 </template>
 
 <script setup>
-import { translate } from "../../../store/languageStore.js";
+// TODO  : composition --> option  &  const & warning & errore
+
+import { translate } from "@/store/languageStore.js";
 
 const performanceStats = [
   { title: "functional.todayReservations", stats: '35', icon: 'mdi-calendar-check', color: 'primary' },

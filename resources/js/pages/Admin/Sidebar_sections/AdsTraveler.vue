@@ -28,6 +28,8 @@
 </template>
 
 <script setup>
+// TODO  : composition --> option  &  const & warning & errore
+
 import Sidebar from "../Sidebar.vue";
 import { ref } from 'vue';
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";

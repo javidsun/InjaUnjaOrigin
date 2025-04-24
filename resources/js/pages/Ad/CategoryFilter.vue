@@ -10,6 +10,8 @@
 </template>
 
 <script setup>
+// TODO  : composition --> option  &  const & warning & errore
+
 import { ref, onMounted } from "vue";
 import axios from "axios";
 

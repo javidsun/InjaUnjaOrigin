@@ -86,6 +86,8 @@
 </template>
 
 <script setup>
+//TODO : composition --> option & const & error warning
+
 import {ref} from 'vue';
 import {Inertia} from '@inertiajs/inertia';
 import UserSidebar from './Layout.vue';

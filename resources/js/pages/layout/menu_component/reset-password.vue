@@ -1,7 +1,9 @@
 <script setup>
+//TODO : composition --> option & const & error warning
+
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { t, currentLanguage } from "../../../store/languageStore";
+import { t, currentLanguage } from "@/store/languageStore.js";
 import Header from '../Header/Header.vue';
 const setLanguage = (lang) => {
     t(lang);
@@ -111,5 +113,4 @@ const goToHome = () => {
 </template>
 
 <style>
-@import './resources/css/@core/template/pages/page-auth.scss';
 </style>

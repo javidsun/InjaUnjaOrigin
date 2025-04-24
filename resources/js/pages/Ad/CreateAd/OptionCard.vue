@@ -30,6 +30,8 @@
 </template>
 
 <script setup>
+// TODO  : composition --> option  &  const & warning & errore
+
 import {ref} from "vue";
 
 defineProps({

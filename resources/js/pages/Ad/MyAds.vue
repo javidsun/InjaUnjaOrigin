@@ -93,6 +93,8 @@
 </template>
 
 <script setup>
+// TODO  : composition --> option  &  const & warning & errore
+
 
 import {ref, computed} from 'vue';
 import {translate} from "@/store/languageStore";

@@ -5,6 +5,8 @@
 </template>
 
 <script setup>
+// TODO  : composition --> option  &  const & warning & errore
+
 import { ref, onMounted } from 'vue';
 
 const isDarkMode = ref(true);

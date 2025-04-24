@@ -37,6 +37,8 @@
 </template>
 
 <script setup>
+//TODO : composition --> option & const & error warning
+
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import UserSidebar from "../Layout.vue";

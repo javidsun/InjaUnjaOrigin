@@ -7,7 +7,7 @@
             <VCard class="auth-card pa-6 purple-background" style="max-width: 400px;">
                 <VCardText class="text-center">
                     <div class="logo-container">
-                        <img src="/assets/images/inja-unja.png" alt="Logo" class="logo-image" />
+                        <img src="/assets/images/inja-unja.png" alt="Logo" class="logo-image"/>
                     </div>
                     <h4 class="mb-1 font fontsiz">
                         {{ translate('verifyEmail.greeting') }}
@@ -56,7 +56,7 @@
 
 <script>
 import Header from '../Header/Header.vue';
-import { translate } from "@/store/languageStore";
+import {translate} from "@/store/languageStore";
 
 export default {
     name: 'VerifyEmail',

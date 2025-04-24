@@ -15,6 +15,7 @@ class AuthController
 
     public function __construct(protected AuthServicesContract $authServices)
     {
+        $this->authServices ??= app(AuthServicesContract::class);
     }
 
     public function register(Request $request): DtoControllerResponse

@@ -6,7 +6,7 @@ use App\Services\Announcements\HomeAnnouncementService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class HomeAnnouncementController extends Controllers
+class HomeAnnouncementController
 {
     public function __construct(protected ?HomeAnnouncementService  $homeAnnouncementService = null)
     {

@@ -8,7 +8,6 @@ import { translate, currentLanguage } from "@/store/languageStore.js";
 import pinia from '../js/pages/plugins/pinia/index';
 import App from "../js/pages/App.vue";
 import 'vuetify/dist/vuetify.min.css';
-import apiService from "@/globalServices/apiService.js";
 import store from './store'; // Import Vuex Store
 
 const app = createApp(App);

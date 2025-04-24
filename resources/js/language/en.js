@@ -184,17 +184,19 @@ export default {
         resetLinkSent: 'لینک بازیابی ارسال شد!',
     },
 
-    verifyEmail: {
-        greeting: 'Verify Your Email ✉️',
-        instructions:
-            'A verification link has been sent to your email. Please follow the link inside to continue.',
-        email: 'Email',
-        emailPlaceholder: 'e.g. johndoe@email.com',
-        resend: 'Resend Email',
-        skip: "Didn't get the mail?",
-        goHome: 'Go to Home',
-        enterEmail: 'Please enter your email address.',
-    },
+     verifyEmail: {
+         greeting: 'Verify Your Email ✉️',
+         instructions: 'A verification link has been sent to your email. Please follow the link inside to continue.',
+         email: 'Email',
+         emailPlaceholder: 'e.g. johndoe@email.com',
+         resend: 'Resend Email',
+         skip: "Didn't get the mail?",
+         goHome: 'Go to Home',
+         emailRequired: 'Please enter your email address.',
+         resendSuccess: 'Verification email has been resent successfully!',
+         resendError: 'Failed to resend verification email. Please try again.'
+     },
+
     resetPassword: {
         greeting: 'Reset Your Password',
         instructions: 'Enter your email and we will send you instructions to reset your password.',

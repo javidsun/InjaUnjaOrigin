@@ -4,11 +4,11 @@
             {{ translate("injaunja.title") }}
         </v-card-title>
 
-       <v-card-text class="text-body-1 text-center">
+        <v-card-text class="text-body-1 text-center">
             <p>{{ translate("injaunja.description") }}</p>
         </v-card-text>
 
-       <h2 class="text-h5 text-center mt-8 mb-4">
+        <h2 class="text-h5 text-center mt-8 mb-4">
             {{ translate("injaunja.teamTitle") }}
         </h2>
 
@@ -21,44 +21,52 @@
                 <p class="text-body-2">{{ member.role }}</p>
             </div>
         </div>
-
     </v-card>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+import { translate } from "@/store/languageStore";
 
-import { ref } from 'vue';
-import { translate } from "@/store/languageStore.js";
-
-const isSupportModalOpen = ref(false);
-
-const openModal = () => {
-    isSupportModalOpen.value = true;
+export default {
+    name: "AboutUs",
+    data() {
+        return {
+            team: [],
+            isSupportModalOpen: false,
+        };
+    },
+    methods: {
+        translate,
+        openModal() {
+            try {
+                this.isSupportModalOpen = true;
+            } catch (error) {
+                console.error("Error opening modal:", error);
+            }
+        }
+    },
+    created() {
+        try {
+            this.team = [
+                { name: "Armin Shamseddini", role: "Founder-C.E.O", image: "profile (1).jpg" },
+                { name: "Javid Shams", role: "Founder-C.T.O", image: "profile (2).jpg" },
+                { name: "Zahra Azizi", role: "Founder-C.O.O", image: "profile (3).jpg" },
+                { name: "Mohamad Keshmiri", role: "Backend Developer", image: "profile (8).jpg" }
+            ];
+        } catch (error) {
+            console.error("Error loading team data:", error);
+        }
+    }
 };
-
-const team = [
-    { name: "Armin Shamseddini", role: "Founder-C.E.O", image: "profile (1).jpg" },
-    { name: "Javid Shams", role: "Founder-C.T.O", image: "profile (2).jpg" },
-    { name: "Zahra Azizi", role: "Founder-C.O.O", image: "profile (3).jpg" },
-    { name: "Mohamad Keshmiri", role: "Backend Developer", image: "profile (8).jpg" }
-];
-
-const closeModal = () => {
-    dialog.value = false;
-};
-defineExpose({ openModal });
-
 </script>
 
 <style scoped>
 .about-us-container {
     padding: 24px;
-    background-color: Var(--background-color);
+    background-color: var(--background-color);
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
 
 .team-members {
     display: flex;
@@ -80,5 +88,11 @@ defineExpose({ openModal });
 
 .team-member p {
     color: #666;
+}
+
+.team-member img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
 }
 </style>

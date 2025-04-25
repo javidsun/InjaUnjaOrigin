@@ -1,4 +1,10 @@
 export default {
+ injaunja: {
+                    title: 'InjaUnja',
+                    description: 'InjaUnja is an innovative startup focused on location-based services...',
+                    teamTitle: 'Our Team',
+
+                },
     advertisements: {
         firstAd: 'First advertisement text',
         secondAd: 'Second advertisement text',
@@ -299,7 +305,7 @@ export default {
         Rome: 'Rome',
         Berlin: 'Berlin',
         Amsterdam: 'Amsterdam',
-
+    },
         UserSidebar: {
             UserDashboard: 'UserDashboard',
             createAdForm: 'Create New Ads',
@@ -2652,12 +2658,7 @@ export default {
                     termsUpdatesTitle: 'About Our Terms Updates',
                     termsUpdatesDescription: 'Please review this information about our terms updates.',
                 },
-                injaunja: {
-                    title: 'InjaUnja',
-                    description: 'InjaUnja is an innovative startup focused on location-based services...',
-                    teamTitle: 'Our Team',
 
-                },
                 "Admin_UserManagment": {
                     "user_management": "User Management",
                     "user_list_and_roles": "User List and Roles",
@@ -3101,5 +3102,5 @@ export default {
                 cultural: "cultural"
             }
         },
-    },
+
 }

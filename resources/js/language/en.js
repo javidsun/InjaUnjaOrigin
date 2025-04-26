@@ -5,10 +5,10 @@ export default {
         teamTitle: 'Our Team',
 
     },
-    general:{
-    ok:'Ok',
-    success:'Success',
-    error:'Error'
+    general: {
+        ok: 'Ok',
+        success: 'Success',
+        error: 'Error'
     },
     advertisements: {
         firstAd: 'First advertisement text',
@@ -2666,42 +2666,6 @@ export default {
                 termsUpdatesTitle: 'About Our Terms Updates',
                 termsUpdatesDescription: 'Please review this information about our terms updates.',
             },
-
-            "Admin_UserManagment": {
-                "user_management": "User Management",
-                "user_list_and_roles": "User List and Roles",
-                "add_new_user": "Add New User",
-                "edit_user": "Edit User",
-                "user_name": "User Name",
-                "user_email": "User Email",
-                "user_role": "User Role",
-                "user_active": "User Active",
-                "close": "Close",
-                "save": "Save",
-                "activity_history": "Activity History",
-                "actions": "Actions",
-                "activity": "Activity",
-                "date": "Date",
-                "status": "Status",
-                "roles": {
-                    "normal_user": "Normal User",
-                    "host": "Host",
-                    "admin": "Admin"
-                },
-                "activities": {
-                    "house_reservation": "House Reservation",
-                    "payment": "Payment",
-                    "comment": "Comment"
-                },
-                "statuses": {
-                    "completed": "Completed",
-                    "pending": "Pending"
-                },
-                "validation": {
-                    "required": "This field is required",
-                    "invalid_email": "Invalid email"
-                }
-            },
             Admin_AdManagement: {
                 ad_management: "Ad Management",
                 ad_list_and_actions: "Ad List and Actions",
@@ -2768,133 +2732,6 @@ export default {
                 order_name: "Order Name",
                 user_name: "User Name",
                 action: "Action",
-            },
-            "Admin_UserManagment": {
-                "user_management": "User Management",
-                "user_list_and_roles": "User List and Roles",
-                "add_new_user": "Add New User",
-                "edit_user": "Edit User",
-                "user_name": "User Name",
-                "user_email": "User Email",
-                "user_role": "User Role",
-                "user_active": "User Active",
-                "close": "Close",
-                "save": "Save",
-                "activity_history": "Activity History",
-                "actions": "Actions",
-                "activity": "Activity",
-                "date": "Date",
-                "status": "Status",
-                "roles": {
-                    "normal_user": "Normal User",
-                    "host": "Host",
-                    "admin": "Admin"
-                },
-                "activities": {
-                    "house_reservation": "House Reservation",
-                    "payment": "Payment",
-                    "comment": "Comment"
-                },
-                "statuses": {
-                    "completed": "Completed",
-                    "pending": "Pending"
-                },
-                "validation": {
-                    "required": "This field is required",
-                    "invalid_email": "Invalid email"
-                }
-            },
-            Admin_AdManagement: {
-                ad_management: "Ad Management",
-                ad_list_and_actions: "Ad List and Actions",
-                add_new_ad: "Add New Ad",
-                edit_ad: "Edit Ad",
-                ad_title: "Ad Title",
-                ad_description: "Ad Description",
-                ad_category: "Ad Category",
-                base_price: "Base Price",
-                service_fee: "Service Fee",
-                discount: "Discount",
-                total_price: "Total Price",
-                received_amount: "Received Amount",
-                host_as_individual: "Host as Individual",
-                host_as_business: "Host as Business",
-                security_camera: "Security Camera",
-                sound_insulation: "Sound Insulation",
-                protective_weapons: "Protective Weapons",
-                ad_active: "Ad Active",
-                close: "Close",
-                save: "Save",
-                ad_details: "Ad Details",
-                ad_status: "Ad Status",
-                Awaiting_confirmation: "Awaiting Confirmation",
-                active: "Active",
-                inactive: "Inactive",
-                validation: {
-                    required: "This field is required.",
-                },
-                select_ad_type: "Select ad type",
-                house: "house",
-                travel_companion: "travel companion",
-                event: "event",
-                car: "car",
-                coming_soon: "coming soon",
-                this_feature_will_be_available_soon: "This feature will be available soon",
-                companion_title: "Companion ad title",
-                companion_description: "Travel description",
-                travel_type: "Travel type",
-                origin: "Origin",
-                destination: "Destination",
-                travel_date: "Travel date",
-                price: "Participation fee",
-                gender_preference: "Gender preference",
-                smoking_allowed: "Smoking allowed",
-                pets_allowed: "Pets allowed",
-                one_way: "One way",
-                round_trip: "Round trip",
-                multi_city: "Multi-city",
-                no_preference: "No preference",
-                male_only: "Males only",
-                female_only: "Females only"
-
-            },
-            Admin_Reports: {
-                analysis_and_reports: "Analysis and Reports",
-                reservations_this_month: "Reservations This Month",
-                reservations_this_month_description: "Total number of reservations made this month.",
-                average_host_income: "Average Host Income",
-                average_host_income_description: "Average income earned by hosts.",
-                approval_rate: "Approval Rate",
-                approval_rate_description: "Percentage of reservations that have been approved.",
-                cancellation_rate: "Cancellation Rate",
-                cancellation_rate_description: "Percentage of reservations that have been canceled.",
-                value: "Value",
-                description: "Description",
-                date: "Date",
-                reservations_details: "Reservations Details",
-                total_reservations: "Total Reservations",
-                successful_reservations: "Successful Reservations",
-                pending_reservations: "Pending Reservations",
-                failed_reservations: "Failed Reservations",
-                cancellation_details: "Cancellation Details",
-                total_cancellations: "Total Cancellations",
-                host: "Host",
-                amount: "Amount",
-                status: "Status",
-                reason: "Reason",
-                count: "Count",
-                host_schedule_change: "Host Schedule Change",
-                payment_issue: "Payment Issue",
-                other: "Other",
-                user_cancellations: "User Cancellations",
-                export: "Export",
-                details: "Details",
-                close: "Close",
-                id: "ID",
-                order_name: "Order Name",
-                user_name: "User Name",
-                action: "Action",
-
             },
             re_dashboard: {
                 conversionRateDescription: "User to customer conversion rate",

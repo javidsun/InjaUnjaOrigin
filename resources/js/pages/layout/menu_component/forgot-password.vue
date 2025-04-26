@@ -1,6 +1,5 @@
 <template>
     <v-app className="back">
-        <Header/>
         <br><br><br>
 
         <div className="auth-wrapper d-flex align-center justify-center pa-4">
@@ -71,13 +70,12 @@
 </template>
 
 <script>
-import Header from '../Header/Header.vue';
 import {translate} from "@/store/languageStore";
 
 export default {
     name: 'ForgotPasswordView',
     components: {
-        Header
+        Header: () => import('../Header/Header.vue')
     },
     data() {
         return {

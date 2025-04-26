@@ -1,9 +1,4 @@
 export default {
-  general:{
-    ok:'باشه',
-    success:'موفق',
-    error:'خطا'
-    },
 
     advertisements: {
         firstAd: 'متن اولین تبلیغ',
@@ -765,31 +760,6 @@ export default {
         support: "پشتیبان",
         Image_selection: "انتخاب تصاویر",
     },
-    Finance: {
-        all: "همه",
-        cancelled: "ناموفق",
-        processing: "در حال پردازش",
-        successful: "موفق",
-        Details: "جزئیات",
-        paymentDetails: "جزئیات پرداخت",
-        paymentDetailsSubtitle: "جزئیات پرداخت",
-        totalAmount: "مبلغ کل",
-        extraFee: "هزینه اضافی",
-        tax: "مالیات",
-        finalAmount: "مبلغ نهایی",
-        paymentMethod: "روش پرداخت",
-        paymentMethodLabel: "روش پرداخت",
-        id: "شناسه",
-        amount: "مبلغ",
-        status: "وضعیت",
-        locationDetails: "جزئیات مکان",
-        location: "موقعیت",
-        host: "میزبان",
-        rating: "امتیاز",
-        type: "نوع",
-        period: "دوره",
-        close: "بستن"
-    },
     setting: {
         settings: "تنظیمات",
         host: "میزبان",
@@ -1229,29 +1199,6 @@ export default {
         Upload_images2: 'حداکثر 10 تصویر بارگذاری کنید',
         title: 'عنوان',
 
-    },
-    Message: {
-        NewMessage: "ارسال پیام جدید",
-        SelectCategory: "انتخاب دسته‌بندی",
-        Username: "یوزرنیم",
-        MessageText: "متن پیام",
-        AllMessages: "همه",
-        HostMessages: "میزبان",
-        GuestMessages: "مهمان",
-        SupportMessages: "پشتیبان",
-        SendMessage: "ارسال",
-        Close: "بستن",
-        Sender: "فرستنده",
-        Status: "وضعیت",
-        Pending: "در انتظار بررسی",
-        Approved: "تایید شده",
-        Reply: "پاسخ",
-        Time: "زمان",
-        all: "همه",
-        host: "میزبان",
-        guest: "مهمان",
-        support: "پشتیبان",
-        Image_selection: "انتخاب تصاویر",
     },
     Finance: {
         all: "همه",

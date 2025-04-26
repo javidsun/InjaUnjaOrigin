@@ -70,6 +70,8 @@
 </template>
 
 <script>
+//Todo: { "email": "string (required, valid email format)", "error": "string (error message)"}
+
 import {translate} from "@/store/languageStore";
 
 export default {

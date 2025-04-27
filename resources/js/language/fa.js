@@ -1,4 +1,10 @@
 export default {
+  general:{
+    ok:'باشه',
+    success:'موفق',
+    error:'خطا'
+    },
+
     advertisements: {
         firstAd: 'متن اولین تبلیغ',
         secondAd: 'متن دومین تبلیغ',
@@ -174,14 +180,16 @@ export default {
         tooManyAttempts: 'تلاش‌های زیاد برای ورود. لطفاً بعداً تلاش کنید.',
     },
     forgotPassword: {
-        greeting: "فراموشی رمز عبور",
-        instruction: "ایمیل خود را وارد کنید تا لینک بازیابی را دریافت کنید.",
-        email: "ایمیل",
-        emailPlaceholder: "ایمیل خود را وارد کنید",
-        sendResetLink: "ارسال لینک بازیابی",
-        backToLogin: "بازگشت به صفحه ورود",
-        fillAllFields: "لطفاً تمامی فیلدها را پر کنید.",
-        resetLinkSent: "لینک بازیابی ارسال شد!",
+         title: 'فراموشی رمز عبور',
+         instructions: 'ایمیل خود را وارد کنید تا لینک بازنشانی ارسال شود',
+         email: 'ایمیل',
+         emailPlaceholder: 'ایمیل خود را وارد کنید',
+         sendResetLink: 'ارسال لینک بازنشانی',
+         rememberPassword: 'رمز عبور خود را به خاطر دارید؟',
+         login: 'ورود',
+         emailRequired: 'وارد کردن ایمیل الزامی است',
+         resetLinkSent: 'لینک بازنشانی به ایمیل شما ارسال شد',
+         errorOccurred: 'خطایی رخ داد، لطفاً مجدداً تلاش کنید'
 
     },
        verifyEmail: {

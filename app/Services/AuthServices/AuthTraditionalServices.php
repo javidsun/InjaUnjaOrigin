@@ -3,6 +3,8 @@
 namespace App\Services\AuthServices;
 
 use App\Constant\AuthConst\UserJson;
+use App\Domain\Repositories\UserRepositoryInterface;
+use App\Domain\Services\AuthService;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -10,18 +12,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 
-class AuthServicesWithPassword
+class AuthTraditionalServices extends AuthService
 {
-
-    public function register(Request $request): JsonResponse
-    {
-        $user = User::create([
-            UserJson::NAME => $request->name,
-            UserJson::EMAIL => $request->email,
-            UserJson::PASSWORD => Hash::make($request->password),
-        ]);
-        return response()->json([UserJson::MESSAGE => 'registrazione eseguita con successo', UserJson::USER => $user]);
+    public function __construct() {
+        parent::__construct();
     }
+
 
     public function login(string $emailValidated , string $passwordValidated): JsonResponse
     {

@@ -4,14 +4,19 @@ namespace App\Services\AuthServices;
 
 use App\Constant\AuthConst\SocialiteDeriveConst;
 use App\Constant\AuthConst\UserJson;
+use App\Domain\Services\Auth\AuthServicesContract;
+use App\Domain\Services\AuthService;
 use App\Models\User;
-use App\Services\IService\AuthServicesContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Contracts\User as SocialUser;
 
-class OAuthServiceWithSocialite implements AuthServicesContract
+class OAuthServiceWithSocialite extends AuthService implements AuthServicesContract
 {
+    public function __construct(
+    ) {
+        Parent::__construct();
+    }
 
     public function loginWithOAuth(SocialUser $socialUser, string $socialProvider): JsonResponse
     {

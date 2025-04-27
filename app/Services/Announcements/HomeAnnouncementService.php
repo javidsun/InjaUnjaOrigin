@@ -3,9 +3,9 @@
 namespace App\Services\Announcements;
 
 use App\Constant\AnnouncementConst\HomeAnnouncementJson;
+use App\Domain\Services\Announcement\AnnouncementContract;
+use App\Infrastructure\Repositories\HomeAnnouncementRepository;
 use App\Mapper\HomeAnnouncementMapper;
-use App\Repositories\HomeAnnouncementRepository;
-use App\Services\IService\AnnouncementContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 

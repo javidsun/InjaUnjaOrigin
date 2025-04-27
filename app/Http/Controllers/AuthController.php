@@ -2,35 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant\AuthConst\UserJson;
+use App\Domain\Services\Auth\AuthServicesContract;
 use App\DTOs\Controller\DTOControllerResponse;
-use App\Services\IService\AuthServicesContract;
+use App\Factories\AuthProviderFactory;
+use App\Http\Requests\Auth\RegisterRequest;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use InvalidArgumentException;
 
 
 class AuthController
 {
-
-    public function __construct(protected AuthServicesContract $authServices)
+    public function __construct(
+        protected AuthServicesContract $authServices,
+        protected AuthProviderFactory  $authProviderFactory
+    )
     {
         $this->authServices ??= app(AuthServicesContract::class);
+        $this->authProviderFactory ??= app(AuthProviderFactory::class);
     }
 
-    public function register(Request $request): DtoControllerResponse
+    public function register(RegisterRequest $request): JsonResponse
     {
         try {
-            Log::info('arriva a questo punto o no ? ? ??  ?');
-            //$this->authServices = $request->attributes->get('authService');
+            $authStrategy = $this->authProviderFactory->make($request->input(UserJson::PROVIDER, UserJson::TRADITIONAL));
+            if (!$request->isValid())
+                throw new InvalidArgumentException('Register Request Validation Failed');
 
-            //$Authtype = $request->input('message', 'Messaggio di test');
-            $authResponse = $this->authServices->register($request);
-            $user = $authResponse->getSingleItem();
+            $user = $authStrategy->register($request->all());
 
-            return new DtoControllerResponse(success: true , payload: $user->createToken('API TOKEN')->plainTextToken,httpStatus: 200,message: 'registrazione completata');
-        } catch (\Exception $e) {
-            return new DTOControllerResponse(success: false, httpStatus: 500, message: $e->getMessage());
+            return response()->json([
+                UserJson::USER => [
+                    UserJson::ID => (string)$user->getId(),
+                    UserJson::NAME => $user->getName(),
+                    UserJson::EMAIL => $user->getEmail(),
+                    UserJson::PROVIDER => $user->getProvider()
+                ]
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                UserJson::MESSAGE => $e->getMessage()
+            ], 422);
         }
     }
     //TODO : quando va con successo vorrei che torna a pagina precedente e chiude questa pagina e riempisce textbox
@@ -42,13 +58,13 @@ class AuthController
             if (!Auth::attempt($request->only('email', 'password'))) {
                 throw new Exception('Auth Attempt to login but invalid credentials');
             }
-            Log::info('request sarebbe '.var_export($request->all(),true));
+            Log::info('request sarebbe ' . var_export($request->all(), true));
             $authResponse = $this->authServices->login($request);
             $user = $authResponse->getSingleItem();
 
-            return new DTOControllerResponse(success: true,payload: ['user'=>$user , 'token'=>$user->createToken('API TOKEN')->plainTextToken], httpStatus: 200, message: 'Login completata');
+            return new DTOControllerResponse(success: true, payload: ['user' => $user, 'token' => $user->createToken('API TOKEN')->plainTextToken], httpStatus: 200, message: 'Login completata');
 
-        }catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return new DTOControllerResponse(success: false, httpStatus: 500, message: $e->getMessage());
         }
     }

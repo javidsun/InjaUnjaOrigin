@@ -2,13 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Domain\Services\Auth\AuthServicesContract;
 use App\Factories\AuthServiceFactory;
-use App\Services\IService\AuthServicesContract;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Middleware;
-use Symfony\Component\HttpFoundation\Response;
 
 class AuthTokenMiddleware extends Middleware
 {

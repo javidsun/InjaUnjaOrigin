@@ -2,30 +2,69 @@
 
 namespace App\Models;
 
+use App\Constant\AuthConst\UserJson;
+use App\Domain\Entity;
+use App\DTOs\ModelEntityConvertable;
+use App\Entities\UserEntity;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticate;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
+use Symfony\Component\Uid\Ulid;
 
-
-class User extends Authenticate
+/**
+ * @property Ulid $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string|null provider
+ * @property string|null provider_id
+ */
+class User extends Authenticate implements ModelEntityConvertable
 {
-    use HasApiTokens,HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable,HasUuids;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'google_id',
-        'twitter_id',
-        'facebook_id',
-        'apple_id',
+        UserJson::NAME,
+        UserJson::EMAIL,
+        UserJson::PASSWORD,
+        UserJson::PROVIDER,
+        UserJson::PROVIDER_ID,
     ];
+
+    public function toEntity(): UserEntity
+    {
+        return new UserEntity(
+            new Ulid($this->id),
+            $this->name,
+            $this->email,
+            $this->password,
+            $this->provider,
+            $this->provider_id
+        );
+    }
+
+    public static function fromEntity(Entity $entity): self
+    {
+        ///TODO : ho dubbio di questo devo sapere ci sta o no
+        return new self([
+            UserJson::ID => $entity->getId()?->toRfc4122(),
+            UserJson::NAME => $entity->getName(),
+            UserJson::EMAIL => $entity->getEmail(),
+            UserJson::PASSWORD => $entity->getPassword() ? Hash::make($entity->getPassword()) : null,
+            UserJson::PROVIDER => $entity->getProvider(),
+            UserJson::PROVIDER_ID => $entity->getProviderId(),
+        ]);
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -36,7 +75,6 @@ class User extends Authenticate
         'password',
         'remember_token',
     ];
-
 
 
     /**

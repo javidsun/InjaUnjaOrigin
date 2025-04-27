@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Constant\AuthConst\UserJson;
-use App\Services\IService\AuthServicesContract;
+use App\Domain\Services\Auth\AuthServicesContract;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Http\JsonResponse;
 
 class OAuthController
 {

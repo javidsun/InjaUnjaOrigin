@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\IService;
+namespace App\Domain\Services\Auth;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

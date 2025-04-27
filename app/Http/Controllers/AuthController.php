@@ -18,8 +18,8 @@ use InvalidArgumentException;
 class AuthController
 {
     public function __construct(
-        protected AuthServicesContract $authServices,
-        protected AuthProviderFactory  $authProviderFactory
+        protected ?AuthServicesContract $authServices=null,
+        protected ?AuthProviderFactory  $authProviderFactory=null
     )
     {
         $this->authServices ??= app(AuthServicesContract::class);

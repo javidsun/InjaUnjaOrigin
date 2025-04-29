@@ -20,6 +20,8 @@ const setLanguage = (lang) => {
 setLanguage(currentLanguage.value);
 
 const translate = (key) => {
+    console.log('Translation key:', key, 'Type:', typeof key);
+
     if (!messages.value) return key;
 
     if (typeof key !== 'string') {

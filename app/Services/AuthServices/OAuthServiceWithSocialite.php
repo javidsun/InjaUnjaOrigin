@@ -52,6 +52,6 @@ class OAuthServiceWithSocialite extends AuthService implements AuthServicesContr
 
     public function logout(Request $request): JsonResponse
     {
-        // TODO: Implement logout() method.
+        // TODO:  Implement logout() method.
     }
 }

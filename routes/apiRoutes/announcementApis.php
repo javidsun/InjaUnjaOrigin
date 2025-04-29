@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\HomeAnnouncementController;
+use App\Http\Controllers\AnnouncementControllers\HomeAnnouncementController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:sanctum'])->post('/home/announcements',[HomeAnnouncementController::class, "store"]);
+Route::Group(['prefix'=>'home/announcement','middleware' => ['auth:sanctum']], function(){
+    Route::post('',[HomeAnnouncementController::class, "store"]);
+});
+

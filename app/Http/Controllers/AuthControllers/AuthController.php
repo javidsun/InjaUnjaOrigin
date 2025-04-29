@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\AuthControllers;
 
 use App\Constant\AuthConst\UserJson;
+use App\Domain\Controllers\Controller;
 use App\Domain\Services\Auth\AuthServicesContract;
 use App\DTOs\Controller\DTOControllerResponse;
 use App\Factories\AuthProviderFactory;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 
 
-class AuthController
+class AuthController extends Controller
 {
     public function __construct(
         protected ?AuthServicesContract $authServices=null,

@@ -1,26 +1,25 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\AuthControllers;
 
 use App\Constant\AuthConst\UserJson;
-use App\Domain\Services\Auth\AuthServicesContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Facades\Socialite;
 
-class OAuthController
+class OAuthController extends AuthController
 {
 
-    public function __construct(protected ?AuthServicesContract $authServices = null)
+    public function __construct()
     {
-        $this->authServices ??= app(AuthServicesContract::class);
+        parent::__construct();
     }
 
     public function redirect($provider): RedirectResponse
     {
         try {
             return Socialite::driver($provider)->redirect();
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return new RedirectResponse($exception->getMessage());
         }
     }
@@ -33,7 +32,7 @@ class OAuthController
         try {
             $socialUser = Socialite::driver($provider)->user();
 
-            return $this->authServices->loginWithOAuth($socialUser,$provider);
+            return $this->authServices->loginWithOAuth($socialUser, $provider);
         } catch (\Exception $e) {
             return response()->json([
                 UserJson::SUCCESS => false,

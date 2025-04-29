@@ -1,16 +1,14 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\OAuthController;
-use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Controllers\AuthControllers\AuthController;
+use App\Http\Controllers\AuthControllers\OAuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
     'prefix' => 'auth',
     'middleware' => ['auth:sanctum', 'hasIdpSession',],
 ], function () {
-    Route::post('/register', function (RegisterRequest $request, AuthController $authController) {
-    });
+    Route::post('/register', [AuthController::class, 'register']);
 
     Route::get('/auth/{provider}/redirect', [OAuthController::class, 'redirect']);
 

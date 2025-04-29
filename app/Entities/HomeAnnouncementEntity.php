@@ -2,49 +2,42 @@
 
 namespace App\Entities;
 
+use App\Domain\Entity;
 use DateTimeImmutable;
 
-class HomeAnnouncementEntity
+class HomeAnnouncementEntity extends Entity
 {
     public function __construct(
-        private readonly ?string           $id,
-        private readonly string            $user_id,
-        private string                     $title,
-        private readonly string            $description,
-        private float                      $price,
-        private readonly string            $location,
-        private string                     $image,
-        private readonly DateTimeImmutable $createdAt,
-        private readonly DateTimeImmutable $updatedAt,
+        protected readonly ?string $id,
+        protected readonly string  $user_id,
+        protected string           $title,
+        protected string           $content,
+        protected string           $status,
+        protected bool             $is_pinned,
+        protected bool             $is_pinned_full,
+        protected ?string           $subtitle,
+        protected ?string           $link,
+        protected ?string  $description,
+        protected ?string           $image,
     )
-    {}
+    {
+    }
+
     public function getId(): ?string{return $this->id;}
+
     public function getUserId(): string{return $this->user_id;}
+
     public function getTitle(): string{return $this->title;}
+    public function getContent(): string{return $this->content;}
+    public function getStatus(): string{return $this->status;}
+    public function getIsPinned(): bool{return $this->is_pinned;}
+    public function getIsPinnedFull(): bool{return $this->is_pinned_full;}
+    public function getSubtitle(): string{return $this->subtitle;}
+    public function getLink(): string{return $this->link;}
+
     public function getDescription(): string{return $this->description;}
-    public function getPrice(): float{return $this->price;}
-    public function getLocation(): string{return $this->location;}
+
     public function getImage(): string{return $this->image;}
-    public function getCreatedAt(): DateTimeImmutable{return $this->createdAt;}
-    public function getUpdatedAt(): DateTimeImmutable{return $this->updatedAt;}
-    public function setTitle(string $title): void {
-        if (strlen($title) < 3) {
-            throw new \InvalidArgumentException("Il titolo deve avere almeno 3 caratteri.");
-        }
-        $this->title = $title;
-    }
 
-    public function setPrice(float $price): void {
-        if ($price < 0) {
-            throw new \InvalidArgumentException("Il prezzo non può essere negativo.");
-        }
-        $this->price = $price;
-    }
 
-    public function setImage(?string $image): void {
-        if ($image && !filter_var($image, FILTER_VALIDATE_URL)) {
-            throw new \InvalidArgumentException("Il percorso dell'immagine non è valido.");
-        }
-        $this->image = $image;
-    }
 }

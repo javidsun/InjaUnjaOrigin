@@ -60,7 +60,7 @@ class User extends Authenticate implements ModelEntityConvertable
         );
     }
 
-    public static function fromEntity(Entity $entity): self
+    public static function fromEntity(UserEntity|Entity $entity): self
     {
         ///TODO : ho dubbio di questo devo sapere ci sta o no
         return new self([
@@ -76,19 +76,5 @@ class User extends Authenticate implements ModelEntityConvertable
     public function homeAnnouncements(): HasMany
     {
         return $this->hasMany(HomeAnnouncement::class, 'user_id');
-    }
-
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
     }
 }

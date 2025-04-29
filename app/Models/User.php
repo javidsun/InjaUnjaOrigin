@@ -8,6 +8,7 @@ use App\DTOs\ModelEntityConvertable;
 use App\Entities\UserEntity;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticate;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -35,6 +36,13 @@ class User extends Authenticate implements ModelEntityConvertable
     protected $fillable = [
         UserJson::NAME,
         UserJson::EMAIL,
+    ];
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
         UserJson::PASSWORD,
         UserJson::PROVIDER,
         UserJson::PROVIDER_ID,
@@ -65,16 +73,10 @@ class User extends Authenticate implements ModelEntityConvertable
         ]);
     }
 
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public function homeAnnouncements(): HasMany
+    {
+        return $this->hasMany(HomeAnnouncement::class, 'user_id');
+    }
 
 
     /**

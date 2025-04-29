@@ -1,4 +1,5 @@
 export default {
+
     advertisements: {
         firstAd: 'متن اولین تبلیغ',
         secondAd: 'متن دومین تبلیغ',
@@ -174,14 +175,16 @@ export default {
         tooManyAttempts: 'تلاش‌های زیاد برای ورود. لطفاً بعداً تلاش کنید.',
     },
     forgotPassword: {
-        greeting: "فراموشی رمز عبور",
-        instruction: "ایمیل خود را وارد کنید تا لینک بازیابی را دریافت کنید.",
-        email: "ایمیل",
-        emailPlaceholder: "ایمیل خود را وارد کنید",
-        sendResetLink: "ارسال لینک بازیابی",
-        backToLogin: "بازگشت به صفحه ورود",
-        fillAllFields: "لطفاً تمامی فیلدها را پر کنید.",
-        resetLinkSent: "لینک بازیابی ارسال شد!",
+         title: 'فراموشی رمز عبور',
+         instructions: 'ایمیل خود را وارد کنید تا لینک بازنشانی ارسال شود',
+         email: 'ایمیل',
+         emailPlaceholder: 'ایمیل خود را وارد کنید',
+         sendResetLink: 'ارسال لینک بازنشانی',
+         rememberPassword: 'رمز عبور خود را به خاطر دارید؟',
+         login: 'ورود',
+         emailRequired: 'وارد کردن ایمیل الزامی است',
+         resetLinkSent: 'لینک بازنشانی به ایمیل شما ارسال شد',
+         errorOccurred: 'خطایی رخ داد، لطفاً مجدداً تلاش کنید'
 
     },
        verifyEmail: {
@@ -757,31 +760,6 @@ export default {
         support: "پشتیبان",
         Image_selection: "انتخاب تصاویر",
     },
-    Finance: {
-        all: "همه",
-        cancelled: "ناموفق",
-        processing: "در حال پردازش",
-        successful: "موفق",
-        Details: "جزئیات",
-        paymentDetails: "جزئیات پرداخت",
-        paymentDetailsSubtitle: "جزئیات پرداخت",
-        totalAmount: "مبلغ کل",
-        extraFee: "هزینه اضافی",
-        tax: "مالیات",
-        finalAmount: "مبلغ نهایی",
-        paymentMethod: "روش پرداخت",
-        paymentMethodLabel: "روش پرداخت",
-        id: "شناسه",
-        amount: "مبلغ",
-        status: "وضعیت",
-        locationDetails: "جزئیات مکان",
-        location: "موقعیت",
-        host: "میزبان",
-        rating: "امتیاز",
-        type: "نوع",
-        period: "دوره",
-        close: "بستن"
-    },
     setting: {
         settings: "تنظیمات",
         host: "میزبان",
@@ -938,8 +916,7 @@ export default {
         Set_house_rules:'قوانینی که باید در خانه رعایت شود، قوانین لغو، میزبان چگونه می‌تواند رزرو کند و موارد بیشتر را تنظیم کنید',
         Request_Approval:'درخواست برای تایید لیست',
 
-    }
-
+    },
     security: {
         title: 'ورود و امنیت',
         passwordLabel: 'رمز عبور',
@@ -1222,29 +1199,6 @@ export default {
         Upload_images2: 'حداکثر 10 تصویر بارگذاری کنید',
         title: 'عنوان',
 
-    },
-    Message: {
-        NewMessage: "ارسال پیام جدید",
-        SelectCategory: "انتخاب دسته‌بندی",
-        Username: "یوزرنیم",
-        MessageText: "متن پیام",
-        AllMessages: "همه",
-        HostMessages: "میزبان",
-        GuestMessages: "مهمان",
-        SupportMessages: "پشتیبان",
-        SendMessage: "ارسال",
-        Close: "بستن",
-        Sender: "فرستنده",
-        Status: "وضعیت",
-        Pending: "در انتظار بررسی",
-        Approved: "تایید شده",
-        Reply: "پاسخ",
-        Time: "زمان",
-        all: "همه",
-        host: "میزبان",
-        guest: "مهمان",
-        support: "پشتیبان",
-        Image_selection: "انتخاب تصاویر",
     },
     Finance: {
         all: "همه",

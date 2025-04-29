@@ -2,9 +2,9 @@
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
             <v-card-title class="gift-card-section">
-                <span>{{ translate('giftCardTitle') }}</span>
+                <span>{{ translate('giftCard.giftCardTitle') }}</span>
                 <v-spacer></v-spacer>
-                <v-btn icon @click="closeModal" class="close-btn">
+                <v-btn icon @click="handleCloseModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
             </v-card-title>
@@ -16,22 +16,23 @@
                 </div>
 
                 <p class="description">
-                    {{ translate('giftCardDescription') }}
+                    {{ translate('giftCard.giftCardDescription') }}
                 </p>
 
-                <v-form @submit.prevent="confirmGiftCardPurchase">
+                <v-form @submit.prevent="handleGiftCardPurchase">
                     <v-text-field
-                        v-model="giftCardAmount"
-                        :label="translate('giftCardAmountLabel')"
+                        v-model="giftCardData.amount"
+                        :label="translate('giftCard.giftCardAmountLabel')"
                         type="number"
                         required
                         outlined
                         class="mb-4"
+                        min="1"
                     ></v-text-field>
 
                     <v-text-field
-                        v-model="giftCardRecipient"
-                        :label="translate('giftCardRecipientLabel')"
+                        v-model="giftCardData.recipient"
+                        :label="translate('giftCard.giftCardRecipientLabel')"
                         type="email"
                         required
                         outlined
@@ -39,66 +40,136 @@
                     ></v-text-field>
 
                     <v-textarea
-                        v-model="giftCardMessage"
-                        :label="translate('giftCardMessageLabel')"
+                        v-model="giftCardData.message"
+                        :label="translate('giftCard.giftCardMessageLabel')"
                         outlined
                         class="mb-4"
                     ></v-textarea>
 
                     <div class="button-container">
                         <v-btn type="submit" color="primary" large>
-                            {{ translate('confirmPurchase') }}
+                            {{ translate('giftCard.confirmPurchase') }}
                         </v-btn>
-                        <v-btn @click="closeModal" color="secondary" large class="ml-2">
-                            {{ translate('cancel') }}
+                        <v-btn @click="handleCloseModal" color="secondary" large class="ml-2">
+                            {{ translate('giftCard.cancel') }}
                         </v-btn>
                     </div>
                 </v-form>
             </v-card-text>
         </v-card>
     </v-dialog>
-
-
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import { translate } from "@/store/languageStore.js";
+<script>
+//Todo: { "amount": "number (the gift card value)", "recipient": "string (recipient's email address)", "message": "string (optional gift message)","purchase_date": "string (date in ISO format)", "sender_id": "number (optional - if authenticated user)"}
 
-const isModalOpen = ref(false);
+import { translate } from "@/store/languageStore";
 
-const openModal = () => {
-    isModalOpen.value = true;
-};
+export default {
+    name: 'GiftCardModal',
+    data() {
+        return {
+            isModalOpen: false,
+            giftCardData: {
+                amount: '',
+                recipient: '',
+                message: ''
+            },
+            giftCards: []
+        }
+    },
+    methods: {
+        translate,
 
-const closeModal = () => {
-    isModalOpen.value = false;
-    giftCardAmount.value = '';
-    giftCardRecipient.value = '';
-    giftCardMessage.value = '';
-};
+        openModal() {
+            try {
+                this.isModalOpen = true;
+            } catch (error) {
+                this.handleError('Failed to open modal', error);
+            }
+        },
 
-const giftCardAmount = ref('');
-const giftCardRecipient = ref('');
-const giftCardMessage = ref('');
-const giftCards = ref([]);
+        handleCloseModal() {
+            try {
+                this.isModalOpen = false;
+                this.resetFormData();
+            } catch (error) {
+                this.handleError('Failed to close modal', error);
+            }
+        },
 
-const confirmGiftCardPurchase = () => {
-    const newGiftCard = {
-        amount: giftCardAmount.value,
-        recipient: giftCardRecipient.value,
-        message: giftCardMessage.value,
-        date: new Date().toLocaleDateString(),
-    };
+        resetFormData() {
+            this.giftCardData = {
+                amount: '',
+                recipient: '',
+                message: ''
+            };
+        },
+        async handleGiftCardPurchase() {
+            try {
+                if (!this.validateForm()) {
+                    return;
+                }
+                const newGiftCard = this.prepareGiftCardData();
+                this.giftCards.push(newGiftCard);
 
-    giftCards.value.push(newGiftCard);
+                await this.processPurchase(newGiftCard);
+                this.handleCloseModal();
 
-    console.log('Gift card purchased:', newGiftCard);
-    closeModal();
-};
+            } catch (error) {
+                this.handleError('Failed to process gift card purchase', error);
+            }
+        },
+
+        validateForm() {
+            if (!this.giftCardData.amount || Number(this.giftCardData.amount) <= 0) {
+                this.showError('Please enter a valid amount');
+                return false;
+            }
+
+            if (!this.giftCardData.recipient || !this.validateEmail(this.giftCardData.recipient)) {
+                this.showError('Please enter a valid email address');
+                return false;
+            }
+
+            return true;
+        },
+
+        prepareGiftCardData() {
+            return {
+                amount: Number(this.giftCardData.amount),
+                recipient: this.giftCardData.recipient.trim(),
+                message: this.giftCardData.message.trim(),
+                date: new Date().toISOString()
+            };
+        },
+
+        async processPurchase(giftCardData) {
+            //  would be an API call
+            console.log('Processing gift card purchase:', giftCardData);
+            // Example: await api.post('/gift-cards', giftCardData);
+        },
 
 
-defineExpose({openModal});
+        validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        },
+
+        showError(message) {
+            //  would show this to the user
+            console.warn('Validation error:', message);
+        },
+
+
+        handleError(context, error) {
+            // would log this to an error tracking service
+            console.warn(`${context}:`, error.message);
+            // optionally show a user-friendly message
+            this.showError('An error occurred. Please try again.');
+        }
+    }
+}
 </script>
 
 <style scoped>
@@ -112,6 +183,7 @@ defineExpose({openModal});
 
 .close-btn {
     transition: transform 0.2s ease;
+    color: white;
 }
 
 .close-btn:hover {
@@ -129,13 +201,8 @@ defineExpose({openModal});
     background-color: #3b3b3b;
 }
 
-.close-btn {
-    color: white;
-}
-
 .modal-image {
     margin-bottom: 1rem;
     text-align: center;
 }
-
 </style>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\AuthControllers;
 
-use App\Constant\AuthConst\UserJson;
+use App\Constant\TableParametersConst\AuthConst\UserJson;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Facades\Socialite;

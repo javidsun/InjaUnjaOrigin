@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Constant\AuthConst\UserJson;
+use App\Constant\TableParametersConst\AuthConst\UserJson;
 use App\Domain\Entity;
 use App\DTOs\ModelEntityConvertable;
 use App\Entities\UserEntity;

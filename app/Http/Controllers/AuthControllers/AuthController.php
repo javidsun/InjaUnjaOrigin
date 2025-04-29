@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\AuthControllers;
 
-use App\Constant\AuthConst\UserJson;
+use App\Constant\TableParametersConst\AuthConst\UserJson;
 use App\Domain\Controllers\Controller;
 use App\Domain\Services\Auth\AuthServicesContract;
 use App\DTOs\Controller\DTOControllerResponse;

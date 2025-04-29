@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Constant\AnnouncementConst\HomeAnnouncementJson;
+use App\Constant\TableParametersConst\AnnouncementConst\HomeAnnouncementJson;
 use App\Domain\Entity;
 use App\DTOs\ModelEntityConvertable;
 use App\Entities\HomeAnnouncementEntity;
@@ -40,6 +40,7 @@ class HomeAnnouncement extends Model implements ModelEntityConvertable
         HomeAnnouncementJson::DESCRIPTION,
         HomeAnnouncementJson::IMAGE,
     ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -65,17 +66,17 @@ class HomeAnnouncement extends Model implements ModelEntityConvertable
     public static function fromEntity(HomeAnnouncementEntity|Entity $entity): self
     {
         return new self([
-            HomeAnnouncementJson::ID=> $entity->getId(),
-            HomeAnnouncementJson::USER_ID=> $entity->getUserId(),
-            HomeAnnouncementJson::TITLE=> $entity->getTitle(),
-            HomeAnnouncementJson::CONTENT=> $entity->getContent(),
-            HomeAnnouncementJson::STATUS=> $entity->getStatus(),
-            HomeAnnouncementJson::IS_PINNED=> $entity->getIsPinned(),
-            HomeAnnouncementJson::IS_PINNED_FULL=> $entity->getIsPinnedFull(),
-            HomeAnnouncementJson::SUBTITLE=> $entity->getSubtitle(),
-            HomeAnnouncementJson::LINK=> $entity->getLink(),
-            HomeAnnouncementJson::DESCRIPTION=> $entity->getDescription(),
-            HomeAnnouncementJson::IMAGE=> $entity->getImage(),
+            HomeAnnouncementJson::ID => $entity->getId(),
+            HomeAnnouncementJson::USER_ID => $entity->getUserId(),
+            HomeAnnouncementJson::TITLE => $entity->getTitle(),
+            HomeAnnouncementJson::CONTENT => $entity->getContent(),
+            HomeAnnouncementJson::STATUS => $entity->getStatus(),
+            HomeAnnouncementJson::IS_PINNED => $entity->getIsPinned(),
+            HomeAnnouncementJson::IS_PINNED_FULL => $entity->getIsPinnedFull(),
+            HomeAnnouncementJson::SUBTITLE => $entity->getSubtitle(),
+            HomeAnnouncementJson::LINK => $entity->getLink(),
+            HomeAnnouncementJson::DESCRIPTION => $entity->getDescription(),
+            HomeAnnouncementJson::IMAGE => $entity->getImage(),
         ]);
     }
 }

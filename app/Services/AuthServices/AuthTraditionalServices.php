@@ -2,8 +2,7 @@
 
 namespace App\Services\AuthServices;
 
-use App\Constant\AuthConst\UserJson;
-use App\Domain\Repositories\UserRepositoryInterface;
+use App\Constant\TableParametersConst\AuthConst\UserJson;
 use App\Domain\Services\AuthService;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;

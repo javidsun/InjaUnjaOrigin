@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Constant\AnnouncementConst;
+namespace App\Constant\TableParametersConst\AnnouncementConst;
 
 class HomeAnnouncementJson
 {

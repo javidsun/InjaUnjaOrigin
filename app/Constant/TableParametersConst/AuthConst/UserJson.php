@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Constant\AuthConst;
+namespace App\Constant\TableParametersConst\AuthConst;
 
 class UserJson
 {

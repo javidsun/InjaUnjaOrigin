@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Announcement;
 
-use App\Constant\AnnouncementConst\HomeAnnouncementJson;
+use App\Constant\TableParametersConst\AnnouncementConst\HomeAnnouncementJson;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 

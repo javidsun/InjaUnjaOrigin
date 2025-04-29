@@ -2,8 +2,8 @@
 
 namespace App\Services\AuthServices;
 
-use App\Constant\AuthConst\SocialiteDeriveConst;
-use App\Constant\AuthConst\UserJson;
+use App\Constant\TableParametersConst\AuthConst\SocialiteDeriveConst;
+use App\Constant\TableParametersConst\AuthConst\UserJson;
 use App\Domain\Services\Auth\AuthServicesContract;
 use App\Domain\Services\AuthService;
 use App\Models\User;

@@ -2,7 +2,7 @@
 
 namespace App\Services\Announcements;
 
-use App\Constant\AnnouncementConst\HomeAnnouncementJson;
+use App\Constant\TableParametersConst\AnnouncementConst\HomeAnnouncementJson;
 use App\Domain\Services\Announcement\AnnouncementContract;
 use App\Entities\HomeAnnouncementEntity;
 use App\Infrastructure\Repositories\HomeAnnouncementEloquentRepository;

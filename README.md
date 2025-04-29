@@ -126,6 +126,18 @@ Explanation: This command installs the PHP dependencies listed in the composer.j
 ```bash
 nom i
 ```
+
+allora c'è un installazione spaccante per ER e relazione delle tabelle che si fa ogni vola con il commando 
+```bash
+brew install graphviz
+```
+dopo di installazione il pacchetto 
+```bash
+php artisan generate:erd
+```
+
+
+
 Explanation: This is a short form of npm install, which installs the dependencies listed in the package.json file.
 
 

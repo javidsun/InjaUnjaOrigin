@@ -6,6 +6,7 @@ use App\Entities\UserEntity;
 
 interface RegisterStrategyContract
 {
+
     public function register(array $data): UserEntity;
 
 }

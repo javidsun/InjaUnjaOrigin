@@ -7,10 +7,12 @@
 /storage/pail
 /vendor
 .env
+.php-cs-fixer.cache
+.phpunit.result.cache
+/storage/logs/laravel.log
 .env.backup
 .env.production
 .phpactor.json
-.phpunit.result.cache
 Homestead.json
 Homestead.yaml
 auth.json
@@ -26,7 +28,5 @@ yarn-error.log
 /storage/logs/*
 !/storage/logs/.gitignore
 !/storage/logs
-!/storage/logs/laravel.log
-storage/logs/laravel.log
 
 

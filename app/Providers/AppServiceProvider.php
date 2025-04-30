@@ -20,16 +20,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(
-            UserRepositoryInterface::class,
-            EloquentUserRepository::class
-        );
-        $this->app->bind(RoleRepositoryInterface::class,RoleEloquentRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, EloquentUserRepository::class);
+        $this->app->bind(RoleRepositoryInterface::class, RoleEloquentRepository::class);
         $this->app->bind(RoleServiceContract::class, RoleService::class);
         $this->app->bind(AnnouncementRepositoryInterface::class, HomeAnnouncementEloquentRepository::class);
     }
-    //TODO : devo capire in questo caso perchè non ha utilizzato ->singleton  ?
-    //TODO:$message = $request->input('message', 'Messaggio di test');
+    // TODO : devo capire in questo caso perchè non ha utilizzato ->singleton  ?
+    // TODO:$message = $request->input('message', 'Messaggio di test');
 
     /**
      * Bootstrap any application services.

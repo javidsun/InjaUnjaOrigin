@@ -8,11 +8,11 @@ use App\Models\Role;
 
 class RoleEloquentRepository implements RoleRepositoryInterface
 {
+    public function store(RoleEntity $entity): RoleEntity
+    {
+        $model = Role::fromEntity($entity);
+        $model->save();
 
-  public function store(RoleEntity $entity): RoleEntity
-  {
-      $model = Role::fromEntity($entity);
-      $model->save();
-      return $model->toEntity();
-  }
+        return $model->toEntity();
+    }
 }

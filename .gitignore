@@ -30,3 +30,4 @@ yarn-error.log
 storage/logs/laravel.log
 
 
+/.php-cs-fixer.cache

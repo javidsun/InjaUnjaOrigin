@@ -14,27 +14,46 @@
                 </v-list-item-content>
             </v-list-item>
         </v-list>
+
+        <v-alert v-if="errorMessage" type="error" dismissible>
+            {{ errorMessage }}
+        </v-alert>
     </div>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
+<script>
+//Todo: {id / title / description/ image /price /comments:id / content /createdAt /user : id /name}
 
-import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
 import adService from "../../services/adService";
 
-const route = useRoute();
-const ad = ref(null);
+export default {
+    name: 'AdDetailView',
+    data() {
+        return {
+            ad: null,
+            errorMessage: '',
+            isLoading: false
+        }
+    },
+    methods: {
+        async fetchAd() {
+            this.isLoading = true;
+            this.errorMessage = '';
 
-const fetchAd = async () => {
-    try {
-        const response = await adService.getAdById(route.params.id);
-        ad.value = response.data;
-    } catch (error) {
-        console.error("Error fetching ad:", error);
+            try {
+                const adId = this.$route.params.id;
+                const response = await adService.getAdById(adId);
+                this.ad = response.data;
+            } catch (error) {
+                this.errorMessage = 'Failed to load ad details. Please try again later.';
+                this.$logger.error("Error fetching ad:", error);
+            } finally {
+                this.isLoading = false;
+            }
+        }
+    },
+    mounted() {
+        this.fetchAd();
     }
-};
-
-onMounted(fetchAd);
+}
 </script>

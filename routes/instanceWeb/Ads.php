@@ -13,13 +13,14 @@ Route::get('/AdsList', function () {
 Route::get('/CategoryFilter', function () {
     return Inertia::render('Ad/CategoryFilter');
 });
-Route::get('/MyAds', function () {
-    return Inertia::render('Ad/MyAds');
-});
 
 Route::get('/MyReservations', function () {
     return Inertia::render('Users/Reserv/MyReservations');
 });
+
+Route::get('/MyAds', function () {
+    return Inertia::render('Ad/MyAds');
+})->name('MyAds');
 
 
 

@@ -591,6 +591,14 @@
 </template>
 
 <script>
+//Todo:{ad:title/description/propertyType/amenities/hostType/locationFeatures/basePrice/serviceFee/uploadedImages/totalPrice/reservationType
+//Todo: receivedAmount/availableDates:: ["2023-12-15", "2023-12-16"]/location: "123 Main St, City, Country"
+//Todo: coordinates:  "lat": 35.6892,"lng": 51.3890
+//Todo: accommodationDetails:guests/rooms/beds/bathrooms
+//Todo: extraFees:title/amount/
+//Todo: specialFeatures/discounts:title/percent/value
+//Todo: status:published
+
 import { translate } from "../../../store/languageStore";
 
 export default {

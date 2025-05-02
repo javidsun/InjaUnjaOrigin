@@ -2,33 +2,57 @@
     <v-select
         v-model="selectedCategory"
         :items="categories"
-        label="انتخاب دسته‌بندی"
+        label="Choose a category"
         item-title="name"
         item-value="id"
         @update:modelValue="filterByCategory"
     ></v-select>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
+<script>
 
-import { ref, onMounted } from "vue";
 import axios from "axios";
 
-const selectedCategory = ref(null);
-const categories = ref([]);
+export default {
+    name: "CategorySelector",
+    data() {
+        return {
+            selectedCategory: null,
+            categories: []
+        };
+    },
+    methods: {
 
-const filterByCategory = () => {
-    emit("categorySelected", selectedCategory.value);
-};
+        filterByCategory(categoryId) {
+            try {
+                this.$emit("categorySelected", categoryId);
+            } catch (error) {
+                this.showError("Error filtering category", error);
+            }
+        },
 
-// دریافت دسته‌بندی‌ها از API هنگام لود شدن کامپوننت
-onMounted(async () => {
-    try {
-        const response = await axios.get("/api/categories");
-        categories.value = response.data;
-    } catch (error) {
-        console.error("خطا در دریافت دسته‌بندی‌ها:", error);
+
+        async fetchCategories() {
+            try {
+                const response = await axios.get("/api/categories");
+                this.categories = response.data;
+            } catch (error) {
+                this.showError("Error retrieving categories", error);
+            }
+        },
+
+        showError(message, error) {
+            console.error(message, error);
+            this.$alert({
+                title: "error",
+                text: `${message}. Please try again..`,
+                type: "error",
+                confirmButtonText: "I understand"
+            });
+        }
+    },
+    mounted() {
+        this.fetchCategories();
     }
-});
+};
 </script>

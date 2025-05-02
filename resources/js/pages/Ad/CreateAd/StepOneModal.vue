@@ -39,20 +39,20 @@
                     <h5 v-else-if="openModal === 'finalStepModal2'">{{ translate('Ad.Request_Approval') }}</h5>
 
                     <p class="modal-text text-info" v-if="openModal === 'amenities'">{{ translate('Ad.step_two') }}<br>{{
-                        translate('Ad.step_two_description') }}</p>
+                            translate('Ad.step_two_description') }}</p>
                     <p class="modal-text" v-else-if="openModal === 'photos'">{{ translate('Ad.need_to_add_photos')
                         }}</p>
                     <p class="modal-text text-muted" v-else-if="openModal === 'modalStep3'">{{
-                        translate('Ad.final_step_description') }}</p>
+                            translate('Ad.final_step_description') }}</p>
                     <p class="modal-text" v-else-if="openModal === 'Step3-1'">{{ translate('Ad.CanChange') }} </p>
                     <p class="modal-text top1" v-else-if="openModal === 'thirdStepSetPrice'">{{
-                        translate('Ad.CanChange') }}</p>
+                            translate('Ad.CanChange') }}</p>
                     <p class="modal-text top1" v-else-if="openModal === 'discountModal'">{{
-                        translate('Ad.Helps_highlight_your_niche') }} </p>
+                            translate('Ad.Helps_highlight_your_niche') }} </p>
                     <p class="modal-text top1" v-else-if="openModal === 'finalStepModal'">{{
-                        translate('Ad.host_type_question') }} </p>
+                            translate('Ad.host_type_question') }} </p>
                     <h2 class="modal-text  bold-red-text" v-else-if="openModal === 'finalStepModal2'">{{
-                        translate('Ad.Awaiting_Confirmation') }} </h2>
+                            translate('Ad.Awaiting_Confirmation') }} </h2>
 
                 </v-card-title>
                 <v-card v-if="openModal === 'property'" class="top1">
@@ -190,8 +190,22 @@
                         <v-row>
                             <v-col v-for="(image, index) in uploadedImages" :key="index" cols="4">
                                 <v-img :src="image" class="rounded-lg" aspect-ratio="1"></v-img>
+                                <v-btn
+                                    v-if="uploadedImages.length > 3"
+                                    icon
+                                    small
+                                    color="error"
+                                    @click="removeImage(index)"
+                                    class="image-remove-btn"
+                                >
+                                    <v-icon>mdi-close</v-icon>
+                                </v-btn>
                             </v-col>
                         </v-row>
+                        <p class="text-caption text-center mt-2">
+                            {{ translate('Ad.image_upload_limit', {min: 3, max: 10}) }}
+                            ({{ uploadedImages.length }}/10)
+                        </p>
                     </div>
                 </template>
                 <v-card v-else-if="openModal === 'title'">
@@ -309,7 +323,7 @@
                             </v-text-field>
                         </v-col>
                         <v-col cols="8" class="mb-0 received-amount2">
-                            <v-text-field v-model="receivedAmount" :label="translate('Ad.received_amount')" dense
+                            <v-text-field v-model="totalPrice" :label="translate('Ad.received_amount')" dense
                                           outlined readonly class="rounded-lg">
                                 <template v-slot:append>
                                     <span>{{ currency }}</span>
@@ -410,20 +424,21 @@
                 <template v-if="openModal === 'finalStepModal'">
                     <v-row justify="center">
                         <v-col cols="12">
-                            <v-row class="top1 ">
-                                <v-col cols="6" class="top1 ">
+                            <v-row class="top1">
+                                <v-col cols="6" class="top1">
                                     <v-checkbox
                                         v-model="hostType"
                                         :label="translate('Ad.host_as_individual')"
-
                                         :value="'individual'"
+                                        required
                                     />
                                 </v-col>
-                                <v-col cols="6" class="top1 ">
+                                <v-col cols="6" class="top1">
                                     <v-checkbox
                                         v-model="hostType"
                                         :label="translate('Ad.host_as_business')"
                                         :value="'business'"
+                                        required
                                     />
                                 </v-col>
                             </v-row>
@@ -460,11 +475,24 @@
                         <v-col cols="12">
                             <v-divider class="my-4"/>
                             <h2 align="center" class="font-weight-bold3" style="color: darkred"><strong>{{
-                                translate('Ad.important_information') }}</strong></h2>
+                                    translate('Ad.important_information') }}</strong></h2>
                             <p>{{ translate('Ad.cctv_prohibited') }}</p>
                             <p>{{ translate('Ad.onsite_cameras_required') }}</p>
                             <h4 class="font-weight-bold3" style="color: #1b43ff">{{
-                                translate('Ad.follow_local_regulations') }}</h4>
+                                    translate('Ad.follow_local_regulations') }}</h4>
+                        </v-col>
+                    </v-row>
+                </template>
+                <template v-if="openModal === 'calendarModal'">
+                    <v-row justify="center">
+                        <v-col cols="12">
+                            <h3 class="text-center">{{ translate('Ad.select_available_dates') }}</h3>
+                            <v-date-picker
+                                v-model="selectedDates"
+                                range
+                                multiple
+                                :min="new Date().toISOString().substr(0, 10)"
+                            ></v-date-picker>
                         </v-col>
                     </v-row>
                 </template>
@@ -491,16 +519,13 @@
                                                         <div>
                                                             {{ totalPrice }} {{ currency }}
                                                         </div>
-
                                                     </div>
                                                 </v-card-text>
                                             </v-card>
                                         </v-row>
-
                                     </div>
                                 </div>
                             </v-col>
-
                         </v-row>
                     </v-row>
 
@@ -518,25 +543,10 @@
                         </v-col>
                     </v-row>
 
-                    <v-row align="center" justify="center" class="selectable-item" @click="showCalendar = true">
+                    <v-row align="center" justify="center" class="selectable-item" @click="openModal = 'calendarModal'">
                         <v-icon class="mr-2">mdi-calendar-month</v-icon>
                         <h3>{{ translate('Ad.Set_up_calendar') }}</h3>
                     </v-row>
-
-                    <v-dialog v-model="showCalendar" max-width="400px" centered persistent class="custom-dialog">
-                        <v-card>
-                            <v-card-title>{{ translate('Ad.available_dates') }}</v-card-title>
-                            <v-card-text>
-                                <v-date-picker v-model="selectedDates" multiple></v-date-picker>
-                            </v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="primary" @click="saveDates">{{ translate('Ad.SaveExit') }}</v-btn>
-                                <v-btn color="grey" text @click="showCalendar = false"> {{ translate('Ad.Back') }}
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
 
                     <v-row>
                         <v-col cols="12">
@@ -565,498 +575,601 @@
                      padding: 4px 8px;" @click="$emit('update:modelValue', false)">
                         {{ translate('Ad.SaveExit') }}
                     </v-btn>
-                    <v-btn color="primary" class="btn-small" style="min-width: auto; padding: 4px 8px;" @click="goNext"
-                           :disabled="characterLimitExceeded">
-                        {{ translate('Ad.ConfirmNext') }}
+                    <v-btn
+                        color="primary"
+                        class="btn-small"
+                        style="min-width: auto; padding: 4px 8px;"
+                        @click="goNext"
+                        :disabled="characterLimitExceeded || (openModal === 'finalStepModal' && !hostType.length)"
+                    >
+                        {{ openModal === 'finalStepModal2' ? translate('Ad.Publish') : translate('Ad.ConfirmNext') }}
                     </v-btn>
-
                 </v-card-actions>
             </v-card>
         </v-card>
     </v-dialog>
-
-
 </template>
 
+<script>
+//Todo:{ad:title/description/propertyType/amenities/hostType/locationFeatures/basePrice/serviceFee/uploadedImages/totalPrice/reservationType
+//Todo: receivedAmount/availableDates:: ["2023-12-15", "2023-12-16"]/location: "123 Main St, City, Country"
+//Todo: coordinates:  "lat": 35.6892,"lng": 51.3890
+//Todo: accommodationDetails:guests/rooms/beds/bathrooms
+//Todo: extraFees:title/amount/
+//Todo: specialFeatures/discounts:title/percent/value
+//Todo: status:published
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
+import { translate } from "../../../store/languageStore";
 
-import {ref, computed, defineProps, defineEmits, watch, nextTick, onMounted} from 'vue';
-import {translate} from "@/store/languageStore.js";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
-import {useStore} from 'vuex';
-
-let ads = computed(() => []);
-import MyAds from "../MyAds.vue"
-
-const store = useStore();
-const title = ref('');
-const description = ref('');
-const images = ref([]);
-const showCustomDiscount = ref(false);
-const addCustomDiscount = () => {
-    if (customDiscountTitle.value && customDiscountPercent.value > 0) {
-        const newDiscount = {
-            title: customDiscountTitle.value,
-            percent: parseFloat(customDiscountPercent.value),
-        };
-        selectedDiscounts.value.push(newDiscount);
-        showCustomDiscount.value = false;
-        customDiscountTitle.value = '';
-        customDiscountPercent.value = 0;
-    }
-};
-
-const removeDiscount = (index) => {
-    selectedDiscounts.value.splice(index, 1);
-};
-
-onMounted(() => {
-    ads = computed(() => store.getters.getAds);
-});
-
-const editAd = (adId) => {
-    router.push({name: 'EditAd', params: {id: adId}});
-};
-
-const deleteAd = (adId) => {
-    store.dispatch('deleteAd', adId);
-};
-const customDiscountTitle = ref('');
-const customDiscountPercent = ref(0);
-
-const openModal = ref("property");
-
-const props = defineProps({
-    modelValue: Boolean,
-    totalPrice: Number,
-    currency: String,
-    title: String,
-    uploadedImage: String,
-    city: String,
-    country: String,
-    userName: String,
-    basePrice: Number,
-    discountedPrice: Number,
-    discount: Boolean,
-    ad: {
-        type: Object,
-        default: null,
+export default {
+    props: {
+        modelValue: Boolean,
+        totalPrice: Number,
+        currency: {
+            type: String,
+            default: '€'
+        },
+        title: String,
+        uploadedImage: String,
+        city: String,
+        country: String,
+        userName: String,
+        basePrice: {
+            type: Number,
+            default: 0
+        },
+        discountedPrice: Number,
+        discount: Boolean,
+        ad: {
+            type: Object,
+            default: null
+        }
     },
-});
 
-const emit = defineEmits(["update:modelValue", "next", "back", "update-total-price"]);
-const userName = "Default name";
-const location = "Default Location";
-const selectedProperty = ref(props.ad ? props.ad.propertyType : null);
-const selectedAmenities = ref(props.ad ? props.ad.amenities : []);
-const hostType = ref(props.ad ? props.ad.hostType : null);
-const locationFeatures = ref(props.ad ? props.ad.locationFeatures : []);
-const basePrice = ref(props.ad ? props.ad.basePrice : 0);
-const serviceFee = ref(props.ad ? props.ad.serviceFee : 0);
-const extraFees = ref(props.ad ? props.ad.extraFees : []);
-const uploadedImages = ref(props.ad ? props.ad.uploadedImages : []);
-const uploadedImage = ref(props.ad ? props.ad.uploadedImage : '');
-const characterLimitExceeded = ref(false);
-const characterLimitExceeded2 = ref(false);
-const selectedModal4 = ref([]);
-const selectedReservation = ref(null);
-const selectedDiscounts = ref([]);
-const showCalendar = ref(false);
-const selectedDates = ref([]);
-const isCustomer = ref(false);
-const selectProperty = (title) => {
-    selectedProperty.value = title;
-};
+    emits: ['update:modelValue', 'next', 'back', 'update-total-price'],
 
-const saveAd = () => {
-    const adData = {
-        title: title.value,
-        description: description.value,
-        propertyType: selectedProperty.value,
-        amenities: selectedAmenities.value,
-        hostType: hostType.value,
-        locationFeatures: locationFeatures.value,
-        basePrice: basePrice.value,
-        serviceFee: serviceFee.value,
-        extraFees: extraFees.value,
-        uploadedImages: uploadedImages.value,
-        totalPrice: totalPrice.value,
-        receivedAmount: receivedAmount.value,
-        images: uploadedImages.value,
+    data() {
+        return {
+            openModal: "property",
+            title: this.ad ? this.ad.title : '',
+            description: this.ad ? this.ad.description : '',
+            selectedProperty: this.ad ? this.ad.propertyType : null,
+            selectedAmenities: this.ad ? this.ad.amenities : [],
+            hostType: this.ad ? this.ad.hostType : [],
+            locationFeatures: this.ad ? this.ad.locationFeatures : [],
+            basePrice: this.ad ? this.ad.basePrice : 0,
+            serviceFee: this.ad ? this.ad.serviceFee : 0,
+            extraFees: this.ad ? this.ad.extraFees : [],
+            uploadedImages: this.ad ? this.ad.uploadedImages : [],
+            uploadedImage: this.ad ? this.ad.uploadedImage : '',
+            characterLimitExceeded: false,
+            characterLimitExceeded2: false,
+            selectedModal4: [],
+            selectedReservation: null,
+            selectedDiscounts: [],
+            selectedDates: [],
+            isCustomer: false,
+            searchQuery: "",
+            showCustomDiscount: false,
+            customDiscountTitle: '',
+            customDiscountPercent: 0,
+            map: null,
+            marker: null,
+            userName: "Default name",
+            location: "Default Location",
 
-    };
-    title.value = '';
-    description.value = '';
-    selectedProperty.value = null;
-    uploadedImages.value = [];
-    store.dispatch('saveAd', adData);
-    router.push({name: 'MyAds'});
+            propertyTypes: [
+                {title: "Ad.home", image: "/home-icon.png"},
+                {title: "Ad.apartment", image: "/apartment-icon.png"},
+                {title: "Ad.furniture", image: "/furniture-icon.png"},
+                {title: "Ad.bed", image: "/bed-icon.png"},
+                {title: "Ad.Camper", image: "/car-icon.png"},
+                {title: "Ad.travelTent", image: "/tent-icon.png"},
+                {title: "Ad.container", image: "/container.png"},
+                {title: "Ad.Treehouse", image: "/Treehouse.png"}
+            ],
+            accommodationDetails: [
+                {name: "Ad.Guest", value: 1},
+                {name: "Ad.Room", value: 1},
+                {name: "Ad.bed", value: 1},
+                {name: "Ad.Bathroom", value: 1}
+            ],
+            modal4Options: [
+                {text: "Ad.peaceful", icon: 'mdi-home-heart'},
+                {text: "Ad.unique", icon: 'mdi-flower'},
+                {text: "Ad.family_favorite", icon: 'mdi-heart'},
+                {text: "Ad.unique_style", icon: 'mdi-palette'},
+                {text: "Ad.center", icon: 'mdi-map-marker'},
+                {text: "Ad.spacious", icon: 'mdi-home-variant'}
+            ],
+            amenities: [
+                {text: "Ad.wifi", icon: 'mdi-wifi'},
+                {text: "Ad.television", icon: 'mdi-television'},
+                {text: "Ad.kitchen", icon: 'mdi-silverware-fork-knife'},
+                {text: "Ad.washing_machine", icon: 'mdi-washing-machine'},
+                {text: "Ad.free_parking", icon: 'mdi-parking'},
+                {text: "Ad.paid_parking", icon: 'mdi-currency-usd'},
+                {text: "Ad.air_conditioning", icon: 'mdi-air-conditioner'},
+                {text: "Ad.work_space", icon: 'mdi-desk'}
+            ],
+            specialAmenities: [
+                {text: "Ad.pool", icon: 'mdi-pool'},
+                {text: "Ad.yard", icon: 'mdi-tree'},
+                {text: "Ad.barbecue", icon: 'mdi-grill'},
+                {text: "Ad.patio", icon: 'mdi-patio-heater'},
+                {text: "Ad.gym", icon: 'mdi-dumbbell'},
+                {text: "Ad.sea_access", icon: 'mdi-wave'}
+            ],
+            safetyFeatures: [
+                {text: "Ad.smoke_alarm", icon: 'mdi-smoke-detector'},
+                {text: "Ad.fire_extinguisher", icon: 'mdi-fire-extinguisher'},
+                {text: "Ad.first_aid_kit", icon: 'mdi-plus-circle'},
+                {text: "Ad.carbon_monoxide_alarm", icon: 'mdi-molecule-co'}
+            ],
+            discountOptions: [
+                {value: 1, title: this.translate("Ad.Special_discount"), description: this.translate("Ad.OffFirstReserve"), percent: 20},
+                {value: 2, title: this.translate("Ad.Weekly_discount"), description: this.translate("Ad.Off7night"), percent: 10},
+                {value: 3, title: this.translate("Ad.Monthly_discount"), description: this.translate("Ad.Off28nightStay"), percent: 20}
+            ]
+        };
+    },
 
-    if (props.ad) {
-        store.dispatch('editAd', {id: props.ad.id, ...adData});
-    } else {
-        store.dispatch('saveAd', adData);
-    }
+    computed: {
+        discountAmount() {
+            return this.selectedDiscounts.reduce((sum, discount) => {
+                return (this.totalPrice * discount.percent / 100);
+            }, 0);
+        },
 
-    emit('update:modelValue', false);
-};
+        calculatedBaseTotal() {
+            const base = parseFloat(this.basePrice) || 0;
+            const service = parseFloat(this.serviceFee) || 0;
+            const extras = this.extraFees.reduce((sum, fee) => sum + (parseFloat(fee.amount) || 0), 0);
+            return base + service + extras;
+        },
 
-const searchQuery = ref("");
-const propertyTypes = ref([
-    {title: "Ad.home", image: "/home-icon.png"},
-    {title: "Ad.apartment", image: "/apartment-icon.png"},
-    {title: "Ad.furniture", image: "/furniture-icon.png"},
-    {title: "Ad.bed", image: "/bed-icon.png"},
-    {title: "Ad.Camper", image: "/car-icon.png"},
-    {title: "Ad.travelTent", image: "/tent-icon.png"},
-    {title: "Ad.container", image: "/container.png"},
-    {title: "Ad.Treehouse", image: "/Treehouse.png"},
-]);
-const accommodationDetails = ref([
-    {name: "Ad.Guest", value: 1},
-    {name: "Ad.Room", value: 1},
-    {name: "Ad.bed", value: 1},
-    {name: "Ad.Bathroom", value: 1},
-]);
+        totalDiscount() {
+            return this.selectedDiscounts.reduce((sum, discount) => sum + discount.percent, 0);
+        },
 
-const selectProperty2 = () => {
-    openModal.value = "property";
-};
+        totalPrice() {
+            const baseTotal = this.calculatedBaseTotal;
+            return baseTotal - (baseTotal * (this.totalDiscount / 100));
+        },
 
-const confirmStep2 = () => {
-    emit("update:modelValue", false);
-    emit("next");
-};
+        receivedAmount() {
+            return this.totalPrice - 10;
+        },
 
-const closeModal = () => {
-    emit("update:modelValue", false);
-};
+        finalTotalPrice() {
+            return this.totalPrice;
+        },
 
-const selectReservation = (type) => {
-    selectedReservation.value = type;
-};
-const goBack = () => {
-    if (openModal.value === "map") {
-        openModal.value = "property";
-    } else if (openModal.value === "details") {
-        openModal.value = "map";
-    } else if (openModal.value === 'title') {
-        openModal.value = 'photos';
-    } else if (openModal.value === 'photos') {
-        openModal.value = 'amenities';
-    } else if (openModal.value === 'modal4') {
-        openModal.value = 'title';
-    } else if (openModal.value === 'modalStep3') {
-        openModal.value = 'modal4';
-    } else if (openModal.value === 'Step3-1') {
-        openModal.value = 'modalStep3';
-    } else if (openModal.value === 'thirdStepSetPrice') {
-        openModal.value = 'Step3-1';
-    } else if (openModal.value === 'discountModal') {
-        openModal.value = 'thirdStepSetPrice';
-    } else if (openModal.value === 'finalStepModal') {
-        openModal.value = 'discountModal';
-    } else if (openModal.value === 'finalStepModal2') {
-        openModal.value = 'finalStepModal';
-    } else {
-        emit('update:modelValue', false);
-    }
-};
+        hasMinimumImages() {
+            return this.uploadedImages.length >= 3;
+        }
+    },
 
-const goNext = () => {
-    if (!characterLimitExceeded.value) {
-        if (openModal.value === 'property') {
-            if (!selectedProperty.value) {
+    watch: {
+        modelValue(newVal) {
+            if (newVal && this.ad) {
+                this.title = this.ad.title;
+                this.description = this.ad.description;
+                this.selectedProperty = this.ad.propertyType;
+                this.selectedAmenities = this.ad.amenities;
+                this.hostType = this.ad.hostType;
+                this.locationFeatures = this.ad.locationFeatures;
+                this.basePrice = this.ad.basePrice;
+                this.serviceFee = this.ad.serviceFee;
+                this.extraFees = this.ad.extraFees;
+                this.uploadedImages = this.ad.uploadedImages;
+                this.uploadedImage = this.ad.uploadedImage;
+                this.selectedDates = this.ad.availableDates || [];
+            }
+        },
+        openModal(newVal) {
+            if (newVal === 'finalStepModal2' && this.uploadedImages.length > 0) {
+                this.uploadedImage = this.uploadedImages[0];
+            }
+            if (newVal === 'map') {
+                this.$nextTick(() => {
+                    this.initMap();
+                });
+            }
+        },
+        basePrice() {
+            this.updateFinalTotal();
+        },
+        serviceFee() {
+            this.updateFinalTotal();
+        },
+        extraFees: {
+            deep: true,
+            handler() {
+                this.updateFinalTotal();
+            }
+        }
+    },
+
+    methods: {
+        translate,
+
+        selectProperty(title) {
+            this.selectedProperty = title;
+        },
+
+        selectProperty2() {
+            this.openModal = "property";
+        },
+
+        goBack() {
+            const modalFlow = {
+                "map": "property",
+                "details": "map",
+                "title": "photos",
+                "photos": "amenities",
+                "modal4": "title",
+                "modalStep3": "modal4",
+                "Step3-1": "modalStep3",
+                "thirdStepSetPrice": "Step3-1",
+                "discountModal": "thirdStepSetPrice",
+                "finalStepModal": "discountModal",
+                "finalStepModal2": "finalStepModal",
+                "calendarModal": "finalStepModal2"
+            };
+
+            this.openModal = modalFlow[this.openModal] || (this.$emit('update:modelValue', false), false);
+        },
+
+        goNext() {
+            if (this.characterLimitExceeded) {
+                return;
+            }
+
+            if (this.openModal === 'property' && !this.selectedProperty) {
                 alert("Please select a property type.");
                 return;
             }
-            openModal.value = 'map';
-            nextTick(initMap);
-        } else if (openModal.value === 'map') {
-            openModal.value = 'details';
-        } else if (openModal.value === 'details') {
-            openModal.value = 'amenities';
-        } else if (openModal.value === 'amenities') {
-            openModal.value = 'photos';
-        } else if (openModal.value === 'photos') {
-            openModal.value = 'title';
-        } else if (openModal.value === 'title') {
-            openModal.value = 'modal4';
-        } else if (openModal.value === 'modal4') {
-            openModal.value = 'modalStep3';
-        } else if (openModal.value === 'modalStep3') {
-            openModal.value = 'Step3-1';
-        } else if (openModal.value === 'Step3-1') {
-            openModal.value = 'thirdStepSetPrice';
-        } else if (openModal.value === 'thirdStepSetPrice') {
-            openModal.value = 'discountModal';
-        } else if (openModal.value === 'discountModal') {
-            openModal.value = 'finalStepModal';
-        } else if (openModal.value === 'finalStepModal') {
-            openModal.value = 'finalStepModal2';
-        }
-    } else {
-        emit('update:modelValue', false);
-    }
-};
 
-const openGallery = () => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.multiple = true;
-    input.onchange = (event) => {
-        const files = Array.from(event.target.files);
-        if (files.length > 0) {
-            const maxImages = 10;
-            const validFiles = files.slice(0, maxImages - uploadedImages.value.length);
-            validFiles.forEach(file => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    uploadedImages.value.push(e.target.result);
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-    };
-    input.click();
-};
-
-const openCamera = () => {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({video: true})
-            .then((stream) => {
-                const video = document.createElement('video');
-                video.srcObject = stream;
-                video.play();
-
-                const captureButton = document.createElement('button');
-                captureButton.textContent = 'Capture';
-                document.body.appendChild(captureButton);
-
-                captureButton.addEventListener('click', () => {
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-                    const imageData = canvas.toDataURL('image/png');
-                    uploadedImages.value.push(imageData);
-
-                    stream.getTracks().forEach(track => track.stop());
-                    document.body.removeChild(captureButton);
-                    document.body.removeChild(video);
-                });
-            })
-            .catch((err) => {
-                alert("دسترسی به دوربین غیرممکن است: " + err);
-            });
-    } else {
-        alert("این مرورگر از دوربین پشتیبانی نمی‌کند.");
-    }
-};
-
-const toggleModal4Option = (option) => {
-    const index = selectedModal4.value.indexOf(option);
-    if (index === -1) {
-        selectedModal4.value.push(option);
-    } else {
-        selectedModal4.value.splice(index, 1);
-    }
-};
-
-const increment = (index) => {
-    accommodationDetails.value[index].value += 1;
-};
-
-const decrement = (index) => {
-    if (accommodationDetails.value[index].value > 0) {
-        accommodationDetails.value[index].value -= 1;
-    }
-};
-
-let map, marker;
-const initMap = () => {
-    if (!map) {
-        map = L.map("map").setView([35.6892, 51.3890], 13);
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        marker = L.marker([35.6892, 51.3890], {draggable: true}).addTo(map);
-        map.on('click', (e) => {
-            const {lat, lng} = e.latlng;
-            marker.setLatLng([lat, lng]);
-            updateSearchQuery(e.latlng);
-        });
-    }
-};
-
-const updateSearchQuery = (latLng) => {
-    const {lat, lng} = latLng;
-    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
-        .then(response => response.json())
-        .then(data => {
-            searchQuery.value = data.display_name;
-        });
-};
-
-const searchLocation = () => {
-    if (!searchQuery.value) return;
-    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery.value}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.length > 0) {
-                const {lat, lon} = data[0];
-                map.setView([lat, lon], 13);
-                marker.setLatLng([lat, lon]);
-                searchQuery.value = data[0].display_name;
+            if (this.openModal === 'photos' && !this.hasMinimumImages) {
+                alert("Please upload at least 3 images.");
+                return;
             }
-        });
-};
 
-const goToStep = (step) => {
-    openModal.value = step;
-};
+            if (this.openModal === 'finalStepModal' && this.hostType.length === 0) {
+                alert("Please select host type (individual or business).");
+                return;
+            }
 
-const modal4Options = [
-    {text: "Ad.peaceful", icon: 'mdi-home-heart'},
-    {text: "Ad.unique", icon: 'mdi-flower'},
-    {text: "Ad.family_favorite", icon: 'mdi-heart'},
-    {text: "Ad.unique_style", icon: 'mdi-palette'},
-    {text: "Ad.center", icon: 'mdi-map-marker'},
-    {text: "Ad.spacious", icon: 'mdi-home-variant'},
-];
+            const modalFlow = {
+                "property": "map",
+                "map": "details",
+                "details": "amenities",
+                "amenities": "photos",
+                "photos": "title",
+                "title": "modal4",
+                "modal4": "modalStep3",
+                "modalStep3": "Step3-1",
+                "Step3-1": "thirdStepSetPrice",
+                "thirdStepSetPrice": "discountModal",
+                "discountModal": "finalStepModal",
+                "finalStepModal": "calendarModal",
+                "calendarModal": "finalStepModal2",
+                "finalStepModal2": "publish"
+            };
 
-const amenities = [
-    {text: "Ad.wifi", icon: 'mdi-wifi'},
-    {text: "Ad.television", icon: 'mdi-television'},
-    {text: "Ad.kitchen", icon: 'mdi-silverware-fork-knife'},
-    {text: "Ad.washing_machine", icon: 'mdi-washing-machine'},
-    {text: "Ad.free_parking", icon: 'mdi-parking'},
-    {text: "Ad.paid_parking", icon: 'mdi-currency-usd'},
-    {text: "Ad.air_conditioning", icon: 'mdi-air-conditioner'},
-    {text: "Ad.work_space", icon: 'mdi-desk'},
-];
+            const nextModal = modalFlow[this.openModal];
 
-const specialAmenities = [
-    {text: "Ad.pool", icon: 'mdi-pool'},
-    {text: "Ad.yard", icon: 'mdi-tree'},
-    {text: "Ad.barbecue", icon: 'mdi-grill'},
-    {text: "Ad.patio", icon: 'mdi-patio-heater'},
-    {text: "Ad.gym", icon: 'mdi-dumbbell'},
-    {text: "Ad.sea_access", icon: 'mdi-wave'},
-];
+            if (nextModal === 'publish') {
+                this.publishAd();
+            } else if (nextModal) {
+                this.openModal = nextModal;
+            }
+        },
 
-const safetyFeatures = [
-    {text: "Ad.smoke_alarm", icon: 'mdi-smoke-detector'},
-    {text: "Ad.fire_extinguisher", icon: 'mdi-fire-extinguisher'},
-    {text: "Ad.first_aid_kit", icon: 'mdi-plus-circle'},
-    {text: "Ad.carbon_monoxide_alarm", icon: 'mdi-molecule-co'},
-];
+        async openGallery() {
+            try {
+                if (navigator.permissions) {
+                    const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
+                    if (permissionStatus.state === 'denied') {
+                        alert('Please enable gallery access in your browser settings');
+                        return;
+                    }
+                }
 
-const currency = ref('€');
-const appliedDiscount = ref(0);
-const discountAmount = computed(() => {
-    return selectedDiscounts.value.reduce((sum, discount) => {
-        return (totalPrice.value * discount.percent / 100);
-    }, 0);
-});
+                const input = document.createElement("input");
+                input.type = "file";
+                input.accept = "image/*";
+                input.multiple = true;
+                input.onchange = (event) => {
+                    const files = Array.from(event.target.files);
+                    if (files.length > 0) {
+                        const maxImages = 10;
+                        const remainingSlots = maxImages - this.uploadedImages.length;
 
-const finalTotalPrice = computed(() => totalPrice.value - discountAmount.value);
+                        if (remainingSlots <= 0) {
+                            alert(`You can upload maximum ${maxImages} images`);
+                            return;
+                        }
 
-const discountOptions = [
-    {value: 1, title: translate("Ad.Special_discount"), description: translate("Ad.OffFirstReserve"), percent: 20},
-    {value: 2, title: translate("Ad.Weekly_discount"), description: translate("Ad.Off7night"), percent: 10},
-    {value: 3, title: translate("Ad.Monthly_discount"), description: translate("Ad.Off28nightStay"), percent: 20}
-];
+                        const validFiles = files.slice(0, remainingSlots);
 
-watch(() => props.openModal, (newVal) => {
-    if (newVal === 'finalStepModal2' && uploadedImages.value.length > 0) {
-        uploadedImage.value = uploadedImages.value[0];
+                        validFiles.forEach(file => {
+                            if (file.size > 2 * 1024 * 1024) {
+                                alert(`Image ${file.name} is too large (max 2MB)`);
+                                return;
+                            }
+
+                            const reader = new FileReader();
+                            reader.onload = (e) => {
+                                this.uploadedImages.push(e.target.result);
+                            };
+                            reader.readAsDataURL(file);
+                        });
+                    }
+                };
+                input.click();
+            } catch (error) {
+                console.error("Error in openGallery:", error);
+                alert("An error occurred while opening the gallery");
+            }
+        },
+
+        removeImage(index) {
+            this.uploadedImages.splice(index, 1);
+        },
+
+        openCamera() {
+            try {
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({video: true})
+                        .then((stream) => {
+                            const video = document.createElement('video');
+                            video.srcObject = stream;
+                            video.play();
+
+                            const captureButton = document.createElement('button');
+                            captureButton.textContent = 'Capture';
+                            document.body.appendChild(captureButton);
+
+                            captureButton.addEventListener('click', () => {
+                                const canvas = document.createElement('canvas');
+                                const context = canvas.getContext('2d');
+                                canvas.width = video.videoWidth;
+                                canvas.height = video.videoHeight;
+                                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                                const imageData = canvas.toDataURL('image/png');
+
+                                const size = imageData.length * 0.75;
+                                if (size > 2 * 1024 * 1024) {
+                                    alert("Captured image is too large (max 2MB)");
+                                    return;
+                                }
+
+                                if (this.uploadedImages.length >= 10) {
+                                    alert("You can upload maximum 10 images");
+                                    return;
+                                }
+
+                                this.uploadedImages.push(imageData);
+
+                                stream.getTracks().forEach(track => track.stop());
+                                document.body.removeChild(captureButton);
+                                document.body.removeChild(video);
+                            });
+                        })
+                        .catch((err) => {
+                            alert("Camera access not possible: " + err);
+                        });
+                } else {
+                    alert("This browser doesn't support camera access.");
+                }
+            } catch (error) {
+                console.error("Error in openCamera:", error);
+                alert("An error occurred while accessing the camera");
+            }
+        },
+
+        initMap() {
+            try {
+                if (!this.map) {
+                    this.map = L.map("map").setView([35.6892, 51.3890], 13);
+                    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    }).addTo(this.map);
+                    this.marker = L.marker([35.6892, 51.3890], {draggable: true}).addTo(this.map);
+                    this.map.on('click', (e) => {
+                        const {lat, lng} = e.latlng;
+                        this.marker.setLatLng([lat, lng]);
+                        this.updateSearchQuery(e.latlng);
+                    });
+                }
+            } catch (error) {
+                console.error("Error initializing map:", error);
+                alert("An error occurred while initializing the map");
+            }
+        },
+
+        updateSearchQuery(latLng) {
+            try {
+                const {lat, lng} = latLng;
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        this.searchQuery = data.display_name;
+                        this.location = data.display_name;
+                    });
+            } catch (error) {
+                console.error("Error updating search query:", error);
+            }
+        },
+
+        searchLocation() {
+            try {
+                if (!this.searchQuery) return;
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${this.searchQuery}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.length > 0) {
+                            const {lat, lon} = data[0];
+                            this.map.setView([lat, lon], 13);
+                            this.marker.setLatLng([lat, lon]);
+                            this.searchQuery = data[0].display_name;
+                            this.location = data[0].display_name;
+                        }
+                    });
+            } catch (error) {
+                console.error("Error searching location:", error);
+                alert("An error occurred while searching for the location");
+            }
+        },
+
+        toggleModal4Option(option) {
+            const index = this.selectedModal4.indexOf(option);
+            if (index === -1) {
+                this.selectedModal4.push(option);
+            } else {
+                this.selectedModal4.splice(index, 1);
+            }
+        },
+
+        increment(index) {
+            this.accommodationDetails[index].value += 1;
+        },
+
+        decrement(index) {
+            if (this.accommodationDetails[index].value > 0) {
+                this.accommodationDetails[index].value -= 1;
+            }
+        },
+
+        selectReservation(type) {
+            this.selectedReservation = type;
+        },
+
+        saveDates() {
+            console.log("Selected dates:", this.selectedDates);
+            this.showCalendar = false;
+        },
+
+        checkCharacterLimit() {
+            this.characterLimitExceeded = this.title.length > 32;
+        },
+
+        checkCharacterLimit2() {
+            this.characterLimitExceeded2 = this.description.length > 441;
+        },
+
+        toggleAmenity(amenity) {
+            const index = this.selectedAmenities.indexOf(amenity);
+            if (index === -1) {
+                this.selectedAmenities.push(amenity);
+            } else {
+                this.selectedAmenities.splice(index, 1);
+            }
+        },
+
+        addExtraFee() {
+            this.extraFees.push({title: '', amount: 0, selected: true});
+        },
+
+        updateFinalTotal() {
+            this.$emit('update-total-price', this.totalPrice);
+        },
+
+        selectDiscount(discount) {
+            if (this.selectedDiscounts.some(d => d.value === discount.value)) {
+                this.selectedDiscounts = this.selectedDiscounts.filter(d => d.value !== discount.value);
+            } else {
+                this.selectedDiscounts.push(discount);
+            }
+            this.updateFinalTotal();
+        },
+
+        addCustomDiscount() {
+            try {
+                if (this.customDiscountTitle && this.customDiscountPercent > 0) {
+                    const newDiscount = {
+                        title: this.customDiscountTitle,
+                        percent: parseFloat(this.customDiscountPercent),
+                        value: Date.now()
+                    };
+                    this.selectedDiscounts.push(newDiscount);
+                    this.showCustomDiscount = false;
+                    this.customDiscountTitle = '';
+                    this.customDiscountPercent = 0;
+                    this.updateFinalTotal();
+                }
+            } catch (error) {
+                console.error("Error adding custom discount:", error);
+                alert("An error occurred while adding the discount");
+            }
+        },
+
+        removeDiscount(index) {
+            this.selectedDiscounts.splice(index, 1);
+            this.updateFinalTotal();
+        },
+
+        publishAd() {
+            try {
+                if (!this.hasMinimumImages) {
+                    alert("Please upload at least 3 images before publishing.");
+                    return;
+                }
+
+                if (this.hostType.length === 0) {
+                    alert("Please select host type (individual or business).");
+                    return;
+                }
+
+                if (this.selectedDates.length === 0) {
+                    alert("Please select available dates on the calendar.");
+                    return;
+                }
+
+                const adData = {
+                    title: this.title,
+                    description: this.description,
+                    propertyType: this.selectedProperty,
+                    amenities: this.selectedAmenities,
+                    hostType: this.hostType,
+                    locationFeatures: this.locationFeatures,
+                    basePrice: this.basePrice,
+                    serviceFee: this.serviceFee,
+                    extraFees: this.extraFees,
+                    uploadedImages: this.uploadedImages,
+                    totalPrice: this.totalPrice,
+                    receivedAmount: this.receivedAmount,
+                    availableDates: this.selectedDates,
+                    location: this.location,
+                    reservationType: this.selectedReservation,
+                    status: 'pending'
+                };
+
+                this.$emit('update:modelValue', false);
+
+                if (this.ad) {
+                    this.$store.dispatch('editAd', {id: this.ad.id, ...adData});
+                } else {
+                    this.$store.dispatch('publishAd', adData);
+                }
+
+                this.$router.push({name: 'MyAds'});
+            } catch (error) {
+                console.error("Error publishing ad:", error);
+                alert("An error occurred while publishing the ad");
+            }
+        },
+
+        closeModal() {
+            this.$emit('update:modelValue', false);
+        },
+
     }
-});
-
-watch(() => props.totalPrice, (newValue) => {
-
-});
-
-const toggleDiscount = (value) => {
-    const index = selectedDiscounts.value.indexOf(value);
-    if (index === -1) {
-        selectedDiscounts.value.push(value);
-    } else {
-        selectedDiscounts.value.splice(index, 1);
-    }
 };
-
-const saveDates = () => {
-    console.log("Selected dates:", selectedDates.value);
-    showCalendar.value = false;
-};
-
-const updateFinalTotal = () => {
-};
-
-const checkCharacterLimit = () => {
-    characterLimitExceeded.value = title.value.length > 32;
-};
-
-const checkCharacterLimit2 = () => {
-    characterLimitExceeded2.value = description.value.length > 441;
-};
-
-const toggleAmenity = (amenity) => {
-    const index = selectedAmenities.value.indexOf(amenity);
-    if (index === -1) {
-        selectedAmenities.value.push(amenity);
-    } else {
-        selectedAmenities.value.splice(index, 1);
-    }
-};
-
-const addExtraFee = () => {
-    extraFees.value.push({title: '', amount: 0});
-};
-
-const selectDiscount = (discount) => {
-    if (selectedDiscounts.value.some(d => d.value === discount.value)) {
-        selectedDiscounts.value = selectedDiscounts.value.filter(d => d.value !== discount.value);
-    } else {
-        selectedDiscounts.value.push(discount);
-    }
-};
-
-
-const totalPrice = computed(() => {
-    let extraTotal = extraFees.value.reduce((sum, fee) => sum + (parseFloat(fee.amount) || 0), 0);
-    let total = parseFloat(basePrice.value || 0) + parseFloat(serviceFee.value || 0) + extraTotal;
-    return total - (total * (selectedDiscounts.value.reduce((sum, discount) => sum + discount.percent, 0) / 100));
-});
-
-const receivedAmount = computed(() => totalPrice.value * 0.94);
-
-watch(() => props.modelValue, (newVal) => {
-    if (newVal && props.ad) {
-        title.value = props.ad.title;
-        description.value = props.ad.description;
-        selectedProperty.value = props.ad.propertyType;
-        selectedAmenities.value = props.ad.amenities;
-        hostType.value = props.ad.hostType;
-        locationFeatures.value = props.ad.locationFeatures;
-        basePrice.value = props.ad.basePrice;
-        serviceFee.value = props.ad.serviceFee;
-        extraFees.value = props.ad.extraFees;
-        uploadedImages.value = props.ad.uploadedImages;
-        uploadedImage.value = props.ad.uploadedImage;
-    }
-});
-
 </script>
-
 
 <style scoped>
 .modal-container {

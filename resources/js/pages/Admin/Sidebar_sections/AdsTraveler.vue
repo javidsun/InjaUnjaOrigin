@@ -28,6 +28,9 @@
 </template>
 
 <script>
+//Todo:id/name/image/destination/departureDate/returnDate/description/seatsAvailable/
+//Todo : contactInfo:email/phone
+
 import Sidebar from "../Sidebar.vue";
 import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";

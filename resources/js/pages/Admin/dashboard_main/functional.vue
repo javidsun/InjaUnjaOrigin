@@ -19,7 +19,7 @@
 import { translate } from "@/store/languageStore";
 
 export default {
-    name: 'PerformanceDashboard',
+    name: 'functional',
     data() {
         return {
             performanceStats: [

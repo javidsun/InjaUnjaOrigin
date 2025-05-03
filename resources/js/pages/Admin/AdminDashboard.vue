@@ -52,17 +52,17 @@
 
 import {ref, computed} from 'vue';
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
-import Searchbar from "../../../layout/Header/search/Searchbar.vue";
-import Darkmood from "../../../layout/Header/Darkmood.vue";
-import LanguageSwitcher from "../../../layout/Header/LanguageSwitcher.vue";
-import Footer from "../../../layout/Footer.vue";
-import Sidebar from "../../Sidebar.vue";
+import Searchbar from "../layout/Header/search/Searchbar.vue";
+import Darkmood from "../layout/Header/Darkmood.vue";
+import LanguageSwitcher from "../layout/Header/LanguageSwitcher.vue";
+import Footer from "../layout/Footer.vue";
+import Sidebar from "./Sidebar.vue";
 
 const imageUrl = '/illustration-1.png';
 const imageUrl2 = '/illustration-2.png';
 import warning from './dashboard_main/warning.vue'
 import BasicStatistics from './dashboard_main/BasicStatistics.vue'
-import Report from './Sidebar_sections/Reports.vue'
+import Report from './dashboard_main/Reports.vue'
 import Services from './dashboard_main/Services.vue'
 import functional from './dashboard_main/functional.vue'
 import UserTable from './dashboard_main/UserTable.vue'

@@ -3,9 +3,9 @@
         <v-col cols="12" sm="6" md="3">
             <div class="card-container fontsize">
                 <img src="/public/avatar1.svg" alt="Avatar" class="avatar" />
-                <v-card class="card-info" @click="goToReservations('follow-up')">
+                <v-card class="card-info" @click="handleCardClick('follow-up')">
                     <v-card-text>
-                        <h1 class="card-info2">42</h1>
+                        <h1 class="card-info2">{{ cardData.followUp.count }}</h1>
                         <h2 class="card-info3">{{ translate('warning.followUp') }}</h2>
                     </v-card-text>
                 </v-card>
@@ -15,9 +15,9 @@
         <v-col cols="12" sm="6" md="3">
             <div class="card-container fontsize">
                 <img src="/public/avatar4.svg" alt="Avatar" class="avatar avatar4" />
-                <v-card class="card-success" @click="goToReservations('successful')">
+                <v-card class="card-success" @click="handleCardClick('successful')">
                     <v-card-text>
-                        <h1 class="card-info2">13</h1>
+                        <h1 class="card-info2">{{ cardData.successful.count }}</h1>
                         <h2 class="card-info3">{{ translate('warning.successfulRequests') }}</h2>
                     </v-card-text>
                 </v-card>
@@ -26,9 +26,9 @@
         <v-col cols="12" sm="6" md="3">
             <div class="card-container fontsize">
                 <img src="/public/avatar3.svg" alt="Avatar" class="avatar" />
-                <v-card class="card-warning" @click="goToReservations('pending')">
+                <v-card class="card-warning" @click="handleCardClick('pending')">
                     <v-card-text>
-                        <h1 class="card-info2">27</h1>
+                        <h1 class="card-info2">{{ cardData.pending.count }}</h1>
                         <h2 class="card-info3">{{ translate('warning.pendingRequests') }}</h2>
                     </v-card-text>
                 </v-card>
@@ -38,30 +38,67 @@
         <v-col cols="12" sm="6" md="3">
             <div class="card-container fontsize">
                 <img src="/public/avatar2.svg" alt="Avatar" class="avatar" />
-                <v-card class="card-error" @click="goToReservations('cancelled')">
+                <v-card class="card-error" @click="handleCardClick('cancelled')">
                     <v-card-text>
-                        <h1 class="card-info2">8</h1>
+                        <h1 class="card-info2">{{ cardData.cancelled.count }}</h1>
                         <h2 class="card-info3">{{ translate('warning.cancelledReservations') }}</h2>
                     </v-card-text>
                 </v-card>
             </div>
         </v-col>
-
     </v-row>
 </template>
 
 <script>
+//Todo:dashboard_stats": {follow_up: count/ label }/{successful: count/ label }/{pending: count/ label }/{cancelled: count/ label }
+
+
 import { translate } from "@/store/languageStore";
 
 export default {
-    name: "Warning",
-    setup() {
-        const goToReservations = (type) => {
-            window.location.href = `/ReservationManagement?type=${type}`;
-        };
-
-        return { translate, goToReservations };
+    name: "warning",
+    data() {
+        return {
+            cardData: {
+                followUp: {
+                    count: 42,
+                    route: '/ReservationManagement?type=follow-up'
+                },
+                successful: {
+                    count: 13,
+                    route: '/ReservationManagement?type=successful'
+                },
+                pending: {
+                    count: 27,
+                    route: '/ReservationManagement?type=pending'
+                },
+                cancelled: {
+                    count: 8,
+                    route: '/ReservationManagement?type=cancelled'
+                }
+            }
+        }
     },
+    methods: {
+        translate,
+
+        handleCardClick(cardType) {
+            try {
+                if (!this.cardData[cardType]) {
+                    throw new Error(`Invalid card type: ${cardType}`);
+                }
+                window.location.href = this.cardData[cardType].route;
+            } catch (error) {
+                this.showErrorAlert(error.message);
+            }
+        },
+
+
+        showErrorAlert(message) {
+            alert(`Error: ${message}`);
+        },
+
+    }
 };
 </script>
 

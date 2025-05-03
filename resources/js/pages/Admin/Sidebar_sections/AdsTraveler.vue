@@ -3,7 +3,7 @@
         <v-app-bar app elevation="1" class="header">
             <v-col cols="2">
                 <div class="logo-container">
-                    <img src="/assets/images/inja-unja.png" alt="Logo" class="logo-image" @click="drawer = !drawer" />
+                    <img src="/assets/images/inja-unja.png" alt="Logo" class="logo-image" @click="toggleDrawer" />
                 </div>
             </v-col>
             <v-spacer />
@@ -15,7 +15,7 @@
 
         <Sidebar app v-model="drawer" />
 
-        <v-main :class="{ 'main-expanded': drawer, 'main-collapsed': !drawer }">
+        <v-main :class="mainClasses">
             <v-container fluid>
                 <v-row>
                     <v-col cols="12">
@@ -27,19 +27,52 @@
     </v-app>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
-
+<script>
 import Sidebar from "../Sidebar.vue";
-import { ref } from 'vue';
-import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
 import travelers from '../../layout/sections/Groups/Travel Ads/TravelersContent.vue';
+import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
+import { translate } from "@/store/languageStore";
 
-const isDarkMode = ref(true);
-const drawer = ref(true);
+export default {
+    name: 'MainLayout',
+    components: {
+        Sidebar,
+        Searchbar,
+        Darkmood,
+        LanguageSwitcher,
+        travelers
+    },
+    data() {
+        return {
+            isDarkMode: true,
+            drawer: true
+        };
+    },
+    computed: {
+        mainClasses() {
+            return {
+                'main-expanded': this.drawer,
+                'main-collapsed': !this.drawer
+            };
+        }
+    },
+    methods: {
+        translate,
+        toggleDrawer() {
+            try {
+                this.drawer = !this.drawer;
+            } catch (error) {
+                this.handleError('Failed to toggle drawer', error);
+            }
+        },
+        handleError(message, error) {
+            console.error(message, error);
+        }
+    }
+};
 </script>
 
 <style scoped>
@@ -118,7 +151,6 @@ v-container {
 }
 
 @media (max-width: 600px) {
-
     .main-expanded {
         margin-left: 0;
     }
@@ -137,5 +169,4 @@ v-container {
         max-width: 80%;
     }
 }
-
 </style>

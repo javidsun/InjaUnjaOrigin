@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
 export default {
     name: "Warning",

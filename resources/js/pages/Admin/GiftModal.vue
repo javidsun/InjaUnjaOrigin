@@ -2,7 +2,7 @@
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
             <v-card-title class="gift-card-section">
-                <span>{{ t('giftCardTitle') }}</span>
+                <span>{{ translate('giftCardTitle') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -17,13 +17,13 @@
                 </div>
 
                 <p class="description">
-                    {{ t('giftCardDescription') }}
+                    {{ translate('giftCardDescription') }}
                 </p>
 
                 <v-form @submit.prevent="confirmGiftCardPurchase">
                     <v-text-field
                         v-model="giftCardAmount"
-                        :label="t('giftCardAmountLabel')"
+                        :label="translate('giftCardAmountLabel')"
                         type="number"
                         required
                         outlined
@@ -32,7 +32,7 @@
 
                     <v-text-field
                         v-model="giftCardRecipient"
-                        :label="t('giftCardRecipientLabel')"
+                        :label="translate('giftCardRecipientLabel')"
                         type="email"
                         required
                         outlined
@@ -41,17 +41,17 @@
 
                     <v-textarea
                         v-model="giftCardMessage"
-                        :label="t('giftCardMessageLabel')"
+                        :label="translate('giftCardMessageLabel')"
                         outlined
                         class="mb-4"
                     ></v-textarea>
 
                     <div class="button-container">
                         <v-btn type="submit" color="primary" large>
-                            {{ t('confirmPurchase') }}
+                            {{ translate('confirmPurchase') }}
                         </v-btn>
                         <v-btn @click="closeModal" color="secondary" large class="ml-2">
-                            {{ t('cancel') }}
+                            {{ translate('cancel') }}
                         </v-btn>
                     </div>
                 </v-form>
@@ -71,7 +71,7 @@
 
         <div class="button-container">
             <v-btn @click="openModal" color="primary" large>
-                {{ t('buyGiftCard') }}
+                {{ translate('buyGiftCard') }}
             </v-btn>
         </div>
 
@@ -81,7 +81,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { t } from "../../../store/languageStore";
+import { translate } from "@/store/languageStore";
 import { Inertia } from "@inertiajs/inertia";
 
 const isModalOpen = ref(false);

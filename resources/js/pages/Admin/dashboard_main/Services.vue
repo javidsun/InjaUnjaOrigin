@@ -1,3 +1,4 @@
+
 <template>
     <VContainer>
         <VRow>
@@ -21,43 +22,85 @@
     </VContainer>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
+<script>
+//Todo:title/count/route/active
 
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
-const cards = [
-    {
-        title: "Services.house",
-        count: 45,
-        route: "/AdsHouse",
+export default {
+    name: 'ServiceCardsDashboard',
+    data() {
+        return {
+            cards: [
+                {
+                    title: "Services.house",
+                    count: 45,
+                    route: "/AdsHouse",
+                },
+                {
+                    title: "Services.car",
+                    count: 12,
+                    route: null,
+                },
+                {
+                    title: "Services.event",
+                    count: 7,
+                    route: null,
+                },
+                {
+                    title: "Services.travel",
+                    count: 20,
+                    route: "/AdsTraveler",
+                }
+            ]
+        }
     },
-    {
-        title: "Services.car",
-        count: 12,
-        route: null,
-    },
-    {
-        title: "Services.event",
-        count: 7,
-        route: null,
-    },
-    {
-        title: "Services.travel",
-        count: 20,
-        route: "/AdsTraveler",
+    methods: {
+        translate,
+        goToPage(route) {
+            try {
+                if (route) {
+                    window.location.href = route;
+                } else {
+                    this.showComingSoonMessage();
+                }
+            } catch (error) {
+                this.handleNavigationError(error);
+            }
+        },
+
+
+        showComingSoonMessage() {
+            try {
+                this.$root.$emit('show-info-message', {
+                    title: this.translate('Messages.comingSoon'),
+                    text: this.translate('Messages.featureInDevelopment'),
+                    timeout: 3000
+                });
+            } catch (error) {
+                console.error('Error showing coming soon message:', error);
+                // Fallback to basic alert if Vuetify alert fails
+                alert(this.translate('Messages.featureInDevelopment'));
+            }
+        },
+
+
+        handleNavigationError(error) {
+            try {
+                this.$root.$emit('show-error-message', {
+                    title: this.translate('Messages.navigationError'),
+                    text: this.translate('Messages.navigationFailed'),
+                    timeout: 5000
+                });
+            } catch (alertError) {
+                console.error('Error handling navigation error:', alertError);
+                alert(this.translate('Messages.navigationFailed'));
+            }
+        },
+
     }
-];
-
-const goToPage = (route) => {
-    if (route) {
-        window.location.href = route;
-    } else {
-        alert("This section will be added soon!");
-    }
-};
+}
 </script>
-
 <style scoped>
 @import '../../../../css/@core/template/lib/@layouts/styles/cards.scss';
 

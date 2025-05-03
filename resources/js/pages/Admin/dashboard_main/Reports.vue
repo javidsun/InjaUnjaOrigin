@@ -55,110 +55,213 @@
                 </v-card>
             </v-col>
         </v-row>
+
+        <v-dialog v-model="tableDetailsVisible" max-width="800">
+            <v-card>
+                <v-card-title class="headline">{{ tableDetailsTitle }}</v-card-title>
+                <v-card-text>
+                    <v-alert v-if="errorMessage" type="error" class="mb-4">
+                        {{ errorMessage }}
+                    </v-alert>
+
+                    <div v-if="tableDetailsKey === 'conversionRate'">
+                        <apex-chart
+                            type="donut"
+                            height="360"
+                            :options="chartData.conversionRate.options"
+                            :series="chartData.conversionRate.series"
+                        />
+                    </div>
+
+                    <div v-else-if="tableDetailsKey === 'revenueByCategory'">
+                        <v-data-table
+                            :headers="computedTableHeaders"
+                            :items="computedRevenueByCategory"
+                            class="elevation-1"
+                        ></v-data-table>
+                    </div>
+
+                    <div v-else-if="tableDetailsKey === 'geoActivity'">
+                        <v-data-table
+                            :headers="geoActivityHeaders"
+                            :items="computedTopCities"
+                            class="elevation-1"
+                        ></v-data-table>
+                    </div>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" @click="tableDetailsVisible = false">
+                        {{ translate('common.close') }}
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-container>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
-
-import { ref, computed } from "vue";
+<script>
+//Todo:  "conversionRate: value/ total /labels:Reservation, Visit
+//revenueByCategory: {categoryKey /revenue
+// geoActivity:cityKey /countryKey /bookings
+import { translate } from "@/store/languageStore";
 import ApexChart from "vue3-apexcharts";
-import { translate } from "@/store/languageStore.js";
 
-const conversionRate = 25;
-const revenueByCategory = ref([
-    { categoryKey: "re_dashboard.Home", revenue: 5000 },
-    { categoryKey: "re_dashboard.Car", revenue: 2000 },
-    { categoryKey: "re_dashboard.Others", revenue: 1000 },
-]);
-
-const topCities = ref([
-    { cityKey: "re_dashboard.Barcelona", countryKey: "re_dashboard.Spain", bookings: 120 },
-    { cityKey: "re_dashboard.Paris", countryKey: "re_dashboard.France", bookings: 110 },
-    { cityKey: "re_dashboard.Rome", countryKey: "re_dashboard.Italy", bookings: 100 },
-    { cityKey: "re_dashboard.Berlin", countryKey: "re_dashboard.Germany", bookings: 90 },
-    { cityKey: "re_dashboard.Amsterdam", countryKey: "re_dashboard.Netherlands", bookings: 80 },
-]);
-
-
-const computedRevenueByCategory = computed(() =>
-    revenueByCategory.value.map((item) => ({
-        ...item,
-        category: translate(item.categoryKey),
-    }))
-);
-
-const computedTopCities = computed(() =>
-    topCities.value.map((item) => ({
-        ...item,
-        city: translate(item.cityKey),
-        country: translate(item.countryKey),
-    }))
-);
-
-const tableHeaders = ref([
-    { textKey: "re_dashboard.category", key: "category" },
-    { textKey: "re_dashboard.revenue", key: "revenue" },
-]);
-
-const computedTableHeaders = computed(() =>
-    tableHeaders.value.map((header) => ({
-        ...header,
-        text: translate(header.textKey),
-    }))
-);
-
-const chartData = {
-    conversionRate: {
-        options: {
-            chart: { id: "conversion-rate-chart", background: "transparent" },
-            legend: { position: "top" },
-            labels: [translate("re_dashboard.Reservation"), translate("re_dashboard.Visit")],
-        },
-        series: [conversionRate, 100 - conversionRate],
+export default {
+    name: 'Reports',
+    components: {
+        ApexChart
     },
-    revenueByCategory: {
-        options: {
-            chart: { id: "revenue-by-category-chart" },
-            xaxis: { categories: computedRevenueByCategory.value.map((c) => c.category) },
-        },
-        series: [
-            {
-                name: translate("re_dashboard.revenue"),
-                data: computedRevenueByCategory.value.map((c) => c.revenue),
-            },
-        ],
+    data() {
+        return {
+            conversionRate: 25,
+            revenueByCategory: [
+                { categoryKey: "re_dashboard.Home", revenue: 5000 },
+                { categoryKey: "re_dashboard.Car", revenue: 2000 },
+                { categoryKey: "re_dashboard.Others", revenue: 1000 },
+            ],
+            topCities: [
+                { cityKey: "re_dashboard.Barcelona", countryKey: "re_dashboard.Spain", bookings: 120 },
+                { cityKey: "re_dashboard.Paris", countryKey: "re_dashboard.France", bookings: 110 },
+                { cityKey: "re_dashboard.Rome", countryKey: "re_dashboard.Italy", bookings: 100 },
+                { cityKey: "re_dashboard.Berlin", countryKey: "re_dashboard.Germany", bookings: 90 },
+                { cityKey: "re_dashboard.Amsterdam", countryKey: "re_dashboard.Netherlands", bookings: 80 },
+            ],
+            tableHeaders: [
+                { textKey: "re_dashboard.category", key: "category" },
+                { textKey: "re_dashboard.revenue", key: "revenue" },
+            ],
+            geoActivityHeaders: [
+                { textKey: "re_dashboard.city", key: "city" },
+                { textKey: "re_dashboard.country", key: "country" },
+                { textKey: "re_dashboard.bookings", key: "bookings" },
+            ],
+            tableDetailsVisible: false,
+            tableDetailsKey: "",
+            errorMessage: ""
+        };
     },
-    geoActivity: {
-        options: {
-            chart: { id: "geo-activity-chart" },
-            xaxis: {
-                categories: computedTopCities.value.map((city) => `${city.city} - ${city.country}`),
-            },
+    computed: {
+        computedRevenueByCategory() {
+            try {
+                return this.revenueByCategory.map(item => ({
+                    ...item,
+                    category: this.translate(item.categoryKey)
+                }));
+            } catch (error) {
+                this.handleError("Failed to compute revenue by category", error);
+                return [];
+            }
         },
-        series: [
-            {
-                name: translate("re_dashboard.Reservation"),
-                data: computedTopCities.value.map((city) => city.bookings),
-            },
-        ],
+        computedTopCities() {
+            try {
+                return this.topCities.map(item => ({
+                    ...item,
+                    city: this.translate(item.cityKey),
+                    country: this.translate(item.countryKey)
+                }));
+            } catch (error) {
+                this.handleError("Failed to compute top cities", error);
+                return [];
+            }
+        },
+        computedTableHeaders() {
+            try {
+                return this.tableHeaders.map(header => ({
+                    ...header,
+                    text: this.translate(header.textKey)
+                }));
+            } catch (error) {
+                this.handleError("Failed to compute table headers", error);
+                return [];
+            }
+        },
+        chartData() {
+            return {
+                conversionRate: {
+                    options: {
+                        chart: { id: "conversion-rate-chart", background: "transparent" },
+                        legend: { position: "top" },
+                        labels: [
+                            this.translate("re_dashboard.Reservation"),
+                            this.translate("re_dashboard.Visit")
+                        ],
+                    },
+                    series: [this.conversionRate, 100 - this.conversionRate],
+                },
+                revenueByCategory: {
+                    options: {
+                        chart: { id: "revenue-by-category-chart" },
+                        xaxis: {
+                            categories: this.computedRevenueByCategory.map(c => c.category)
+                        },
+                    },
+                    series: [
+                        {
+                            name: this.translate("re_dashboard.revenue"),
+                            data: this.computedRevenueByCategory.map(c => c.revenue),
+                        },
+                    ],
+                },
+                geoActivity: {
+                    options: {
+                        chart: { id: "geo-activity-chart" },
+                        xaxis: {
+                            categories: this.computedTopCities.map(
+                                city => `${city.city} - ${city.country}`
+                            ),
+                        },
+                    },
+                    series: [
+                        {
+                            name: this.translate("re_dashboard.Reservation"),
+                            data: this.computedTopCities.map(city => city.bookings),
+                        },
+                    ],
+                },
+            };
+        },
+        tableDetailsTitle() {
+            try {
+                switch (this.tableDetailsKey) {
+                    case "conversionRate":
+                        return this.translate("re_dashboard.conversionRate");
+                    case "revenueByCategory":
+                        return this.translate("re_dashboard.revenueByCategory");
+                    case "geoActivity":
+                        return this.translate("re_dashboard.geoActivity");
+                    default:
+                        return "";
+                }
+            } catch (error) {
+                this.handleError("Failed to get table details title", error);
+                return "";
+            }
+        }
     },
-};
+    methods: {
+        translate,
 
-const tableDetailsVisible = ref(false);
-const tableDetailsKey = ref("");
-const tableDetailsTitle = computed(() => {
-    switch (tableDetailsKey.value) {
-        case "conversionRate": return translate("re_dashboard.conversionRate");
-        case "revenueByCategory": return translate("re_dashboard.revenueByCategory");
-        case "geoActivity": return translate("re_dashboard.geoActivity");
-        default: return "";
+        showTableDetails(key) {
+            try {
+                this.tableDetailsKey = key;
+                this.tableDetailsVisible = true;
+            } catch (error) {
+                this.handleError("Failed to show table details", error);
+            }
+        },
+        handleError(message, error) {
+            this.errorMessage = `${message}: ${error.message}`;
+            console.error(message, error);
+
+            this.$notify({
+                title: 'Error',
+                text: message,
+                type: 'error',
+                duration: 5000
+            });
+        }
     }
-});
-
-const showTableDetails = (key) => {
-    tableDetailsKey.value = key;
-    tableDetailsVisible.value = true;
 };
 </script>
 

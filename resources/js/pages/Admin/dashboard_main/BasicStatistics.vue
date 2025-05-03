@@ -21,7 +21,7 @@
 //Todo:title/ value
 
 export default {
-    name: 'DashboardStatsCard',
+    name: 'BasicStatistics',
     data() {
         return {
             stats: [

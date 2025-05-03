@@ -84,10 +84,6 @@ Route::get('/UserProfile', function () {
         return Inertia::render('Users/UserDashboard/UserReservations');
     })->name('UserReservations');
 
-    Route::get('/MyAds', function () {
-        return Inertia::render('Users/UserDashboard/MyAds');
-    })->name('MyAds');
-
     Route::get('/notifications', function () {
         return Inertia::render('Users/UserDashboard/Notifications');
     })->name('notifications');

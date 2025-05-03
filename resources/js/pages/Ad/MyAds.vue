@@ -3,7 +3,7 @@
         <v-container>
             <v-row>
                 <v-col cols="12">
-                    <h2 class="text-center">{{ translate('Ad.MyAds') }}</h2>
+                    <h2 class="text-center">{{ translate('UserSidebar.MyAds') }}</h2>
                 </v-col>
             </v-row>
             <v-row>
@@ -14,7 +14,7 @@
                         <v-card-subtitle class="ad-description">{{ ad.description }}</v-card-subtitle>
                         <v-card-actions>
                             <v-btn color="primary" @click="openEditModal(ad)">{{ translate('Ad.Edit') }}</v-btn>
-                            <v-btn color="error" @click="deleteAd(ad.id)">{{ translate('Ad.delete') }}</v-btn>
+                            <v-btn color="error" @click="confirmDelete(ad.id)">{{ translate('Ad.delete') }}</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-col>
@@ -41,7 +41,7 @@
                                 <v-file-input
                                     multiple
                                     accept="image/*"
-                                    :label="t('Ad.Add_Images')"
+                                    :label="translate('Ad.Add_Images')"
                                     :rules="imageRules"
                                     @change="handleImageUpload"
                                 ></v-file-input>
@@ -51,7 +51,7 @@
                                             <v-img :src="image" height="150" class="image-preview"></v-img>
                                             <v-card-actions>
                                                 <v-btn color="error" @click="removeImage(index)">{{
-                                                    translate('Ad.delete') }}
+                                                        translate('Ad.delete') }}
                                                 </v-btn>
                                             </v-card-actions>
                                         </v-card>
@@ -66,9 +66,9 @@
                                       outlined></v-text-field>
                         <v-text-field :label="translate('Ad.discount') + ' (%)'" v-model="editedAd.discountPercent"
                                       type="number" outlined></v-text-field>
-                        <v-text-field :label="translate('Ad.total_price')" :value="totalPriceComputed" type="number"
+                        <v-text-field :label="translate('Ad.total_price')" :value="totalPrice" type="number"
                                       readonly outlined></v-text-field>
-                        <v-text-field :label="translate('Ad.received_amount')" :value="finalReceivedAmountComputed"
+                        <v-text-field :label="translate('Ad.received_amount')" :value="finalReceivedAmount"
                                       type="number" readonly outlined></v-text-field>
 
                         <v-checkbox v-model="editedAd.hostType" :label="translate('Ad.host_as_individual')"
@@ -88,104 +88,170 @@
                     </v-card-actions>
                 </v-card>
             </v-dialog>
+
+            <v-dialog v-model="confirmDialog" max-width="400px">
+                <v-card>
+                    <v-card-title class="text-h5">{{ translate('Ad.ConfirmDelete') }}</v-card-title>
+                    <v-card-text>{{ translate('Ad.ConfirmDeleteMessage') }}</v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="green darken-1" text @click="confirmDialog = false">{{ translate('Ad.Cancel') }}</v-btn>
+                        <v-btn color="red darken-1" text @click="deleteAd">{{ translate('Ad.Confirm') }}</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </v-container>
     </UserSidebar>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
-
-
-import {ref, computed} from 'vue';
-import {translate} from "@/store/languageStore";
+<script>
 import UserSidebar from '../Users/Layout.vue';
+import { translate } from "@/store/languageStore";
 
-const ads = ref([
-    {
-        id: 1,
-        title: 'آپارتمان زیبا در تهران',
-        description: 'آپارتمان ۲ خوابه در منطقه خوب تهران',
-        images: ['/ads/special-offer.jpg', '/ads/house1.jpg'],
-        propertyType: 'آپارتمان',
-        basePrice: 1000000,
-        serviceFee: 100000,
-        discountPercent: 10,
-        category: 'house',
-        hostType: ['individual'],
-        locationFeatures: ['security_camera'],
+export default {
+    components: {
+        UserSidebar
     },
-    {
-        id: 2,
-        title: 'ویلای لوکس در شمال',
-        description: 'ویلای ۳ خوابه با استخر خصوصی',
-        images: ['/ads/top-rated.jpg', '/ads/house2.jpg'],
-        propertyType: 'ویلا',
-        basePrice: 2000000,
-        serviceFee: 200000,
-        discountPercent: 15,
-        category: 'house',
-        hostType: ['business'],
-        locationFeatures: ['sound_insulation'],
+    data() {
+        return {
+            ads: [
+                {
+                    id: 1,
+                    title: 'آپارتمان زیبا در تهران',
+                    description: 'آپارتمان ۲ خوابه در منطقه خوب تهران',
+                    images: ['/ads/special-offer.jpg', '/ads/house1.jpg'],
+                    propertyType: 'آپارتمان',
+                    basePrice: 1000000,
+                    serviceFee: 100000,
+                    discountPercent: 10,
+                    category: 'house',
+                    hostType: ['individual'],
+                    locationFeatures: ['security_camera'],
+                },
+                {
+                    id: 2,
+                    title: 'ویلای لوکس در شمال',
+                    description: 'ویلای ۳ خوابه با استخر خصوصی',
+                    images: ['/ads/top-rated.jpg', '/ads/house2.jpg'],
+                    propertyType: 'ویلا',
+                    basePrice: 2000000,
+                    serviceFee: 200000,
+                    discountPercent: 15,
+                    category: 'house',
+                    hostType: ['business'],
+                    locationFeatures: ['sound_insulation'],
+                }
+            ],
+            editDialog: false,
+            confirmDialog: false,
+            editedAd: {},
+            adToDelete: null,
+            newImages: [],
+            imageRules: [
+                (files) => !files || files.length <= 10 || this.translate("Ad.Upload_images"),
+                (files) => !files || files.length >= 3 || this.translate("Ad.Upload_images2"),
+            ]
+        }
     },
-]);
+    computed: {
+        totalPrice() {
+            try {
+                const basePrice = parseFloat(this.editedAd.basePrice || 0);
+                const serviceFee = parseFloat(this.editedAd.serviceFee || 0);
+                return (basePrice + serviceFee).toFixed(2);
+            } catch (error) {
+                this.showError('Error calculating total price');
+                return '0.00';
+            }
+        },
+        finalReceivedAmount() {
+            try {
+                const totalPrice = parseFloat(this.totalPrice);
+                const discountPercent = parseFloat(this.editedAd.discountPercent || 0);
+                const discountAmount = (totalPrice * discountPercent) / 100;
+                const finalAmount = (totalPrice - discountAmount) * 0.94;
+                return finalAmount.toFixed(2);
+            } catch (error) {
+                this.showError('Error calculating final amount');
+                return '0.00';
+            }
+        }
+    },
+    methods: {
+        translate,
+        openEditModal(ad) {
+            try {
+                this.editedAd = JSON.parse(JSON.stringify(ad));
+                this.editDialog = true;
+            } catch (error) {
+                this.showError('Failed to open edit modal');
+            }
+        },
+        saveEdit() {
+            try {
+                const index = this.ads.findIndex(ad => ad.id === this.editedAd.id);
+                if (index !== -1) {
+                    this.ads[index] = JSON.parse(JSON.stringify(this.editedAd));
+                    this.showSuccess('Ad updated successfully');
+                    this.editDialog = false;
+                }
+            } catch (error) {
+                this.showError('Failed to save ad');
+            }
+        },
+        confirmDelete(adId) {
+            this.adToDelete = adId;
+            this.confirmDialog = true;
+        },
+        deleteAd() {
+            try {
+                this.ads = this.ads.filter(ad => ad.id !== this.adToDelete);
+                this.showSuccess('Ad deleted successfully');
+                this.confirmDialog = false;
+            } catch (error) {
+                this.showError('Failed to delete ad');
+            }
+        },
+        handleImageUpload(files) {
+            try {
+                if (!files || !files.length) return;
 
-const editDialog = ref(false);
-const editedAd = ref({});
-const newImages = ref([]);
+                const maxImages = 10;
+                const validFiles = files.slice(0, maxImages - this.editedAd.images.length);
 
-const imageRules = [
-    (files) => !files || files.length <= 10 || translate("Ad.Upload_images"),
-    (files) => !files || files.length >= 3 || translate("Ad.Upload_images2"),
-];
-
-const totalPriceComputed = computed(() => {
-    const basePrice = parseFloat(editedAd.value.basePrice || 0);
-    const serviceFee = parseFloat(editedAd.value.serviceFee || 0);
-    return (basePrice + serviceFee).toFixed(2);
-});
-const finalReceivedAmountComputed = computed(() => {
-    const totalPrice = parseFloat(totalPriceComputed.value);
-    const discountPercent = parseFloat(editedAd.value.discountPercent || 0);
-    const discountAmount = (totalPrice * discountPercent) / 100;
-    const finalAmount = (totalPrice - discountAmount) * 0.94;
-    return finalAmount.toFixed(2);
-});
-
-const openEditModal = (ad) => {
-    editedAd.value = {...ad};
-    editDialog.value = true;
-};
-const saveEdit = () => {
-    const index = ads.value.findIndex(ad => ad.id === editedAd.value.id);
-    if (index !== -1) {
-        ads.value[index] = {...editedAd.value};
-        editDialog.value = false;
+                validFiles.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.editedAd.images.push(e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            } catch (error) {
+                this.showError('Failed to upload images');
+            }
+        },
+        removeImage(index) {
+            try {
+                this.editedAd.images.splice(index, 1);
+            } catch (error) {
+                this.showError('Failed to remove image');
+            }
+        },
+        showSuccess(message) {
+            this.$store.dispatch('showAlert', {
+                type: 'success',
+                message: message,
+                duration: 3000
+            });
+        },
+        showError(message) {
+            this.$store.dispatch('showAlert', {
+                type: 'error',
+                message: message,
+                duration: 5000
+            });
+        }
     }
-    ;
-
-    const deleteAd = (adId) => {
-        ads.value = ads.value.filter(ad => ad.id !== adId);
-    };
-
-    const handleImageUpload = (event) => {
-        const files = Array.from(event.target.files);
-        if (!files.length) return;
-
-        const maxImages = 10;
-        const validFiles = files.slice(0, maxImages - editedAd.value.images.length);
-
-        validFiles.forEach(file => {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                editedAd.value.images.push(e.target.result);
-            };
-            reader.readAsDataURL(file);
-        });
-    };
-
-    const removeImage = (index) => {
-        editedAd.value.images.splice(index, 1);
-    };
 }
 </script>
 

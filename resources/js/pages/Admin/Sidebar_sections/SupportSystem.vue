@@ -111,105 +111,168 @@
     </v-app>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
+<script>
+//Todo:{messages:id/sender/recipient/date/content/status/created_at/updated_at}
+//Todo:{users:id/name/recipient/email/role}
+//Todo:{get_messages:id/name/recipient/email/role}
 
-import { ref, computed } from 'vue';
 import Sidebar from "../Sidebar.vue";
 import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
-const drawer = ref(true);
+export default {
+    components: {
+        Sidebar,
+        Searchbar,
+        Darkmood,
+        LanguageSwitcher
+    },
+    data() {
+        return {
+            drawer: true,
+            isDarkMode: false,
+            users: [
+                "Ali Alavi",
+                "Sara Ahmadi",
+                "Majid Reshadat",
+            ],
+            messages: [
+                { sender: "Ali Alavi", date: "2025-03-13", content: "I need help with my account.", status: "unresolved" },
+                { sender: "Sara Ahmadi", date: "2025-03-12", content: "How can I reset my password?", status: "resolved" },
+            ],
+            showMessageForm: false,
+            selectedUser: "",
+            newMessage: "",
+            searchQuery: "",
+            filterStatus: "all",
+            statusOptions: [
+                { text: translate('All'), value: "all" },
+                { text: translate('Resolved'), value: "resolved" },
+                { text: translate('Unresolved'), value: "unresolved" },
+            ],
+            messageHeaders: [
+                { text: translate('Admin_Support.sender'), value: "sender" },
+                { text: translate('Admin_Support.date'), value: "date" },
+                { text: translate('Admin_Support.content'), value: "content" },
+                { text: translate('Admin_Support.status'), value: "status" },
+                { text: translate('Admin_Support.actions'), value: "actions" },
+            ]
+        }
+    },
+    computed: {
+        unreadMessagesCount() {
+            try {
+                return this.messages.filter(message => message.status === "unresolved").length;
+            } catch (error) {
+                this.showError("Failed to count unread messages", error);
+                return 0;
+            }
+        },
+        filteredMessages() {
+            try {
+                return this.messages.filter(message => {
+                    const matchesSearch = message.content.toLowerCase().includes(this.searchQuery.toLowerCase());
+                    const matchesStatus = this.filterStatus === "all" || message.status === this.filterStatus;
+                    return matchesSearch && matchesStatus;
+                });
+            } catch (error) {
+                this.showError("Failed to filter messages", error);
+                return [];
+            }
+        }
+    },
+    methods: {
+        translate,
 
-const users = ref([
-    "Ali Alavi",
-    "Sara Ahmadi",
-    "Majid Reshadat",
-]);
+        toggleMessageForm() {
+            this.showMessageForm = !this.showMessageForm;
+        },
+        async sendMessage() {
+            try {
+                if (!this.selectedUser || this.newMessage.trim() === "") {
+                    this.showWarning("Please fill in all fields.");
+                    return;
+                }
 
-const messages = ref([
-    { sender: "Ali Alavi", date: "2025-03-13", content: "I need help with my account.", status: "unresolved" },
-    { sender: "Sara Ahmadi", date: "2025-03-12", content: "How can I reset my password?", status: "resolved" },
-]);
-
-const showMessageForm = ref(false);
-const selectedUser = ref("");
-const newMessage = ref("");
-
-const searchQuery = ref("");
-const filterStatus = ref("all");
-
-const statusOptions = ref([
-    { text: translate('All'), value: "all" },
-    { text: translate('Resolved'), value: "resolved" },
-    { text: translate('Unresolved'), value: "unresolved" },
-]);
-
-const messageHeaders = ref([
-    { text: translate('Admin_Support.sender'), value: "sender" },
-    { text: translate('Admin_Support.date'), value: "date" },
-    { text: translate('Admin_Support.content'), value: "content" },
-    { text: translate('Admin_Support.status'), value: "status" },
-    { text: translate('Admin_Support.actions'), value: "actions" },
-]);
-
-const unreadMessagesCount = computed(() => {
-    return messages.value.filter(message => message.status === "unresolved").length;
-});
-
-function toggleMessageForm() {
-    showMessageForm.value = !showMessageForm.value;
-}
-
-function sendMessage() {
-    if (selectedUser.value && newMessage.value.trim() !== "") {
-        const newMsg = {
-            sender: "Admin",
-            recipient: selectedUser.value,
-            date: new Date().toISOString().split("T")[0],
-            content: newMessage.value,
-            status: "unresolved",
-        };
-        messages.value.push(newMsg);
-        selectedUser.value = "";
-        newMessage.value = "";
-        showMessageForm.value = false;
-    } else {
-        alert("Please fill in all fields.");
-    }
-}
-
-function replyToMessage(message) {
-    selectedUser.value = message.sender;
-    showMessageForm.value = true;
-}
-
-function markAsResolved(message) {
-    message.status = "resolved";
-}
-
-function deleteMessage(message) {
-    messages.value = messages.value.filter(m => m !== message);
-}
-
-const filteredMessages = computed(() => {
-    return messages.value.filter(message => {
-        const matchesSearch = message.content.toLowerCase().includes(searchQuery.value.toLowerCase());
-        const matchesStatus = filterStatus.value === "all" || message.status === filterStatus.value;
-        return matchesSearch && matchesStatus;
-    });
-});
-
-function getStatusColor(status) {
-    switch (status) {
-        case "resolved":
-            return "success";
-        case "unresolved":
-            return "error";
-        default:
-            return "primary";
+                const newMsg = {
+                    sender: "Admin",
+                    recipient: this.selectedUser,
+                    date: new Date().toISOString().split("T")[0],
+                    content: this.newMessage,
+                    status: "unresolved",
+                };
+                this.messages.push(newMsg);
+                this.selectedUser = "";
+                this.newMessage = "";
+                this.showMessageForm = false;
+                this.showSuccess("Message sent successfully!");
+            } catch (error) {
+                this.showError("Failed to send message", error);
+            }
+        },
+        replyToMessage(message) {
+            try {
+                this.selectedUser = message.sender;
+                this.showMessageForm = true;
+            } catch (error) {
+                this.showError("Failed to reply to message", error);
+            }
+        },
+        async markAsResolved(message) {
+            try {
+                message.status = "resolved";
+                this.showSuccess("Message marked as resolved!");
+            } catch (error) {
+                this.showError("Failed to mark message as resolved", error);
+            }
+        },
+        async deleteMessage(message) {
+            try {
+                this.messages = this.messages.filter(m => m !== message);
+                this.showSuccess("Message deleted successfully!");
+            } catch (error) {
+                this.showError("Failed to delete message", error);
+            }
+        },
+        getStatusColor(status) {
+            try {
+                switch (status) {
+                    case "resolved":
+                        return "success";
+                    case "unresolved":
+                        return "error";
+                    default:
+                        return "primary";
+                }
+            } catch (error) {
+                this.showError("Failed to get status color", error);
+                return "primary";
+            }
+        },
+        showSuccess(message) {
+            this.$emit('show-alert', {
+                type: 'success',
+                message: message,
+                show: true
+            });
+        },
+        showWarning(message) {
+            this.$emit('show-alert', {
+                type: 'warning',
+                message: message,
+                show: true
+            });
+        },
+        showError(message, error) {
+            console.error(message, error);
+            this.$emit('show-alert', {
+                type: 'error',
+                message: `${message}: ${error?.message || 'Unknown error'}`,
+                show: true
+            });
+        }
     }
 }
 </script>

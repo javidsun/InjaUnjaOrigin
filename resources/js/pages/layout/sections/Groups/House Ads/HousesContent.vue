@@ -25,6 +25,8 @@
 
         <v-row class="ad-container">
             <v-col cols="12" v-show="tab === 0">
+                <Searchbar />
+
                 <v-row class="mb-4">
                     <v-col v-for="(icon, index) in icons" :key="index" cols="2">
                         <v-btn
@@ -129,7 +131,7 @@
                         </v-col>
                         <v-col cols="8" class="AdsSetting">
                             <v-card-subtitle class="AdsSetting2 text-h6 text-right">{{ selectedApartment?.host ||
-                                "Uncertain" }}
+                            "Uncertain" }}
                             </v-card-subtitle>
                             <p class="AdsSetting2 text-body-1 text-right"><strong>{{ translate('housescontent.Location')
                                 }}</strong> {{ selectedApartment?.location || "نامشخص" }}</p>
@@ -184,7 +186,7 @@
                     <v-dialog v-model="showEditGuestsModal" max-width="400px">
                         <v-card>
                             <v-card-title class="headline primary--text text-center">{{
-                                translate('housescontent.Edit_guest2') }}
+                                    translate('housescontent.Edit_guest2') }}
                             </v-card-title>
                             <v-card-text>
                                 <v-row>
@@ -210,7 +212,7 @@
                                 <v-btn color="primary" @click="saveGuestInfo">{{ translate('housescontent.Save') }}
                                 </v-btn>
                                 <v-btn color="error" @click="showEditGuestsModal = false">{{
-                                    translate('housescontent.close') }}
+                                        translate('housescontent.close') }}
                                 </v-btn>
                             </v-card-actions>
                         </v-card>
@@ -225,7 +227,7 @@
                     <v-row>
                         <v-col cols="6">
                             <p class="text-body-1">{{ translate('housescontent.Project_Cost') }} * {{
-                                translate('housescontent.Reserved_Days') }}</p>
+                                    translate('housescontent.Reserved_Days') }}</p>
                         </v-col>
                         <v-col cols="6" class="text-right">
                             <p class="text-body-1">{{ basePrice || "0" }} {{ translate('housescontent.Euro') }}</p>
@@ -238,7 +240,7 @@
                         </v-col>
                         <v-col cols="6" class="text-right">
                             <p class="text-body-1">{{ selectedApartment?.extraFee || 0 }} {{
-                                translate('housescontent.Euro') }}</p>
+                                    translate('housescontent.Euro') }}</p>
                         </v-col>
                     </v-row>
 
@@ -254,7 +256,7 @@
                     <v-row>
                         <v-col cols="6">
                             <p class="font-weight-bold text-h6">{{ translate('housescontent.Total_Amount') }} ({{
-                                translate('housescontent.Euro') }})</p>
+                                    translate('housescontent.Euro') }})</p>
                         </v-col>
                         <v-col cols="6" class="text-right">
                             <p class="font-weight-bold text-h6">{{ total }} {{ translate('housescontent.Euro') }}</p>
@@ -264,7 +266,7 @@
 
                     <v-divider class="my-4"></v-divider>
                     <h3 class="font-weight-bold mt-4 text-h5 AdsSetting text-center">{{
-                        translate('housescontent.Pay_with') }}</h3>
+                            translate('housescontent.Pay_with') }}</h3>
                     <v-row>
                         <v-col cols="4">
                             <v-btn @click="selectedPayment = 'credit'" class="d-flex align-center" color="primary"
@@ -314,7 +316,7 @@
                         <v-col cols="6" class="AdsSetting">
                             <p><strong>Owner's name:</strong> {{ selectedApartment?.host || "Uncertain" }}</p>
                             <p><strong>Price:</strong> {{ selectedApartment?.price || "Uncertain" }} {{
-                                selectedApartment?.period || "Uncertain" }}</p>
+                                    selectedApartment?.period || "Uncertain" }}</p>
                             <p><strong>Location:</strong> {{ selectedApartment?.location || "Uncertain" }}</p>
                             <p><strong>Property type:</strong> {{ selectedApartment?.type || "Uncertain" }}</p>
                         </v-col>
@@ -329,26 +331,23 @@
     </v-container>
 </template>
 
-
 <script>
 import {translate} from "@/store/languageStore";
 import HousesMap from "./HousesMap.vue";
 import UserSidebar from '../../../../Users/Layout.vue';
+import Searchbar from '../../../../layout/Header/search/Searchbar.vue';
 
 export default {
-    setup() {
-        return {translate};
-    },
-
     components: {
         HousesMap,
         UserSidebar,
+        Searchbar,
     },
     data() {
         return {
             selectedApartmentId: null,
             showChatModal: false,
-            chatMessages: [],
+            chatMessages: {},
             newMessage: '',
             selectedHost: '',
             showEditGuestsModal: false,
@@ -362,7 +361,6 @@ export default {
                 name: "نام رزرو کننده",
                 days: 4,
             },
-            showReservationModal: {},
             selectedApartment: null,
             tab: 0,
             selectedType: null,
@@ -411,7 +409,6 @@ export default {
                     coordinates: [50.8549, 4.3479],
                     extraFee: 8
                 },
-
                 {
                     id: 4,
                     location: "بروکسل،بلژیک",
@@ -452,158 +449,291 @@ export default {
             filteredApartments: [],
             loading: false,
             showDetail: false,
-            MyReservations: [],
             localShow: false,
             selectedPayment: null,
         };
     },
     computed: {
         isLoggedIn() {
-            return !!this.$store.state.user;
+            try {
+                return !!this.$store.state.user;
+            } catch (error) {
+                this.handleError('Error checking login status', error);
+                return false;
+            }
         },
         total() {
-            let basePrice = parseFloat(this.selectedApartment?.price.replace('€', '').trim()) || 0;
-            let days = this.reservation?.days || 0;
-            let extraFee = this.selectedApartment?.extraFee || 0;
-            let tax = (basePrice * days + extraFee) * 0.10;
-            let totalPrice = (basePrice * days) + extraFee + tax;
-            return totalPrice.toFixed(2);
+            try {
+                let basePrice = parseFloat(this.selectedApartment?.price.replace('€', '').trim()) || 0;
+                let days = this.reservation?.days || 0;
+                let extraFee = this.selectedApartment?.extraFee || 0;
+                let tax = (basePrice * days + extraFee) * 0.10;
+                return (basePrice * days + extraFee + tax).toFixed(2);
+            } catch (error) {
+                this.handleError('Error calculating total', error);
+                return "0.00";
+            }
         },
         basePrice() {
-            let basePrice = parseFloat(this.selectedApartment?.price.replace('€', '').trim()) || 0;
-            let days = this.reservation?.days || 0;
-            return (basePrice * days).toFixed(2);
+            try {
+                let basePrice = parseFloat(this.selectedApartment?.price.replace('€', '').trim()) || 0;
+                let days = this.reservation?.days || 0;
+                return (basePrice * days).toFixed(2);
+            } catch (error) {
+                this.handleError('Error calculating base price', error);
+                return "0.00";
+            }
         },
         tax() {
-            let basePrice = parseFloat(this.selectedApartment?.price.replace('€', '').trim()) || 0;
-            let days = this.reservation?.days || 0;
-            let extraFee = this.selectedApartment?.extraFee || 0;
-            return ((basePrice * days + extraFee) * 0.10).toFixed(2);
+            try {
+                let basePrice = parseFloat(this.selectedApartment?.price.replace('€', '').trim()) || 0;
+                let days = this.reservation?.days || 0;
+                let extraFee = this.selectedApartment?.extraFee || 0;
+                return ((basePrice * days + extraFee) * 0.10).toFixed(2);
+            } catch (error) {
+                this.handleError('Error calculating tax', error);
+                return "0.00";
+            }
         }
     },
     methods: {
+        translate,
+
         openChatModal(item) {
-            this.selectedHost = item.host;
-            this.selectedApartmentId = item.id;
-            if (!this.chatMessages[item.id]) {
-                this.chatMessages[item.id] = [];
+            try {
+                this.selectedHost = item.host;
+                this.selectedApartmentId = item.id;
+                if (!this.chatMessages[item.id]) {
+                    this.chatMessages[item.id] = [];
+                }
+                this.showChatModal = true;
+            } catch (error) {
+                this.handleError('Error opening chat modal', error);
             }
-            this.showChatModal = true;
         },
+
+        /**
+         * Closes the chat modal
+         */
         closeChatModal() {
-            this.showChatModal = false;
-            this.newMessage = '';
-        },
-        toggleExpand() {
-            this.isExpanded = !this.isExpanded;
-            this.$emit('expand', this.isExpanded);
-        },
-        sendMessage() {
-            if (this.newMessage.trim()) {
-                const sanitizedMessage = this.sanitizeMessage(this.newMessage);
-                this.chatMessages[this.selectedApartmentId].push({
-                    sender: 'User',
-                    text: sanitizedMessage
-                });
+            try {
+                this.showChatModal = false;
                 this.newMessage = '';
+            } catch (error) {
+                this.handleError('Error closing chat modal', error);
             }
         },
+
+        /**
+         * Toggles container expansion state
+         */
+        toggleExpand() {
+            try {
+                this.isExpanded = !this.isExpanded;
+                this.$emit('expand', this.isExpanded);
+            } catch (error) {
+                this.handleError('Error toggling expand', error);
+            }
+        },
+
+        /**
+         * Sends a new chat message
+         */
+        sendMessage() {
+            try {
+                if (this.newMessage.trim()) {
+                    const sanitizedMessage = this.sanitizeMessage(this.newMessage);
+                    this.chatMessages[this.selectedApartmentId].push({
+                        sender: 'User',
+                        text: sanitizedMessage
+                    });
+                    this.newMessage = '';
+                }
+            } catch (error) {
+                this.handleError('Error sending message', error);
+            }
+        },
+
+        /**
+         * Sanitizes message content
+         * @param {string} message - The message to sanitize
+         * @returns {string} The sanitized message
+         */
         sanitizeMessage(message) {
-            message = message.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, '***');
-            message = message.replace(/(\+|0)?9\d{9}/g, '***');
-            return message;
-        },
-
-        saveTemporaryReservation() {
-            this.MyReservations.push({
-                ...this.reservation,
-                apartment: this.selectedApartment,
-                paymentStatus: 'pending'
-            });
-
-            this.openPaymentModal();
-        },
-
-        openPaymentModal() {
-            this.localShow = true;
-        },
-        saveDates() {
-            let startDate = new Date(this.selectedDates[0]);
-            let endDate = new Date(this.selectedDates[this.selectedDates.length - 1]);
-            let days = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
-            this.reservation.startDate = this.selectedDates[0];
-            this.reservation.endDate = this.selectedDates[this.selectedDates.length - 1];
-            this.reservation.days = days;
-            this.showCalendar = false;
-        },
-        openReservationModal(apartment) {
-            this.selectedApartment = apartment;
-            this.localShow = true;
-        },
-        filterApartments(type) {
-            this.selectedType = type;
-            this.filteredApartments = this.apartments.filter(
-                apartment => apartment.type === type
-            );
-        },
-        async loadMoreApartments() {
-            if (this.loading) return;
-            this.loading = true;
-
-            const newApartments = [
-                {
-                    id: 10,
-                    location: "آنتورپ،بلژیک",
-                    host: "میزبان علی",
-                    rating: "4.5",
-                    price: "€ 25",
-                    period: "روزانه",
-                    type: "apartment",
-                    image: "rectangle-2200.png",
-                    coordinates: [51.2194, 4.4025],
-                },
-            ];
-
-            this.apartments = this.apartments.concat(newApartments);
-
-            if (this.selectedType) {
-                this.filteredApartments = this.apartments.filter(
-                    apartment => apartment.type === this.selectedType
-                );
-            } else {
-                this.filteredApartments = this.apartments;
+            try {
+                message = message.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, '***');
+                message = message.replace(/(\+|0)?9\d{9}/g, '***');
+                return message;
+            } catch (error) {
+                this.handleError('Error sanitizing message', error);
+                return message;
             }
-
-            this.loading = false;
         },
+
+        /**
+         * Saves selected dates to reservation
+         */
+        saveDates() {
+            try {
+                let startDate = new Date(this.selectedDates[0]);
+                let endDate = new Date(this.selectedDates[this.selectedDates.length - 1]);
+                let days = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+                this.reservation.startDate = this.selectedDates[0];
+                this.reservation.endDate = this.selectedDates[this.selectedDates.length - 1];
+                this.reservation.days = days;
+                this.showCalendar = false;
+            } catch (error) {
+                this.handleError('Error saving dates', error);
+            }
+        },
+
+        /**
+         * Opens reservation modal for a specific apartment
+         * @param {Object} apartment - The apartment object
+         */
+        openReservationModal(apartment) {
+            try {
+                this.selectedApartment = apartment;
+                this.localShow = true;
+            } catch (error) {
+                this.handleError('Error opening reservation modal', error);
+            }
+        },
+
+        /**
+         * Filters apartments by type
+         * @param {string} type - The apartment type to filter by
+         */
+        filterApartments(type) {
+            try {
+                this.selectedType = type;
+                this.filteredApartments = this.apartments.filter(
+                    apartment => apartment.type === type
+                );
+            } catch (error) {
+                this.handleError('Error filtering apartments', error);
+            }
+        },
+
+        /**
+         * Loads more apartments (simulated)
+         */
+        loadMoreApartments() {
+            try {
+                if (this.loading) return;
+                this.loading = true;
+
+                const newApartments = [
+                    {
+                        id: 10,
+                        location: "آنتورپ،بلژیک",
+                        host: "میزبان علی",
+                        rating: "4.5",
+                        price: "€ 25",
+                        period: "روزانه",
+                        type: "apartment",
+                        image: "rectangle-2200.png",
+                        coordinates: [51.2194, 4.4025],
+                    },
+                ];
+
+                this.apartments = this.apartments.concat(newApartments);
+
+                if (this.selectedType) {
+                    this.filteredApartments = this.apartments.filter(
+                        apartment => apartment.type === this.selectedType
+                    );
+                } else {
+                    this.filteredApartments = this.apartments;
+                }
+
+                this.loading = false;
+            } catch (error) {
+                this.handleError('Error loading more apartments', error);
+                this.loading = false;
+            }
+        },
+
+        /**
+         * Opens apartment detail view
+         * @param {Object} item - The apartment object
+         */
         openApartmentDetail(item) {
-            this.selectedApartment = item;
-            this.showDetail = true;
-        },
-        closeModal() {
-            this.localShow = false;
+            try {
+                this.selectedApartment = item;
+                this.showDetail = true;
+            } catch (error) {
+                this.handleError('Error opening apartment detail', error);
+            }
         },
 
+        /**
+         * Closes the modal
+         */
+        closeModal() {
+            try {
+                this.localShow = false;
+            } catch (error) {
+                this.handleError('Error closing modal', error);
+            }
+        },
+
+        /**
+         * Opens guest edit modal
+         */
         editGuests() {
-            this.showEditGuestsModal = true;
+            try {
+                this.showEditGuestsModal = true;
+            } catch (error) {
+                this.handleError('Error editing guests', error);
+            }
         },
+
+        /**
+         * Saves guest information
+         */
         saveGuestInfo() {
-            this.showEditGuestsModal = false;
+            try {
+                this.showEditGuestsModal = false;
+            } catch (error) {
+                this.handleError('Error saving guest info', error);
+            }
         },
+
+        /**
+         * Closes the houses content view
+         */
         closeHousesContent() {
-            this.$emit('close');
-            this.localShow = false;
+            try {
+                this.$emit('close');
+                this.localShow = false;
+            } catch (error) {
+                this.handleError('Error closing houses content', error);
+            }
         },
+
+        /**
+         * Handles errors consistently
+         * @param {string} message - Error message
+         * @param {Error} error - The error object
+         */
+        handleError(message, error) {
+            // You can replace this with your preferred error handling (e.g., show error to user)
+            console.error(message, error);
+            this.$emit('error', { message, error });
+        }
     },
     mounted() {
-        this.filteredApartments = this.apartments;
-    },
+        try {
+            this.filteredApartments = this.apartments;
+        } catch (error) {
+            this.handleError('Error in mounted hook', error);
+        }
+    }
 };
-
 </script>
 
 <style scoped>
-
 .ad-container {
     display: flex;
     flex-direction: column;
@@ -633,7 +763,6 @@ export default {
     background-color: var(--background-color);
     width: 50px;
     height: 50px;
-
 }
 
 .message {
@@ -689,7 +818,6 @@ export default {
 
 .AdsSetting2 {
     margin-top: 15px;
-
 }
 
 .Ads {

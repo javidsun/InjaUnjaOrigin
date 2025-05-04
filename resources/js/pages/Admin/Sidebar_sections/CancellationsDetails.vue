@@ -35,7 +35,6 @@
                                             <v-card-actions>
                                                 <v-btn @click="exportData('total')" color="primary">Export</v-btn>
                                             </v-card-actions>
-
                                         </v-card>
                                     </v-col>
                                     <v-col cols="12" md="6" lg="3">
@@ -91,10 +90,11 @@
                 </v-row>
             </v-container>
         </v-main>
+
         <v-dialog v-model="modalOpen" max-width="800px">
             <v-card>
                 <v-card-title>
-                    {{ selectedType === 'total' ? 'Total Cancellations' : selectedType === 'host_schedule_change' ? 'Host Schedule Change' : selectedType === 'payment_issue' ? 'Payment Issue' : 'User Cancellations' }}
+                    {{ modalTitle }}
                 </v-card-title>
                 <v-card-text>
                     <v-table>
@@ -144,94 +144,142 @@
     </v-app>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
+<script>
+//Todo:{cancellationReasons:reasonKey/count/icon/color}
+//Todo:{cancellations:id/name/reason/date/userName/status/amount}
+//Todo:{host_schedule_change:id/name/reason/date/userName/status/amount}
+//Todo:{payment_issue:id/name/reason/date/userName/status/amount}
+//Todo:{user_cancellations:id/name/reason/date/userName/status/amount}
 
 import Sidebar from "../Sidebar.vue";
-import { ref, computed } from 'vue';
-import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 import * as XLSX from 'xlsx';
 
-const drawer = ref(true);
-const modalOpen = ref(false);
-const detailModalOpen = ref(false);
-const selectedType = ref('');
-const selectedData = ref([]);
-const selectedDetail = ref({});
+export default {
+    components: {
+        Sidebar,
+        Searchbar,
+        Darkmood,
+        LanguageSwitcher
+    },
+    data() {
+        return {
+            drawer: true,
+            modalOpen: false,
+            detailModalOpen: false,
+            selectedType: '',
+            selectedData: [],
+            selectedDetail: {},
+            cancellationDetails: {
+                totalCancellations: 15,
+                cancellationReasons: [
+                    { reasonKey: "Admin_Reports.host_schedule_change", count: 8, icon: "mdi-calendar-remove", color: "blue" },
+                    { reasonKey: "Admin_Reports.payment_issue", count: 5, icon: "mdi-credit-card-off", color: "red" },
+                    { reasonKey: "Admin_Reports.other", count: 2, icon: "mdi-help-circle", color: "gray" },
+                ],
+            },
+            cancellations: {
+                total: [
+                    { id: 1, name: 'Order 101', reason: 'System error', date: '2023-10-01', userName: 'John Doe', status: 'Cancelled', amount: 100 },
+                    { id: 2, name: 'Order 102', reason: 'Timeout issue', date: '2023-10-02', userName: 'Jane Smith', status: 'Cancelled', amount: 150 },
+                    { id: 3, name: 'Order 201', reason: 'Host schedule change', date: '2023-10-03', userName: 'Alice Johnson', status: 'Cancelled', amount: 200 },
+                    { id: 4, name: 'Order 202', reason: 'Host unavailable', date: '2023-10-04', userName: 'Bob Brown', status: 'Cancelled', amount: 250 },
+                    { id: 5, name: 'Order 301', reason: 'Payment failed', date: '2023-10-05', userName: 'Charlie Davis', status: 'Cancelled', amount: 300 },
+                    { id: 6, name: 'Order 302', reason: 'Payment issue', date: '2023-10-06', userName: 'Eva Green', status: 'Cancelled', amount: 350 },
+                    { id: 7, name: 'Order 401', reason: 'User request', date: '2023-10-07', userName: 'Frank White', status: 'Cancelled', amount: 400 },
+                    { id: 8, name: 'Order 402', reason: 'Duplicate order', date: '2023-10-08', userName: 'Grace Black', status: 'Cancelled', amount: 450 },
+                ],
+                host_schedule_change: [
+                    { id: 1, name: 'Order 101', reason: 'System error', date: '2023-10-01', userName: 'John Doe', status: 'Cancelled', amount: 100 },
+                    { id: 2, name: 'Order 102', reason: 'Timeout issue', date: '2023-10-02', userName: 'Jane Smith', status: 'Cancelled', amount: 150 },
+                    { id: 3, name: 'Order 201', reason: 'Host schedule change', date: '2023-10-03', userName: 'Alice Johnson', status: 'Cancelled', amount: 200 },
+                    { id: 4, name: 'Order 202', reason: 'Host unavailable', date: '2023-10-04', userName: 'Bob Brown', status: 'Cancelled', amount: 250 },
+                ],
+                payment_issue: [
+                    { id: 5, name: 'Order 301', reason: 'Payment failed', date: '2023-10-05', userName: 'Charlie Davis', status: 'Cancelled', amount: 300 },
+                    { id: 6, name: 'Order 302', reason: 'Payment issue', date: '2023-10-06', userName: 'Eva Green', status: 'Cancelled', amount: 350 },
+                ],
+                user_cancellations: [
+                    { id: 7, name: 'Order 401', reason: 'User request', date: '2023-10-07', userName: 'Frank White', status: 'Cancelled', amount: 400 },
+                    { id: 8, name: 'Order 402', reason: 'Duplicate order', date: '2023-10-08', userName: 'Grace Black', status: 'Cancelled', amount: 450 },
+                ],
+            },
+            cancellationTableHeaders: [
+                { textKey: "Admin_Reports.reason", value: "reason" },
+                { textKey: "Admin_Reports.count", value: "count" },
+            ]
+        }
+    },
+    computed: {
+        computedCancellationTableHeaders() {
+            return [
+                { text: 'ID', value: 'id' },
+                { text: 'Order Name', value: 'name' },
+                { text: 'Reason', value: 'reason' },
+                { text: 'Date', value: 'date' },
+                { text: 'User Name', value: 'userName' },
+                { text: 'Status', value: 'status' },
+                { text: 'Amount', value: 'amount' },
+                { text: 'Actions', value: 'actions' },
+            ];
+        },
+        modalTitle() {
+            const titles = {
+                'total': 'Total Cancellations',
+                'host_schedule_change': 'Host Schedule Change',
+                'payment_issue': 'Payment Issue',
+                'user_cancellations': 'User Cancellations'
+            };
+            return titles[this.selectedType] || 'Cancellation Details';
+        }
+    },
+    methods: {
+        translate,
+        openModal(type) {
+            try {
+                this.selectedType = type;
+                this.selectedData = this.cancellations[type];
+                this.modalOpen = true;
+            } catch (error) {
+                this.handleError('Failed to open modal', error);
+            }
+        },
 
-const cancellationDetails = ref({
-    totalCancellations: 15,
-    cancellationReasons: [
-        { reasonKey: "Admin_Reports.host_schedule_change", count: 8, icon: "mdi-calendar-remove", color: "blue" },
-        { reasonKey: "Admin_Reports.payment_issue", count: 5, icon: "mdi-credit-card-off", color: "red" },
-        { reasonKey: "Admin_Reports.other", count: 2, icon: "mdi-help-circle", color: "gray" },
-    ],
-});
-function exportData(type) {
-    const data = cancellations[type];
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-    XLSX.writeFile(workbook, `${type}_cancellations.xlsx`);
+        openDetailModal(item) {
+            try {
+                this.selectedDetail = item;
+                this.detailModalOpen = true;
+            } catch (error) {
+                this.handleError('Failed to open detail modal', error);
+            }
+        },
+
+        exportData(type) {
+            try {
+                const data = this.cancellations[type];
+                const worksheet = XLSX.utils.json_to_sheet(data);
+                const workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+                XLSX.writeFile(workbook, `${type}_cancellations.xlsx`);
+            } catch (error) {
+                this.handleError('Failed to export data', error);
+            }
+        },
+
+        showCancellationDetails(item) {
+            this.openDetailModal(item);
+        },
+
+
+        handleError(message, error) {
+            console.error(`${message}:`, error);
+            alert(`${message}. Please try again later.`);
+        }
+    }
 }
-
-const cancellations = {
-    total: [
-        { id: 1, name: 'Order 101', reason: 'System error', date: '2023-10-01', userName: 'John Doe', status: 'Cancelled', amount: 100 },
-        { id: 2, name: 'Order 102', reason: 'Timeout issue', date: '2023-10-02', userName: 'Jane Smith', status: 'Cancelled', amount: 150 },
-        { id: 3, name: 'Order 201', reason: 'Host schedule change', date: '2023-10-03', userName: 'Alice Johnson', status: 'Cancelled', amount: 200 },
-        { id: 4, name: 'Order 202', reason: 'Host unavailable', date: '2023-10-04', userName: 'Bob Brown', status: 'Cancelled', amount: 250 },
-        { id: 5, name: 'Order 301', reason: 'Payment failed', date: '2023-10-05', userName: 'Charlie Davis', status: 'Cancelled', amount: 300 },
-        { id: 6, name: 'Order 302', reason: 'Payment issue', date: '2023-10-06', userName: 'Eva Green', status: 'Cancelled', amount: 350 },
-        { id: 7, name: 'Order 401', reason: 'User request', date: '2023-10-07', userName: 'Frank White', status: 'Cancelled', amount: 400 },
-        { id: 8, name: 'Order 402', reason: 'Duplicate order', date: '2023-10-08', userName: 'Grace Black', status: 'Cancelled', amount: 450 },
-    ],
-    host_schedule_change: [
-        { id: 1, name: 'Order 101', reason: 'System error', date: '2023-10-01', userName: 'John Doe', status: 'Cancelled', amount: 100 },
-        { id: 2, name: 'Order 102', reason: 'Timeout issue', date: '2023-10-02', userName: 'Jane Smith', status: 'Cancelled', amount: 150 },
-        { id: 3, name: 'Order 201', reason: 'Host schedule change', date: '2023-10-03', userName: 'Alice Johnson', status: 'Cancelled', amount: 200 },
-        { id: 4, name: 'Order 202', reason: 'Host unavailable', date: '2023-10-04', userName: 'Bob Brown', status: 'Cancelled', amount: 250 },
-    ],
-    payment_issue: [
-        { id: 5, name: 'Order 301', reason: 'Payment failed', date: '2023-10-05', userName: 'Charlie Davis', status: 'Cancelled', amount: 300 },
-        { id: 6, name: 'Order 302', reason: 'Payment issue', date: '2023-10-06', userName: 'Eva Green', status: 'Cancelled', amount: 350 },
-    ],
-    user_cancellations: [
-        { id: 7, name: 'Order 401', reason: 'User request', date: '2023-10-07', userName: 'Frank White', status: 'Cancelled', amount: 400 },
-        { id: 8, name: 'Order 402', reason: 'Duplicate order', date: '2023-10-08', userName: 'Grace Black', status: 'Cancelled', amount: 450 },
-    ],
-};
-
-function openModal(type) {
-    selectedType.value = type;
-    selectedData.value = cancellations[type];
-    modalOpen.value = true;
-}
-
-function openDetailModal(item) {
-    selectedDetail.value = item;
-    detailModalOpen.value = true;
-}
-
-const computedCancellationTableHeaders = computed(() => [
-    { text: 'ID', value: 'id' },
-    { text: 'Order Name', value: 'name' },
-    { text: 'Reason', value: 'reason' },
-    { text: 'Date', value: 'date' },
-    { text: 'User Name', value: 'userName' },
-    { text: 'Status', value: 'status' },
-    { text: 'Amount', value: 'amount' },
-    { text: 'Actions', value: 'actions' },
-]);
-
-const cancellationTableHeaders = ref([
-    { textKey: "Admin_Reports.reason", value: "reason" },
-    { textKey: "Admin_Reports.count", value: "count" },
-]);
 </script>
 
 <style scoped>

@@ -5,13 +5,12 @@
             <span class="field-text" v-show="!isMobile">{{ translate('Anyweek.anyweek') }}</span>
         </div>
 
-        <v-dialog v-model="showCalendar" max-width="400px" centered persistent class="custom-dialog">
+        <v-dialog v-model="showCalendar" max-width="350px" class="custom-dialog" @click:outside="closeCalendar">
             <v-card>
-                <v-card-text>
+                <v-card-text @click.stop>
                     <v-date-picker v-model="selectedDates" multiple></v-date-picker>
                 </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
+                <v-card-actions @click.stop>
                     <v-btn color="primary" @click="handleDateSelection">{{ translate('Ad.Search') }}</v-btn>
                     <v-btn color="grey" text @click="closeCalendar">{{ translate('Ad.Cancel') }}</v-btn>
                 </v-card-actions>
@@ -121,7 +120,7 @@ export default {
     align-items: center;
     gap: 8px;
     color: var(--text-color);
-    background-color: var(--search-background-color);
+    background-color: var(--background-color);
     padding: 10px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
@@ -132,8 +131,11 @@ export default {
     width: 40px;
     height: 40px;
 }
-
+.custom-dialog{
+    padding-top: 300px;
+}
 .field-text {
     font-size: 14px;
 }
+
 </style>

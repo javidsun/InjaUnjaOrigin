@@ -1,320 +1,296 @@
 <template>
-  <v-col class="field-wrapper" position="relative">
-    <div class="field-content" @click="toggleMenu">
-      <img
-        src="/assets/images/guests-icon.png"
-        alt="Guests Icon"
-        class="icon-img"
-      />
+    <v-col class="field-wrapper" position="relative">
+        <div class="field-content" @click="toggleMenu">
+            <img
+                src="/assets/images/guests-icon.png"
+                alt="Guests Icon"
+                class="icon-img"
+            />
+            <span class="field-text" v-show="!isMobile">{{ translate('guests.title') }}</span>
+        </div>
 
-      <span class="field-text" v-show="!isMobile">{{ translate('guests.title') }}</span>
-    </div>
+        <div v-if="isActive" class="modal-overlay" @click="toggleMenu"></div>
 
-    <div v-if="isActive" class="options-menu">
-      <div class="guest-field">
-        <div class="guest-info">
-          <span class="guest-title">{{ translate('guests.adults') }}</span>
-          <span class="guest-subtitle">{{ translate('guests.adultsSubtitle') }}</span>
-        </div>
-        <div class="guest-controls">
-          <button @click.stop="decrement('adults')" :disabled="adults === 0" class="control-btn">-</button>
-          <span class="guest-count">{{ adults }}</span>
-          <button @click.stop="increment('adults')" class="control-btn">+</button>
-        </div>
-      </div>
+        <div v-if="isActive" class="modal-content">
+            <div class="guest-field">
+                <div class="guest-info">
+                    <span class="guest-title">{{ translate('guests.adults') }}</span>
+                    <span class="guest-subtitle">{{ translate('guests.adultsSubtitle') }}</span>
+                </div>
+                <div class="guest-controls">
+                    <button @click.stop="decrement('adults')" :disabled="adults === 0" class="control-btn">-</button>
+                    <span class="guest-count">{{ adults }}</span>
+                    <button @click.stop="increment('adults')" class="control-btn">+</button>
+                </div>
+            </div>
 
-      <div class="guest-field">
-        <div class="guest-info">
-          <span class="guest-title">{{ translate('guests.children') }}</span>
-          <span class="guest-subtitle">{{ translate('guests.childrenSubtitle') }}</span>
-        </div>
-        <div class="guest-controls">
-          <button @click.stop="decrement('children')" :disabled="children === 0" class="control-btn">-</button>
-          <span class="guest-count">{{ children }}</span>
-          <button @click.stop="increment('children')" class="control-btn">+</button>
-        </div>
-      </div>
+            <div class="guest-field">
+                <div class="guest-info">
+                    <span class="guest-title">{{ translate('guests.children') }}</span>
+                    <span class="guest-subtitle">{{ translate('guests.childrenSubtitle') }}</span>
+                </div>
+                <div class="guest-controls">
+                    <button @click.stop="decrement('children')" :disabled="children === 0" class="control-btn">-</button>
+                    <span class="guest-count">{{ children }}</span>
+                    <button @click.stop="increment('children')" class="control-btn">+</button>
+                </div>
+            </div>
 
-      <div class="guest-field">
-        <div class="guest-info">
-          <span class="guest-title">{{ translate('guests.infants') }}</span>
-          <span class="guest-subtitle">{{ translate('guests.infantsSubtitle') }}</span>
-        </div>
-        <div class="guest-controls">
-          <button @click.stop="decrement('infants')" :disabled="infants === 0" class="control-btn">-</button>
-          <span class="guest-count">{{ infants }}</span>
-          <button @click.stop="increment('infants')" class="control-btn">+</button>
-        </div>
-      </div>
+            <div class="guest-field">
+                <div class="guest-info">
+                    <span class="guest-title">{{ translate('guests.infants') }}</span>
+                    <span class="guest-subtitle">{{ translate('guests.infantsSubtitle') }}</span>
+                </div>
+                <div class="guest-controls">
+                    <button @click.stop="decrement('infants')" :disabled="infants === 0" class="control-btn">-</button>
+                    <span class="guest-count">{{ infants }}</span>
+                    <button @click.stop="increment('infants')" class="control-btn">+</button>
+                </div>
+            </div>
 
-      <div class="guest-field">
-        <div class="guest-info">
-          <span class="guest-title">{{ translate('guests.pets') }}</span>
-          <span class="guest-subtitle">{{ translate('guests.petsSubtitle') }}</span>
+            <div class="guest-field">
+                <div class="guest-info">
+                    <span class="guest-title">{{ translate('guests.pets') }}</span>
+                    <span class="guest-subtitle">{{ translate('guests.petsSubtitle') }}</span>
+                </div>
+                <div class="guest-controls">
+                    <button @click.stop="decrement('pets')" :disabled="pets === 0" class="control-btn">-</button>
+                    <span class="guest-count">{{ pets }}</span>
+                    <button @click.stop="increment('pets')" class="control-btn">+</button>
+                </div>
+            </div>
         </div>
-        <div class="guest-controls">
-          <button @click.stop="decrement('pets')" :disabled="pets === 0" class="control-btn">-</button>
-          <span class="guest-count">{{ pets }}</span>
-          <button @click.stop="increment('pets')" class="control-btn">+</button>
-        </div>
-      </div>
-    </div>
-  </v-col>
+    </v-col>
 </template>
 
 <script>
-import { translate } from '../../../../store/languageStore';
+import { translate } from '@/store/languageStore';
 
 export default {
-  setup() {
-    return { translate };
-  },
-  props: {
-    activeMenu: String,
-  },
-  data() {
-    return {
-      isMobile: false,
-      adults: 0,
-      children: 0,
-      infants: 0,
-      pets: 0,
-    };
-  },
-  computed: {
-    isActive() {
-      return this.activeMenu === "Guests";
+    setup() {
+        return { translate };
     },
-  },
-  methods: {
-    toggleMenu() {
-      this.$emit("update-active-menu", this.isActive ? null : "Guests");
+    props: {
+        activeMenu: String,
     },
-    increment(type) {
-      this[type]++;
+    data() {
+        return {
+            isMobile: false,
+            adults: 0,
+            children: 0,
+            infants: 0,
+            pets: 0,
+        };
     },
-    decrement(type) {
-      if (this[type] > 0) this[type]--;
+    computed: {
+        isActive() {
+            return this.activeMenu === "Guests";
+        },
     },
-    checkScreenSize() {
-      this.isMobile = window.innerWidth <= 950;
+    methods: {
+        toggleMenu() {
+            this.$emit("update-active-menu", this.isActive ? null : "Guests");
+        },
+        increment(type) {
+            this[type]++;
+        },
+        decrement(type) {
+            if (this[type] > 0) this[type]--;
+        },
+        checkScreenSize() {
+            this.isMobile = window.innerWidth <= 950;
+        },
     },
-  },
-  mounted() {
-    this.checkScreenSize();
-    window.addEventListener("resize", this.checkScreenSize);
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.checkScreenSize);
-  },
+    mounted() {
+        this.checkScreenSize();
+        window.addEventListener("resize", this.checkScreenSize);
+    },
+    beforeDestroy() {
+        window.removeEventListener("resize", this.checkScreenSize);
+    },
 };
 </script>
 
 <style scoped>
 .field-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
 }
 
 .field-content {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-color);
-  background-color: var(--search-background-color);
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .icon-img {
-  width: 40px;
-  height: 40px;
+    width: 40px;
+    height: 40px;
 }
 
 .field-text {
-  font-size: 14px;
+    font-size: 14px;
 }
 
-.options-menu {
-  position: fixed;
-  top: 50px;
-  left: 0;
-  width: 17%;
-  background: var(--search-background-color);
-  color: var(--text-color);
-  z-index: 9999;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  box-sizing: border-box;
-  max-height: 350px;
-  overflow-y: auto;
-  margin-left: 55%;
-  line-height: 1.2;
-  transition: background-color 0.3s, color 0.3s;
+/* Modal Overlay Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+}
+
+/* Modal Content Styles */
+.modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
+    background: var(--search-background-color);
+    color: var(--text-color);
+    z-index: 9999;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    box-sizing: border-box;
+    max-height: 80vh;
+    overflow-y: auto;
+    line-height: 1.2;
+    transition: all 0.3s ease;
 }
 
 .guest-field {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 12px 0;
-  padding: 10px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  background: var(--background-color--groups);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 12px 0;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--background-color--groups);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .guest-info {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .guest-title {
-  font-weight: bold;
-  color: var(--text-color);
+    font-weight: bold;
+    color: var(--text-color);
+    font-size: 14px;
 }
 
 .guest-subtitle {
-  font-size: 10px;
-  color: var(--text-color);
+    font-size: 12px;
+    color: var(--text-color);
+    opacity: 0.8;
 }
 
-
 .guest-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .control-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--search-background-color);
-  border: 1px solid var(--border-color);
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--search-background-color);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    transition: all 0.2s ease;
+}
+
+.control-btn:hover:not(:disabled) {
+    background: var(--border-color);
 }
 
 .control-btn:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-  color: var(--text-color);
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 
 .guest-count {
-  width: 24px;
-  text-align: center;
-  font-weight: bold;
-  color: var(--text-color);
+    min-width: 24px;
+    text-align: center;
+    font-weight: bold;
+    color: var(--text-color);
 }
 
-@media (max-width: 1030px) {
-  .options-menu {
-    width: 20%;
-    left: 5%;
-    top: 50px;
-    padding: 10px;
-    max-height: 600px;
-  }
+@media (max-width: 768px) {
+    .modal-content {
+        width: 85%;
+        padding: 15px;
+    }
 
-  .guest-field {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 8px;
-    margin: 8px 0;
-  }
+    .guest-field {
+        padding: 10px;
+        margin: 10px 0;
+    }
 
-  .guest-title {
-    font-size: 12px;
-  }
+    .guest-title {
+        font-size: 13px;
+    }
 
-  .guest-subtitle {
-    font-size: 9px;
-  }
+    .guest-subtitle {
+        font-size: 11px;
+    }
 
-  .guest-controls {
-    gap: 6px;
-  }
-
-  .control-btn {
-    width: 28px;
-    height: 28px;
-    font-size: 10px;
-  }
-
-  .guest-count {
-    width: 20px;
-    font-size: 12px;
-  }
+    .control-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
 }
-@media (max-width: 1030px) {
+
+@media (max-width: 480px) {
+    .modal-content {
+        width: 90%;
+        padding: 12px;
+    }
+
+    .guest-field {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .guest-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+
     .field-text {
         display: none;
     }
+
     .icon-img {
         width: 30px;
         height: 30px;
     }
-    .guest-field {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 5px;
-        margin: 5px 0;
-        gap: 5px;
-    }
-    .guest-info {
-        flex: 1;
-    }
-    .guest-controls {
-        flex: 1;
-        justify-content: flex-end;
-        gap: 4px;
-    }
-    .control-btn {
-        width: 24px;
-        height: 24px;
-        font-size: 10px;
-    }
-    .guest-count {
-        width: 18px;
-        font-size: 10px;
-    }
-}
-
-@media (max-width: 635px) {
-  .options-menu {
-    width: 35%;
-    margin-left: 20%;
-  }
-}
-
-@media (max-width: 350px) {
-  .options-menu {
-    width: 50%;
-    margin-left: 20%;
-  }
-}
-
-@media (max-width: 250px) {
-  .options-menu {
-    width: 70%;
-    margin-left: 20%;
-  }
 }
 </style>

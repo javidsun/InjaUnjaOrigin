@@ -13,7 +13,7 @@
                     <v-list-item
                         v-for="(item, index) in menuItems"
                         :key="index"
-                        @click="openModal(item.component)">
+                        @click="handleMenuItemClick(item.component)">
                         <v-list-item-content class="v-list-item-content">
                             <v-list-item-icon>
                                 <v-icon class="menu-icon">{{ item.icon }}</v-icon>
@@ -25,65 +25,96 @@
             </v-list>
         </v-menu>
 
-        <v-dialog v-show="modalActive" v-model="modalActive" max-width="900px" @update:modelValue="closeModal">
+        <v-dialog v-show="modalActive" v-model="modalActive" max-width="900px" @update:modelValue="handleModalClose">
             <v-card-text>
                 <component :is="selectedComponent" ref="modalRef"></component>
             </v-card-text>
         </v-dialog>
-
     </div>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
-
-import {ref, shallowRef, nextTick} from "vue";
-import {translate} from "@/store/languageStore.js";
+<script>
+import { translate } from "@/store/languageStore";
 import RegisterUser from "../../RegisterUser.vue";
 import Login from "../../Login.vue";
 import GiftModal from "../../layout/menu_component/GiftCardatFirst.vue";
 import InjaUnja from "../../layout/menu_component/InjaUnja.vue";
 import HelpCenter from "../../Users/SettingModals/SupportModal.vue";
 
+export default {
+    name: 'HamburgerMenu',
 
-const menuActive = ref(false);
-const modalActive = ref(false);
-const selectedComponent = shallowRef(null);
-const modalRef = ref(null);
+    data() {
+        return {
+            menuActive: false,
+            modalActive: false,
+            selectedComponent: null,
+            modalRef: null,
+            menuItems: [
+                { title: "menu.register", icon: "mdi-account-plus", component: RegisterUser },
+                { title: "menu.login", icon: "mdi-login", component: Login },
+                { title: "menu.giftCard", icon: "mdi-gift", component: GiftModal },
+                { title: "menu.injaUnja", icon: "mdi-map-marker", component: InjaUnja },
+                { title: "menu.helpCenter", icon: "mdi-help-circle", component: HelpCenter }
+            ]
+        };
+    },
 
-const openModal = async (component) => {
-    console.log("Opening modal for component:", component);
-    selectedComponent.value = component;
-    modalActive.value = true;
+    methods: {
+        translate,
 
+        async handleMenuItemClick(component) {
+            try {
+                this.selectedComponent = component;
+                this.modalActive = true;
 
-    await nextTick();
+                await this.$nextTick();
 
-    console.log("Modal ref:", modalRef.value);
-    if (modalRef.value && modalRef.value.openModal) {
-        modalRef.value.openModal();
-    } else {
-        console.error("Modal ref or openModal method is not available.");
+                if (this.modalRef && typeof this.modalRef.openModal === 'function') {
+                    this.modalRef.openModal();
+                } else {
+                    this.showWarning("The requested modal could not be opened properly.");
+                }
+            } catch (error) {
+                this.showError("An error occurred while opening the modal", error);
+            }
+        },
+
+        handleModalClose() {
+            try {
+                this.modalActive = false;
+                this.selectedComponent = null;
+            } catch (error) {
+                this.showError("An error occurred while closing the modal", error);
+            }
+        },
+
+        showWarning(message) {
+            console.warn(message);
+            this.$emit('show-notification', {
+                type: 'warning',
+                message: message,
+                timeout: 5000
+            });
+        },
+
+        showError(message, error) {
+            console.error(message, error);
+            this.$emit('show-notification', {
+                type: 'error',
+                message: `${message}. Please try again later.`,
+                timeout: 8000
+            });
+        }
+    },
+
+    mounted() {
+        this.$emit('ready', {
+            openModal: this.handleMenuItemClick
+        });
     }
 };
-
-const closeModal = () => {
-    modalActive.value = false;
-    selectedComponent.value = null;
-};
-
-const menuItems = [
-    {title: "menu.register", icon: "mdi-account-plus", component: RegisterUser},
-    {title: "menu.login", icon: "mdi-login", component: Login},
-    {title: "menu.giftCard", icon: "mdi-gift", component: GiftModal},
-    {title: "menu.injaUnja", icon: "mdi-map-marker", component: InjaUnja},
-    {title: "menu.helpCenter", icon: "mdi-help-circle", component: HelpCenter}
-];
-defineExpose({
-    openModal
-});
 </script>
-
 
 <style scoped>
 .menu_open {
@@ -130,4 +161,3 @@ defineExpose({
     align-items: center;
 }
 </style>
-

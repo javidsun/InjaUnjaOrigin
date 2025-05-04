@@ -18,7 +18,7 @@
         <v-main :class="{ 'main-expanded': drawer && !isMobile, 'main-collapsed': !drawer }">
             <v-container fluid>
                 <v-row>
-                    <v-col cols="12" >
+                    <v-col cols="12">
                         <v-card class="elevation-2 rounded-lg border1">
                             <v-card-title class="text-h5 primary--text">
                                 <v-icon class="mr-2">mdi-account-multiple</v-icon>
@@ -32,7 +32,7 @@
                 </v-row>
 
                 <v-row>
-                    <v-col cols="12" >
+                    <v-col cols="12">
                         <v-card class="elevation-2 rounded-lg border1">
                             <v-card-title>
                                 <v-btn color="primary" @click="openUserDialog" elevation="2" rounded>
@@ -61,6 +61,7 @@
                         </v-card>
                     </v-col>
                 </v-row>
+
                 <v-dialog v-model="userDialog" max-width="600px">
                     <v-card class="elevation-2 rounded-lg">
                         <v-card-title class="headline text-center">
@@ -123,119 +124,172 @@
     </v-app>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
+<script>
+//Todo:id/name/email/role/active/created_at/updated_at
+//Todo:create_user & update_user : description/name/email/role/active
 
 import Sidebar from "../Sidebar.vue";
-import { ref, computed } from 'vue';
-import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
-import { translate } from "@/store/languageStore.js";
-const isMobile = computed(() => window.innerWidth <= 600);
+import { translate } from "@/store/languageStore";
 
-const userDialog = ref(false);
-const historyDialog = ref(false);
-const editingUser = ref(false);
-const valid = ref(false);
-const props = defineProps({
-    type: Array,
-});
+export default {
+    components: {
+        Sidebar,
+        Searchbar,
+        Darkmood,
+        LanguageSwitcher
+    },
 
-const users = ref([
-    { id: 1, name: 'Ali Reza', email: 'ali@example.com', role: ('Normal User'), active: true },
-    { id: 2, name: 'Fatemeh', email: 'fatemeh@example.com', role: ('Host'), active: false },
-]);
+    data() {
+        return {
+            isDarkMode: true,
+            drawer: true,
+            userDialog: false,
+            historyDialog: false,
+            editingUser: false,
+            valid: false,
+            selectedUser: { name: '' },
 
-const userActivities = computed(() => [
-    { id: 1, activity: translate('Admin_UserManagment.activities.house_reservation'), date: '2025-03-10', status: translate('Admin_UserManagment.statuses.completed') },
-    { id: 2, activity: translate('Admin_UserManagment.activities.payment'), date: '2025-03-09', status: translate('Admin_UserManagment.statuses.pending') },
-    { id: 3, activity: translate('Admin_UserManagment.activities.comment'), date: '2025-03-08', status: translate('Admin_UserManagment.statuses.completed') }
-]);
+            users: [
+                { id: 1, name: 'Ali Reza', email: 'ali@example.com', role: 'Normal User', active: true },
+                { id: 2, name: 'Fatemeh', email: 'fatemeh@example.com', role: 'Host', active: false },
+            ],
 
-const toggleUserStatus = (user) => {
-    const userIndex = users.value.findIndex(u => u.id === user.id);
-    if (userIndex !== -1) {
-        users.value[userIndex].active = !users.value[userIndex].active;
+            userForm: {
+                name: '',
+                email: '',
+                role: '',
+                active: false
+            },
+
+            userHeaders: [
+                { text: translate('Admin_UserManagment.user_name'), align: 'start', key: 'name', sortable: true },
+                { text: translate('Admin_UserManagment.user_email'), key: 'email' },
+                { text: translate('Admin_UserManagment.user_role'), key: 'role' },
+                { text: translate('Admin_UserManagment.user_active'), key: 'active' },
+                { text: translate('Admin_UserManagment.actions'), key: 'actions', sortable: false }
+            ],
+
+            activityHeaders: [
+                { text: translate('Admin_UserManagment.activity'), align: 'start', key: 'activity' },
+                { text: translate('Admin_UserManagment.date'), key: 'date' },
+                { text: translate('Admin_UserManagment.status'), key: 'status' }
+            ],
+
+            rules: {
+                required: value => !!value || translate('Admin_UserManagment.validation.required'),
+                email: value => /.+@.+\..+/.test(value) || translate('Admin_UserManagment.validation.invalid_email')
+            }
+        };
+    },
+
+    computed: {
+        isMobile() {
+            return window.innerWidth <= 600;
+        },
+
+        roles() {
+            return ['Normal User', 'Host', 'Admin'];
+        },
+
+        userActivities() {
+            return [
+                { id: 1, activity: translate('Admin_UserManagment.activities.house_reservation'), date: '2025-03-10', status: translate('Admin_UserManagment.statuses.completed') },
+                { id: 2, activity: translate('Admin_UserManagment.activities.payment'), date: '2025-03-09', status: translate('Admin_UserManagment.statuses.pending') },
+                { id: 3, activity: translate('Admin_UserManagment.activities.comment'), date: '2025-03-08', status: translate('Admin_UserManagment.statuses.completed') }
+            ];
+        }
+    },
+
+    methods: {
+        translate,
+        toggleUserStatus(user) {
+            try {
+                const userIndex = this.users.findIndex(u => u.id === user.id);
+                if (userIndex !== -1) {
+                    this.users[userIndex].active = !this.users[userIndex].active;
+                    this.showSuccessMessage(translate('Admin_UserManagment.status_updated'));
+                }
+            } catch (error) {
+                this.showErrorMessage(translate('Admin_UserManagment.status_update_failed'));
+            }
+        },
+
+        openUserDialog() {
+            this.userForm = { name: '', email: '', role: '', active: false };
+            this.editingUser = false;
+            this.userDialog = true;
+        },
+
+        saveUser() {
+            try {
+                if (!this.valid) return;
+
+                if (this.editingUser) {
+                    const userIndex = this.users.findIndex(u => u.id === this.userForm.id);
+                    if (userIndex !== -1) {
+                        this.users[userIndex] = { ...this.userForm };
+                        this.showSuccessMessage(translate('Admin_UserManagment.user_updated'));
+                    }
+                } else {
+                    const newUser = {
+                        ...this.userForm,
+                        id: this.users.length > 0 ? Math.max(...this.users.map(u => u.id)) + 1 : 1
+                    };
+                    this.users.push(newUser);
+                    this.showSuccessMessage(translate('Admin_UserManagment.user_added'));
+                }
+
+                this.userDialog = false;
+            } catch (error) {
+                this.showErrorMessage(translate('Admin_UserManagment.save_failed'));
+            }
+        },
+
+        editUserRole(user) {
+            try {
+                this.userForm = { ...user };
+                this.editingUser = true;
+                this.userDialog = true;
+            } catch (error) {
+                this.showErrorMessage(translate('Admin_UserManagment.edit_failed'));
+            }
+        },
+
+        viewUserHistory(user) {
+            try {
+                this.selectedUser = user;
+                this.historyDialog = true;
+            } catch (error) {
+                this.showErrorMessage(translate('Admin_UserManagment.history_load_failed'));
+            }
+        },
+
+        showSuccessMessage(message) {
+            this.$root.$emit('show-alert', {
+                type: 'success',
+                message: message
+            });
+        },
+
+        showErrorMessage(message) {
+            this.$root.$emit('show-alert', {
+                type: 'error',
+                message: message
+            });
+        },
+
+        toggleDarkMode() {
+            this.isDarkMode = !this.isDarkMode;
+        }
     }
-};
-
-const isDarkMode = ref(true);
-const drawer = ref(true);
-
-const toggleDarkMode = () => {
-    isDarkMode.value = !isDarkMode.value;
-};
-
-const userHeaders = [
-    { text: translate('Admin_UserManagment.user_name'), align: 'start', key: 'name', sortable: true },
-    { text: translate('Admin_UserManagment.user_email'), key: 'email' },
-    { text: translate('Admin_UserManagment.user_role'), key: 'role' },
-    { text: translate('Admin_UserManagment.user_active'), key: 'active' },
-    { text: translate('Admin_UserManagment.actions'), key: 'actions', sortable: false }
-];
-
-const activityHeaders = [
-    { text: translate('Admin_UserManagment.activity'), align: 'start', key: 'activity' },
-    { text: translate('Admin_UserManagment.date'), key: 'date' },
-    { text: translate('Admin_UserManagment.status'), key: 'status' }
-];
-
-const roles = computed(() => [
-    ('Normal User'),
-    ('Host'),
-    ('Admin'),
-]);
-
-const userForm = ref({
-    name: '',
-    email: '',
-    role: '',
-    active: false
-});
-
-const selectedUser = ref({ name: '' });
-
-const rules = computed(() => ({
-    required: value => !!value || translate('Admin_UserManagment.validation.required'),
-    email: value => /.+@.+\..+/.test(value) || translate('Admin_UserManagment.validation.invalid_email')
-}));
-
-const openUserDialog = () => {
-    userForm.value = { name: '', email: '', role: '', active: false };
-    editingUser.value = false;
-    userDialog.value = true;
-};
-
-const saveUser = () => {
-    if (!valid.value) return;
-
-    if (editingUser.value) {
-        const userIndex = users.value.findIndex(u => u.id === userForm.value.id);
-        users.value[userIndex] = { ...userForm.value };
-    } else {
-        const newUser = { ...userForm.value, id: users.value.length + 1 };
-        users.value.push(newUser);
-    }
-
-    userDialog.value = false;
-};
-
-const editUserRole = user => {
-    userForm.value = { ...user };
-    editingUser.value = true;
-    userDialog.value = true;
-};
-
-const viewUserHistory = user => {
-    selectedUser.value = user;
-    historyDialog.value = true;
 };
 </script>
 
-
 <style scoped>
+/* Styles remain the same as original */
 .v-data-table th {
     background-color: #f0f0f0;
     font-weight: bold;
@@ -362,5 +416,4 @@ v-container {
         width: 50px;
     }
 }
-
 </style>

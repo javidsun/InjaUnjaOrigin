@@ -53,7 +53,6 @@
                                     <v-dialog v-model="messageDialog" max-width="500">
                                         <v-card>
                                             <v-card-title>
-
                                                 {{ translate('Admin_Finance.send_message') }}</v-card-title>
                                             <v-card-text>
                                                 <v-textarea
@@ -74,7 +73,6 @@
                                             </v-card-actions>
                                         </v-card>
                                     </v-dialog>
-
                                 </v-row>
                             </v-card-text>
                         </v-card>
@@ -206,335 +204,366 @@
     </v-app>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
+<script>
+//Todo:{getUserStats:url/description/response:/{bestUserLastMonth:{user/successfulAttempts/unsuccessfulAttempts}/worstUserLastMonth:{user/successfulAttempts/unsuccessfulAttempts}
+//Todo:{getPayments:url/description/response:/{id/user/amount/date/status/failedAttempts/userId}
+//Todo:{getRefundRequests:url/description/response:/{id/user/amount/date/status/failedAttempts/userId}
+//Todo:{sendMessage:url/description/request:/{userId/message/image}
+//Todo:{blockUser:url/description/request:/{userId:note}
+//Todo:{processRefund:url/description/request:/{action:note}
 
-import { ref, computed } from 'vue';
+
 import Sidebar from "../Sidebar.vue";
 import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
-const drawer = ref(true);
-
-const paymentHeaders = ref([
-    { text: translate('Admin_Finance.payments_list'), value: "id" },
-    { text: translate('Admin_Finance.user'), value: "user" },
-    { text: translate('Admin_Finance.amount'), value: "amount" },
-    { text: translate('Admin_Finance.date'), value: "date" },
-    { text: translate('Admin_Finance.status'), value: "status" },
-    { text: translate('Admin_Finance.actions'), value: "actions" },
-]);
-
-const payments = ref([
-    {
-        id: 1,
-        user: "Ali Alavi",
-        amount: "100 Euro",
-        date: "2023-02-01",
-        status: "Successful",
-        failedAttempts: 0,
-        userId: 101,
+export default {
+    components: {
+        Sidebar,
+        Searchbar,
+        Darkmood,
+        LanguageSwitcher
     },
-    {
-        id: 5,
-        user: "Ali Alavi",
-        amount: "52 Euro",
-        date: "2023-02-01",
-        status: "Successful",
-        failedAttempts: 0,
-        userId: 101,
+    data() {
+        return {
+            drawer: true,
+            messageDialog: false,
+            messageText: "",
+            messageImage: null,
+            selectedUserForMessage: null,
+            blockUserDialog: false,
+            approveRefundDialog: false,
+            rejectRefundDialog: false,
+            blockUserNote: "",
+            approveRefundNote: "",
+            rejectRefundNote: "",
+            selectedUser: null,
+            selectedRefund: null,
+
+            paymentHeaders: [
+                { text: translate('Admin_Finance.payments_list'), value: "id" },
+                { text: translate('Admin_Finance.user'), value: "user" },
+                { text: translate('Admin_Finance.amount'), value: "amount" },
+                { text: translate('Admin_Finance.date'), value: "date" },
+                { text: translate('Admin_Finance.status'), value: "status" },
+                { text: translate('Admin_Finance.actions'), value: "actions" },
+            ],
+
+            payments: [
+                {
+                    id: 1,
+                    user: "Ali Alavi",
+                    amount: "100 Euro",
+                    date: "2023-02-01",
+                    status: "Successful",
+                    failedAttempts: 0,
+                    userId: 101,
+                },
+                {
+                    id: 5,
+                    user: "Ali Alavi",
+                    amount: "52 Euro",
+                    date: "2023-02-01",
+                    status: "Successful",
+                    failedAttempts: 0,
+                    userId: 101,
+                },
+                {
+                    id: 2,
+                    user: "Sara Ahmadi",
+                    amount: "120 Euro",
+                    date: "2023-02-05",
+                    status: "Unsuccessful",
+                    failedAttempts: 4,
+                    userId: 102,
+                },
+                {
+                    id: 3,
+                    user: "Majid Reshadat",
+                    amount: "158 Euro",
+                    date: "2023-02-06",
+                    status: "Unsuccessful",
+                    failedAttempts: 2,
+                    userId: 103,
+                },
+                {
+                    id: 4,
+                    user: "Samira rezai",
+                    amount: "25 Euro",
+                    date: "2023-01-06",
+                    status: "Successful",
+                    failedAttempts: 5,
+                    userId: 104,
+                },
+                {
+                    id: 6,
+                    user: "Sara Ahmadi",
+                    amount: "120 Euro",
+                    date: "2023-02-05",
+                    status: "Unsuccessful",
+                    failedAttempts: 4,
+                    userId: 102,
+                },
+                {
+                    id: 7,
+                    user: "Sara Ahmadi",
+                    amount: "100 Euro",
+                    date: "2023-02-03",
+                    status: "Unsuccessful",
+                    failedAttempts: 4,
+                    userId: 102,
+                },
+            ],
+
+            refundHeaders: [
+                { text: translate('Admin_Finance.refund_requests'), value: "id" },
+                { text: translate('Admin_Finance.user'), value: "user" },
+                { text: translate('Admin_Finance.amount'), value: "amount" },
+                { text: translate('Admin_Finance.requestDate'), value: "requestDate" },
+                { text: translate('Admin_Finance.status'), value: "status" },
+                { text: translate('Admin_Finance.actions'), value: "actions" },
+            ],
+
+            refundRequests: [
+                {
+                    id: 1,
+                    user: "Ali Alavi",
+                    amount: "100 Euro",
+                    date: "2023-02-05",
+                    status: "Waiting",
+                    failedAttempts: 0,
+                    userId: 101,
+                },
+                {
+                    id: 2,
+                    user: "Sara Ahmadi",
+                    amount: "120 Euro",
+                    date: "2023-02-05",
+                    status: "Waiting",
+                    failedAttempts: 4,
+                    userId: 102,
+                },
+            ]
+        };
     },
-    {
-        id: 2,
-        user: "Sara Ahmadi",
-        amount: "120 Euro",
-        date: "2023-02-05",
-        status: "Unsuccessful",
-        failedAttempts: 4,
-        userId: 102,
-    },
-    {
-        id: 3,
-        user: "Majid Reshadat",
-        amount: "158 Euro",
-        date: "2023-02-06",
-        status: "Unsuccessful",
-        failedAttempts: 2,
-        userId: 103,
-    },
-    {
-        id: 4,
-        user: "Samira rezai",
-        amount: "25 Euro",
-        date: "2023-01-06",
-        status: "Successful",
-        failedAttempts: 5,
-        userId: 104,
-    },
-    {
-        id: 6,
-        user: "Sara Ahmadi",
-        amount: "120 Euro",
-        date: "2023-02-05",
-        status: "Unsuccessful",
-        failedAttempts: 4,
-        userId: 102,
-    },
-    {
-        id: 7,
-        user: "Sara Ahmadi",
-        amount: "100 Euro",
-        date: "2023-02-03",
-        status: "Unsuccessful",
-        failedAttempts: 4,
-        userId: 102,
-    },
-]);
+    computed: {
+        userStats() {
+            const stats = {};
+            this.payments.forEach(payment => {
+                if (!stats[payment.userId]) {
+                    stats[payment.userId] = {
+                        user: payment.user,
+                        successfulAttempts: 0,
+                        unsuccessfulAttempts: 0,
+                    };
+                }
+                if (payment.status === "Successful") {
+                    stats[payment.userId].successfulAttempts++;
+                } else if (payment.status === "Unsuccessful") {
+                    stats[payment.userId].unsuccessfulAttempts++;
+                }
+            });
+            return Object.values(stats);
+        },
 
-const refundHeaders = ref([
-    { text: translate('Admin_Finance.refund_requests'), value: "id" },
-    { text: translate('Admin_Finance.user'), value: "user" },
-    { text: translate('Admin_Finance.amount'), value: "amount" },
-    { text: translate('Admin_Finance.requestDate'), value: "requestDate" },
-    { text: translate('Admin_Finance.status'), value: "status" },
-    { text: translate('Admin_Finance.actions'), value: "actions" },
-]);
+        userStatsByMonth() {
+            const statsByMonth = {};
+            this.payments.forEach(payment => {
+                const month = this.getMonthFromDate(payment.date);
+                if (!statsByMonth[month]) {
+                    statsByMonth[month] = {};
+                }
+                if (!statsByMonth[month][payment.userId]) {
+                    statsByMonth[month][payment.userId] = {
+                        user: payment.user,
+                        successfulAttempts: 0,
+                        unsuccessfulAttempts: 0,
+                    };
+                }
+                if (payment.status === "Successful") {
+                    statsByMonth[month][payment.userId].successfulAttempts++;
+                } else if (payment.status === "Unsuccessful") {
+                    statsByMonth[month][payment.userId].unsuccessfulAttempts++;
+                }
+            });
+            return statsByMonth;
+        },
 
-const refundRequests = ref([
-    {
-        id: 1,
-        user: "Ali Alavi",
-        amount: "100 Euro",
-        date: "2023-02-05",
-        status: "Waiting",
-        failedAttempts: 0,
-        userId: 101,
-    },
-    {
-        id: 2,
-        user: "Sara Ahmadi",
-        amount: "120 Euro",
-        date: "2023-02-05",
-        status: "Waiting",
-        failedAttempts: 4,
-        userId: 102,
-    },
-]);
-const messageDialog = ref(false);
-const messageText = ref("");
-const messageImage = ref(null);
-const selectedUserForMessage = ref(null);
+        bestUserLastMonth() {
+            const lastMonth = this.getLastMonth();
+            const stats = Object.values(this.userStatsByMonth[lastMonth] || {});
+            return stats.reduce((best, current) => {
+                return current.successfulAttempts > best.successfulAttempts ? current : best;
+            }, { successfulAttempts: 0 });
+        },
 
-function openMessageDialog(user) {
-    selectedUserForMessage.value = user;
-    messageDialog.value = true;
-}
-
-function sendMessage() {
-    const message = {
-        text: messageText.value,
-        image: messageImage.value,
-        user: selectedUserForMessage.value.user,
-    };
-    alert(`Message sent to ${message.user}:\nText: ${message.text}\nImage: ${message.image ? message.image.name : "None"}`);
-    messageDialog.value = false;
-    messageText.value = "";
-    messageImage.value = null;
-}
-const userStats = computed(() => {
-    const stats = {};
-    payments.value.forEach(payment => {
-        if (!stats[payment.userId]) {
-            stats[payment.userId] = {
-                user: payment.user,
-                successfulAttempts: 0,
-                unsuccessfulAttempts: 0,
-            };
-        }
-        if (payment.status === "Successful") {
-            stats[payment.userId].successfulAttempts++;
-        } else if (payment.status === "Unsuccessful") {
-            stats[payment.userId].unsuccessfulAttempts++;
-        }
-    });
-    return Object.values(stats);
-});
-
-
-const getMonthFromDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.getMonth() + 1;
-};
-
-const getLastMonth = () => {
-    const now = new Date();
-    now.setMonth(now.getMonth() - 1);
-    return now.getMonth() + 1;
-};
-
-const userStatsByMonth = computed(() => {
-    const statsByMonth = {};
-    payments.value.forEach(payment => {
-        const month = getMonthFromDate(payment.date);
-        if (!statsByMonth[month]) {
-            statsByMonth[month] = {};
-        }
-        if (!statsByMonth[month][payment.userId]) {
-            statsByMonth[month][payment.userId] = {
-                user: payment.user,
-                successfulAttempts: 0,
-                unsuccessfulAttempts: 0,
-            };
-        }
-        if (payment.status === "Successful") {
-            statsByMonth[month][payment.userId].successfulAttempts++;
-        } else if (payment.status === "Unsuccessful") {
-            statsByMonth[month][payment.userId].unsuccessfulAttempts++;
-        }
-    });
-    return statsByMonth;
-});
-
-const bestUserLastMonth = computed(() => {
-    const lastMonth = getLastMonth();
-    const stats = Object.values(userStatsByMonth.value[lastMonth] || {});
-    return stats.reduce((best, current) => {
-        return current.successfulAttempts > best.successfulAttempts ? current : best;
-    }, { successfulAttempts: 0 });
-});
-
-const worstUserLastMonth = computed(() => {
-    const lastMonth = getLastMonth();
-    const stats = Object.values(userStatsByMonth.value[lastMonth] || {});
-    const worst = stats.reduce((worst, current) => {
-        return current.unsuccessfulAttempts > worst.unsuccessfulAttempts ? current : worst;
-    }, { unsuccessfulAttempts: 0 });
-
-    if (worst.user === bestUserLastMonth.value.user) {
-        return stats
-            .filter(user => user.user !== bestUserLastMonth.value.user)
-            .reduce((worst, current) => {
+        worstUserLastMonth() {
+            const lastMonth = this.getLastMonth();
+            const stats = Object.values(this.userStatsByMonth[lastMonth] || {});
+            const worst = stats.reduce((worst, current) => {
                 return current.unsuccessfulAttempts > worst.unsuccessfulAttempts ? current : worst;
             }, { unsuccessfulAttempts: 0 });
-    }
-    return worst;
-});
 
-const blockUserDialog = ref(false);
-const approveRefundDialog = ref(false);
-const rejectRefundDialog = ref(false);
+            if (worst.user === this.bestUserLastMonth.user) {
+                return stats
+                    .filter(user => user.user !== this.bestUserLastMonth.user)
+                    .reduce((worst, current) => {
+                        return current.unsuccessfulAttempts > worst.unsuccessfulAttempts ? current : worst;
+                    }, { unsuccessfulAttempts: 0 });
+            }
+            return worst;
+        }
+    },
+    methods: {
+        translate,
+        getMonthFromDate(dateString) {
+            try {
+                const date = new Date(dateString);
+                return date.getMonth() + 1;
+            } catch (error) {
+                console.log("Error parsing date:", error);
+                return 0;
+            }
+        },
 
-const blockUserNote = ref("");
-const approveRefundNote = ref("");
-const rejectRefundNote = ref("");
+        getLastMonth() {
+            try {
+                const now = new Date();
+                now.setMonth(now.getMonth() - 1);
+                return now.getMonth() + 1;
+            } catch (error) {
+                console.log("Error getting last month:", error);
+                return 0;
+            }
+        },
 
-const selectedUser = ref(null);
-const selectedRefund = ref(null);
+        getStatusColor(status) {
+            try {
+                switch (status) {
+                    case "Successful":
+                        return "success";
+                    case "Unsuccessful":
+                        return "error";
+                    case "Waiting":
+                        return "warning";
+                    default:
+                        return "primary";
+                }
+            } catch (error) {
+                console.log("Error getting status color:", error);
+                return "primary";
+            }
+        },
 
-function getStatusColor(status) {
-    switch (status) {
-        case "Successful":
-            return "success";
-        case "Unsuccessful":
-            return "error";
-        case "Waiting":
-            return "warning";
-        default:
-            return "primary";
-    }
-}
+        openMessageDialog(user) {
+            try {
+                this.selectedUserForMessage = user;
+                this.messageDialog = true;
+            } catch (error) {
+                console.log("Error opening message dialog:", error);
+            }
+        },
 
-function openBlockUserDialog(user) {
-    selectedUser.value = user;
-    blockUserDialog.value = true;
-}
+        sendMessage() {
+            try {
+                const message = {
+                    text: this.messageText,
+                    image: this.messageImage,
+                    user: this.selectedUserForMessage.user,
+                };
+                alert(`Message sent to ${message.user}:\nText: ${message.text}\nImage: ${message.image ? message.image.name : "None"}`);
+                this.messageDialog = false;
+                this.messageText = "";
+                this.messageImage = null;
+            } catch (error) {
+                console.log("Error sending message:", error);
+            }
+        },
 
-function openApproveRefundDialog(refund) {
-    selectedRefund.value = refund;
-    approveRefundDialog.value = true;
-}
+        openBlockUserDialog(user) {
+            try {
+                this.selectedUser = user;
+                this.blockUserDialog = true;
+            } catch (error) {
+                console.log("Error opening block user dialog:", error);
+            }
+        },
 
-function openRejectRefundDialog(refund) {
-    selectedRefund.value = refund;
-    rejectRefundDialog.value = true;
-}
+        openApproveRefundDialog(refund) {
+            try {
+                this.selectedRefund = refund;
+                this.approveRefundDialog = true;
+            } catch (error) {
+                console.log("Error opening approve refund dialog:", error);
+            }
+        },
 
-function blockUser() {
-    alert(`${translate('Admin_Finance.user_blocked')}\n Message: ${blockUserNote.value}`);
-    blockUserDialog.value = false;
-    blockUserNote.value = "";
-}
+        openRejectRefundDialog(refund) {
+            try {
+                this.selectedRefund = refund;
+                this.rejectRefundDialog = true;
+            } catch (error) {
+                console.log("Error opening reject refund dialog:", error);
+            }
+        },
 
-function approveRefund() {
-    const refund = selectedRefund.value;
-    refund.status = "Approved";
-    payments.value.push({
-        id: payments.value.length + 1,
-        user: refund.user,
-        amount: refund.amount,
-        date: new Date().toISOString().split('T')[0],
-        status: "Successful",
-        failedAttempts: 0,
-        userId: refund.userId,
-    });
-    refundRequests.value = refundRequests.value.filter(r => r.id !== refund.id);
-    alert(`${translate('Admin_Finance.refund_approved')}\n Message: ${approveRefundNote.value}`);
-    approveRefundDialog.value = false;
-    approveRefundNote.value = "";
-}
+        blockUser() {
+            try {
+                alert(`${translate('Admin_Finance.user_blocked')}\n Message: ${this.blockUserNote}`);
+                this.blockUserDialog = false;
+                this.blockUserNote = "";
+            } catch (error) {
+                console.log("Error blocking user:", error);
+            }
+        },
 
-function rejectRefund() {
-    const refund = selectedRefund.value;
-    refund.status = "Rejected";
-    payments.value.push({
-        id: payments.value.length + 1,
-        user: refund.user,
-        amount: refund.amount,
-        date: new Date().toISOString().split('T')[0],
-        status: "Unsuccessful",
-        failedAttempts: 0,
-        userId: refund.userId,
-    });
-    refundRequests.value = refundRequests.value.filter(r => r.id !== refund.id);
-    alert(`${translate('Admin_Finance.refund_rejected')}\n Message: ${rejectRefundNote.value}`);
-    rejectRefundDialog.value = false;
-    rejectRefundNote.value = "";
-}
+        approveRefund() {
+            try {
+                const refund = this.selectedRefund;
+                refund.status = "Approved";
+                this.payments.push({
+                    id: this.payments.length + 1,
+                    user: refund.user,
+                    amount: refund.amount,
+                    date: new Date().toISOString().split('T')[0],
+                    status: "Successful",
+                    failedAttempts: 0,
+                    userId: refund.userId,
+                });
+                this.refundRequests = this.refundRequests.filter(r => r.id !== refund.id);
+                alert(`${translate('Admin_Finance.refund_approved')}\n Message: ${this.approveRefundNote}`);
+                this.approveRefundDialog = false;
+                this.approveRefundNote = "";
+            } catch (error) {
+                console.log("Error approving refund:", error);
+            }
+        },
 
-const bestUserByMonth = computed(() => {
-    const bestUsers = {};
-    for (const month in userStatsByMonth.value) {
-        const stats = Object.values(userStatsByMonth.value[month]);
-        bestUsers[month] = stats.reduce((best, current) => {
-            return current.successfulAttempts > best.successfulAttempts ? current : best;
-        }, { successfulAttempts: 0 });
-    }
-    return bestUsers;
-});
-
-const worstUserByMonth = computed(() => {
-    const worstUsers = {};
-    for (const month in userStatsByMonth.value) {
-        const stats = Object.values(userStatsByMonth.value[month]);
-        const worst = stats.reduce((worst, current) => {
-            return current.unsuccessfulAttempts > worst.unsuccessfulAttempts ? current : worst;
-        }, { unsuccessfulAttempts: 0 });
-
-        if (worst.user === bestUserByMonth.value[month].user) {
-            worstUsers[month] = stats
-                .filter(user => user.user !== bestUserByMonth.value[month].user)
-                .reduce((worst, current) => {
-                    return current.unsuccessfulAttempts > worst.unsuccessfulAttempts ? current : worst;
-                }, { unsuccessfulAttempts: 0 });
-        } else {
-            worstUsers[month] = worst;
+        rejectRefund() {
+            try {
+                const refund = this.selectedRefund;
+                refund.status = "Rejected";
+                this.payments.push({
+                    id: this.payments.length + 1,
+                    user: refund.user,
+                    amount: refund.amount,
+                    date: new Date().toISOString().split('T')[0],
+                    status: "Unsuccessful",
+                    failedAttempts: 0,
+                    userId: refund.userId,
+                });
+                this.refundRequests = this.refundRequests.filter(r => r.id !== refund.id);
+                alert(`${translate('Admin_Finance.refund_rejected')}\n Message: ${this.rejectRefundNote}`);
+                this.rejectRefundDialog = false;
+                this.rejectRefundNote = "";
+            } catch (error) {
+                console.log("Error rejecting refund:", error);
+            }
         }
     }
-    return worstUsers;
-});
-
+};
 </script>
 
 <style scoped>

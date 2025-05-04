@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { currentLanguage, setLanguage } from '@/store/languageStore.js';
+import { currentLanguage, setLanguage } from '@/store/languageStore';
 
 const toggleLanguage = () => {
     setLanguage(currentLanguage.value === 'fa' ? 'en' : 'fa');

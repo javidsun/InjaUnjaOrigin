@@ -3,7 +3,7 @@
         <v-app-bar app elevation="1" class="header">
             <v-col cols="2">
                 <div class="logo-container">
-                    <img src="/assets/images/inja-unja.png" alt="Logo" class="logo-image" @click="drawer = !drawer"/>
+                    <img src="/assets/images/inja-unja.png" alt="Logo" class="logo-image" @click="toggleDrawer"/>
                 </div>
             </v-col>
             <v-spacer/>
@@ -15,11 +15,10 @@
             <LanguageSwitcher class="language"/>
         </v-app-bar>
 
-        <Sidebar app v-model="drawer"/>
+        <Sidebar app v-model="drawerOpen"/>
 
-        <v-main :class="{ 'main-expanded': drawer, 'main-collapsed': !drawer }">
+        <v-main :class="{ 'main-expanded': drawerOpen, 'main-collapsed': !drawerOpen }">
             <v-container fluid>
-
                 <v-row>
                     <v-col cols="12">
                         <warning/>
@@ -47,40 +46,67 @@
     </v-app>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
-
-import {ref, computed} from 'vue';
+<script>
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 import Searchbar from "../layout/Header/search/Searchbar.vue";
 import Darkmood from "../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../layout/Header/LanguageSwitcher.vue";
 import Footer from "../layout/Footer.vue";
 import Sidebar from "./Sidebar.vue";
-
-const imageUrl = '/illustration-1.png';
-const imageUrl2 = '/illustration-2.png';
 import warning from './dashboard_main/warning.vue'
 import BasicStatistics from './dashboard_main/BasicStatistics.vue'
 import Report from './dashboard_main/Reports.vue'
 import Services from './dashboard_main/Services.vue'
 import functional from './dashboard_main/functional.vue'
 import UserTable from './dashboard_main/UserTable.vue'
-import {useRouter} from 'vue-router';
+import { translate } from "@/store/languageStore";
 
-const router = useRouter();
+export default {
+    name: 'DashboardLayout',
+    components: {
+        Searchbar,
+        Darkmood,
+        LanguageSwitcher,
+        Footer,
+        Sidebar,
+        warning,
+        BasicStatistics,
+        Report,
+        Services,
+        functional,
+        UserTable
+    },
+    data() {
+        return {
+            isDarkMode: true,
+            drawerOpen: true,
+            imageUrl: '/illustration-1.png',
+            imageUrl2: '/illustration-2.png'
+        }
+    },
+    methods: {
+        translate,
 
-const props = defineProps({
-    type: Array,
-});
-
-const isDarkMode = ref(true);
-const drawer = ref(true);
-
-const toggleDarkMode = () => {
-    isDarkMode.value = !isDarkMode.value;
-};
-
+        toggleDarkMode() {
+            try {
+                this.isDarkMode = !this.isDarkMode;
+            } catch (error) {
+                this.showError('Failed to toggle dark mode', error);
+            }
+        },
+        toggleDrawer() {
+            try {
+                this.drawerOpen = !this.drawerOpen;
+            } catch (error) {
+                this.showError('Failed to toggle drawer', error);
+            }
+        },
+        showError(message, error) {
+            console.error(message, error);
+            this.$emit('error', { message, error });
+        }
+    }
+}
 </script>
 
 <style scoped>
@@ -167,6 +193,4 @@ v-container {
     left: 0;
     background-color: var(--background-color);
 }
-
-
 </style>

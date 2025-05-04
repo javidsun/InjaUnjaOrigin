@@ -33,9 +33,8 @@
                                             </v-card-title>
                                             <v-card-subtitle>{{ translate('Admin_Reports.total_reservations') }}</v-card-subtitle>
                                             <v-card-actions>
-                                                <v-btn @click="exportToExcel('total')" color="primary">Export</v-btn>
+                                                <v-btn @click="exportToExcel('total')" color="primary">{{ translate('General.export') }}</v-btn>
                                             </v-card-actions>
-
                                         </v-card>
                                     </v-col>
                                     <v-col cols="12" md="6" lg="3">
@@ -45,9 +44,8 @@
                                             </v-card-title>
                                             <v-card-subtitle>{{ translate('Admin_Reports.successful_reservations') }}</v-card-subtitle>
                                             <v-card-actions>
-                                                <v-btn @click="exportToExcel('successful')" color="primary">Export</v-btn>
+                                                <v-btn @click="exportToExcel('successful')" color="primary">{{ translate('General.export') }}</v-btn>
                                             </v-card-actions>
-
                                         </v-card>
                                     </v-col>
                                     <v-col cols="12" md="6" lg="3">
@@ -57,9 +55,8 @@
                                             </v-card-title>
                                             <v-card-subtitle>{{ translate('Admin_Reports.pending_reservations') }}</v-card-subtitle>
                                             <v-card-actions>
-                                                <v-btn @click="exportToExcel('pending')" color="primary">Export</v-btn>
+                                                <v-btn @click="exportToExcel('pending')" color="primary">{{ translate('General.export') }}</v-btn>
                                             </v-card-actions>
-
                                         </v-card>
                                     </v-col>
                                     <v-col cols="12" md="6" lg="3">
@@ -69,9 +66,8 @@
                                             </v-card-title>
                                             <v-card-subtitle>{{ translate('Admin_Reports.failed_reservations') }}</v-card-subtitle>
                                             <v-card-actions>
-                                                <v-btn @click="exportToExcel('failed')" color="primary">Export</v-btn>
+                                                <v-btn @click="exportToExcel('failed')" color="primary">{{ translate('General.export') }}</v-btn>
                                             </v-card-actions>
-
                                         </v-card>
                                     </v-col>
                                 </v-row>
@@ -126,7 +122,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="reservationDialog = false">close</v-btn>
+                    <v-btn color="primary" @click="reservationDialog = false">{{ translate('General.close') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -152,152 +148,191 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="detailsDialog = false">close</v-btn>
+                    <v-btn color="primary" @click="detailsDialog = false">{{ translate('General.close') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
-
     </v-app>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
+<script>
+//Todo:{reservationsDetails:total/successful/pending/failed}
+//Todo:{reservations:title/date/icon/color/image/amount/status:failed|successful|pending}
 
 import Sidebar from "../Sidebar.vue";
-import { ref, computed } from 'vue';
-import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 import * as XLSX from 'xlsx';
 
-const drawer = ref(true);
-const reservationDialog = ref(false);
-const selectedReservation = ref({});
-const detailsDialog = ref(false);
-const detailsTitle = ref('');
-const detailsItems = computed(() => detailsData.value.total);
-const computedReservationTableHeaders = ref([
-    { text: "ID", value: "id" },
-    { text: translate('Admin_Reports.guest_name'), value: "guest_name" },
-    { text: translate('Admin_Reports.date'), value: "date" },
-]);
-
-function exportToExcel() {
-    const data = detailsItems.value.map(item => ({
-        نام: item.name,
-        تاریخ: item.date,
-        آیکون: item.icon,
-        تصویر: item.image,
-        مبلغ: item.amount
-    }));
-
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Reservations");
-    XLSX.writeFile(workbook, "reservations.xlsx");
-}
-
-const reservationsDetails = ref({
-    total: 123,
-    successful: 100,
-    pending: 20,
-    failed: 3,
-});
-
-const reservations = ref([
-    {
-        title: translate("HouseReservation"),
-        date: "2025-01-01",
-        icon: "mdi-home",
-        color: "blue",
-        image: "/ads/house.svg",
-        amount: "120 Euro",
+export default {
+    components: {
+        Sidebar,
+        Searchbar,
+        Darkmood,
+        LanguageSwitcher
     },
-    {
-        title: translate("CarReservation"),
-        date: "2024-12-29",
-        icon: "mdi-car",
-        color: "green",
-        image: "/ads/car.svg",
-        amount: "50 Euro",
-
+    data() {
+        return {
+            drawer: true,
+            reservationDialog: false,
+            selectedReservation: {},
+            detailsDialog: false,
+            detailsTitle: '',
+            reservationsDetails: {
+                total: 123,
+                successful: 100,
+                pending: 20,
+                failed: 3,
+            },
+            reservations: [
+                {
+                    title: this.translate("HouseReservation"),
+                    date: "2025-01-01",
+                    icon: "mdi-home",
+                    color: "blue",
+                    image: "/ads/house.svg",
+                    amount: "120 Euro",
+                },
+                {
+                    title: this.translate("CarReservation"),
+                    date: "2024-12-29",
+                    icon: "mdi-car",
+                    color: "green",
+                    image: "/ads/car.svg",
+                    amount: "50 Euro",
+                },
+                {
+                    title: this.translate("EventReservation"),
+                    date: "2024-12-25",
+                    icon: "mdi-calendar",
+                    color: "purple",
+                    image: "/ads/event.svg",
+                    amount: "20 Euro",
+                },
+                {
+                    title: this.translate("TravelerReservation"),
+                    date: "2024-12-20",
+                    icon: "mdi-account-group",
+                    color: "orange",
+                    image: "/ads/firend.svg",
+                    amount: "80 Euro",
+                },
+            ],
+            detailsTableHeaders: [
+                { text: this.translate('General.name'), value: "name" },
+                { text: this.translate('General.date'), value: "date" },
+                { text: this.translate('General.icon'), value: "icon" },
+                { text: this.translate('General.image'), value: "image" },
+                { text: this.translate('General.amount'), value: "amount" },
+            ],
+        };
     },
-    {
-        title: translate("EventReservation"),
-        date: "2024-12-25",
-        icon: "mdi-calendar",
-        color: "purple",
-        image: "/ads/event.svg",
-        amount: "20 Euro",
-
+    computed: {
+        detailsItems() {
+            return this.detailsData.total;
+        },
+        detailsData() {
+            return {
+                total: this.reservations.map(reservation => ({
+                    name: reservation.title,
+                    date: reservation.date,
+                    icon: reservation.icon,
+                    color: reservation.color,
+                    image: reservation.image,
+                    amount: reservation.amount
+                })),
+                successful: this.reservations.filter(reservation =>
+                    reservation.title === this.translate("HouseReservation") ||
+                    reservation.title === this.translate("CarReservation")
+                ).map(reservation => ({
+                    name: reservation.title,
+                    date: reservation.date,
+                    icon: reservation.icon,
+                    color: reservation.color,
+                    image: reservation.image,
+                    amount: reservation.amount
+                })),
+                pending: this.reservations.filter(reservation =>
+                    reservation.title === this.translate("EventReservation")
+                ).map(reservation => ({
+                    name: reservation.title,
+                    date: reservation.date,
+                    icon: reservation.icon,
+                    color: reservation.color,
+                    image: reservation.image,
+                    amount: reservation.amount
+                })),
+                failed: this.reservations.filter(reservation =>
+                    reservation.title === this.translate("TravelerReservation")
+                ).map(reservation => ({
+                    name: reservation.title,
+                    date: reservation.date,
+                    icon: reservation.icon,
+                    color: reservation.color,
+                    image: reservation.image,
+                    amount: reservation.amount
+                })),
+            };
+        }
     },
-    {
-        title: translate("TravelerReservation"),
-        date: "2024-12-20",
-        icon: "mdi-account-group",
-        color: "orange",
-        image: "/ads/firend.svg",
-        amount: "80 Euro",
-    },
-]);
-const detailsTableHeaders = ref([
-    { text: "نام", value: "name" },
-    { text: "تاریخ", value: "date" },
-    { text: "آیکون", value: "icon" },
-    { text: "تصویر", value: "image" },
-    { text: "مبلغ", value: "amount" },
-]);
+    methods: {
+        translate(key) {
+            return translate(key);
+        },
+        showDetails(value, type) {
+            try {
+                this.detailsTitle = this.translate(`Admin_Reports.${type}_reservations`);
+                this.detailsItems = this.detailsData[type];
+                this.detailsDialog = true;
+            } catch (error) {
+                this.$emit('error', {
+                    message: this.translate('Errors.failed_to_show_details'),
+                    error: error
+                });
+            }
+        },
+        showReservationDetails(event, { item }) {
+            try {
+                this.selectedReservation = item;
+                this.reservationDialog = true;
+            } catch (error) {
+                this.$emit('error', {
+                    message: this.translate('Errors.failed_to_show_reservation'),
+                    error: error
+                });
+            }
+        },
+        exportToExcel(type) {
+            try {
+                const data = this.detailsData[type].map(item => ({
+                    [this.translate('General.name')]: item.name,
+                    [this.translate('General.date')]: item.date,
+                    [this.translate('General.icon')]: item.icon,
+                    [this.translate('General.image')]: item.image,
+                    [this.translate('General.amount')]: item.amount
+                }));
 
+                const worksheet = XLSX.utils.json_to_sheet(data);
+                const workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, "Reservations");
+                XLSX.writeFile(workbook, `${type}_reservations.xlsx`);
 
-const detailsData = computed(() => ({
-    total: reservations.value.map(reservation => ({
-        name: reservation.title,
-        date: reservation.date,
-        icon: reservation.icon,
-        color: reservation.color,
-        image: reservation.image,
-        amount: reservation.amount
-    })),
-    successful: reservations.value.filter(reservation => reservation.title === translate("HouseReservation") || reservation.title === translate("CarReservation")).map(reservation => ({
-        name: reservation.title,
-        date: reservation.date,
-        icon: reservation.icon,
-        color: reservation.color,
-        image: reservation.image,
-        amount: reservation.amount
-    })),
-    pending: reservations.value.filter(reservation => reservation.title === translate("EventReservation")).map(reservation => ({
-        name: reservation.title,
-        date: reservation.date,
-        icon: reservation.icon,
-        color: reservation.color,
-        image: reservation.image,
-        amount: reservation.amount
-    })),
-    failed: reservations.value.filter(reservation => reservation.title === translate("TravelerReservation")).map(reservation => ({
-        name: reservation.title,
-        date: reservation.date,
-        icon: reservation.icon,
-        color: reservation.color,
-        image: reservation.image,
-        amount: reservation.amount
-    })),
-}));
-function showDetails(value, type) {
-    detailsTitle.value = translate(`Admin_Reports.${type}_reservations`);
-    detailsItems.value = detailsData.value[type];
-    detailsDialog.value = true;
-}
-function showReservationDetails(event, { item }) {
-    selectedReservation.value = item;
-    reservationDialog.value = true;
-}
-
+                this.$emit('success', this.translate('Success.export_successful'));
+            } catch (error) {
+                this.$emit('error', {
+                    message: this.translate('Errors.export_failed'),
+                    error: error
+                });
+            }
+        }
+    }
+};
 </script>
 
 <style scoped>
+/* Your existing styles remain unchanged */
 .info-card.success {
     background: #d4edda;
     color: #155724;

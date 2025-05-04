@@ -170,150 +170,197 @@
     </v-app>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
+<script>
+//todo:{reservationsThisMonth/averageHostIncome/approvalRate/cancellationRate}{revenueByCategory:categoryKey/revenue/conversionRate}
 
 import Sidebar from "../Sidebar.vue";
-import { ref, computed } from "vue";
 import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
 import ApexChart from "vue3-apexcharts";
-import { translate } from "@/store/languageStore.js";
-import { watchEffect } from "vue";
+import { translate } from "@/store/languageStore";
 
-const isDarkMode = ref(true);
-const drawer = ref(true);
-const reservationsThisMonth = ref(123);
-const averageHostIncome = ref(2500);
-const approvalRate = ref(85);
-const cancellationRate = ref(12);
-const goTo = (path) => {
-    window.location.href = path;
-};
-const tableDetailsVisible = ref(false);
-const tableDetailsTitle = ref('');
-const tableDetailsKey = ref('');
-
-const showTableDetails = (key) => {
-    tableDetailsKey.value = key;
-    tableDetailsTitle.value = translate(`re_dashboard.${key}`);
-    tableDetailsVisible.value = true;
-};
-
-const modalVisible = ref(false);
-const modalTitle = ref('');
-const modalData = ref({
-    value: '',
-    description: '',
-    date: new Date().toLocaleDateString(),
-});
-
-const showModal = (key) => {
-    const data = {
-        reservations_this_month: {
-            value: reservationsThisMonth.value,
-            description: translate('Admin_Reports.reservations_this_month_description'),
-        },
-        average_host_income: {
-            value: `${averageHostIncome.value} €`,
-            description: translate('Admin_Reports.average_host_income_description'),
-        },
-        approval_rate: {
-            value: `${approvalRate.value}%`,
-            description: translate('Admin_Reports.approval_rate_description'),
-        },
-        cancellation_rate: {
-            value: `${cancellationRate.value}%`,
-            description: translate('Admin_Reports.cancellation_rate_description'),
-        },
-    }[key];
-
-    modalTitle.value = translate(`Admin_Reports.${key}`);
-    modalData.value = { ...data, date: new Date().toLocaleDateString() };
-    modalVisible.value = true;
-};
-
-const conversionRate = 25;
-const revenueByCategory = ref([
-    { categoryKey: "re_dashboard.Home", revenue: 5000 },
-    { categoryKey: "re_dashboard.Car", revenue: 2000 },
-    { categoryKey: "re_dashboard.Others", revenue: 1000 },
-]);
-
-const computedRevenueByCategory = computed(() =>
-    revenueByCategory.value.map((item) => ({
-        ...item,
-        category: translate(item.categoryKey),
-    }))
-);
-
-const tableHeaders = ref([
-    { textKey: "re_dashboard.category", key: "category" },
-    { textKey: "re_dashboard.revenue", key: "revenue" },
-]);
-
-const computedTableHeaders = computed(() =>
-    tableHeaders.value.map((header) => ({
-        ...header,
-        text: translate(header.textKey),
-    }))
-);
-
-const chartData = ref({
-    conversionRate: {
-        options: {
-            chart: {
-                id: "conversion-rate-chart",
-                background: "transparent"
-            },
-            labels: ["converted", "not converted"],
-            theme: {
-                mode: isDarkMode.value ? "dark" : "light",
-            },
-            tooltip: {
-                enabled: true,
-                theme: isDarkMode.value ? "dark" : "light",
-            },
-            colors: ["#4CAF50", "#FF5252"],
-        },
-        series: [conversionRate, 100 - conversionRate],
+export default {
+    components: {
+        Sidebar,
+        Searchbar,
+        Darkmood,
+        LanguageSwitcher,
+        ApexChart
     },
-    revenueByCategory: {
-        options: {
-            chart: {
-                id: "revenue-by-category-chart",
-                background: "transparent"
+    data() {
+        return {
+            isDarkMode: true,
+            drawer: true,
+            reservationsThisMonth: 123,
+            averageHostIncome: 2500,
+            approvalRate: 85,
+            cancellationRate: 12,
+            tableDetailsVisible: false,
+            tableDetailsTitle: '',
+            tableDetailsKey: '',
+            modalVisible: false,
+            modalTitle: '',
+            modalData: {
+                value: '',
+                description: '',
+                date: new Date().toLocaleDateString(),
             },
-            theme: {
-                mode: isDarkMode.value ? "dark" : "light",
+            revenueByCategory: [
+                { categoryKey: "re_dashboard.Home", revenue: 5000 },
+                { categoryKey: "re_dashboard.Car", revenue: 2000 },
+                { categoryKey: "re_dashboard.Others", revenue: 1000 },
+            ],
+            tableHeaders: [
+                { textKey: "re_dashboard.category", key: "category" },
+                { textKey: "re_dashboard.revenue", key: "revenue" },
+            ],
+            chartData: {
+                conversionRate: {
+                    options: {
+                        chart: {
+                            id: "conversion-rate-chart",
+                            background: "transparent"
+                        },
+                        labels: ["converted", "not converted"],
+                        theme: {
+                            mode: "dark",
+                        },
+                        tooltip: {
+                            enabled: true,
+                            theme: "dark",
+                        },
+                        colors: ["#4CAF50", "#FF5252"],
+                    },
+                    series: [25, 75],
+                },
+                revenueByCategory: {
+                    options: {
+                        chart: {
+                            id: "revenue-by-category-chart",
+                            background: "transparent"
+                        },
+                        theme: {
+                            mode: "dark",
+                        },
+                        tooltip: {
+                            theme: "dark",
+                        }
+                    },
+                    series: [],
+                },
+            }
+        };
+    },
+    computed: {
+        computedRevenueByCategory() {
+            return this.revenueByCategory.map((item) => ({
+                ...item,
+                category: translate(item.categoryKey),
+            }));
+        },
+        computedTableHeaders() {
+            return this.tableHeaders.map((header) => ({
+                ...header,
+                text: translate(header.textKey),
+            }));
+        }
+    },
+    watch: {
+        isDarkMode(newVal) {
+            this.updateChartThemes(newVal ? "dark" : "light");
+        },
+        computedRevenueByCategory: {
+            handler(newVal) {
+                if (this.chartData.revenueByCategory) {
+                    this.chartData.revenueByCategory.series = [
+                        {
+                            name: translate("re_dashboard.revenue"),
+                            data: newVal.map((c) => c.revenue),
+                        },
+                    ];
+                }
             },
-            tooltip: {
-                theme: isDarkMode.value ? "dark" : "light",
+            immediate: true
+        }
+    },
+    methods: {
+        translate,
+        goTo(path) {
+            try {
+                window.location.href = path;
+            } catch (error) {
+                this.handleError("Navigation error", error);
             }
         },
-        series: [],
-    },
-});
-watchEffect(() => {
-    if (chartData.value.revenueByCategory) {
-        chartData.value.revenueByCategory.series = [
-            {
-                name: translate("re_dashboard.revenue"),
-                data: computedRevenueByCategory.value.map((c) => c.revenue),
-            },
-        ];
+        showTableDetails(key) {
+            try {
+                this.tableDetailsKey = key;
+                this.tableDetailsTitle = translate(`re_dashboard.${key}`);
+                this.tableDetailsVisible = true;
+            } catch (error) {
+                this.handleError("Table details error", error);
+            }
+        },
+        showModal(key) {
+            try {
+                const modalDataMap = {
+                    reservations_this_month: {
+                        value: this.reservationsThisMonth,
+                        description: translate('Admin_Reports.reservations_this_month_description'),
+                    },
+                    average_host_income: {
+                        value: `${this.averageHostIncome} €`,
+                        description: translate('Admin_Reports.average_host_income_description'),
+                    },
+                    approval_rate: {
+                        value: `${this.approvalRate}%`,
+                        description: translate('Admin_Reports.approval_rate_description'),
+                    },
+                    cancellation_rate: {
+                        value: `${this.cancellationRate}%`,
+                        description: translate('Admin_Reports.cancellation_rate_description'),
+                    },
+                };
+
+                const data = modalDataMap[key];
+                if (!data) {
+                    throw new Error(`Invalid modal key: ${key}`);
+                }
+
+                this.modalTitle = translate(`Admin_Reports.${key}`);
+                this.modalData = {
+                    ...data,
+                    date: new Date().toLocaleDateString()
+                };
+                this.modalVisible = true;
+            } catch (error) {
+                this.handleError("Modal error", error);
+            }
+        },
+        updateChartThemes(theme) {
+            try {
+                if (this.chartData.conversionRate) {
+                    this.chartData.conversionRate.options.theme.mode = theme;
+                    this.chartData.conversionRate.options.tooltip.theme = theme;
+                }
+                if (this.chartData.revenueByCategory) {
+                    this.chartData.revenueByCategory.options.theme.mode = theme;
+                    this.chartData.revenueByCategory.options.tooltip.theme = theme;
+                }
+            } catch (error) {
+                this.handleError("Chart theme update error", error);
+            }
+        },
+        handleError(context, error) {
+         console.error(`${context}:`, error);
+            this.$emit('error', {
+                message: "An error occurred. Please try again.",
+                details: context
+            });
+        }
     }
-});
-
-const exportToCSV = () => {
-    const headers = computedTableHeaders.value.map(header => header.text);
-    const data = computedRevenueByCategory.value.map(item => [item.category, item.revenue]);
-    exportCSV(headers, data, 'revenue_by_category.csv');
 };
-
-
-
 </script>
 
 <style scoped>

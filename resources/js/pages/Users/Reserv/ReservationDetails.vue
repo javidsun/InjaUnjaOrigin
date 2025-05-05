@@ -37,6 +37,8 @@
 </template>
 
 <script>
+//Todo:id/title/date/icon/color/image/description
+
 import UserSidebar from "../Layout.vue";
 
 export default {

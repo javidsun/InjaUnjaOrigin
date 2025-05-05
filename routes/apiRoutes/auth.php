@@ -4,13 +4,14 @@ use App\Http\Controllers\AuthControllers\AuthController;
 use App\Http\Controllers\AuthControllers\OAuthController;
 use Illuminate\Support\Facades\Route;
 
+Route::post('/register', [AuthController::class, 'register']);
+
 Route::group(
     [
     'prefix' => 'auth',
-    'middleware' => ['auth:sanctum', 'hasIdpSession'],
+    'middleware' => ['auth:sanctum', 'session'],
 ],
     function () {
-        Route::post('/register', [AuthController::class, 'register']);
 
         Route::get('/auth/{provider}/redirect', [OAuthController::class, 'redirect']);
 

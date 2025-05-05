@@ -12,8 +12,7 @@ abstract class AuthService implements RegisterStrategyContract
     public function __construct(
         protected ?UserEntity $userEntity = null,
         protected ?UserRepositoryInterface $userRepositoryInterface = null
-    )
-    {
+    ) {
         $this->userEntity ??= app(UserEntity::class);
         $this->userRepositoryInterface ??= app(UserRepositoryInterface::class);
     }
@@ -24,6 +23,7 @@ abstract class AuthService implements RegisterStrategyContract
     public function register(array $data): UserEntity
     {
         $user = $this->userEntity->fromArray($data);
+
         return $this->userRepositoryInterface->save($user);
     }
 }

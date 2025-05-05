@@ -40,9 +40,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [\App\Http\Middleware\HandleInertiaRequests::class]);
         // Middleware per le API (Protezione e throttling)
         //Protegge le API e richiede autenticazione con un token
-        $middleware->api(prepend: ['auth:sanctum']);
+        //$middleware->api(prepend: ['auth:sanctum']);
         //Limita le richieste API per prevenire abusi
-        $middleware->api(append: ['throttle:60,1']);
+        //$middleware->api(append: ['throttle:60,1']);
 
     })
     ->withExceptions(function (Exceptions $exceptions) {

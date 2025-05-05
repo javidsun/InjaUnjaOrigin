@@ -80,6 +80,7 @@
 
 <script>
 import InjaUnjaLogo from "@/assets/images/logo1.png"
+import apiService from "@/globalServices/apiService.js";
 
 export default {
     name: "Register", //salam
@@ -116,8 +117,11 @@ export default {
             console.log('form data sarebe : : : ', formData);
 
             try {
-                await apiService.axiosToBackend().get('/sanctum/csrf-cookie');
+                //await apiService.axiosToBackend().get('/sanctum/csrf-cookie');
+                console.log('csrf cookie settato',formData);
                 const response = await apiService.axiosToBackend().post('/api/register', formData);
+
+                console.log('response', response);
 
                 if (response.data.success) {
                     console.log('Registrazione completata:', response.data);
@@ -126,13 +130,7 @@ export default {
                     this.error = response.data.message;
                 }
                 console.log(response);
-                //this.$router.push('/dashboard'); // Redirigi l'utente dopo la registrazione
             } catch (error) {
-                if (error.response && error.response.status === 422) {
-                    this.error = 'Errore di validazione: ' + Object.values(error.response.data.errors).join(', ');
-                } else {
-                    this.error = 'Errore durante la registrazione. Riprova più tardi.';
-                }
                 console.error('Errore durante la registrazione:', error);
             } finally {
                 this.loading = false;

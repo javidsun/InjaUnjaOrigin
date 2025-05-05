@@ -6,7 +6,6 @@ use App\Constant\TableParametersConst\AuthConst\UserJson;
 use App\Domain\Entity;
 use App\DTOs\ModelEntityConvertable;
 use App\Entities\UserEntity;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -26,7 +25,7 @@ use Symfony\Component\Uid\Ulid;
  */
 class User extends Authenticate implements ModelEntityConvertable
 {
-    use HasApiTokens, HasFactory, Notifiable,HasUuids;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -35,6 +34,7 @@ class User extends Authenticate implements ModelEntityConvertable
      */
 
     protected $fillable = [
+        'id',
         UserJson::NAME,
         UserJson::EMAIL,
     ];

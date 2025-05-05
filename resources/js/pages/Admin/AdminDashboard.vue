@@ -8,7 +8,6 @@
             </v-col>
             <v-spacer/>
 
-            <Searchbar/>
             <v-spacer/>
 
             <Darkmood class="darkmood"/>

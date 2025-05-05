@@ -5,21 +5,38 @@
             <span class="field-text" v-show="!isMobile">{{ translate(selectedOption) || translate('Anywhere.anywhere') }}</span>
         </div>
 
-        <div v-if="isActive" class="options-menu">
-            <v-btn @click="selectOption('Anywhere.flexible')">{{ translate('Anywhere.flexible') }}</v-btn>
-            <v-btn @click="selectOption('Anywhere.italy')">{{ translate('Anywhere.italy') }}</v-btn>
-            <v-btn @click="selectOption('Anywhere.spain')">{{ translate('Anywhere.spain') }}</v-btn>
-            <v-btn @click="selectOption('Anywhere.france')">{{ translate('Anywhere.france') }}</v-btn>
-            <v-btn @click="selectOption('Anywhere.turkey')">{{ translate('Anywhere.turkey') }}</v-btn>
-            <v-btn @click="selectOption('Anywhere.unitedStates')">{{ translate('Anywhere.unitedStates') }}</v-btn>
-        </div>
+        <v-dialog
+            v-model="isActive"
+            max-width="500px"
+            transition="dialog-transition"
+            content-class="center-modal"
+        >
+            <v-card class="width_1">
+                <v-card-title class="headline">
+                    {{ translate('Select Location') }}
+                </v-card-title>
+                <v-card-text>
+                    <div class="options-menu-modal">
+                        <v-btn block @click="selectOption('Anywhere.flexible')">{{ translate('Anywhere.flexible') }}</v-btn>
+                        <v-btn block @click="selectOption('Anywhere.italy')">{{ translate('Anywhere.italy') }}</v-btn>
+                        <v-btn block @click="selectOption('Anywhere.spain')">{{ translate('Anywhere.spain') }}</v-btn>
+                        <v-btn block @click="selectOption('Anywhere.france')">{{ translate('Anywhere.france') }}</v-btn>
+                        <v-btn block @click="selectOption('Anywhere.turkey')">{{ translate('Anywhere.turkey') }}</v-btn>
+                        <v-btn block @click="selectOption('Anywhere.unitedStates')">{{ translate('Anywhere.unitedStates') }}</v-btn>
+                    </div>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" text @click="toggleMenu">
+                        {{ translate('Close') }}
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-col>
 </template>
 
 <script>
-//Todo:location-selected:description/payload
-//Todo:data_requirements:flexible/italy/spain/france/turkey/unitedStates/anywhere
-
 import { translate } from "@/store/languageStore";
 
 export default {
@@ -38,8 +55,13 @@ export default {
         };
     },
     computed: {
-        isActive() {
-            return this.activeMenu === "anywhere";
+        isActive: {
+            get() {
+                return this.activeMenu === "anywhere";
+            },
+            set(value) {
+                this.$emit("update-active-menu", value ? "anywhere" : null);
+            }
         },
         translate() {
             return translate;
@@ -121,7 +143,7 @@ export default {
     align-items: center;
     gap: 8px;
     color: var(--text-color);
-    background-color: var(--search-background-color);
+    background-color: var(--background-color);
     padding: 10px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
@@ -137,35 +159,22 @@ export default {
     font-size: 14px;
 }
 
-.options-menu {
-    position: fixed;
-    top: 50px;
-    left: 0;
-    width: 15%;
-    z-index: 9999;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    color: var(--text-color);
-    background-color: var(--search-background-color);
-    border: 1px solid var(--border-color);
-    padding: 10px 8px;
-    box-sizing: border-box;
-    max-height: 300px;
-    overflow-y: auto;
-    margin-left: 30%;
-    line-height: 1.2;
+.options-menu-modal {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    transition: background-color 0.3s, color 0.3s;
+    gap: 12px;
+    padding: 10px 0;
 }
-
-.options-menu v-btn {
-    flex: none;
-    padding: 8px 14px;
-    font-size: 10px;
+.width_1{
+    width: 50% !important;
+    margin-top: 250px;
+}
+.options-menu-modal v-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
     text-align: center;
-    background: var(--search-background-color);
+    background: var(--background-color);
     color: var(--text-color);
     border: 1px solid var(--border-color);
     border-radius: 4px;
@@ -173,16 +182,16 @@ export default {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.options-menu v-btn.active {
+.options-menu-modal v-btn:hover {
     background: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
 }
 
-.options-menu v-btn:hover {
-    background: var(--background-color--groups);
-    color: var(--text-color);
-    border-color: var(--border-color);
+.center-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (max-width: 768px) {
@@ -193,81 +202,6 @@ export default {
 
     .field-text {
         display: none;
-    }
-
-    .options-menu {
-        width: 30%;
-        padding: 8px 0;
-    }
-}
-
-@media (max-width: 768px) {
-    .field-wrapper {
-        flex-direction: row;
-        justify-content: flex-start;
-        gap: 4px;
-    }
-
-    .field-content {
-        padding: 5px 8px;
-        gap: 4px;
-    }
-
-    .icon-img {
-        width: 24px;
-        height: 24px;
-    }
-
-    .field-text {
-        font-size: 12px;
-    }
-
-    .options-menu {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 4px;
-        padding: 5px;
-    }
-
-    .options-menu v-btn {
-        padding: 4px 8px;
-        font-size: 10px;
-    }
-}
-
-@media (max-width: 1030px) {
-    .field-wrapper {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-    }
-
-    .field-content {
-        gap: 6px;
-    }
-
-    .icon-img {
-        width: 30px;
-        height: 30px;
-    }
-
-    .field-text {
-        display: none;
-    }
-
-    .options-menu {
-        width: 100%;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 6px;
-    }
-
-    .options-menu v-btn {
-        flex: 1 1 calc(33.33% - 8px);
-        margin: 0;
-        padding: 4px 8px;
-        font-size: 10px;
     }
 }
 </style>

@@ -24,6 +24,8 @@
         </v-row>
 
         <v-row class="ad-container">
+            <Searchbar />
+
             <v-col cols="12" v-show="tab === 0">
                 <v-row class="mb-4">
                     <v-col v-for="(icon, index) in travelIcons" :key="index" cols="2">
@@ -397,11 +399,18 @@
 </template>
 
 <script>
+//Todo:{id/destination}
+//Todo: user:{name/age/gender:(male/female/other)/rating/languages/nationality}
+//Todo:{travelDates/budget/description/images/coordinates/personalityTraits/createdAt/updatedAt}
+//Todo:{reservations: companionId/userId/startDate/endDate/guests/status/paymentMethod/paymentStatus/totalAmount}
+//Todo:{messages: sender/text/timestamp/read
+//Todo:{travelStyles: id/name/icon/description
+
 import { translate } from "../../../../../store/languageStore";
 import CompanionMap from "./CompanionMap.vue";
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import axios from 'axios';
+import Searchbar from '../../../../layout/Header/search/Searchbar.vue';
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -417,6 +426,7 @@ export default {
 
     components: {
         CompanionMap,
+        Searchbar,
 
     },
     data() {

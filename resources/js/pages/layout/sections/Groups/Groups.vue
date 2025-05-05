@@ -1,149 +1,212 @@
-<script setup>
-import { ref } from "vue";
+<template>
+    <v-row class="group-row">
+        <v-col
+            v-for="(group, index) in groupImages"
+            :key="index"
+            cols="12"
+            sm="6"
+            md="3"
+            class="group-image-container"
+            @click="handleGroupSelection(index)"
+        >
+            <div class="image-box">
+                <v-img :src="group" class="group-image" />
+            </div>
+            <div v-if="selectedGroup === index" class="selection-indicator">
+                <v-icon color="success">mdi-check-circle</v-icon>
+            </div>
+        </v-col>
+    </v-row>
+</template>
 
-defineProps({
-  groupImages: Array,
-});
+<script>
+export default {
+    name: 'Groups',
+    props: {
+        groupImages: {
+            type: Array,
+            required: true,
+            validator: function(value) {
+                try {
+                    return Array.isArray(value) && value.every(item => typeof item === 'string');
+                } catch (error) {
+                    console.error('Invalid groupImages prop:', error);
+                    return false;
+                }
+            }
+        }
+    },
+    data() {
+        return {
+            selectedGroup: null
+        };
+    },
+    methods: {
+        handleGroupSelection(index) {
+            try {
+                if (index < 0 || index >= this.groupImages.length) {
+                    throw new Error('Invalid group index selected');
+                }
 
-const emit = defineEmits(["selectGroup"]);
+                this.selectedGroup = index;
+                this.$emit('selectGroup', index);
 
-const selectedGroup = ref(null);
+                this.$vuetify.goTo('.group-row', {
+                    duration: 300,
+                    offset: 0,
+                    easing: 'easeInOutCubic'
+                });
 
-const selectGroup = (index) => {
-  selectedGroup.value = index;
-  emit("selectGroup", index); // ارسال مقدار به والد
+            } catch (error) {
+                console.error('Error in group selection:', error.message);
+                this.showErrorFeedback();
+            }
+        },
+        showErrorFeedback() {
+            try {
+                const errorElements = document.querySelectorAll('.group-image-container');
+                errorElements.forEach(el => {
+                    el.classList.add('error-shake');
+                    setTimeout(() => el.classList.remove('error-shake'), 500);
+                });
+            } catch (error) {
+                console.error('Error showing feedback:', error);
+            }
+        }
+    }
 };
 </script>
 
-<template>
-  <v-row class="group-row">
-    <v-col
-        v-for="(group, index) in groupImages"
-        :key="index"
-        cols="12"
-        sm="6"
-        md="3"
-        class="group-image-container"
-        @click="selectGroup(index)"
-    >
-      <div class="image-box">
-        <v-img :src="group" class="group-image" />
-      </div>
-    </v-col>
-  </v-row>
-</template>
-
 <style scoped>
 .group-row {
-  margin-bottom: 30px;
-  margin-top: 50px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 0 60px;
-  gap: 10px;
+    margin-bottom: 30px;
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 60px;
+    gap: 10px;
 }
-.group-image-container {
-  margin-bottom: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1 1 calc(25% - 10px);
-  max-width: calc(25% - 10px);
 
+.group-image-container {
+    position: relative;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 calc(25% - 10px);
+    max-width: calc(25% - 10px);
 }
+
+.selection-indicator {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 2;
+    background: white;
+    border-radius: 50%;
+}
+
 .image-box {
-  width: 80%;
-  aspect-ratio: 1;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  overflow: visible;
-  transition: transform 0.3s ease-in-out;
-  background-color: var(--background-color--groups);
-  min-width: 150px;
-  min-height: 150px;
+    width: 80%;
+    aspect-ratio: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: visible;
+    transition: transform 0.3s ease-in-out;
+    background-color: var(--background-color--groups);
+    min-width: 150px;
+    min-height: 150px;
 }
 
 .image-box:hover {
-  transform: scale(1.05);
+    transform: scale(1.05);
 }
 
 .group-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
 .group-image-container:hover .group-image {
-  transform: scale(0.9);
-  cursor: pointer;
+    transform: scale(0.9);
+    cursor: pointer;
+}
+
+.error-shake {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
 }
 
 @media (min-width: 960px) {
-  .group-row {
-    justify-content: flex-start;
-  }
+    .group-row {
+        justify-content: flex-start;
+    }
 
-  .group-image-container {
-    flex: 1 1 25%;
-  }
-  .image-box {
-    width: 30%;
-    min-width: 110px;
-    min-height: 110px;
-
-  }
+    .group-image-container {
+        flex: 1 1 25%;
+    }
+    .image-box {
+        width: 30%;
+        min-width: 110px;
+        min-height: 110px;
+    }
 }
-
 
 @media (min-width: 100px) and (max-width: 200px) {
-  .group-row {
-    justify-content: flex-start;
-  }
+    .group-row {
+        justify-content: flex-start;
+    }
 
-  .group-image-container {
-    flex: 1 1 25%;
-  }
-  .group-image {
-    max-width: 100%;
-    max-height: 100%;
-  }
+    .group-image-container {
+        flex: 1 1 25%;
+    }
+    .group-image {
+        max-width: 100%;
+        max-height: 100%;
+    }
 
-  .image-box {
-    width: 50%;
-    min-width: 40px;
-    min-height: 40px;
-  }
+    .image-box {
+        width: 50%;
+        min-width: 40px;
+        min-height: 40px;
+    }
 }
+
 @media (min-width: 200px) and (max-width: 370px) {
-
-  .image-box {
-    width: 50%;
-    min-width: 50px;
-    min-height: 50px;
-    max-width: 50%;
-  }
+    .image-box {
+        width: 50%;
+        min-width: 50px;
+        min-height: 50px;
+        max-width: 50%;
+    }
 }
+
 @media (min-width: 371px) and (max-width: 505px) {
-
-  .image-box {
-    width: 50%;
-    min-width: 60px;
-    min-height: 60px;
-    max-width: 50%;
-  }
+    .image-box {
+        width: 50%;
+        min-width: 60px;
+        min-height: 60px;
+        max-width: 50%;
+    }
 }
+
 @media (min-width: 506px) and (max-width: 960px) {
-  .group-row {
-    justify-content: flex-start;
-  }
+    .group-row {
+        justify-content: flex-start;
+    }
 
-  .image-box {
-    width: 5%;
-    min-width: 80px;
-    min-height: 80px;
-  }
+    .image-box {
+        width: 5%;
+        min-width: 80px;
+        min-height: 80px;
+    }
 }
-
-
 </style>

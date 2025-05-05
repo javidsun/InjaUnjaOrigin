@@ -13,12 +13,13 @@
                     lg="3"
                     class="recentReservations"
                 >
-                    <v-card outlined class="reservation-card">
+                    <v-card outlined class="reservation-card" @click="handleReservationClick(reservation)">
                         <v-img
                             :src="reservation.image"
                             aspect-ratio="1"
                             class="reservation-image"
                             height="100"
+                            @error="handleImageError"
                         ></v-img>
                         <v-card-title>
                             <v-icon :color="reservation.color" class="reservation-icon">
@@ -27,7 +28,7 @@
                             {{ reservation.title }}
                         </v-card-title>
                         <v-card-subtitle class="reservation-date">
-                            {{ reservation.date }}
+                            {{ formatDate(reservation.date) }}
                         </v-card-subtitle>
                     </v-card>
                 </v-col>
@@ -41,42 +42,86 @@
     </v-card>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+//Todo:id/title/date/icon/color/image/type
 
-import {ref} from 'vue';
-import {translate} from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
-const recentReservations = ref([
-    {
-        title: translate("UserSidebar.HouseReservation"),
-        date: "2025-01-01",
-        icon: "mdi-home",
-        color: "blue",
-        image: "/ads/house.svg",
+export default {
+    name: 'RecentReservationsCard',
+    data() {
+        return {
+            recentReservations: [
+                {
+                    title: translate("UserSidebar.HouseReservation"),
+                    date: "2025-01-01",
+                    icon: "mdi-home",
+                    color: "blue",
+                    image: "/ads/house.svg",
+                    type: "house"
+                },
+                {
+                    title: translate("UserSidebar.CarReservation"),
+                    date: "2024-12-29",
+                    icon: "mdi-car",
+                    color: "green",
+                    image: "/ads/car.svg",
+                    type: "car"
+                },
+                {
+                    title: translate("UserSidebar.EventReservation"),
+                    date: "2024-12-25",
+                    icon: "mdi-calendar",
+                    color: "purple",
+                    image: "/ads/event.svg",
+                    type: "event"
+                },
+                {
+                    title: translate("UserSidebar.TravelerReservation"),
+                    date: "2024-12-20",
+                    icon: "mdi-account-group",
+                    color: "orange",
+                    image: "/ads/firend.svg",
+                    type: "traveler"
+                }
+            ],
+            defaultImage: "/ads/default-image.svg"
+        };
     },
-    {
-        title: translate("UserSidebar.CarReservation"),
-        date: "2024-12-29",
-        icon: "mdi-car",
-        color: "green",
-        image: "/ads/car.svg",
-    },
-    {
-        title: translate("UserSidebar.EventReservation"),
-        date: "2024-12-25",
-        icon: "mdi-calendar",
-        color: "purple",
-        image: "/ads/event.svg",
-    },
-    {
-        title: translate("UserSidebar.TravelerReservation"),
-        date: "2024-12-20",
-        icon: "mdi-account-group",
-        color: "orange",
-        image: "/ads/firend.svg",
-    },
-]);
+    methods: {
+        handleReservationClick(reservation) {
+            try {
+                this.$router.push(`/reservation-details/${reservation.type}/${reservation.date}`);
+            } catch (error) {
+                this.showErrorNotification("Failed to navigate to reservation details");
+            }
+        },
+
+        formatDate(dateString) {
+            try {
+                const options = {year: 'numeric', month: 'long', day: 'numeric'};
+                return new Date(dateString).toLocaleDateString(undefined, options);
+            } catch (error) {
+                this.showErrorNotification("Invalid date format");
+                return dateString; // Return original if formatting fails
+            }
+        },
+
+        handleImageError(event) {
+            try {
+                event.target.src = this.defaultImage;
+            } catch (error) {
+                console.log("Error handling image load failure");
+            }
+        },
+
+        showErrorNotification(message) {
+            this.$emit('show-error', message);
+        },
+
+        translate,
+    }
+};
 </script>
 
 <style scoped>
@@ -87,7 +132,6 @@ const recentReservations = ref([
     direction: rtl;
     box-shadow: none !important;
     color: var(--text-color);
-
 }
 
 .reservation-card {
@@ -130,5 +174,4 @@ const recentReservations = ref([
     color: gray;
     font-style: italic;
 }
-
 </style>

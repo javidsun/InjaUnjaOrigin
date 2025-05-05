@@ -1,17 +1,17 @@
 <template>
     <UserSidebar class="back">
         <v-container class="messages-container">
-            <v-btn color="primary" @click="newMessageDialog = true" aria-label="Send new message">
+            <v-btn color="primary" @click="openNewMessageDialog" aria-label="Send new message">
                 {{ translate('Message.NewMessage') }}
             </v-btn>
 
-            <v-dialog v-model="newMessageDialog" max-width="500px">
+            <v-dialog v-model="uiState.newMessageDialog" max-width="500px">
                 <v-card class="modal1">
                     <v-card-title>{{ translate('Message.NewMessage') }}</v-card-title>
                     <v-card-text>
-                        <v-select v-model="newMessageType" :items="categories2" item-value="type" item-text="title" :label="translate('Message.SelectCategory')"></v-select>
-                        <v-text-field v-model="newMessageUsername" :label="translate('Message.Username')" dense outlined v-if="newMessageType === 'host' || newMessageType === 'guest'"></v-text-field>
-                        <v-text-field v-model="newMessageText" :label="translate('Message.MessageText')" dense outlined></v-text-field>
+                        <v-select v-model="messageData.newMessageType" :items="messageCategories" item-value="type" item-text="title" :label="translate('Message.SelectCategory')"></v-select>
+                        <v-text-field v-model="messageData.newMessageUsername" :label="translate('Message.Username')" dense outlined v-if="messageData.newMessageType === 'host' || messageData.newMessageType === 'guest'"></v-text-field>
+                        <v-text-field v-model="messageData.newMessageText" :label="translate('Message.MessageText')" dense outlined></v-text-field>
                         <v-file-input
                             @change="handleImageUpload"
                             :label="translate('Message.Image_selection')"
@@ -19,24 +19,23 @@
                             outlined
                             accept="image/*">
                         </v-file-input>
-                        <v-img v-if="previewImage" :src="previewImage" class="preview-image"></v-img>
+                        <v-img v-if="uiState.previewImage" :src="uiState.previewImage" class="preview-image"></v-img>
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn color="primary" @click="sendNewMessage" :disabled="!newMessageText || (newMessageType !== 'support' && !newMessageUsername)">{{ translate('Message.SendMessage') }}</v-btn>
-                        <v-btn text @click="newMessageDialog = false">{{ translate('housescontent.close') }}</v-btn>
+                        <v-btn color="primary" @click="sendNewMessage" :disabled="!messageData.newMessageText || (messageData.newMessageType !== 'support' && !messageData.newMessageUsername)">{{ translate('Message.SendMessage') }}</v-btn>
+                        <v-btn text @click="closeNewMessageDialog">{{ translate('housescontent.close') }}</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
-
 
             <v-row>
                 <v-col cols="12">
                     <div class="tabs">
                         <span
-                            v-for="(category, index) in categories"
+                            v-for="(category, index) in allCategories"
                             :key="index"
                             @click="selectCategory(category)"
-                            :class="{'active-tab': selectedCategory === category.type}"
+                            :class="{'active-tab': uiState.selectedCategory === category.type}"
                         >
                             {{ category.title }}
                         </span>
@@ -70,24 +69,24 @@
                 </v-col>
             </v-row>
 
-            <v-dialog v-model="selectedMessage" max-width="500px">
-                <v-card v-if="selectedMessage">
-                    <v-card-title>{{ selectedMessage.sender }}</v-card-title>
+            <v-dialog v-model="uiState.selectedMessage" max-width="500px">
+                <v-card v-if="uiState.selectedMessage">
+                    <v-card-title>{{ uiState.selectedMessage.sender }}</v-card-title>
                     <v-card-text>
-                        {{ sanitizeMessage(selectedMessage.fullText) }}
-                        <div v-if="selectedMessage.image">
-                            <v-img v-if="selectedMessage.image" :src="selectedMessage.image" class="message-image"></v-img>
+                        {{ sanitizeMessage(uiState.selectedMessage.fullText) }}
+                        <div v-if="uiState.selectedMessage.image">
+                            <v-img v-if="uiState.selectedMessage.image" :src="uiState.selectedMessage.image" class="message-image"></v-img>
                         </div>
-                        <div v-if="selectedMessage.replies">
+                        <div v-if="uiState.selectedMessage.replies">
                             <hr>
-                            <div v-for="(reply, index) in selectedMessage.replies" :key="index" class="reply">
+                            <div v-for="(reply, index) in uiState.selectedMessage.replies" :key="index" class="reply">
                                 <p>{{ sanitizeMessage(reply.text) }} <span class="reply-time">{{ reply.time }}</span></p>
                                 <v-img v-if="reply.image" :src="reply.image" class="reply-image"></v-img>
                             </div>
                         </div>
                     </v-card-text>
                     <v-card-actions>
-                        <v-text-field v-model="replyText" :label="translate('Message.Reply')" dense outlined :disabled="selectedMessage.closed"></v-text-field>
+                        <v-text-field v-model="messageData.replyText" :label="translate('Message.Reply')" dense outlined :disabled="uiState.selectedMessage.closed"></v-text-field>
                         <v-file-input
                             @change="handleReplyImageUpload"
                             :label="translate('Message.Image_selection')"
@@ -95,9 +94,9 @@
                             outlined
                             accept="image/*">
                         </v-file-input>
-                        <v-img v-if="replyPreviewImage" :src="replyPreviewImage" class="preview-image"></v-img>
-                        <v-btn color="primary" @click="sendReply" :disabled="selectedMessage.closed">{{ translate('Message.SendMessage') }}</v-btn>
-                        <v-btn text @click="selectedMessage = null">{{ translate('housescontent.close') }}</v-btn>
+                        <v-img v-if="uiState.replyPreviewImage" :src="uiState.replyPreviewImage" class="preview-image"></v-img>
+                        <v-btn color="primary" @click="sendReply" :disabled="uiState.selectedMessage.closed">{{ translate('Message.SendMessage') }}</v-btn>
+                        <v-btn text @click="closeMessageDialog">{{ translate('housescontent.close') }}</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -106,50 +105,95 @@
 </template>
 
 <script>
-//TODO : composition --> option & const & error warning
+//Todo:id/sender:username-or-id/profileImage/preview/fullText/SendImage:image-or-null/time/type/approved/status/closed/replies:id/text/image/time/sender username-or-id
 
 import UserSidebar from '../Layout.vue';
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
 export default {
-    setup() {
-        return { translate };
-    },
+    name: 'Message',
     components: {
-        UserSidebar,
-
+        UserSidebar
     },
     data() {
         return {
-            newMessageUsername: "",
-            newMessageDialog: false,
-            newMessageType: null,
-            newMessageText: "",
-            selectedCategory: "all",
-            selectedMessage: null,
-            newMessageImage: null,
-            previewImage: null,
-            replyPreviewImage: null,
-            replyText: "",
-            replyImage: null,
-            categories: [
+            uiState: {
+                newMessageDialog: false,
+                selectedCategory: "all",
+                selectedMessage: null,
+                previewImage: null,
+                replyPreviewImage: null
+            },
+            messageData: {
+                newMessageUsername: "",
+                newMessageType: null,
+                newMessageText: "",
+                replyText: "",
+                newMessageImage: null,
+                replyImage: null
+            },
+            allCategories: [
                 { title: translate("all"), type: "all" },
                 { title: translate("host"), type: "host" },
                 { title: translate("guest"), type: "guest" },
                 { title: translate("support"), type: "support" }
             ],
-            categories2: [
+            messageCategories: [
                 { title: translate("host"), type: "host" },
                 { title: translate("guest"), type: "guest" },
                 { title: translate("support"), type: "support" }
             ],
-
             messages: [
-                { sender: "آرش", avatar: "avatar-2.png", preview: "سلام، چندتا سوال بابت اجاره اتاق داشتم. می خواس...", fullText: "سلام، چندتا سوال ببت اجاره اتاق داشتم. می خواس... ", time: " 1:10:10 PM", type: "host", approved: true, status: "تایید شد. یک اتاق برای اجاره در یک خانه دو خوابه" },
-                { sender: "مریم", avatar: "avatar-1.png", preview: "سلام، برای سفر به سوئیس و این تور جنگل می تونم...", fullText: "سلام، برای سفر به سوئیس و این تور جنگل می تونم...", time: "  10:28:25 AM", type: "guest", approved: false, status: "تایید نشده. یک اتاق برای اجاره در یک خانه دو خوابه" },
-                { sender: "کیارش", avatar: "avatar3.svg", preview: "وقت بخیر، من و دوستم دنبال دو نفر همسفر می گر...", fullText: "وقت بخیر، من و دوستم دنبال دو نفر همسفر می گر...", time: "01/03/2024 ", type: "guest", approved: true, status: "تایید شد. جستجوی همسفر برای رفتن به سیسیل" },
-                { sender: "میترا", avatar: "avatar4.svg", preview: "وقت بخیر، من دوشنبه میرسم ونیز با چندتا از دوس...", fullText: "وقت بخیر، من دوشنبه میرسم ونیز با چندتا از دوس...", time: "02/02/2024  ", type: "host", approved: true, status: "تایید شد. تور لیدر در شهر ونیز با ۸ سال سابقه" },
-                { sender: "پشتیبان InjaOnja", avatar: "inja-unja.png", preview: "شما، مراحل بازپرداخت را انجام دادم. تشکر", fullText: "شما، مراحل بازپرداخت را انجام دادم. تشکر", time: "01/02/2024   ", type: "support", approved: false, status: "پایان" },
+                {
+                    sender: "آرش",
+                    avatar: "avatar-2.png",
+                    preview: "سلام، چندتا سوال بابت اجاره اتاق داشتم. می خواس...",
+                    fullText: "سلام، چندتا سوال ببت اجاره اتاق داشتم. می خواس... ",
+                    time: " 1:10:10 PM",
+                    type: "host",
+                    approved: true,
+                    status: "تایید شد. یک اتاق برای اجاره در یک خانه دو خوابه"
+                },
+                {
+                    sender: "مریم",
+                    avatar: "avatar-1.png",
+                    preview: "سلام، برای سفر به سوئیس و این تور جنگل می تونم...",
+                    fullText: "سلام، برای سفر به سوئیس و این تور جنگل می تونم...",
+                    time: "  10:28:25 AM",
+                    type: "guest",
+                    approved: false,
+                    status: "تایید نشده. یک اتاق برای اجاره در یک خانه دو خوابه"
+                },
+                {
+                    sender: "کیارش",
+                    avatar: "avatar3.svg",
+                    preview: "وقت بخیر، من و دوستم دنبال دو نفر همسفر می گر...",
+                    fullText: "وقت بخیر، من و دوستم دنبال دو نفر همسفر می گر...",
+                    time: "01/03/2024 ",
+                    type: "guest",
+                    approved: true,
+                    status: "تایید شد. جستجوی همسفر برای رفتن به سیسیل"
+                },
+                {
+                    sender: "میترا",
+                    avatar: "avatar4.svg",
+                    preview: "وقت بخیر، من دوشنبه میرسم ونیز با چندتا از دوس...",
+                    fullText: "وقت بخیر، من دوشنبه میرسم ونیز با چندتا از دوس...",
+                    time: "02/02/2024  ",
+                    type: "host",
+                    approved: true,
+                    status: "تایید شد. تور لیدر در شهر ونیز با ۸ سال سابقه"
+                },
+                {
+                    sender: "پشتیبان InjaOnja",
+                    avatar: "inja-unja.png",
+                    preview: "شما، مراحل بازپرداخت را انجام دادم. تشکر",
+                    fullText: "شما، مراحل بازپرداخت را انجام دادم. تشکر",
+                    time: "01/02/2024   ",
+                    type: "support",
+                    approved: false,
+                    status: "پایان"
+                },
                 {
                     sender: "پشتیبان InjaOnja",
                     avatar: "inja-unja.png",
@@ -160,131 +204,195 @@ export default {
                     approved: false,
                     status: "پایان",
                     closed: true
-                },
-
+                }
             ]
         };
     },
     computed: {
         filteredMessages() {
-            if (this.selectedCategory === "all") return this.messages;
-            return this.messages.filter(msg => msg.type === this.selectedCategory);
+            if (this.uiState.selectedCategory === "all") return this.messages;
+            return this.messages.filter(msg => msg.type === this.uiState.selectedCategory);
         }
     },
     methods: {
+        translate,
+        openNewMessageDialog() {
+            this.uiState.newMessageDialog = true;
+        },
+
+        closeNewMessageDialog() {
+            this.uiState.newMessageDialog = false;
+            this.resetNewMessageForm();
+        },
+
+
+        closeMessageDialog() {
+            this.uiState.selectedMessage = null;
+            this.resetReplyForm();
+        },
+
+
         handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                if (this.previewImage) {
-                    URL.revokeObjectURL(this.previewImage);
+            try {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                if (this.uiState.previewImage) {
+                    URL.revokeObjectURL(this.uiState.previewImage);
                 }
-                this.previewImage = URL.createObjectURL(file);
-                this.newMessageImage = file;
+
+                this.uiState.previewImage = URL.createObjectURL(file);
+                this.messageData.newMessageImage = file;
+            } catch (error) {
+                this.showErrorAlert(this.translate('Message.ImageUploadError'));
             }
         },
+
         handleReplyImageUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                this.replyPreviewImage = URL.createObjectURL(file);
-                this.replyImage = file;
-            }
-        },
-        beforeUnmount() {
-            if (this.previewImage) {
-                URL.revokeObjectURL(this.previewImage);
-            }
-            if (this.replyPreviewImage) {
-                URL.revokeObjectURL(this.replyPreviewImage);
+            try {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                this.uiState.replyPreviewImage = URL.createObjectURL(file);
+                this.messageData.replyImage = file;
+            } catch (error) {
+                this.showErrorAlert(this.translate('Message.ImageUploadError'));
             }
         },
 
         selectCategory(category) {
-            this.selectedCategory = category.type;
+            this.uiState.selectedCategory = category.type;
         },
+
         openMessage(message) {
             if (!message.closed) {
-                this.selectedMessage = message;
+                this.uiState.selectedMessage = message;
             }
         },
+
         closeMessage(message) {
-            message.closed = true;
-            if (this.selectedMessage === message) {
-                this.selectedMessage = null;
+            try {
+                message.closed = true;
+                if (this.uiState.selectedMessage === message) {
+                    this.uiState.selectedMessage = null;
+                }
+                this.showSuccessAlert(this.translate('Message.MessageClosed'));
+            } catch (error) {
+                this.showErrorAlert(this.translate('Message.CloseError'));
             }
         },
+
         sendNewMessage() {
-            if (this.newMessageText.trim() && this.newMessageType) {
-                const sanitizedText = this.sanitizeMessage(this.newMessageText);
+            try {
+                if (!this.messageData.newMessageText.trim() || !this.messageData.newMessageType) {
+                    throw new Error(this.translate('Message.RequiredFields'));
+                }
+
+                const sanitizedText = this.sanitizeMessage(this.messageData.newMessageText);
                 const newMessage = {
                     sender: "you",
                     avatar: "avatar1.svg",
                     preview: sanitizedText.slice(0, 20) + "...",
                     fullText: sanitizedText,
-                    image: this.previewImage,
+                    image: this.uiState.previewImage,
                     time: new Date().toLocaleTimeString(),
-                    type: this.newMessageType,
+                    type: this.messageData.newMessageType,
                     approved: false,
                     status: "Awaiting review"
                 };
 
                 this.messages.unshift(newMessage);
-
-                this.newMessageText = "";
-                this.previewImage = null;
-                this.newMessageImage = null;
-                this.newMessageDialog = false;
+                this.resetNewMessageForm();
+                this.uiState.newMessageDialog = false;
+                this.showSuccessAlert(this.translate('Message.SentSuccess'));
+            } catch (error) {
+                this.showErrorAlert(error.message || this.translate('Message.SendError'));
             }
         },
 
         sanitizeMessage(message) {
-            message = message.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, '***');
-            message = message.replace(/(\+|0)?9\d{9}/g, '***');
-            return message;
-        },
-        sendReply() {
-            if (this.replyText.trim() && this.selectedMessage && !this.selectedMessage.closed) {
-                if (!this.selectedMessage.replies) {
-                    this.selectedMessage.replies = [];
-                }
-                const sanitizedText = this.sanitizeMessage(this.replyText);
-                this.selectedMessage.replies.push({
-                    text: sanitizedText,
-                    image: this.replyImage && this.replyImage.length > 0 ? URL.createObjectURL(this.replyImage[0]) : null,
-                    time: new Date().toLocaleTimeString(),
-                });
-                this.replyText = "";
-                this.replyImage = null;
-                this.selectedMessage = null;
+            try {
+                if (!message) return '';
+                let sanitized = message;
+                sanitized = sanitized.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, '***');
+                sanitized = sanitized.replace(/(\+|0)?9\d{9}/g, '***');
+                return sanitized;
+            } catch (error) {
+                return message;
             }
         },
 
-        //برای زمانیکه میخواهم به بک متصل کنم
-        // async fetchMessages() {
-        //     try {
-        //         const response = await fetch('http://127.0.0.1:8003/api/messages');
-        //
-        //         if (!response.ok) {
-        //             throw new Error(`خطای شبکه: ${response.status} ${response.statusText}`);
-        //         }
-        //
-        //         const contentType = response.headers.get('content-type');
-        //         if (!contentType || !contentType.includes('application/json')) {
-        //             throw new TypeError('پاسخ دریافتی JSON نیست.');
-        //         }
-        //
-        //         const data = await response.json();
-        //         this.messages = data;
-        //     } catch (error) {
-        //         console.error("Error fetching messages:", error);
-        //         alert("خطا در دریافت پیام‌ها. لطفاً دوباره تلاش کنید.");
-        //     }
-        // }
+        sendReply() {
+            try {
+                if (!this.messageData.replyText.trim() || !this.uiState.selectedMessage || this.uiState.selectedMessage.closed) {
+                    throw new Error(this.translate('Message.InvalidReply'));
+                }
+
+                if (!this.uiState.selectedMessage.replies) {
+                    this.uiState.selectedMessage.replies = [];
+                }
+
+                const sanitizedText = this.sanitizeMessage(this.messageData.replyText);
+                this.uiState.selectedMessage.replies.push({
+                    text: sanitizedText,
+                    image: this.uiState.replyPreviewImage,
+                    time: new Date().toLocaleTimeString(),
+                });
+
+                this.resetReplyForm();
+                this.uiState.selectedMessage = null;
+                this.showSuccessAlert(this.translate('Message.ReplySent'));
+            } catch (error) {
+                this.showErrorAlert(error.message || this.translate('Message.ReplyError'));
+            }
+        },
+
+        resetNewMessageForm() {
+            this.messageData.newMessageUsername = "";
+            this.messageData.newMessageText = "";
+            this.messageData.newMessageImage = null;
+            if (this.uiState.previewImage) {
+                URL.revokeObjectURL(this.uiState.previewImage);
+            }
+            this.uiState.previewImage = null;
+        },
+
+        resetReplyForm() {
+            this.messageData.replyText = "";
+            this.messageData.replyImage = null;
+            if (this.uiState.replyPreviewImage) {
+                URL.revokeObjectURL(this.uiState.replyPreviewImage);
+            }
+            this.uiState.replyPreviewImage = null;
+        },
+
+        showSuccessAlert(message) {
+            this.$emit('show-alert', {
+                type: 'success',
+                message: message,
+                title: this.translate('Message.Success')
+            });
+        },
+
+        showErrorAlert(message) {
+            this.$emit('show-alert', {
+                type: 'error',
+                message: message,
+                title: this.translate('Message.Error')
+            });
+        }
     },
-    // mounted() {
-    //     this.fetchMessages();
-    // }
+    beforeUnmount() {
+        if (this.uiState.previewImage) {
+            URL.revokeObjectURL(this.uiState.previewImage);
+        }
+        if (this.uiState.replyPreviewImage) {
+            URL.revokeObjectURL(this.uiState.replyPreviewImage);
+        }
+    }
 };
 </script>
+
 
 <style scoped>
 .messages-container {

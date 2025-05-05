@@ -8,7 +8,6 @@
             </v-col>
 
             <v-col cols="6">
-                <Searchbar />
             </v-col>
 
             <v-col cols="4" class="d-flex justify-end align-center menu-wrapper">

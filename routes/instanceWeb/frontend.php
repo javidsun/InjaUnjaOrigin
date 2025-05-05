@@ -69,9 +69,6 @@ Route::get('/inja-unja', function () {
 Route::get('/help-center', function () {
     return Inertia::render('HelpCenter');
 });
-Route::get('/AdminDashboard', function () {
-    return Inertia::render('views/dashboards/Admin/AdminDashboard');
-});
 
 Route::get('/UserDashboard', function () {
     return Inertia::render('Users/UserDashboard/UserDashboard');
@@ -83,10 +80,6 @@ Route::get('/UserProfile', function () {
     Route::get('/UserReservations', function () {
         return Inertia::render('Users/UserDashboard/UserReservations');
     })->name('UserReservations');
-
-    Route::get('/MyAds', function () {
-        return Inertia::render('Users/UserDashboard/MyAds');
-    })->name('MyAds');
 
     Route::get('/notifications', function () {
         return Inertia::render('Users/UserDashboard/Notifications');

@@ -295,222 +295,297 @@
     </v-app>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
 
+<script>
+//Todo: Ad Model (House Type): id/title/description/category/basePrice/serviceFee/discountPercent/hostType/locationFeatures/status/images/type/active
+//Todo: Ad Model (Companion Type):{id/title/description/origin/destination/travelDate/price/genderPreference/travelType/status/type/active/smokingAllowed/petsAllowed/images
+import { translate } from "@/store/languageStore";
 import Sidebar from "../Sidebar.vue";
 import { ref,reactive, computed } from 'vue';
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
-import { translate } from "@/store/languageStore.js";
 
-const adTypeDialog = ref(false);
-const adDialog = ref(false);
-const detailsDialog = ref(false);
-const editingAd = ref(false);
-const valid = ref(false);
-const selectedAdType = ref('');
-const companionValid = ref(false);
-const datePickerMenu = ref(false);
-const companionForm = reactive({
-    title: '',
-    description: '',
-    origin: '',
-    destination: '',
-    travelDate: null,
-    price: 0,
-    genderPreference: '',
-    active: false,
-    travelType: '',
-});
+export default {
+    components: {
+        Sidebar,
+        Searchbar,
+        Darkmood,
+        LanguageSwitcher
+    },
+    data() {
+        return {
+            isDarkMode: true,
+            drawer: true,
+            adTypeDialog: false,
+            adDialog: false,
+            detailsDialog: false,
+            editingAd: false,
+            valid: false,
+            companionValid: false,
+            datePickerMenu: false,
 
-const travelTypes = computed(() => [
-    { label: translate("Ad.Normal"), value: 'normal', img: '/Travel 005.png' },
-    { label: translate('Ad.Luxury'), value: 'luxury', img: '/Travel 006.png' },
-    { label: translate('Ad.Adventure'), value: 'adventure', img: '/Travel 007.png' },
-    { label: translate('Ad.Camping'), value: 'camping', img: '/Travel 008.png' },
-    { label: translate('Ad.Backpacking'), value: 'backpacking', img: '/Travel 009.png' },
-]);
+            selectedAdType: '',
+            selectedAd: { title: '' },
 
-const genderPreferences = computed(() => [
-    { label: translate('Admin_AdManagement.no_preference'), value: 'no_preference' },
-    { label: translate('Admin_AdManagement.male_only'), value: 'male' },
-    { label: translate('Admin_AdManagement.female_only'), value: 'female' }
-]);
+            adForm: {
+                title: '',
+                description: '',
+                category: '',
+                basePrice: 0,
+                serviceFee: 0,
+                discountPercent: 0,
+                hostType: [],
+                locationFeatures: [],
+                active: false,
+                images: []
+            },
+            companionForm: {
+                title: '',
+                description: '',
+                origin: '',
+                destination: '',
+                travelDate: null,
+                price: 0,
+                genderPreference: '',
+                active: false,
+                travelType: '',
+                smokingAllowed: false,
+                petsAllowed: false
+            },
 
-const saveCompanionAd = () => {
-    console.log('companionForm:', companionForm);
-    if (!companionValid.value) return;
+            ads: [
+                {
+                    id: 1,
+                    title: 'آپارتمان لوکس',
+                    description: 'آپارتمان مبله با ویو دریا',
+                    category: 'آپارتمان',
+                    basePrice: 1000000,
+                    serviceFee: 100000,
+                    discountPercent: 10,
+                    hostType: ['individual'],
+                    locationFeatures: ['security_camera'],
+                    status: 'Awaiting_confirmation',
+                    images: ['/ads/special-offer.jpg', '/ads/house1.jpg']
+                },
+                {
+                    id: 2,
+                    title: 'ویلا در شمال',
+                    description: 'ویلا با استخر و باغچه',
+                    category: 'ویلا',
+                    basePrice: 2000000,
+                    serviceFee: 200000,
+                    discountPercent: 15,
+                    hostType: ['business'],
+                    locationFeatures: ['sound_insulation'],
+                    status: 'Awaiting_confirmation',
+                    images: ['/ads/top-rated.jpg', '/ads/house2.jpg']
+                }
+            ],
+            adHeaders: [
+                { text: this.translate('Admin_AdManagement.ad_title'), align: 'start', key: 'title', sortable: true },
+                { text: this.translate('Admin_AdManagement.ad_description'), key: 'description' },
+                { text: this.translate('Admin_AdManagement.ad_category'), key: 'category' },
+                { text: this.translate('Admin_AdManagement.ad_status'), key: 'status' },
+                { text: this.translate('Admin_AdManagement.images'), key: 'images', sortable: false },
+                { text: this.translate('Admin_AdManagement.actions'), key: 'actions', sortable: false }
+            ],
+            adTypes: [
+                { text: this.translate('house'), value: 'house', icon: 'mdi-home' },
+                { text: this.translate('travel_companion'), value: 'companion', icon: 'mdi-account-group' },
+                { text: this.translate('event'), value: 'event', icon: 'mdi-calendar' },
+                { text: this.translate('car'), value: 'car', icon: 'mdi-car' }
+            ]
+        }
+    },
+    computed: {
+        categories() {
+            return ['ویلا', 'آپارتمان', 'سوئیت'];
+        },
+        travelTypes() {
+            return [
+                { label: this.translate("Ad.Normal"), value: 'normal', img: '/Travel 005.png' },
+                { label: this.translate('Ad.Luxury'), value: 'luxury', img: '/Travel 006.png' },
+                { label: this.translate('Ad.Adventure'), value: 'adventure', img: '/Travel 007.png' },
+                { label: this.translate('Ad.Camping'), value: 'camping', img: '/Travel 008.png' },
+                { label: this.translate('Ad.Backpacking'), value: 'backpacking', img: '/Travel 009.png' }
+            ];
+        },
+        genderPreferences() {
+            return [
+                { label: this.translate('Admin_AdManagement.no_preference'), value: 'no_preference' },
+                { label: this.translate('Admin_AdManagement.male_only'), value: 'male' },
+                { label: this.translate('Admin_AdManagement.female_only'), value: 'female' }
+            ];
+        },
+        rules() {
+            return {
+                required: value => !!value || this.translate('Admin_AdManagement.validation.required')
+            };
+        },
+        totalPriceComputed() {
+            try {
+                const basePrice = parseFloat(this.adForm.basePrice || 0);
+                const serviceFee = parseFloat(this.adForm.serviceFee || 0);
+                return (basePrice + serviceFee).toFixed(2);
+            } catch (error) {
+                this.showError('Failed to calculate total price');
+                return '0.00';
+            }
+        },
+        finalReceivedAmountComputed() {
+            try {
+                const totalPrice = parseFloat(this.totalPriceComputed);
+                const discountPercent = parseFloat(this.adForm.discountPercent || 0);
+                const discountAmount = (totalPrice * discountPercent) / 100;
+                const finalAmount = (totalPrice - discountAmount) * 0.94;
+                return finalAmount.toFixed(2);
+            } catch (error) {
+                this.showError('Failed to calculate final amount');
+                return '0.00';
+            }
+        }
+    },
+    methods: {
+        translate,
 
-    const newAd = {
-        ...companionForm,
-        id: ads.value.length + 1,
-        status: 'Awaiting_confirmation',
-        type: 'companion'
-    };
-    ads.value.push(newAd);
-    adDialog.value = false;
-};
-const adTypes = [
-    { text: translate('house'), value: 'house', icon: 'mdi-home' },
-    { text: translate('travel_companion'), value: 'companion', icon: 'mdi-account-group' },
-    { text: translate('event'), value: 'event', icon: 'mdi-calendar' },
-    { text: translate('car'), value: 'car', icon: 'mdi-car' }
-];
-const openAdDialog = () => {
-    adTypeDialog.value = true;
-};
+        showError(message) {
+            alert(message);
+        },
+        showSuccess(message) {
+            alert(message);
+        },
+        openAdDialog() {
+            this.adTypeDialog = true;
+        },
+        selectAdType(type) {
+            try {
+                this.selectedAdType = type;
+                this.adTypeDialog = false;
+                this.adDialog = true;
 
-const selectAdType = (type) => {
-    selectedAdType.value = type;
-    adTypeDialog.value = false;
-    adDialog.value = true;
-    if (type === 'house') {
-        adForm.value = {
-            title: '',
-            description: '',
-            category: '',
-            basePrice: 0,
-            serviceFee: 0,
-            discountPercent: 0,
-            hostType: [],
-            locationFeatures: [],
-            active: false,
-            images: []
-        };
-    } else if (type === 'companion') {
-        companionForm.value = {
-            title: '',
-            description: '',
-            travelType: '',
-            origin: '',
-            destination: '',
-            travelDate: null,
-            price: 0,
-            genderPreference: '',
-            active: false,
-            smokingAllowed: false,
-            petsAllowed: false,
+                if (type === 'house') {
+                    this.adForm = {
+                        title: '',
+                        description: '',
+                        category: '',
+                        basePrice: 0,
+                        serviceFee: 0,
+                        discountPercent: 0,
+                        hostType: [],
+                        locationFeatures: [],
+                        active: false,
+                        images: []
+                    };
+                } else if (type === 'companion') {
+                    this.companionForm = {
+                        title: '',
+                        description: '',
+                        travelType: '',
+                        origin: '',
+                        destination: '',
+                        travelDate: null,
+                        price: 0,
+                        genderPreference: '',
+                        active: false,
+                        smokingAllowed: false,
+                        petsAllowed: false
+                    };
+                }
 
-        };
+                this.editingAd = false;
+            } catch (error) {
+                this.showError('Failed to select ad type');
+            }
+        },
+        closeAdDialog() {
+            this.adDialog = false;
+            this.selectedAdType = '';
+        },
+        saveAd() {
+            try {
+                if (!this.valid) return;
+
+                if (this.editingAd) {
+                    const adIndex = this.ads.findIndex(a => a.id === this.adForm.id);
+                    if (adIndex !== -1) {
+                        this.ads[adIndex] = { ...this.adForm };
+                        this.showSuccess('Ad updated successfully');
+                    }
+                } else {
+                    const newAd = {
+                        ...this.adForm,
+                        id: this.ads.length + 1,
+                        status: 'Awaiting_confirmation',
+                        type: 'house'
+                    };
+                    this.ads.push(newAd);
+                    this.showSuccess('Ad created successfully');
+                }
+
+                this.adDialog = false;
+            } catch (error) {
+                this.showError('Failed to save ad');
+            }
+        },
+        saveCompanionAd() {
+            try {
+                if (!this.companionValid) return;
+
+                const newAd = {
+                    ...this.companionForm,
+                    id: this.ads.length + 1,
+                    status: 'Awaiting_confirmation',
+                    type: 'companion'
+                };
+                this.ads.push(newAd);
+                this.showSuccess('Companion ad created successfully');
+                this.adDialog = false;
+            } catch (error) {
+                this.showError('Failed to save companion ad');
+            }
+        },
+        editAd(ad) {
+            try {
+                this.adForm = { ...ad };
+                this.editingAd = true;
+                this.adDialog = true;
+                this.selectedAdType = 'house';
+            } catch (error) {
+                this.showError('Failed to edit ad');
+            }
+        },
+        viewAdDetails(ad) {
+            this.selectedAd = ad;
+            this.detailsDialog = true;
+        },
+        approveAd(ad) {
+            try {
+                const adIndex = this.ads.findIndex(a => a.id === ad.id);
+                if (adIndex !== -1) {
+                    this.ads[adIndex].status = 'approved';
+                    this.showSuccess('Ad approved successfully');
+                }
+            } catch (error) {
+                this.showError('Failed to approve ad');
+            }
+        },
+        rejectAd(ad) {
+            try {
+                const adIndex = this.ads.findIndex(a => a.id === ad.id);
+                if (adIndex !== -1) {
+                    this.ads[adIndex].status = 'rejected';
+                    this.showSuccess('Ad rejected successfully');
+                }
+            } catch (error) {
+                this.showError('Failed to reject ad');
+            }
+        },
     }
-
-    editingAd.value = false;
-};
-
-const closeAdDialog = () => {
-    adDialog.value = false;
-    selectedAdType.value = '';
-};
-
-
-
-const props = defineProps({
-    type: Array,
-});
-
-const ads = ref([
-    { id: 1, title: 'آپارتمان لوکس', description: 'آپارتمان مبله با ویو دریا', category: 'آپارتمان', basePrice: 1000000, serviceFee: 100000, discountPercent: 10, hostType: ['individual'], locationFeatures: ['security_camera'], status: 'Awaiting_confirmation', images: ['/ads/special-offer.jpg', '/ads/house1.jpg'] },
-    { id: 2, title: 'ویلا در شمال', description: 'ویلا با استخر و باغچه', category: 'ویلا', basePrice: 2000000, serviceFee: 200000, discountPercent: 15, hostType: ['business'], locationFeatures: ['sound_insulation'], status: 'Awaiting_confirmation', images: ['/ads/top-rated.jpg', '/ads/house2.jpg'] },
-]);
-
-const categories = computed(() => [
-    'ویلا',
-    'آپارتمان',
-    'سوئیت',
-]);
-
-const approveAd = (ad) => {
-    const adIndex = ads.value.findIndex(a => a.id === ad.id);
-    if (adIndex !== -1) {
-        ads.value[adIndex].status = 'approved';
-    }
-};
-
-const rejectAd = (ad) => {
-    const adIndex = ads.value.findIndex(a => a.id === ad.id);
-    if (adIndex !== -1) {
-        ads.value[adIndex].status = 'rejected';
-    }
-};
-
-const isDarkMode = ref(true);
-const drawer = ref(true);
-
-const toggleDarkMode = () => {
-    isDarkMode.value = !isDarkMode.value;
-};
-
-const adHeaders = [
-    { text: translate('Admin_AdManagement.ad_title'), align: 'start', key: 'title', sortable: true },
-    { text: translate('Admin_AdManagement.ad_description'), key: 'description' },
-    { text: translate('Admin_AdManagement.ad_category'), key: 'category' },
-    { text: translate('Admin_AdManagement.ad_status'), key: 'status' },
-    { text: translate('Admin_AdManagement.images'), key: 'images', sortable: false },
-    { text: translate('Admin_AdManagement.actions'), key: 'actions', sortable: false }
-];
-
-const adForm = ref({
-    title: '',
-    description: '',
-    category: '',
-    basePrice: 0,
-    serviceFee: 0,
-    discountPercent: 0,
-    hostType: [],
-    locationFeatures: [],
-    active: false,
-    images: []
-});
-
-const selectedAd = ref({ title: '' });
-
-const rules = computed(() => ({
-    required: value => !!value || translate('Admin_AdManagement.validation.required'),
-}));
-
-const totalPriceComputed = computed(() => {
-    const basePrice = parseFloat(adForm.value.basePrice || 0);
-    const serviceFee = parseFloat(adForm.value.serviceFee || 0);
-    return (basePrice + serviceFee).toFixed(2);
-});
-
-const finalReceivedAmountComputed = computed(() => {
-    const totalPrice = parseFloat(totalPriceComputed.value);
-    const discountPercent = parseFloat(adForm.value.discountPercent || 0);
-    const discountAmount = (totalPrice * discountPercent) / 100;
-    const finalAmount = (totalPrice - discountAmount) * 0.94;
-    return finalAmount.toFixed(2);
-});
-
-
-const saveAd = () => {
-    if (!valid.value) return;
-
-    if (editingAd.value) {
-        const adIndex = ads.value.findIndex(a => a.id === adForm.value.id);
-        ads.value[adIndex] = { ...adForm.value };
-    } else {
-        const newAd = { ...adForm.value, id: ads.value.length + 1, status: 'Awaiting_confirmation' };
-        ads.value.push(newAd);
-    }
-
-    adDialog.value = false;
-};
-
-const editAd = ad => {
-    adForm.value = { ...ad };
-    editingAd.value = true;
-    adDialog.value = true;
-};
-
-const viewAdDetails = ad => {
-    selectedAd.value = ad;
-    detailsDialog.value = true;
-};
+}
 </script>
+
 
 <style scoped>
 .v-data-table th {

@@ -13,9 +13,6 @@
 
 <script setup>
 import { translate } from "../../../store/languageStore";
-const setLanguage = (lang) => {
-    t(lang);
-};
 
 const props = defineProps({
   advertisements: Array,

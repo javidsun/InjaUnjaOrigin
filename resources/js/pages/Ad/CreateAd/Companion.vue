@@ -58,7 +58,7 @@
                 </p>
             </v-card-text>
             <v-card-actions class="d-flex justify-end gap-2">
-                <v-btn color="grey" text @click="closeCompanionModal">
+                <v-btn color="grey" text @click="closeModal">
                     <v-icon left>mdi-content-save-outline</v-icon>
                     {{ translate('Ad.SaveExit') }}
                 </v-btn>
@@ -252,7 +252,7 @@
                 </v-btn>
                 <v-btn
                     color="primary"
-                    @click="confirmBudget"
+                    @click="goNext"
                     :disabled="!budgetAmount"
                 >
                     {{ translate('Ad.ConfirmNext') }}
@@ -685,7 +685,7 @@
                     <v-icon left>mdi-content-save-outline</v-icon>
                     {{ translate('Ad.SaveExit') }}
                 </v-btn>
-                <v-btn color="primary" @click="confirmAdditionalDescription">
+                <v-btn color="primary" @click="goNext">
                     {{ translate('Ad.ConfirmNext') }}
                     <v-icon right>mdi-arrow-right</v-icon>
                 </v-btn>
@@ -735,7 +735,7 @@
                     <v-icon left>mdi-content-save-outline</v-icon>
                     {{ translate('Ad.SaveExit') }}
                 </v-btn>
-                <v-btn color="primary" @click="confirmAdditionalDescription">
+                <v-btn color="primary" @click="goNext">
                     {{ translate('Ad.ConfirmNext') }}
                     <v-icon right>mdi-arrow-right</v-icon>
                 </v-btn>
@@ -1106,900 +1106,762 @@
     </v-dialog>
 </template>
 
-<script setup>
-// TODO  : composition --> option  &  const & warning & errore
+<script>
+import { translate } from "@/store/languageStore";
 
-import { ref, computed, defineProps, defineEmits, onMounted, onBeforeUnmount, nextTick } from "vue";
-import { translate } from "@/store/languageStore.js";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
-import { useDisplay } from 'vuetify'
-const { smAndUp } = useDisplay()
-const props = defineProps(["modelValue"]);
-const emit = defineEmits(["update:modelValue"]);
-const showComingSoon = ref(false);
-const currentStep = ref(0);
-const showStep1 = ref(false);
-const showStep2 = ref(false);
-const showStep3 = ref(false);
-const showStep4 = ref(false);
-const showStep5 = ref(false);
-const showStep9 = ref(false);
-const styleError = ref(false);
-const showStep10 = ref(false);
-const showStep11 = ref(false);
-const additionalDescription = ref('');
-const showStep12 = ref(false);
-const showStep13 = ref(false);
-const selectedDates = ref([]);
-const minDate = ref(new Date().toISOString().substr(0, 10));
-const maxDate = ref(new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().substr(0, 10));
-const showStep14 = ref(false);
-const showEssentialTipsModal = ref(false);
-const showStep15 = ref(false);
-const showStep6 = ref(false);
-const uploadedPhotos = ref([]);
-const photoDescription = ref('');
-const fileInput = ref(null);
-const userLocationAddress = ref(null);
-const userName ="UserName";
-const originSearch = ref("");
-const originSearchResults = ref([]);
-const selectedOrigin = ref(null);
-const showStep7 = ref(false);
-const travelPlanText = ref('');
-const uploadedPlanFile = ref(null);
-const uploadedPlanFilePreview = ref(null);
-const planFileInput = ref(null);
-const maleCompanionCount = ref(0);
-const femaleCompanionCount = ref(0);
-const anyGenderCompanionCount = ref(0);
-const currentCompanionCount = ref(0);
-const neededCompanionCount = ref(0);
-const destinationSearch = ref("");
-const searchResults = ref([]);
-const selectedDestination = ref(null);
-const travelChecklistText = ref('');
-const uploadedChecklistFile = ref(null);
-const uploadedChecklistFilePreview = ref(null);
-const checklistFileInput = ref(null);
-let map = null;
-let marker = null;
-let userLocationMarker = null;
-let userLocation = ref(null);
-let routeLine = null;
-let distance = ref(null);
-
-
-const showModal = computed({
-    get: () => props.modelValue,
-    set: (value) => emit("update:modelValue", value),
-});
-
-
-const confirmTravelDates = () => {
-    console.log('Selected travel dates:', selectedDates.value);
-    setActiveModal(15);
-};
-
-const clearSelectedDates = () => {
-    selectedDates.value = [];
-};
-
-const confirmSafetyGuidelines = () => {
-    console.log('Safety guidelines confirmed');
-    setActiveModal(currentStep.value + 1);
-};
-
-const confirmAdditionalDescription = () => {
-    console.log('Additional description:', additionalDescription.value);
-    setActiveModal(currentStep.value + 1);
-};
-const goToStep14 = () => {
-    setActiveModal(14);
-};
-
-const publishAd = () => {
-    console.log('Ad published:', {
-        destination: selectedDestination.value,
-        dates: selectedDates.value,
-        style: selectedStyle.value,
-        budget: budgetAmount.value,
-        traits: selectedTraits.value,
-        photos: uploadedPhotos.value,
-        plan: {
-            text: travelPlanText.value,
-            file: uploadedPlanFile.value
-        },
-        checklist: {
-            text: travelChecklistText.value,
-            file: uploadedChecklistFile.value
-        },
-        companions: {
-            current: currentCompanionCount.value,
-            needed: neededCompanionCount.value,
-            male: maleCompanionCount.value,
-            female: femaleCompanionCount.value,
-            any: anyGenderCompanionCount.value
-        },
-        description: additionalDescription.value
-    });
-
-    clearSavedData();
-    resetAllModals();
-
-    console.log('Ad published successfully');
-};
-
-const clearSavedData = () => {
-    localStorage.removeItem('travelCompanionState');
-};
-
-const resetAllModals = () => {
-    showModal.value = false;
-    showStep1.value = false;
-    showStep2.value = false;
-    showStep3.value = false;
-    showStep4.value = false;
-    showStep5.value = false;
-    showStep6.value = false;
-    showStep7.value = false;
-    showStep9.value = false;
-    showStep10.value = false;
-    showStep11.value = false;
-    showStep12.value = false;
-    showStep13.value = false;
-    showStep14.value = false;
-    showStep15.value = false;
-    currentStep.value = 0;
-    selectedDestination.value = null;
-    selectedStyle.value = null;
-    budgetAmount.value = null;
-    selectedTraits.value = [];
-    uploadedPhotos.value = [];
-    travelPlanText.value = '';
-    uploadedPlanFile.value = null;
-    travelChecklistText.value = '';
-    uploadedChecklistFile.value = null;
-    selectedDates.value = [];
-};
-
-
-const confirmTravelStyle = () => {
-    if (!selectedStyle.value) {
-        styleError.value = true;
-    } else {
-        styleError.value = false;
-        setActiveModal(currentStep.value + 1);
-    }
-};
-
-onMounted(() => {
-    if (props.modelValue) {
-        setActiveModal(1);
-    }
-});
-
-const closeModal = () => {
-    setActiveModal(0);
-};
-
-const openModal = (type) => {
-    if (type === "companion") {
-        setActiveModal(2);
-    }
-};
-
-const goNext = () => {
-    setActiveModal(currentStep.value + 1);
-    if (currentStep.value === 3) {
-        nextTick(() => {
-            initMap();
-        });
-    }
-};
-
-const budgetAmount = ref(null);
-
-const confirmBudget = () => {
-    setActiveModal(currentStep.value + 1);
-    console.log('Selected data:', {
-        destination: selectedDestination.value,
-        style: selectedStyle.value,
-        budget: budgetAmount.value
-    });
-};
-
-
-const confirmDestination = () => {
-    setActiveModal(currentStep.value + 1);
-};
-const goBack = () => {
-    if (currentStep.value === 2) {
-        nextTick(() => {
-            initMap();
-        });
-    }
-
-    if (currentStep.value === 14) {
-        setActiveModal(13);
-    } else {
-        setActiveModal(currentStep.value - 1);
-    }
-};
-
-const closeCompanionModal = () => {
-    setActiveModal(0);
-};
-
-const saveAndExit = () => {
-    saveState();
-    showModal.value = false;
-    showStep1.value = false;
-    showStep2.value = false;
-    showStep3.value = false;
-    showStep4.value = false;
-    showStep5.value = false;
-    showStep6.value = false;
-    showStep7.value = false;
-    showStep9.value = false;
-    showStep10.value = false;
-    showStep11.value = false;
-    currentStep.value = 0;
-};
-
-
-const searchLocation = async () => {
-    if (destinationSearch.value.length < 3) {
-        searchResults.value = [];
-        return;
-    }
-
-    try {
-        const response = await fetch(
-            `https://nominatim.openstreetmap.org/search?format=json&q=${destinationSearch.value}&limit=5`
-        );
-        const data = await response.json();
-        searchResults.value = data;
-    } catch (error) {
-        console.error("Error searching location:", error);
-        searchResults.value = [];
-    }
-};
-
-const selectLocation = (location) => {
-    selectedDestination.value = {
-        display_name: location.display_name,
-        lat: location.lat,
-        lon: location.lon
-    };
-    destinationSearch.value = location.display_name;
-    searchResults.value = [];
-
-    if (map) {
-        const latLng = L.latLng(parseFloat(location.lat), parseFloat(location.lon));
-        map.setView(latLng, 13);
-
-        if (marker) {
-            map.removeLayer(marker);
+export default {
+    name: 'TravelCompanionModal',
+    props: {
+        modelValue: Boolean
+    },
+    emits: ['update:modelValue'],
+    data() {
+        return {
+            showComingSoon: false,
+            currentStep: 0,
+            showStep1: false,
+            showStep2: false,
+            showStep3: false,
+            showStep4: false,
+            showStep5: false,
+            showStep6: false,
+            showStep7: false,
+            showStep9: false,
+            showStep10: false,
+            showStep11: false,
+            showStep12: false,
+            showStep13: false,
+            showStep14: false,
+            showStep15: false,
+            styleError: false,
+            originSearch: "",
+            originSearchResults: [],
+            selectedOrigin: null,
+            destinationSearch: "",
+            searchResults: [],
+            selectedDestination: null,
+            userLocation: null,
+            userLocationAddress: null,
+            distance: null,
+            selectedStyle: null,
+            budgetAmount: null,
+            selectedTraits: [],
+            uploadedPhotos: [],
+            photoDescription: "",
+            travelPlanText: "",
+            uploadedPlanFile: null,
+            uploadedPlanFilePreview: null,
+            currentCompanionCount: 0,
+            neededCompanionCount: 0,
+            maleCompanionCount: 0,
+            femaleCompanionCount: 0,
+            anyGenderCompanionCount: 0,
+            additionalDescription: "",
+            selectedDates: [],
+            showEssentialTipsModal: false,
+            map: null,
+            marker: null,
+            userLocationMarker: null,
+            routeLine: null,
+            minDate: new Date().toISOString().substr(0, 10),
+            maxDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().substr(0, 10),
+            userName: "UserName",
+            essentialTips: [
+                'Ad.Tip1',
+                'Ad.Tip2',
+                'Ad.Tip3'
+            ]
         }
+    },
+    computed: {
+        showModal: {
+            get() {
+                return this.modelValue
+            },
+            set(value) {
+                this.$emit("update:modelValue", value)
+            }
+        },
+        travelStyles() {
+            return [
+                { label: this.translate("Ad.Normal"), value: 'normal', img: '/Travel 005.png' },
+                { label: this.translate('Ad.Luxury'), value: 'luxury', img: '/Travel 006.png' },
+                { label: this.translate('Ad.Adventure'), value: 'adventure', img: '/Travel 007.png' },
+                { label: this.translate('Ad.Camping'), value: 'camping', img: '/Travel 008.png' },
+                { label: this.translate('Ad.Backpacking'), value: 'backpacking', img: '/Travel 009.png' },
+            ]
+        },
+        personalityTraits() {
+            return [
+                { key: "calm", label: "Traits.Calm", img: "/Travel 011.png" },
+                { key: "friendly", label: "Traits.Friendly", img: "/Travel 012.png" },
+                { key: "warrior", label: "Traits.Warrior", img: "/Travel 013.png" },
+                { key: "hardworking", label: "Traits.Hardworking", img: "/Travel 014.png" },
+                { key: "gamer", label: "Traits.Gamer", img: "/Travel 016.png" },
+                { key: "nightOwl", label: "Traits.NightOwl", img: "/Travel 018.png" },
+                { key: "earlyBird", label: "Traits.EarlyBird", img: "/Travel 019.png" },
+                { key: "sleepy", label: "Traits.Sleepy", img: "/Travel 017.png" },
+                { key: "foodie", label: "Traits.Foodie", img: "/Travel 020.png" },
+                { key: "snacker", label: "Traits.Snacker", img: "/Travel 021.png" },
+                { key: "vegetarian", label: "Traits.Vegetarian", img: "/Travel 022.png" },
+                { key: "athlete", label: "Traits.Athlete", img: "/Travel 023.png" },
+                { key: "bookworm", label: "Traits.Bookworm", img: "/Travel 025.png" },
+                { key: "curious", label: "Traits.Curious", img: "/Travel 026.png" },
+                { key: "planner", label: "Traits.Planner", img: "/Travel 027.png" },
+                { key: "punctual", label: "Traits.Punctual", img: "/Travel 028.png" },
+                { key: "supportive", label: "Traits.Supportive", img: "/Travel 029.png" },
+                { key: "musicLover", label: "Traits.MusicLover", img: "/Travel 030.png" },
+                { key: "honest", label: "Traits.Honest", img: "/Travel 031.png" },
+                { key: "leader", label: "Traits.Leader", img: "/Travel 032.png" },
+                { key: "happy", label: "Traits.Happy", img: "/Travel 033.png" },
+                { key: "tired", label: "Traits.Tired", img: "/Travel 034.png" },
+                { key: "extrovert", label: "Traits.Extrovert", img: "/Travel 035.png" },
+                { key: "introvert", label: "Traits.Introvert", img: "/Travel 036.png" },
+                { key: "coordinator", label: "Traits.Coordinator", img: "/Travel 037.png" },
+                { key: "coldSensitive", label: "Traits.ColdSensitive", img: "/Travel 038.png" },
+                { key: "heatSensitive", label: "Traits.HeatSensitive", img: "/Travel 039.png" },
+                { key: "analytical", label: "Traits.Analytical", img: "/Travel 040.png" },
+                { key: "warm", label: "Traits.warm", img: "/Travel 024.png" },
+            ]
+        },
+            totalCompanions() {
+                return this.maleCompanionCount + this.femaleCompanionCount + this.anyGenderCompanionCount
+            },
+            isDateSelectionValid() {
+                return this.selectedDates.length > 0
+            }
+        },
+        methods: {
+            translate,
 
-        marker = L.marker(latLng).addTo(map);
+            setActiveModal(step) {
+                this.currentStep = step
+                this.resetAllModals()
 
-        if (userLocation.value) {
-            drawRoute(userLocation.value, latLng);
-        }
-    }
-};
-const initMap = async () => {
-    await nextTick();
-    const mapElement = document.getElementById('destinationMap');
-    if (!mapElement || mapElement._leaflet_id) return;
-
-    if (map) {
-        map.remove();
-        map = null;
-        marker = null;
-        userLocationMarker = null;
-        routeLine = null;
-    }
-    map = L.map('destinationMap', {
-        zoomControl: true,
-        doubleClickZoom: true,
-        closePopupOnClick: true,
-        dragging: true,
-        zoomSnap: 0.5
-    });
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    map.setView([35.6892, 51.3890], 13);
-
-    if (navigator.geolocation && !selectedOrigin.value) {
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                const userLatLng = L.latLng(
-                    position.coords.latitude,
-                    position.coords.longitude
-                );
-
-                userLocation.value = userLatLng;
-
-                await updateUserLocationAddress(position.coords.latitude, position.coords.longitude);
-
-                userLocationMarker = L.marker(userLatLng, {
-                    icon: L.divIcon({
-                        className: 'user-location-marker',
-                        html: '<div style="background-color: #4285F4; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>',
-                        iconSize: [20, 20],
-                        iconAnchor: [10, 10]
-                    })
-                }).addTo(map)
-                    .bindPopup(translate('Ad.YourCurrentLocation')).openPopup();
-
-                map.setView(userLatLng, 13);
-                await updateSelectedLocation(position.coords.latitude, position.coords.longitude);
-
-                if (selectedDestination.value) {
-                    drawRoute(userLatLng, L.latLng(selectedDestination.value.lat, selectedDestination.value.lon));
+                switch(step) {
+                    case 1: this.showModal = true; break
+                    case 2: this.showStep1 = true; break
+                    case 3: this.showStep2 = true; break
+                    case 4: this.showStep3 = true; break
+                    case 5: this.showStep4 = true; break
+                    case 6: this.showStep5 = true; break
+                    case 7: this.showStep6 = true; break
+                    case 8: this.showStep7 = true; break
+                    case 9: this.showStep9 = true; break
+                    case 10: this.showStep10 = true; break
+                    case 11: this.showStep11 = true; break
+                    case 12: this.showStep12 = true; break
+                    case 13: this.showStep13 = true; break
+                    case 14: this.showStep14 = true; break
+                    case 15: this.showStep15 = true; break
                 }
             },
-            (error) => {
-                console.error("Error getting user location:", error);
-                updateSelectedLocation(35.6892, 51.3890);
+
+            resetAllModals() {
+                this.showModal = false
+                this.showStep1 = false
+                this.showStep2 = false
+                this.showStep3 = false
+                this.showStep4 = false
+                this.showStep5 = false
+                this.showStep6 = false
+                this.showStep7 = false
+                this.showStep9 = false
+                this.showStep10 = false
+                this.showStep11 = false
+                this.showStep12 = false
+                this.showStep13 = false
+                this.showStep14 = false
+                this.showStep15 = false
             },
-            {
-                enableHighAccuracy: true,
-                timeout: 5000,
-                maximumAge: 0
+
+            closeModal() {
+                this.setActiveModal(0)
+            },
+
+            openModal(type) {
+                if (type === "companion") {
+                    this.setActiveModal(2)
+                }
+            },
+
+            goNext() {
+                this.setActiveModal(this.currentStep + 1)
+                if (this.currentStep === 3) {
+                    this.$nextTick(() => {
+                        this.initMap()
+                    })
+                }
+            },
+             confirmDestination () {
+                 this.setActiveModal(this.currentStep + 1)
+            },
+
+            goBack() {
+                if (this.currentStep === 2) {
+                    this.$nextTick(() => {
+                        this.initMap()
+                    })
+                }
+
+                if (this.currentStep === 14) {
+                    this.setActiveModal(13)
+                } else {
+                    this.setActiveModal(this.currentStep - 1)
+                }
+            },
+
+            closeCompanionModal() {
+                this.setActiveModal(0)
+            },
+
+            saveAndExit() {
+                this.saveState()
+                this.resetAllModals()
+            },
+
+            async searchLocation() {
+                if (this.destinationSearch.length < 3) {
+                    this.searchResults = []
+                    return
+                }
+
+                try {
+                    const response = await fetch(
+                        `https://nominatim.openstreetmap.org/search?format=json&q=${this.destinationSearch}&limit=5`
+                    )
+                    const data = await response.json()
+                    this.searchResults = data
+                } catch (error) {
+                    this.showError("Error searching location", error)
+                    this.searchResults = []
+                }
+            },
+
+            selectLocation(location) {
+                this.selectedDestination = {
+                    display_name: location.display_name,
+                    lat: location.lat,
+                    lon: location.lon
+                }
+                this.destinationSearch = location.display_name
+                this.searchResults = []
+
+                if (this.map) {
+                    const latLng = L.latLng(parseFloat(location.lat), parseFloat(location.lon))
+                    this.map.setView(latLng, 13)
+
+                    if (this.marker) {
+                        this.map.removeLayer(this.marker)
+                    }
+
+                    this.marker = L.marker(latLng).addTo(this.map)
+
+                    if (this.userLocation) {
+                        this.drawRoute(this.userLocation, latLng)
+                    }
+                }
+            },
+
+            async searchOriginLocation() {
+                if (this.originSearch.length < 3) {
+                    this.originSearchResults = []
+                    return
+                }
+
+                try {
+                    const response = await fetch(
+                        `https://nominatim.openstreetmap.org/search?format=json&q=${this.originSearch}&limit=5`
+                    )
+                    const data = await response.json()
+                    this.originSearchResults = data
+                } catch (error) {
+                    this.showError("Error searching origin location", error)
+                    this.originSearchResults = []
+                }
+            },
+
+            selectOriginLocation(location) {
+                this.selectedOrigin = {
+                    display_name: location.display_name,
+                    lat: location.lat,
+                    lon: location.lon
+                }
+                this.originSearch = location.display_name
+                this.originSearchResults = []
+
+                if (this.map) {
+                    const latLng = L.latLng(parseFloat(location.lat), parseFloat(location.lon))
+
+                    if (this.userLocationMarker) {
+                        this.map.removeLayer(this.userLocationMarker)
+                    }
+
+                    this.userLocationMarker = L.marker(latLng, {
+                        icon: L.divIcon({
+                            className: 'user-location-marker',
+                            html: '<div style="background-color: #4285F4; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>',
+                            iconSize: [20, 20],
+                            iconAnchor: [10, 10]
+                        })
+                    }).addTo(this.map)
+                        .bindPopup(this.translate('Ad.SelectedOrigin')).openPopup()
+
+                    this.userLocation = latLng
+
+                    if (this.selectedDestination) {
+                        this.drawRoute(latLng, L.latLng(this.selectedDestination.lat, this.selectedDestination.lon))
+                    }
+                }
+            },
+
+            async initMap() {
+                await this.$nextTick()
+                const mapElement = document.getElementById('destinationMap')
+                if (!mapElement || mapElement._leaflet_id) return
+
+                if (this.map) {
+                    this.map.remove()
+                    this.map = null
+                    this.marker = null
+                    this.userLocationMarker = null
+                    this.routeLine = null
+                }
+
+                this.map = L.map('destinationMap', {
+                    zoomControl: true,
+                    doubleClickZoom: true,
+                    closePopupOnClick: true,
+                    dragging: true,
+                    zoomSnap: 0.5
+                })
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(this.map)
+
+                this.map.setView([35.6892, 51.3890], 13)
+
+                if (navigator.geolocation && !this.selectedOrigin) {
+                    navigator.geolocation.getCurrentPosition(
+                        async (position) => {
+                            try {
+                                const userLatLng = L.latLng(
+                                    position.coords.latitude,
+                                    position.coords.longitude
+                                )
+
+                                this.userLocation = userLatLng
+
+                                await this.updateUserLocationAddress(position.coords.latitude, position.coords.longitude)
+
+                                this.userLocationMarker = L.marker(userLatLng, {
+                                    icon: L.divIcon({
+                                        className: 'user-location-marker',
+                                        html: '<div style="background-color: #4285F4; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>',
+                                        iconSize: [20, 20],
+                                        iconAnchor: [10, 10]
+                                    })
+                                }).addTo(this.map)
+                                    .bindPopup(this.translate('Ad.YourCurrentLocation')).openPopup()
+
+                                this.map.setView(userLatLng, 13)
+                                await this.updateSelectedLocation(position.coords.latitude, position.coords.longitude)
+
+                                if (this.selectedDestination) {
+                                    this.drawRoute(userLatLng, L.latLng(this.selectedDestination.lat, this.selectedDestination.lon))
+                                }
+                            } catch (error) {
+                                this.showError("Error initializing user location", error)
+                            }
+                        },
+                        (error) => {
+                            this.showError("Error getting user location", error)
+                            this.updateSelectedLocation(35.6892, 51.3890)
+                        },
+                        {
+                            enableHighAccuracy: true,
+                            timeout: 5000,
+                            maximumAge: 0
+                        }
+                    )
+                } else if (this.selectedOrigin) {
+                    const latLng = L.latLng(parseFloat(this.selectedOrigin.lat), parseFloat(this.selectedOrigin.lon))
+                    this.userLocation = latLng
+                    this.map.setView(latLng, 13)
+
+                    if (this.selectedDestination) {
+                        this.drawRoute(latLng, L.latLng(this.selectedDestination.lat, this.selectedDestination.lon))
+                    }
+                } else {
+                    this.showError("Geolocation is not supported by this browser")
+                    this.updateSelectedLocation(35.6892, 51.3890)
+                }
+
+                this.map.on('click', async (e) => {
+                    try {
+                        const { lat, lng } = e.latlng
+
+                        if (this.marker) {
+                            this.map.removeLayer(this.marker)
+                        }
+
+                        this.marker = L.marker([lat, lng]).addTo(this.map)
+                        await this.updateSelectedLocation(lat, lng)
+
+                        if (this.userLocation) {
+                            this.drawRoute(this.userLocation, e.latlng)
+                        }
+                    } catch (error) {
+                        this.showError("Error handling map click", error)
+                    }
+                })
+            },
+
+            async updateUserLocationAddress(lat, lng) {
+                try {
+                    const response = await fetch(
+                        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
+                    )
+                    const data = await response.json()
+
+                    if (data) {
+                        this.userLocationAddress = data.display_name
+                    }
+                } catch (error) {
+                    this.showError("Error getting user location address", error)
+                    this.userLocationAddress = null
+                }
+            },
+
+            async drawRoute(start, end) {
+                if (this.routeLine) {
+                    this.map.removeLayer(this.routeLine)
+                }
+
+                this.routeLine = L.polyline([start, end], {
+                    color: '#007bff',
+                    weight: 3,
+                    opacity: 0.7,
+                    dashArray: '5, 5'
+                }).addTo(this.map)
+
+                const calculatedDistance = start.distanceTo(end) / 1000
+                this.distance = calculatedDistance.toFixed(1) + ' km'
+
+                this.map.fitBounds([start, end], { padding: [50, 50] })
+
+                const midpoint = L.latLng(
+                    (start.lat + end.lat) / 2,
+                    (start.lng + end.lng) / 2
+                )
+
+                this.routeLine.bindPopup(this.distance, {
+                    className: 'distance-popup',
+                    autoClose: false,
+                    closeOnClick: false
+                }).openPopup()
+            },
+
+            async updateSelectedLocation(lat, lng) {
+                try {
+                    const response = await fetch(
+                        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
+                    )
+                    const data = await response.json()
+
+                    if (data) {
+                        this.selectedDestination = {
+                            display_name: data.display_name,
+                            lat: lat.toString(),
+                            lon: lng.toString()
+                        }
+                        this.destinationSearch = data.display_name
+                    }
+                } catch (error) {
+                    this.showError("Error getting location details", error)
+                }
+            },
+
+            selectStyle(style) {
+                this.selectedStyle = style
+            },
+
+            confirmTravelStyle() {
+                if (!this.selectedStyle) {
+                    this.styleError = true
+                } else {
+                    this.styleError = false
+                    this.setActiveModal(this.currentStep + 1)
+                }
+            },
+
+            toggleTrait(key) {
+                if (this.selectedTraits.includes(key)) {
+                    this.selectedTraits = this.selectedTraits.filter((k) => k !== key)
+                } else {
+                    this.selectedTraits.push(key)
+                }
+            },
+
+            confirmPersonalityTraits() {
+                console.log("Selected traits:", this.selectedTraits)
+                this.setActiveModal(this.currentStep + 1)
+            },
+
+            triggerFileInput() {
+                this.$refs.fileInput.click()
+            },
+
+            handleFileUpload(event) {
+                try {
+                    const files = event.target.files
+                    if (files.length + this.uploadedPhotos.length > 10) {
+                        alert(this.translate('Ad.MaxPhotosWarning'))
+                        return
+                    }
+
+                    Array.from(files).forEach(file => {
+                        if (file.type.match('image.*')) {
+                            const reader = new FileReader()
+                            reader.onload = (e) => {
+                                this.uploadedPhotos.push({
+                                    file,
+                                    preview: e.target.result,
+                                    description: ''
+                                })
+                            }
+                            reader.readAsDataURL(file)
+                        }
+                    })
+                } catch (error) {
+                    this.showError("Error handling file upload", error)
+                }
+            },
+
+            removePhoto(index) {
+                this.uploadedPhotos.splice(index, 1)
+            },
+
+            triggerPlanFileInput() {
+                this.$refs.planFileInput.click()
+            },
+
+            handlePlanFileUpload(event) {
+                try {
+                    const file = event.target.files[0]
+                    if (!file) return
+
+                    const validTypes = ['application/pdf', 'image/jpeg', 'image/png']
+                    if (!validTypes.includes(file.type)) {
+                        alert(this.translate('Ad.InvalidFileType'))
+                        return
+                    }
+
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert(this.translate('Ad.FileTooLarge'))
+                        return
+                    }
+
+                    this.uploadedPlanFile = file
+                    this.travelPlanText = ''
+
+                    if (file.type.includes('image')) {
+                        const reader = new FileReader()
+                        reader.onload = (e) => {
+                            this.uploadedPlanFilePreview = e.target.result
+                        }
+                        reader.readAsDataURL(file)
+                    }
+                } catch (error) {
+                    this.showError("Error handling plan file upload", error)
+                }
+            },
+
+            removeUploadedFile() {
+                this.uploadedPlanFile = null
+                this.uploadedPlanFilePreview = null
+            },
+
+            getFileIcon(fileType) {
+                if (fileType.includes('image')) return 'mdi-image'
+                if (fileType.includes('pdf')) return 'mdi-file-pdf'
+                return 'mdi-file'
+            },
+
+            isImageFile(fileType) {
+                return fileType.includes('image')
+            },
+
+            formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes'
+                const k = 1024
+                const sizes = ['Bytes', 'KB', 'MB', 'GB']
+                const i = Math.floor(Math.log(bytes) / Math.log(k))
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+            },
+
+            confirmTravelPlan() {
+                console.log('Travel plan:', {
+                    text: this.travelPlanText,
+                    file: this.uploadedPlanFile
+                })
+                this.setActiveModal(this.currentStep + 1)
+            },
+
+            incrementCompanionCount(type) {
+                switch(type) {
+                    case 'male': this.maleCompanionCount++; break
+                    case 'female': this.femaleCompanionCount++; break
+                    case 'any': this.anyGenderCompanionCount++; break
+                    case 'current': this.currentCompanionCount++; break
+                    case 'needed': this.neededCompanionCount++; break
+                }
+            },
+
+            decrementCompanionCount(type) {
+                switch(type) {
+                    case 'male': if (this.maleCompanionCount > 0) this.maleCompanionCount--; break
+                    case 'female': if (this.femaleCompanionCount > 0) this.femaleCompanionCount--; break
+                    case 'any': if (this.anyGenderCompanionCount > 0) this.anyGenderCompanionCount--; break
+                    case 'current': if (this.currentCompanionCount > 0) this.currentCompanionCount--; break
+                    case 'needed': if (this.neededCompanionCount > 0) this.neededCompanionCount--; break
+                }
+            },
+
+            confirmCompanionCount() {
+                this.setActiveModal(this.currentStep + 1)
+            },
+
+            clearSelectedDates() {
+                this.selectedDates = []
+            },
+
+            formatSelectedDates() {
+                if (this.selectedDates.length === 0) return ''
+
+                const formattedDates = this.selectedDates.map(date => {
+                    const d = new Date(date)
+                    return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`
+                }).sort((a, b) => new Date(a) - new Date(b))
+
+                return formattedDates.join(', ')
+            },
+
+            formatSelectedDatesRange() {
+                if (this.selectedDates.length === 0) return ''
+
+                const sortedDates = [...this.selectedDates].sort()
+                const firstDate = new Date(sortedDates[0])
+                const lastDate = new Date(sortedDates[sortedDates.length - 1])
+
+                return `${firstDate.getDate()} ${this.translate(`Month.${firstDate.getMonth()}`)} - ${lastDate.getDate()} ${this.translate(`Month.${lastDate.getMonth()}`)}`
+            },
+
+            showEssentialTips() {
+                this.showEssentialTipsModal = true
+            },
+
+            confirmSafetyGuidelines() {
+                console.log('Safety guidelines confirmed')
+                this.setActiveModal(this.currentStep + 1)
+            },
+
+            publishListing() {
+                this.setActiveModal(this.currentStep + 1)
+            },
+
+            publishAd() {
+                console.log('Ad published:', {
+                    destination: this.selectedDestination,
+                    dates: this.selectedDates,
+                    style: this.selectedStyle,
+                    budget: this.budgetAmount,
+                    traits: this.selectedTraits,
+                    photos: this.uploadedPhotos,
+                    plan: {
+                        text: this.travelPlanText,
+                        file: this.uploadedPlanFile
+                    },
+                    companions: {
+                        current: this.currentCompanionCount,
+                        needed: this.neededCompanionCount,
+                        male: this.maleCompanionCount,
+                        female: this.femaleCompanionCount,
+                        any: this.anyGenderCompanionCount
+                    },
+                    description: this.additionalDescription
+                })
+
+                this.clearSavedData()
+                this.resetAllModals()
+            },
+
+            saveState() {
+                localStorage.setItem('travelCompanionState', JSON.stringify({
+                    currentStep: this.currentStep,
+                    selectedOrigin: this.selectedOrigin,
+                    selectedDestination: this.selectedDestination,
+                    selectedStyle: this.selectedStyle,
+                    budgetAmount: this.budgetAmount,
+                    selectedTraits: this.selectedTraits,
+                    uploadedPhotos: this.uploadedPhotos,
+                    travelPlanText: this.travelPlanText,
+                    uploadedPlanFile: this.uploadedPlanFile
+                }))
+            },
+
+            loadState() {
+                try {
+                    const savedState = localStorage.getItem('travelCompanionState')
+                    if (savedState) {
+                        const state = JSON.parse(savedState)
+                        this.currentStep = state.currentStep
+                        this.selectedOrigin = state.selectedOrigin || null
+                        this.selectedDestination = state.selectedDestination
+                        this.selectedStyle = state.selectedStyle
+                        this.budgetAmount = state.budgetAmount
+                        this.selectedTraits = state.selectedTraits || []
+                        this.uploadedPhotos = state.uploadedPhotos || []
+                        this.travelPlanText = state.travelPlanText || ''
+                        this.uploadedPlanFile = state.uploadedPlanFile || null
+                    }
+                } catch (error) {
+                    this.showError("Error loading saved state", error)
+                }
+            },
+
+            clearSavedData() {
+                localStorage.removeItem('travelCompanionState')
+            },
+
+            showError(message, error = null) {
+                console.error(message, error)
             }
-        );
-    } else if (selectedOrigin.value) {
-        const latLng = L.latLng(parseFloat(selectedOrigin.value.lat), parseFloat(selectedOrigin.value.lon));
-        userLocation.value = latLng;
-        map.setView(latLng, 13);
-
-        if (selectedDestination.value) {
-            drawRoute(latLng, L.latLng(selectedDestination.value.lat, selectedDestination.value.lon));
-        }
-    } else {
-        console.error("Geolocation is not supported by this browser.");
-        updateSelectedLocation(35.6892, 51.3890);
-    }
-
-
-    map.on('click', async (e) => {
-        const { lat, lng } = e.latlng;
-
-        if (marker) {
-            map.removeLayer(marker);
-        }
-
-        marker = L.marker([lat, lng]).addTo(map);
-        await updateSelectedLocation(lat, lng);
-
-        if (userLocation.value) {
-            drawRoute(userLocation.value, e.latlng);
-        }
-    });
-};
-const updateUserLocationAddress = async (lat, lng) => {
-    try {
-        const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
-        );
-        const data = await response.json();
-
-        if (data) {
-            userLocationAddress.value = data.display_name;
-        }
-    } catch (error) {
-        console.error("Error getting user location address:", error);
-        userLocationAddress.value = null;
-    }
-};
-const drawRoute = async (start, end) => {
-    if (routeLine) {
-        map.removeLayer(routeLine);
-    }
-
-    routeLine = L.polyline([start, end], {
-        color: '#007bff',
-        weight: 3,
-        opacity: 0.7,
-        dashArray: '5, 5'
-    }).addTo(map);
-
-    const calculatedDistance = start.distanceTo(end) / 1000;
-    distance.value = calculatedDistance.toFixed(1) + ' km';
-
-    map.fitBounds([start, end], { padding: [50, 50] });
-
-    const midpoint = L.latLng(
-        (start.lat + end.lat) / 2,
-        (start.lng + end.lng) / 2
-    );
-
-    routeLine.bindPopup(distance.value, {
-        className: 'distance-popup',
-        autoClose: false,
-        closeOnClick: false
-    }).openPopup();
-};
-
-
-const updateSelectedLocation = async (lat, lng) => {
-    try {
-        const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
-        );
-        const data = await response.json();
-
-        if (data) {
-            selectedDestination.value = {
-                display_name: data.display_name,
-                lat: lat.toString(),
-                lon: lng.toString()
-            };
-            destinationSearch.value = data.display_name;
-        }
-    } catch (error) {
-        console.error("Error getting location details:", error);
-    }
-};
-
-onMounted(() => {
-    delete L.Icon.Default.prototype._getIconUrl;
-    L.Icon.Default.mergeOptions({
-        iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
-        iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-        shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png'
-    });
-});
-
-onBeforeUnmount(() => {
-    if (map) {
-        map.remove();
-        map = null;
-    }
-});
-
-
-const travelStyles = computed(() => [
-    { label: translate("Ad.Normal"), value: 'normal', img: '/Travel 005.png' },
-    { label: translate('Ad.Luxury'), value: 'luxury', img: '/Travel 006.png' },
-    { label: translate('Ad.Adventure'), value: 'adventure', img: '/Travel 007.png' },
-    { label: translate('Ad.Camping'), value: 'camping', img: '/Travel 008.png' },
-    { label: translate('Ad.Backpacking'), value: 'backpacking', img: '/Travel 009.png' },
-]);
-const selectedStyle = ref(null);
-
-const selectStyle = (style) => {
-    selectedStyle.value = style;
-};
-
-const goToMapStep = () => {
-    currentStep.value = 2;
-    nextTick(() => {
-        initMap();
-    });
-};
-const selectedTraits = ref([]);
-
-const personalityTraits = computed(() => [
-    { key: "calm", label: "Traits.Calm", img: "/Travel 011.png" },
-    { key: "friendly", label: "Traits.Friendly", img: "/Travel 012.png" },
-    { key: "warrior", label: "Traits.Warrior", img: "/Travel 013.png" },
-    { key: "hardworking", label: "Traits.Hardworking", img: "/Travel 014.png" },
-    { key: "gamer", label: "Traits.Gamer", img: "/Travel 016.png" },
-    { key: "nightOwl", label: "Traits.NightOwl", img: "/Travel 018.png" },
-    { key: "earlyBird", label: "Traits.EarlyBird", img: "/Travel 019.png" },
-    { key: "sleepy", label: "Traits.Sleepy", img: "/Travel 017.png" },
-    { key: "foodie", label: "Traits.Foodie", img: "/Travel 020.png" },
-    { key: "snacker", label: "Traits.Snacker", img: "/Travel 021.png" },
-    { key: "vegetarian", label: "Traits.Vegetarian", img: "/Travel 022.png" },
-    { key: "athlete", label: "Traits.Athlete", img: "/Travel 023.png" },
-    { key: "bookworm", label: "Traits.Bookworm", img: "/Travel 025.png" },
-    { key: "curious", label: "Traits.Curious", img: "/Travel 026.png" },
-    { key: "planner", label: "Traits.Planner", img: "/Travel 027.png" },
-    { key: "punctual", label: "Traits.Punctual", img: "/Travel 028.png" },
-    { key: "supportive", label: "Traits.Supportive", img: "/Travel 029.png" },
-    { key: "musicLover", label: "Traits.MusicLover", img: "/Travel 030.png" },
-    { key: "honest", label: "Traits.Honest", img: "/Travel 031.png" },
-    { key: "leader", label: "Traits.Leader", img: "/Travel 032.png" },
-    { key: "happy", label: "Traits.Happy", img: "/Travel 033.png" },
-    { key: "tired", label: "Traits.Tired", img: "/Travel 034.png" },
-    { key: "extrovert", label: "Traits.Extrovert", img: "/Travel 035.png" },
-    { key: "introvert", label: "Traits.Introvert", img: "/Travel 036.png" },
-    { key: "coordinator", label: "Traits.Coordinator", img: "/Travel 037.png" },
-    { key: "coldSensitive", label: "Traits.ColdSensitive", img: "/Travel 038.png" },
-    { key: "heatSensitive", label: "Traits.HeatSensitive", img: "/Travel 039.png" },
-    { key: "analytical", label: "Traits.Analytical", img: "/Travel 040.png" },
-    { key: "warm", label: "Traits.warm", img: "/Travel 024.png" },
-
-]);
-
-const toggleTrait = (key) => {
-    if (selectedTraits.value.includes(key)) {
-        selectedTraits.value = selectedTraits.value.filter((k) => k !== key);
-    } else {
-        selectedTraits.value.push(key);
-    }
-};
-
-const confirmPersonalityTraits = () => {
-    console.log("Selected traits:", selectedTraits.value);
-    setActiveModal(currentStep.value + 1);
-};
-
-const triggerFileInput = () => {
-    fileInput.value.click();
-};
-
-const handleFileUpload = (event) => {
-    const files = event.target.files;
-    if (files.length + uploadedPhotos.value.length > 10) {
-        alert(translate('Ad.MaxPhotosWarning'));
-        return;
-    }
-
-    Array.from(files).forEach(file => {
-        if (file.type.match('image.*')) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                uploadedPhotos.value.push({
-                    file,
-                    preview: e.target.result,
-                    description: ''
-                });
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-};
-
-const removePhoto = (index) => {
-    uploadedPhotos.value.splice(index, 1);
-};
-
-
-const triggerPlanFileInput = () => {
-    planFileInput.value.click();
-};
-
-const handlePlanFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        const validTypes = ['application/pdf', 'image/jpeg', 'image/png'];
-        if (!validTypes.includes(file.type)) {
-            alert(translate('Ad.InvalidFileType'));
-            return;
-        }
-
-        if (file.size > 5 * 1024 * 1024) {
-            alert(translate('Ad.FileTooLarge'));
-            return;
-        }
-
-        uploadedPlanFile.value = file;
-        travelPlanText.value = '';
-
-        if (file.type.includes('image')) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                uploadedPlanFilePreview.value = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-};
-
-const removeUploadedFile = () => {
-    uploadedPlanFile.value = null;
-    uploadedPlanFilePreview.value = null;
-};
-
-const getFileIcon = (fileType) => {
-    if (fileType.includes('image')) return 'mdi-image';
-    if (fileType.includes('pdf')) return 'mdi-file-pdf';
-    return 'mdi-file';
-};
-
-const isImageFile = (fileType) => {
-    return fileType.includes('image');
-};
-
-const formatFileSize = (bytes) => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-};
-
-const confirmTravelPlan = () => {
-    console.log('Travel plan:', {
-        text: travelPlanText.value,
-        file: uploadedPlanFile.value
-    });
-    setActiveModal(currentStep.value + 1);
-};
-
-const saveState = () => {
-    localStorage.setItem('travelCompanionState', JSON.stringify({
-        currentStep: currentStep.value,
-        selectedOrigin: selectedOrigin.value,
-        selectedDestination: selectedDestination.value,
-        selectedStyle: selectedStyle.value,
-        budgetAmount: budgetAmount.value,
-        selectedTraits: selectedTraits.value,
-        uploadedPhotos: uploadedPhotos.value,
-        travelPlanText: travelPlanText.value,
-        uploadedPlanFile: uploadedPlanFile.value
-    }));
-};
-
-const loadState = () => {
-    const savedState = localStorage.getItem('travelCompanionState');
-    if (savedState) {
-        const state = JSON.parse(savedState);
-        currentStep.value = state.currentStep;
-        selectedOrigin.value = state.selectedOrigin || null;
-        selectedDestination.value = state.selectedDestination;
-        selectedDestination.value = state.selectedDestination;
-        selectedStyle.value = state.selectedStyle;
-        budgetAmount.value = state.budgetAmount;
-        selectedTraits.value = state.selectedTraits || [];
-        uploadedPhotos.value = state.uploadedPhotos || [];
-        travelPlanText.value = state.travelPlanText || '';
-        uploadedPlanFile.value = state.uploadedPlanFile || null;
-    }
-};
-
-onMounted(() => {
-    loadState();
-    if (props.modelValue) {
-        setActiveModal(currentStep.value || 1);
-    }
-});
-
-const triggerChecklistFileInput = () => {
-    checklistFileInput.value.click();
-};
-
-const handleChecklistFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        const validTypes = ['application/pdf', 'image/jpeg', 'image/png'];
-        if (!validTypes.includes(file.type)) {
-            alert(translate('Ad.InvalidFileType'));
-            return;
-        }
-
-        if (file.size > 5 * 1024 * 1024) {
-            alert(translate('Ad.FileTooLarge'));
-            return;
-        }
-
-        uploadedChecklistFile.value = file;
-            travelChecklistText.value = '';
-
-        if (file.type.includes('image')) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                uploadedChecklistFilePreview.value = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-};
-
-
-const setActiveModal = (step) => {
-    currentStep.value = step;
-
-    showModal.value = false;
-    showStep1.value = false;
-    showStep2.value = false;
-    showStep3.value = false;
-    showStep4.value = false;
-    showStep5.value = false;
-    showStep6.value = false;
-    showStep7.value = false;
-    showStep9.value = false;
-    showStep10.value = false;
-    showStep11.value = false;
-    showStep12.value = false;
-    showStep13.value = false;
-    showStep14.value = false;
-    showStep15.value = false;
-
-    switch(step) {
-        case 1: showModal.value = true; break;
-        case 2: showStep1.value = true; break;
-        case 3: showStep2.value = true; break;
-        case 4: showStep3.value = true; break;
-        case 5: showStep4.value = true; break;
-        case 6: showStep5.value = true; break;
-        case 7: showStep6.value = true; break;
-        case 8: showStep7.value = true; break;
-        case 9: showStep9.value = true; break;
-        case 10: showStep10.value = true; break;
-        case 11: showStep11.value = true; break;
-        case 12: showStep12.value = true; break;
-        case 13: showStep13.value = true; break;
-        case 14: showStep14.value = true; break;
-        case 15: showStep15.value = true; break;
-
-        default: break;
-    }
-};
-
-
-const confirmCompanionCount = () => {
-    setActiveModal(currentStep.value + 1);
-};
-
-const totalCompanions = computed(() => {
-    return maleCompanionCount.value + femaleCompanionCount.value + anyGenderCompanionCount.value;
-});
-const incrementCompanionCount = (type) => {
-    switch(type) {
-        case 'male':
-            maleCompanionCount.value++;
-            break;
-        case 'female':
-            femaleCompanionCount.value++;
-            break;
-        case 'any':
-            anyGenderCompanionCount.value++;
-            break;
-        case 'current':
-            currentCompanionCount.value++;
-            break;
-        case 'needed':
-            neededCompanionCount.value++;
-            break;
-    }
-};
-
-const decrementCompanionCount = (type) => {
-    switch(type) {
-        case 'male':
-            if (maleCompanionCount.value > 0) maleCompanionCount.value--;
-            break;
-        case 'female':
-            if (femaleCompanionCount.value > 0) femaleCompanionCount.value--;
-            break;
-        case 'any':
-            if (anyGenderCompanionCount.value > 0) anyGenderCompanionCount.value--;
-            break;
-        case 'current':
-            if (currentCompanionCount.value > 0) currentCompanionCount.value--;
-            break;
-        case 'needed':
-            if (neededCompanionCount.value > 0) neededCompanionCount.value--;
-            break;
-    }
-};
-
-const publishListing = () => {
-    setActiveModal(currentStep.value + 1);
-};
-
-const clearDateSelection = () => {
-    selectedDates.value = [];
-};
-
-const formatSelectedDates = () => {
-    if (selectedDates.value.length === 0) return '';
-
-    const formattedDates = selectedDates.value.map(date => {
-        const d = new Date(date);
-        return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
-    }).sort((a, b) => new Date(a) - new Date(b));
-
-    return formattedDates.join(', ');
-};
-
-const isDateSelectionValid = computed(() => {
-    return selectedDates.value.length > 0;
-});
-
-const essentialTips = ref([
-    'Ad.Tip1',
-    'Ad.Tip2',
-    'Ad.Tip3',
-    // ... سایر نکات
-]);
-
-
-const showEssentialTips = () => {
-    showEssentialTipsModal.value = true;
-};
-const confirmAndProceed = () => {
-    if (currentStep.value === 14) {
-        setActiveModal(15);
-    } else if (currentStep.value === 15) {
-        saveAndExit();
-    }
-};
-const formatSelectedDatesRange = () => {
-    if (selectedDates.value.length === 0) return '';
-
-    const sortedDates = [...selectedDates.value].sort();
-    const firstDate = new Date(sortedDates[0]);
-    const lastDate = new Date(sortedDates[sortedDates.length - 1]);
-
-    return `${firstDate.getDate()} ${translate(`Month.${firstDate.getMonth()}`)} - ${lastDate.getDate()} ${translate(`Month.${lastDate.getMonth()}`)}`;
-};
-
-const finalConfirmAndPublish = () => {
-    console.log('Final confirmation and publishing:', {
-        destination: selectedDestination.value,
-        dates: selectedDates.value,
-        photos: uploadedPhotos.value,
-    });
-
-    saveAndExit();
-};
-const searchOriginLocation = async () => {
-    if (originSearch.value.length < 3) {
-        originSearchResults.value = [];
-        return;
-    }
-
-    try {
-        const response = await fetch(
-            `https://nominatim.openstreetmap.org/search?format=json&q=${originSearch.value}&limit=5`
-        );
-        const data = await response.json();
-        originSearchResults.value = data;
-    } catch (error) {
-        console.error("Error searching origin location:", error);
-        originSearchResults.value = [];
-    }
-};
-
-const selectOriginLocation = (location) => {
-    selectedOrigin.value = {
-        display_name: location.display_name,
-        lat: location.lat,
-        lon: location.lon
-    };
-    originSearch.value = location.display_name;
-    originSearchResults.value = [];
-
-    if (map) {
-        const latLng = L.latLng(parseFloat(location.lat), parseFloat(location.lon));
-
-        if (userLocationMarker) {
-            map.removeLayer(userLocationMarker);
-        }
-
-        userLocationMarker = L.marker(latLng, {
-            icon: L.divIcon({
-                className: 'user-location-marker',
-                html: '<div style="background-color: #4285F4; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>',
-                iconSize: [20, 20],
-                iconAnchor: [10, 10]
+        },
+        mounted() {
+            delete L.Icon.Default.prototype._getIconUrl
+            L.Icon.Default.mergeOptions({
+                iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
+                iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+                shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png'
             })
-        }).addTo(map)
-            .bindPopup(translate('Ad.SelectedOrigin')).openPopup();
 
-        userLocation.value = latLng;
-
-        if (selectedDestination.value) {
-            drawRoute(latLng, L.latLng(selectedDestination.value.lat, selectedDestination.value.lon));
+            this.loadState()
+            if (this.modelValue) {
+                this.setActiveModal(this.currentStep || 1)
+            }
+        },
+        beforeUnmount() {
+            if (this.map) {
+                this.map.remove()
+                this.map = null
+            }
         }
-    }
-};
 
-
-
+}
 </script>
+
 
 <style scoped>
 #destinationMap {

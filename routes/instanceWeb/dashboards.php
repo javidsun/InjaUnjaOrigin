@@ -6,7 +6,6 @@ use Inertia\Inertia;
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 });
-
 Route::get('/AdminDashboard', function () {
     return Inertia::render('Admin/AdminDashboard');
 });

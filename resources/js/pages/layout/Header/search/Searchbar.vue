@@ -100,6 +100,7 @@ export default {
 .search-btn, .search-bar-wrapper > * {
     border-left: none !important;
     border-right: none !important;
+    background-color:var(--background-color);
 }
 
 @media (max-width: 650px) {

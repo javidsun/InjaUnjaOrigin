@@ -16,6 +16,7 @@
     "require-dev": {
         "beyondcode/laravel-er-diagram-generator": "^4.0",
         "fakerphp/faker": "^1.23",
+        "friendsofphp/php-cs-fixer": "^3.75",
         "laravel/pail": "^1.1",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",

@@ -12,7 +12,6 @@
                     @click="goToPage(item.link)"
                     :active="activePage === item.page"
                 >
-
                     <v-list-item-content class="v-list-item-content">
                         <v-list-item-icon class="v-list-item-icon">
                             <v-icon class="sidebar-icon" large>{{ item.icon }}</v-icon>
@@ -21,56 +20,47 @@
                     </v-list-item-content>
                 </v-list-item>
             </v-list-item-group>
-
         </v-list>
     </v-navigation-drawer>
-
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+import { translate } from "@/store/languageStore";
 
-import {ref} from 'vue';
-import {translate} from "@/store/languageStore.js";
-import {useRouter} from 'vue-router';
-import {Inertia} from '@inertiajs/inertia';
-
-const goToPage = (link) => {
-    Inertia.visit(link);
-};
-
-const router = useRouter();
-
-const drawer = ref(false);
-
-const activePage = ref("dashboard");
-
-const setActivePage = (page) => {
-    activePage.value = page;
-};
-const menuItems = [
-    {title: "UserSidebar.UserDashboard", icon: "mdi-view-dashboard", page: "UserDashboard", link: "/UserDashboard"},
-    {title: "UserSidebar.createAdForm", icon: "mdi-plus-box", page: "createAdForm", link: "/createAdForm"},
-    {title: "UserSidebar.UserProfile", icon: "mdi-account", page: "UserProfile", link: "/UserProfile"},
-    {
-        title: "UserSidebar.UserReservations",
-        icon: "mdi-calendar-check",
-        page: "MyReservations",
-        link: "/MyReservations"
+export default {
+    data() {
+        return {
+            drawer: false,
+            activePage: "dashboard",
+            menuItems: [
+                { title: "UserSidebar.UserDashboard", icon: "mdi-view-dashboard", page: "UserDashboard", link: "/UserDashboard" },
+                { title: "UserSidebar.createAdForm", icon: "mdi-plus-box", page: "createAdForm", link: "/createAdForm" },
+                { title: "UserSidebar.UserProfile", icon: "mdi-account", page: "UserProfile", link: "/UserProfile" },
+                { title: "UserSidebar.UserReservations", icon: "mdi-calendar-check", page: "MyReservations", link: "/MyReservations" },
+                { title: "UserSidebar.MyAds", icon: "mdi-format-list-bulleted", page: "MyAds", link: "/MyAds" },
+                { title: "UserSidebar.houses", icon: "mdi-home-city", page: "houses", link: "/houses" },
+                { title: "UserSidebar.vehicles", icon: "mdi-car", page: "vehicles", link: "/vehicles" },
+                { title: "UserSidebar.events", icon: "mdi-calendar-star", page: "events", link: "/events" },
+                { title: "UserSidebar.travelers", icon: "mdi-account-group", page: "travelers", link: "/travelers" },
+                { title: "UserSidebar.Messages", icon: "mdi-message", page: "Messages", link: "/Messages" },
+                { title: "UserSidebar.UserFinance", icon: "mdi-finance", page: "UserFinance", link: "/UserFinance" },
+                { title: "UserSidebar.UserSettings", icon: "mdi-cog", page: "UserSettings", link: "/UserSettings" },
+                { title: "UserSidebar.Support", icon: "mdi-help-circle", page: "Support", link: "/Support" }
+            ]
+        };
     },
-    {title: "UserSidebar.MyAds", icon: "mdi-format-list-bulleted", page: "MyAds", link: "/MyAds"},
-    {title: "UserSidebar.houses", icon: "mdi-home-city", page: "houses", link: "/houses"},
-    {title: "UserSidebar.vehicles", icon: "mdi-car", page: "vehicles", link: "/vehicles"},
-    {title: "UserSidebar.events", icon: "mdi-calendar-star", page: "events", link: "/events"},
-    {title: "UserSidebar.travelers", icon: "mdi-account-group", page: "travelers", link: "/travelers"},
-    {title: "UserSidebar.Messages", icon: "mdi-message", page: "Messages", link: "/Messages"},
-    {title: "UserSidebar.UserFinance", icon: "mdi-finance", page: "UserFinance", link: "/UserFinance"},
-    {title: "UserSidebar.UserSettings", icon: "mdi-cog", page: "UserSettings", link: "/UserSettings"},
-    {title: "UserSidebar.Support", icon: "mdi-help-circle", page: "Support", link: "/Support"},
-];
+    methods: {
+        translate,
 
+        goToPage(link) {
+            this.$inertia.visit(link);
+        },
+        setActivePage(page) {
+            this.activePage = page;
+        }
+    },
+};
 </script>
-
 
 <style scoped>
 .sidebar {

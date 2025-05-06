@@ -29,36 +29,43 @@
     </v-dialog>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+import { translate } from "@/store/languageStore";
 
-import {ref} from 'vue';
-import {translate} from "@/store/languageStore.js";
+export default {
+    name: 'SuggestFriend',
 
-const isfriendModalOpen = ref(false);
+    data() {
+        return {
+            isfriendModalOpen: false,
+        };
+    },
 
-const openModal = () => {
-    isfriendModalOpen.value = true;
+    methods: {
+        translate,
+
+        openModal() {
+            this.isfriendModalOpen = true;
+        },
+        closeModal() {
+            this.isfriendModalOpen = false;
+        },
+        shareLink() {
+            const url = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: translate('friendInvite.shareTitle'),
+                    text: translate('friendInvite.shareMessage'),
+                    url: url
+                }).catch((error) => console.error("❌ Error sharing:", error));
+            } else {
+                alert(translate('friendInvite.shareFallback'));
+            }
+        }
+    },
+
+    expose: ['openModal']
 };
-
-const closeModal = () => {
-    isfriendModalOpen.value = false;
-};
-
-const shareLink = () => {
-    const url = window.location.href;
-    if (navigator.share) {
-        navigator.share({
-            title: translate('friendInvite.shareTitle'),
-            text: translate('friendInvite.shareMessage'),
-            url: url
-        }).catch((error) => console.error("Error sharing:", error));
-    } else {
-        alert(t('friendInvite.shareFallback'));
-    }
-};
-defineExpose({openModal});
-
 </script>
 
 <style scoped>

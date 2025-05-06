@@ -8,27 +8,28 @@
                 <span class="how-it-works-title">{{ translate('howItWorks.title') }}</span>
                 <v-spacer></v-spacer>
             </v-card-title>
+
             <v-divider></v-divider>
 
             <v-card-text class="how-it-works-content">
                 <p class="description">{{ translate('howItWorks.description') }}</p>
 
                 <v-card class="video-card mx-auto">
-                    <v-img src="/injaunjalogin.mp4" alt="Video Thumbnail" class="video-thumbnail"></v-img>
+                    <v-img src="/injaunjalogin.mp4" alt="Video Thumbnail" class="video-thumbnail" />
                 </v-card>
 
                 <p class="step-title"><strong>{{ translate('howItWorks.step1Title') }}</strong></p>
                 <p class="step-description">{{ translate('howItWorks.step1Description') }}</p>
 
                 <v-card class="video-card mx-auto">
-                    <v-img src="/injaunjalogin.mp4" alt="Video Thumbnail" class="video-thumbnail"></v-img>
+                    <v-img src="/injaunjalogin.mp4" alt="Video Thumbnail" class="video-thumbnail" />
                 </v-card>
 
                 <p class="step-title"><strong>{{ translate('howItWorks.step2Title') }}</strong></p>
                 <p class="step-description">{{ translate('howItWorks.step2Description') }}</p>
 
                 <v-card class="video-card mx-auto">
-                    <v-img src="/injaunjalogin.mp4" alt="Video Thumbnail" class="video-thumbnail"></v-img>
+                    <v-img src="/injaunjalogin.mp4" alt="Video Thumbnail" class="video-thumbnail" />
                 </v-card>
 
                 <p class="step-title"><strong>{{ translate('howItWorks.step3Title') }}</strong></p>
@@ -54,33 +55,49 @@
     </v-dialog>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+import { translate } from '@/store/languageStore';
 
-import {ref} from 'vue';
-import {translate} from "@/store/languageStore.js";
+export default {
+    name: 'Report',
+    data() {
+        return {
+            isHowItWorksModalOpen: false,
+            faqs: [
+                { question: 'howItWorks.faq1Question', answer: 'howItWorks.faq1Answer' },
+                { question: 'howItWorks.faq2Question', answer: 'howItWorks.faq2Answer' },
+                { question: 'howItWorks.faq3Question', answer: 'howItWorks.faq3Answer' },
+                { question: 'howItWorks.faq4Question', answer: 'howItWorks.faq4Answer' },
+                { question: 'howItWorks.faq5Question', answer: 'howItWorks.faq5Answer' },
+            ],
+        };
+    },
+    methods: {
+        translate,
+        openModal() {
+            try {
+                this.isHowItWorksModalOpen = true;
+            } catch (err) {
+                this.showError('There was a problem opening the modal.');
+            }
+        },
 
-const isHowItWorksModalOpen = ref(false);
+        closeHowItWorksModal() {
+            try {
+                this.isHowItWorksModalOpen = false;
+            } catch (err) {
+                this.showError('There was a problem closing the modal.');
+            }
+        },
 
-const openModal = () => {
-    isHowItWorksModalOpen.value = true;
+        showError(message) {
+            alert(`⚠️ ${message}`);
+        },
+
+
+    },
 };
-
-const closeHowItWorksModal = () => {
-    isHowItWorksModalOpen.value = false;
-};
-
-const faqs = ref([
-    {question: 'howItWorks.faq1Question', answer: 'howItWorks.faq1Answer'},
-    {question: 'howItWorks.faq2Question', answer: 'howItWorks.faq2Answer'},
-    {question: 'howItWorks.faq3Question', answer: 'howItWorks.faq3Answer'},
-    {question: 'howItWorks.faq4Question', answer: 'howItWorks.faq4Answer'},
-    {question: 'howItWorks.faq5Question', answer: 'howItWorks.faq5Answer'},
-]);
-
-defineExpose({openModal});
 </script>
-
 
 <style scoped>
 .how-it-works-header {
@@ -99,7 +116,6 @@ defineExpose({openModal});
 .close-btn {
     transition: transform 0.2s ease;
 }
-
 .close-btn:hover {
     transform: rotate(90deg);
 }
@@ -140,7 +156,7 @@ defineExpose({openModal});
     font-size: 1.1rem;
     margin-top: 20px;
     margin-bottom: 10px;
-    color: #1976D2; /* رنگ آبی */
+    color: #1976D2;
 }
 
 .support-description {
@@ -153,3 +169,4 @@ defineExpose({openModal});
     margin-top: 20px;
 }
 </style>
+

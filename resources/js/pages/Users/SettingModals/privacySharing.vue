@@ -27,7 +27,7 @@
                     <h3>{{ translate('privacySharing.deleteAccount.title') }}</h3>
                     <p>{{ translate('privacySharing.deleteAccount.description') }}</p>
                     <div class="button-container">
-                        <v-btn @click="deleteAccount" color="error">
+                        <v-btn @click="showDeleteConfirmation" color="error">
                             {{ translate('privacySharing.deleteAccount.button') }}
                         </v-btn>
                     </div>
@@ -102,7 +102,7 @@
                     <h3>{{ translate('privacySharing.services.title') }}</h3>
                     <p>{{ translate('privacySharing.services.description') }}</p>
                     <div class="button-container">
-                        <v-btn @click="showServices.value = true" color="primary">
+                        <v-btn @click="showServices = true" color="primary">
                             {{ translate('privacySharing.services.button') }}
                         </v-btn>
                     </div>
@@ -126,7 +126,7 @@
                                 </v-list-item>
                             </v-list>
                             <div class="button-container">
-                                <v-btn @click="showServices.value = false" color="secondary">
+                                <v-btn @click="showServices = false" color="secondary">
                                     {{ translate('privacySharing.services.closeButton') }}
                                 </v-btn>
                             </div>
@@ -136,77 +136,136 @@
             </v-card-text>
         </v-card>
     </v-dialog>
+
+    <v-dialog v-model="showDeleteAlert" max-width="500px">
+        <v-card>
+            <v-card-title class="error white--text">
+                <v-icon large color="white">mdi-alert-circle</v-icon>
+                <span class="ml-2">{{ translate('alerts.deleteAccount.title') }}</span>
+            </v-card-title>
+            <v-card-text class="pa-4">
+                <p>{{ translate('alerts.deleteAccount.message') }}</p>
+                <p class="font-weight-bold mt-3">{{ translate('alerts.deleteAccount.warning') }}</p>
+            </v-card-text>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="secondary" @click="showDeleteAlert = false">
+                    {{ translate('alerts.cancel') }}
+                </v-btn>
+                <v-btn color="error" @click="confirmDeleteAccount">
+                    {{ translate('alerts.deleteAccount.confirm') }}
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+
+    <v-snackbar v-model="showSuccessAlert" color="success" timeout="3000" top right>
+        <v-icon left>mdi-check-circle</v-icon>
+        {{ successMessage }}
+    </v-snackbar>
+
+    <v-snackbar v-model="showErrorAlert" color="error" timeout="3000" top right>
+        <v-icon left>mdi-alert-circle</v-icon>
+        {{ errorMessage }}
+    </v-snackbar>
 </template>
 
+<script>
+//Todo:getUserData:description/response
+//Todo:deleteAccount:description/response
+//Todo:thirdPartySettings:description/body:sharing/analytics/marketing
+//Todo:profileVisibility:description/body:visibility
+//Todo:connectedServices:description/response:id/name/description/connected
+//Todo:alerts:description/successMessages:settingsSaved/serviceUpdated/downloadStarted/accountDeleted
+//Todo:errorMessages:default/deleteAccount
 
-<script setup>
-//TODO : composition --> option & const & error warning
+import { translate } from "@/store/languageStore";
 
-import {ref} from 'vue';
-import {translate} from "@/store/languageStore.js";
+export default {
+    name: 'PrivacySharingModal',
+    data() {
+        return {
+            isModalOpen: false,
+            showThirdPartyTools: false,
+            showSharing: false,
+            showServices: false,
+            thirdPartySharing: false,
+            thirdPartyAnalytics: false,
+            thirdPartyMarketing: false,
+            profileVisibility: "public",
+            connectedServices: [
+                {id: 1, name: "Google", description: "Connect to the account Google", connected: true},
+                {id: 2, name: "Facebook", description: "Connect to the account Facebook", connected: true},
+                {id: 3, name: "Twitter", description: "Connect to the account Twitter", connected: true},
+            ],
+            showDeleteAlert: false,
+            showSuccessAlert: false,
+            showErrorAlert: false,
+            successMessage: '',
+            errorMessage: ''
+        }
+    },
+    methods: {
+        translate,
 
-const isModalOpen = ref(false);
-const showThirdPartyTools = ref(false);
-const showSharing = ref(false);
-const showServices = ref(false);
-const thirdPartySharing = ref(false);
-const thirdPartyAnalytics = ref(false);
-const thirdPartyMarketing = ref(false);
-const profileVisibility = ref("public");
-
-const connectedServices = ref([
-    {id: 1, name: "Google", description: "Connect to the account Google", connected: true},
-    {id: 2, name: "Facebook", description: "Connect to the account Facebook", connected: true},
-    {id: 3, name: "Twitter", description: "Connect to the account Twitter", connected: true},
-]);
-
-const toggleServiceConnection = (serviceId) => {
-    const service = connectedServices.value.find(s => s.id === serviceId);
-    if (service) {
-        service.connected = !service.connected;
-        console.log(`Connection status ${service.name}: ${service.connected ? 'ON' : 'OFF'}`);
+        toggleServiceConnection(serviceId) {
+            var service = this.connectedServices.find(function(s) { return s.id === serviceId; });
+            if (service) {
+                service.connected = !service.connected;
+                console.log("Connection status " + service.name + ": " + (service.connected ? 'ON' : 'OFF'));
+                this.showAlert('success', this.translate('alerts.serviceUpdated'));
+            }
+        },
+        saveThirdPartySettings() {
+            console.log("Third-party tool settings saved:", {
+                sharing: this.thirdPartySharing,
+                analytics: this.thirdPartyAnalytics,
+                marketing: this.thirdPartyMarketing,
+            });
+            this.showThirdPartyTools = false;
+            this.showAlert('success', this.translate('alerts.settingsSaved'));
+        },
+        saveSharingSettings() {
+            console.log("Sharing settings saved:", this.profileVisibility);
+            this.showSharing = false;
+            this.showAlert('success', this.translate('alerts.settingsSaved'));
+        },
+        openModal() {
+            this.isModalOpen = true;
+        },
+        closeModal() {
+            this.isModalOpen = false;
+        },
+        downloadUserData() {
+            var link = document.createElement('a');
+            link.href = '/UserProfile.pdf';
+            link.download = 'UserProfile.pdf';
+            link.click();
+            this.showAlert('success', this.translate('alerts.downloadStarted'));
+        },
+        showDeleteConfirmation() {
+            this.showDeleteAlert = true;
+        },
+        confirmDeleteAccount() {
+            this.showDeleteAlert = false;
+            console.log("Account deleted.");
+            this.showAlert('success', this.translate('alerts.accountDeleted'));
+            this.closeModal();
+        },
+        showAlert(type, message) {
+            if (type === 'success') {
+                this.successMessage = message;
+                this.showSuccessAlert = true;
+            } else {
+                this.errorMessage = message;
+                this.showErrorAlert = true;
+            }
+        },
     }
-};
-
-const saveThirdPartySettings = () => {
-    console.log("Third-party tool settings saved:", {
-        sharing: thirdPartySharing.value,
-        analytics: thirdPartyAnalytics.value,
-        marketing: thirdPartyMarketing.value,
-    });
-};
-
-const saveSharingSettings = () => {
-    console.log("Sharing settings saved:", profileVisibility.value);
-};
-
-const openModal = () => {
-    isModalOpen.value = true;
-};
-
-const closeModal = () => {
-    isModalOpen.value = false;
-};
-
-const downloadUserData = () => {
-    const link = document.createElement('a');
-    link.href = '/UserProfile.pdf';
-    link.download = 'UserProfile.pdf';
-    link.click();
-};
-
-const deleteAccount = () => {
-    if (confirm("Are you sure you want to delete your account?")) {
-        console.log("Account deleted.");
-    }
-};
-
-defineExpose({openModal});
+}
 </script>
 
-
 <style scoped>
-
 .dialog-header {
     display: flex;
     align-items: center;

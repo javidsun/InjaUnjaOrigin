@@ -37,6 +37,8 @@
 </template>
 
 <script>
+//Todo:{zoomLevel/panDirection
+
 import { translate } from "@/store/languageStore";
 
 export default {

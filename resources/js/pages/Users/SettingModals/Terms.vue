@@ -7,8 +7,8 @@
                 <v-btn icon @click="closeTermsModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
-
             </v-card-title>
+
             <v-divider></v-divider>
 
             <v-card-text class="terms-content">
@@ -24,15 +24,14 @@
                     </v-card-text>
                 </v-card>
 
-                <p class="section-title">{{translate('terms.sectionTitle') }}</p>
+                <p class="section-title">{{ translate('terms.sectionTitle') }}</p>
                 <p class="section-description">{{ translate('terms.sectionDescription') }}</p>
                 <p class="section-update">{{ translate('terms.sectionUpdate') }}</p>
 
                 <p class="thank-you">{{ translate('terms.thankYou') }}</p>
-
                 <p class="terms-text">{{ translate('terms.termsText') }}</p>
-
                 <p class="table-of-contents">{{ translate('terms.tableOfContents') }}</p>
+
                 <v-list>
                     <v-list-item v-for="(item, index) in termsList" :key="index">
                         <v-list-item-content>
@@ -45,49 +44,54 @@
     </v-dialog>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+import { translate } from "@/store/languageStore";
 
-import {ref} from 'vue';
-import {translate} from "@/store/languageStore.js";
+export default {
+    name: "TermsModal",
 
-const isTermsModalOpen = ref(false);
+    data() {
+        return {
+            isTermsModalOpen: false,
+            termsList: [
+                'terms.guestConditions1',
+                'terms.guestConditions2',
+                'terms.guestConditions3',
+                'terms.hostConditions1',
+                'terms.hostConditions2',
+                'terms.hostConditions3',
+                'terms.hostConditions4',
+                'terms.generalConditions1',
+                'terms.generalConditions2',
+                'terms.generalConditions3',
+                'terms.generalConditions4',
+                'terms.generalConditions5',
+                'terms.generalConditions6',
+                'terms.generalConditions7',
+                'terms.generalConditions8',
+                'terms.generalConditions9',
+                'terms.generalConditions10',
+                'terms.generalConditions11',
+                'terms.generalConditions12',
+                'terms.generalConditions13',
+                'terms.generalConditions14',
+                'terms.generalConditions15',
+                'terms.generalConditions16',
+            ]
+        };
+    },
 
-const openModal = () => {
-    isTermsModalOpen.value = true;
+    methods: {
+        translate,
+
+        openModal() {
+            this.isTermsModalOpen = true;
+        },
+        closeTermsModal() {
+            this.isTermsModalOpen = false;
+        },
+    }
 };
-
-const closeTermsModal = () => {
-    isTermsModalOpen.value = false;
-};
-
-const termsList = ref([
-    'terms.guestConditions1',
-    'terms.guestConditions2',
-    'terms.guestConditions3',
-    'terms.hostConditions1',
-    'terms.hostConditions2',
-    'terms.hostConditions3',
-    'terms.hostConditions4',
-    'terms.generalConditions1',
-    'terms.generalConditions2',
-    'terms.generalConditions3',
-    'terms.generalConditions4',
-    'terms.generalConditions5',
-    'terms.generalConditions6',
-    'terms.generalConditions7',
-    'terms.generalConditions8',
-    'terms.generalConditions9',
-    'terms.generalConditions10',
-    'terms.generalConditions11',
-    'terms.generalConditions12',
-    'terms.generalConditions13',
-    'terms.generalConditions14',
-    'terms.generalConditions15',
-    'terms.generalConditions16',
-]);
-
-defineExpose({openModal});
 </script>
 
 <style scoped>

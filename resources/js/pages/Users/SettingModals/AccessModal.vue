@@ -36,43 +36,65 @@
     </v-dialog>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+import { translate } from "@/store/languageStore";
 
-import {ref} from 'vue';
-import {useRouter} from 'vue-router';
-import {translate} from "@/store/languageStore.js";
-import {Inertia} from "@inertiajs/inertia";
+export default {
+    name: 'Access',
 
-const isModalOpen = ref(false);
-const router = useRouter();
+    data() {
+        return {
+            isModalOpen: false,
+            zoomLevel: 5,
+            panDirection: 0,
+            panLabels: ['Up', 'Right', 'Down', 'Left']
+        }
+    },
 
-const openModal = () => {
-    isModalOpen.value = true;
-};
+    methods: {
+        translate,
 
-const closeModal = () => {
-    isModalOpen.value = false;
-};
+        openModal() {
+            try {
+                this.isModalOpen = true;
+            } catch (error) {
+                this.handleError('Failed to open modal', error);
+            }
+        },
 
-const goToPage = (link) => {
-    Inertia.visit(link);
-};
+        closeModal() {
+            try {
+                this.isModalOpen = false;
+            } catch (error) {
+                this.handleError('Failed to close modal', error);
+            }
+        },
 
-const zoomLevel = ref(5);
-const panDirection = ref(0);
+        updateZoom() {
+            try {
+                //Todo: Send zoom level to backend
+                console.log(`Zoom Level: ${this.zoomLevel}`);
+            } catch (error) {
+                this.handleError('Failed to update zoom', error);
+            }
+        },
 
-const updateZoom = () => {
-    console.log(`Zoom Level: ${zoomLevel.value}`);
-};
+        updatePan() {
+            try {
+                //Todo: Send pan direction to backend
+                console.log(`Pan Direction: ${this.panLabels[this.panDirection]}`);
+            } catch (error) {
+                this.handleError('Failed to update pan', error);
+            }
+        },
 
-const panLabels = ['Up', 'Right', 'Down', 'Left'];
+        handleError(message, error) {
+            console.error(message, error);
+            this.$emit('error', { message, error });
+        }
+    },
 
-const updatePan = () => {
-    console.log(`Pan Direction: ${panLabels[panDirection.value]}`);
-};
-
-defineExpose({openModal});
+}
 </script>
 
 <style scoped>

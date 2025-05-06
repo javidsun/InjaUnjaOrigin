@@ -1,18 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-
-$files = glob(__DIR__ . '/frontend/*.php');
+$files = glob(__DIR__.'/frontend/*.php');
 foreach ($files as $file) {
     require $file;
 }
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
-
-});
+Route::group(['middleware' => 'auth:sanctum'], function () {});
 Route::get('/add-property', function () {
     return Inertia::render('AddProperty');
 });
@@ -53,7 +49,6 @@ Route::get('/verify-email', function () {
     return Inertia::render('layout/menu_component/verify-email');
 });
 
-
 Route::get('/add-property', function () {
     return Inertia::render('AddProperty');
 });
@@ -77,26 +72,25 @@ Route::get('/UserProfile', function () {
     return Inertia::render('Users/UserDashboard/UserProfile');
 });
 
-    Route::get('/UserReservations', function () {
-        return Inertia::render('Users/UserDashboard/UserReservations');
-    })->name('UserReservations');
+Route::get('/UserReservations', function () {
+    return Inertia::render('Users/UserDashboard/UserReservations');
+})->name('UserReservations');
 
-    Route::get('/notifications', function () {
-        return Inertia::render('Users/UserDashboard/Notifications');
-    })->name('notifications');
+Route::get('/notifications', function () {
+    return Inertia::render('Users/UserDashboard/Notifications');
+})->name('notifications');
 
-    Route::get('/UserFinance', function () {
-        return Inertia::render('Users/UserDashboard/UserFinance');
-    })->name('UserFinance');
+Route::get('/UserFinance', function () {
+    return Inertia::render('Users/UserDashboard/UserFinance');
+})->name('UserFinance');
 
-    Route::get('/UserSettings', function () {
-        return Inertia::render('Users/UserDashboard/UserSettings');
-    })->name('UserSettings');
+Route::get('/UserSettings', function () {
+    return Inertia::render('Users/UserDashboard/UserSettings');
+})->name('UserSettings');
 
-    Route::get('/Support', function () {
-        return Inertia::render('Users/UserDashboard/Support');
-    })->name('Support');
-
+Route::get('/Support', function () {
+    return Inertia::render('Users/UserDashboard/Support');
+})->name('Support');
 
 // Routes for public sections
 Route::get('/houses', function () {

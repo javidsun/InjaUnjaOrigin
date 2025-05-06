@@ -2,6 +2,7 @@
 
 namespace App\Domain\Services;
 
+use App\Domain\Entity;
 use App\Domain\Repositories\UserRepositoryInterface;
 use App\Domain\Services\Auth\RegisterStrategyContract;
 use App\Entities\UserEntity;
@@ -25,4 +26,8 @@ abstract class AuthService implements RegisterStrategyContract
         return $this->userRepositoryInterface->save($userEntity);
     }
 
+    public function login(array $data):UserEntity
+    {
+        return $this->userRepositoryInterface->get($data);
+    }
 }

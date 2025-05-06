@@ -6,11 +6,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);
 
+Route::get('/login', [AuthController::class, 'login']);
+
 Route::group(
     [
-    'prefix' => 'auth',
-    'middleware' => ['auth:sanctum', 'session'],
-],
+        'prefix' => 'auth',
+        'middleware' => ['auth:sanctum', 'session'],
+    ],
     function () {
 
         Route::get('/auth/{provider}/redirect', [OAuthController::class, 'redirect']);

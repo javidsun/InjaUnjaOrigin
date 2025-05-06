@@ -4,6 +4,7 @@ namespace App\Services\AuthServices;
 
 use App\Constant\TableParametersConst\AuthConst\UserJson;
 use App\Domain\Services\AuthService;
+use App\Entities\UserEntity;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class AuthTraditionalServices extends AuthService
         parent::__construct();
     }
 
-    public function login(string $emailValidated, string $passwordValidated): JsonResponse
+
+    public function login2(string $emailValidated, string $passwordValidated): JsonResponse
     {
         $user = User::where(UserJson::EMAIL, $emailValidated)->first();
 

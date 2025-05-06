@@ -11,12 +11,9 @@
             <v-divider></v-divider>
 
             <v-card-text class="modal-content">
-                <p class="description">
-                    {{ translate('guide.createGuideDescription') }}
-                </p>
-
+                <p class="description">{{ translate('guide.createGuideDescription') }}</p>
                 <div class="image-container">
-                    <v-img src="\icons8-guide-book-98.png" alt="Guide Image" class="guide-image"></v-img>
+                    <v-img src="/icons8-guide-book-98.png" alt="Guide Image" class="guide-image"></v-img>
                 </div>
 
                 <div v-if="createdGuide" class="guide-preview">
@@ -48,10 +45,7 @@
             <v-divider></v-divider>
 
             <v-card-text class="modal-content">
-                <p class="description">
-                    {{ translate('guide.guideDescription') }}
-                </p>
-
+                <p class="description">{{ translate('guide.guideDescription') }}</p>
                 <v-form @submit.prevent="saveGuide">
                     <v-text-field
                         v-model="guideTitle"
@@ -75,7 +69,7 @@
 
                     <div class="button-container">
                         <v-btn type="submit" color="primary" large>
-                            {{ isEditing ? t('guide.saveChanges') : translate('guide.createGuideButton') }}
+                            {{ isEditing ? translate('guide.saveChanges') : translate('guide.createGuideButton') }}
                         </v-btn>
                         <v-btn @click="closeCreateGuideModal" color="secondary" large class="ml-2">
                             {{ translate('cancel') }}
@@ -85,68 +79,87 @@
             </v-card-text>
         </v-card>
     </v-dialog>
-    v
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+//Todo:{title/description/image
 
-import {ref} from 'vue';
-import {translate} from "@/store/languageStore.js";
+import { translate } from '@/store/languageStore';
 
-const isModalOpen = ref(false);
-const isCreateGuideModalOpen = ref(false);
-const isEditing = ref(false);
-const guideTitle = ref('');
-const guideDescription = ref('');
-const guideImage = ref(null);
-const imagePreview = ref(null);
-const createdGuide = ref(null);
+export default {
+    name: 'Guide',
 
-const openModal = () => {
-    isModalOpen.value = true;
+    data() {
+        return {
+            isModalOpen: false,
+            isCreateGuideModalOpen: false,
+            isEditing: false,
+            guideTitle: '',
+            guideDescription: '',
+            guideImage: null,
+            imagePreview: null,
+            createdGuide: null
+        };
+    },
+
+    methods: {
+        translate,
+
+        openModal() {
+            this.isModalOpen = true;
+        },
+
+        closeModal() {
+            this.isModalOpen = false;
+        },
+
+        openCreateGuideModal() {
+            this.isCreateGuideModalOpen = true;
+        },
+
+        closeCreateGuideModal() {
+            this.isCreateGuideModalOpen = false;
+            this.isEditing = false;
+            this.guideTitle = '';
+            this.guideDescription = '';
+            this.guideImage = null;
+            this.imagePreview = null;
+        },
+
+        async saveGuide() {
+            try {
+                const guideData = {
+                    title: this.guideTitle,
+                    description: this.guideDescription,
+                    imageUrl: this.imagePreview
+                };
+
+                this.createdGuide = guideData;
+
+                this.closeCreateGuideModal();
+            } catch (error) {
+                console.warn("Error saving help:", error);
+            }
+        },
+
+        editGuide() {
+            try {
+                if (!this.createdGuide) return;
+
+                this.isEditing = true;
+                this.guideTitle = this.createdGuide.title;
+                this.guideDescription = this.createdGuide.description;
+                this.imagePreview = this.createdGuide.imageUrl;
+
+                this.openCreateGuideModal();
+            } catch (error) {
+                console.warn("Error saving help:", error);
+            }
+        }
+    }
 };
-
-const closeModal = () => {
-    isModalOpen.value = false;
-};
-
-const openCreateGuideModal = () => {
-    isCreateGuideModalOpen.value = true;
-};
-
-const closeCreateGuideModal = () => {
-    isCreateGuideModalOpen.value = false;
-    isEditing.value = false;
-    guideTitle.value = '';
-    guideDescription.value = '';
-    guideImage.value = null;
-    imagePreview.value = null;
-};
-
-const saveGuide = () => {
-    const guideData = {
-        title: guideTitle.value,
-        description: guideDescription.value,
-        imageUrl: imagePreview.value,
-    };
-
-    createdGuide.value = guideData;
-    console.log('Guide saved:', guideData);
-
-    closeCreateGuideModal();
-};
-
-const editGuide = () => {
-    isEditing.value = true;
-    guideTitle.value = createdGuide.value.title;
-    guideDescription.value = createdGuide.value.description;
-    imagePreview.value = createdGuide.value.imageUrl;
-    openCreateGuideModal();
-};
-
-defineExpose({openModal});
 </script>
+
 
 <style scoped>
 .dialog-header {

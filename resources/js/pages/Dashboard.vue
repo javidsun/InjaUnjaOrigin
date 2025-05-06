@@ -44,7 +44,6 @@
         <v-main>
             <v-container fluid>
                 <v-row>
-                    <!-- Widget statistiche -->
                     <v-col cols="12" sm="6" md="3">
                         <v-card class="mx-auto" max-width="344">
                             <v-avatar color="primary" size="x-large" class="mt-3">
@@ -86,7 +85,6 @@
                         </v-card>
                     </v-col>
 
-                    <!-- Calendario -->
                     <v-col cols="12" md="4">
                         <v-card title="Calendario Eventi">
                             <v-card-text>
@@ -95,7 +93,6 @@
                         </v-card>
                     </v-col>
 
-                    <!-- Tabella dati -->
                     <v-col cols="12">
                         <v-card title="Ultimi Ordini">
                             <v-card-text>
@@ -123,48 +120,34 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
-
 export default {
-    // TODO  : is option but const
     name: "Dashboard",
-    setup() {
-        const drawer = ref(false);
-        //const date = ref(new Date().toISOString().substr(0, 10));
-        const events = ['2023-05-01', '2023-05-15', '2023-05-22'];
-        const search = ref('');
-        const theme = ref('light');
-
-        const headers = [
-            { title: 'ID Ordine', align: 'start', sortable: true, key: 'id' },
-            { title: 'Cliente', align: 'start', sortable: true, key: 'customer' },
-            { title: 'Data', align: 'start', sortable: true, key: 'date' },
-            { title: 'Stato', align: 'start', sortable: true, key: 'status' },
-            { title: 'Totale', align: 'end', sortable: true, key: 'total' },
-        ];
-
-        const orders = [
-            { id: 1, customer: 'Mario Rossi', date: '2023-05-01', status: 'Completato', total: '€120.00' },
-            { id: 2, customer: 'Giulia Bianchi', date: '2023-05-02', status: 'In elaborazione', total: '€75.50' },
-            { id: 3, customer: 'Luca Verdi', date: '2023-05-03', status: 'Spedito', total: '€200.00' },
-            { id: 4, customer: 'Anna Neri', date: '2023-05-04', status: 'Completato', total: '€50.00' },
-            { id: 5, customer: 'Marco Gialli', date: '2023-05-05', status: 'In attesa di pagamento', total: '€180.00' },
-        ];
-
-        const toggleTheme = () => {
-            theme.value = theme.value === 'light' ? 'dark' : 'light';
-        };
-
+    data() {
         return {
-            drawer,
-           // date,
-            events,
-            search,
-            theme,
-            headers,
-            orders,
-            toggleTheme,
+            drawer: false,
+            events: ['2023-05-01', '2023-05-15', '2023-05-22'],
+            search: '',
+            theme: 'light',
+            headers: [
+                { title: 'ID Ordine', align: 'start', sortable: true, key: 'id' },
+                { title: 'Cliente', align: 'start', sortable: true, key: 'customer' },
+                { title: 'Data', align: 'start', sortable: true, key: 'date' },
+                { title: 'Stato', align: 'start', sortable: true, key: 'status' },
+                { title: 'Totale', align: 'end', sortable: true, key: 'total' },
+            ],
+            orders: [
+                { id: 1, customer: 'Mario Rossi', date: '2023-05-01', status: 'Completato', total: '€120.00' },
+                { id: 2, customer: 'Giulia Bianchi', date: '2023-05-02', status: 'In elaborazione', total: '€75.50' },
+                { id: 3, customer: 'Luca Verdi', date: '2023-05-03', status: 'Spedito', total: '€200.00' },
+                { id: 4, customer: 'Anna Neri', date: '2023-05-04', status: 'Completato', total: '€50.00' },
+                { id: 5, customer: 'Marco Gialli', date: '2023-05-05', status: 'In attesa di pagamento', total: '€180.00' },
+            ],
         };
+    },
+    methods: {
+        toggleTheme() {
+            this.theme = this.theme === 'light' ? 'dark' : 'light';
+        },
     },
 };
 </script>
@@ -197,3 +180,5 @@ export default {
     }
 }
 </style>
+
+

@@ -1,6 +1,5 @@
 <template>
     <UserSidebar>
-
         <v-card>
             <v-card-text class="support-content">
                 <p class="welcome-message">{{ translate('support.welcomeMessage') }}</p>
@@ -49,75 +48,64 @@
                     <p>{{ translate(selectedQuestion?.answer) }}</p>
                 </v-card-text>
             </v-card>
-
         </v-dialog>
     </UserSidebar>
-
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+import { translate } from "@/store/languageStore";
 
-import {ref, computed} from 'vue';
-import {translate} from "@/store/languageStore.js";
-import UserSidebar from './Layout.vue';
+export default {
+    data() {
+        return {
+            isHelpModalOpen: false,
+            searchQuery: '',
+            selectedQuestion: null,
+            supportQuestions: [
+                {title: 'support.cancelGuest', answer: 'support.cancelGuestAnswer'},
+                {title: 'support.accountSettings', answer: 'support.accountSettingsAnswer'},
+                {title: 'support.refundHost', answer: 'support.refundHostAnswer'},
+                {title: 'support.hostingGoals', answer: 'support.hostingGoalsAnswer'},
+                {title: 'support.prepareListings', answer: 'support.prepareListingsAnswer'},
+                {title: 'support.payments', answer: 'support.paymentsAnswer'},
+                {title: 'support.manageExperiences', answer: 'support.manageExperiencesAnswer'},
+                {title: 'support.coHost', answer: 'support.coHostAnswer'},
+                {title: 'support.billHelp', answer: 'support.billHelpAnswer'},
+            ],
+        };
+    },
+    computed: {
+        filteredQuestions() {
+            return this.supportQuestions.filter(question =>
+                this.translate(question.title).toLowerCase().includes(this.searchQuery.toLowerCase())
+            );
+        }
+    },
+    methods: {
+        openHelpModal(question) {
+            this.selectedQuestion = question;
+            this.isHelpModalOpen = true;
+        },
+        closeHelpModal() {
+            this.isHelpModalOpen = false;
+        },
+        contactSupport() {
+            const url = window.location.href;
+            const supportDetails = this.translate('support.contactMessage', { query: this.searchQuery });
 
-const isSupportModalOpen = ref(false);
-
-const openModal = () => {
-    isSupportModalOpen.value = true;
-};
-
-const closeSupportModal = () => {
-    isSupportModalOpen.value = false;
-};
-
-const isHelpModalOpen = ref(false);
-const searchQuery = ref('');
-const selectedQuestion = ref(null);
-
-const supportQuestions = ref([
-    {title: 'support.cancelGuest', answer: 'support.cancelGuestAnswer'},
-    {title: 'support.accountSettings', answer: 'support.accountSettingsAnswer'},
-    {title: 'support.refundHost', answer: 'support.refundHostAnswer'},
-    {title: 'support.hostingGoals', answer: 'support.hostingGoalsAnswer'},
-    {title: 'support.prepareListings', answer: 'support.prepareListingsAnswer'},
-    {title: 'support.payments', answer: 'support.paymentsAnswer'},
-    {title: 'support.manageExperiences', answer: 'support.manageExperiencesAnswer'},
-    {title: 'support.coHost', answer: 'support.coHostAnswer'},
-    {title: 'support.billHelp', answer: 'support.billHelpAnswer'},
-]);
-
-const filteredQuestions = computed(() => {
-    return supportQuestions.value.filter(question =>
-        translate(question.title).toLowerCase().includes(searchQuery.value.toLowerCase())
-    );
-});
-
-const openHelpModal = (question) => {
-    selectedQuestion.value = question;
-    isHelpModalOpen.value = true;
-};
-
-const closeHelpModal = () => {
-    isHelpModalOpen.value = false;
-};
-
-const contactSupport = () => {
-    const url = window.location.href;
-    const supportDetails = translate('support.contactMessage', {query: searchQuery.value});
-
-    if (navigator.share) {
-        navigator.share({
-            title: translate('support.contactTitle'),
-            text: supportDetails,
-            url: url,
-        }).catch((error) => console.error("Error sharing:", error));
-    } else {
-        alert(translate('support.contactFallback'));
+            if (navigator.share) {
+                navigator.share({
+                    title: this.translate('support.contactTitle'),
+                    text: supportDetails,
+                    url: url,
+                }).catch((error) => console.error("Error sharing:", error));
+            } else {
+                alert(this.translate('support.contactFallback'));
+            }
+        },
+        translate,
     }
 };
-
 </script>
 
 <style scoped>

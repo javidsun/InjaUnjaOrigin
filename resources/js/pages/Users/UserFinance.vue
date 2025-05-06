@@ -80,6 +80,10 @@
 </template>
 
 <script>
+//Todo:id/status/amount/tax/extraFee/
+//Todo:finance:id/location/location/host/rating/price/period/type/image
+//Todo:paymentMethod:transactionReference/createdAt
+
 import UserSidebar from './Layout.vue';
 import jsPDF from 'jspdf';
 import {translate} from "@/store/languageStore";

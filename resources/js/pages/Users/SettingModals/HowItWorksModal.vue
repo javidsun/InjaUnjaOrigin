@@ -14,21 +14,21 @@
                 <p class="description">{{ translate('howItWorks.description') }}</p>
 
                 <v-card class="video-card mx-auto">
-                    <v-img src="/injaunjalogin.mp4" alt="Video Thumbnail" class="video-thumbnail"></v-img>
+                    <v-img :src="videoThumbnail" alt="Video Thumbnail" class="video-thumbnail"></v-img>
                 </v-card>
 
                 <p class="step-title"><strong>{{ translate('howItWorks.step1Title') }}</strong></p>
                 <p class="step-description">{{ translate('howItWorks.step1Description') }}</p>
 
                 <v-card class="video-card mx-auto">
-                    <v-img src="/injaunjalogin.mp4" alt="Video Thumbnail" class="video-thumbnail"></v-img>
+                    <v-img :src="videoThumbnail" alt="Video Thumbnail" class="video-thumbnail"></v-img>
                 </v-card>
 
                 <p class="step-title"><strong>{{ translate('howItWorks.step2Title') }}</strong></p>
                 <p class="step-description">{{ translate('howItWorks.step2Description') }}</p>
 
                 <v-card class="video-card mx-auto">
-                    <v-img src="/injaunjalogin.mp4" alt="Video Thumbnail" class="video-thumbnail"></v-img>
+                    <v-img :src="videoThumbnail" alt="Video Thumbnail" class="video-thumbnail"></v-img>
                 </v-card>
 
                 <p class="step-title"><strong>{{ translate('howItWorks.step3Title') }}</strong></p>
@@ -54,32 +54,53 @@
     </v-dialog>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+//Todo:question/answer
 
-import {ref} from 'vue';
-import {translate} from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
-const isHowItWorksModalOpen = ref(false);
+export default {
+    name: 'HowItWorksModal',
 
-// تغییر نام تابع به openModal
-const openModal = () => {
-    isHowItWorksModalOpen.value = true;
-};
+    data() {
+        return {
+            isHowItWorksModalOpen: false,
+            videoThumbnail: '/injaunjalogin.mp4',
+            faqs: [
+                {question: 'howItWorks.faq1Question', answer: 'howItWorks.faq1Answer'},
+                {question: 'howItWorks.faq2Question', answer: 'howItWorks.faq2Answer'},
+                {question: 'howItWorks.faq3Question', answer: 'howItWorks.faq3Answer'},
+                {question: 'howItWorks.faq4Question', answer: 'howItWorks.faq4Answer'},
+                {question: 'howItWorks.faq5Question', answer: 'howItWorks.faq5Answer'},
+            ]
+        }
+    },
 
-const closeHowItWorksModal = () => {
-    isHowItWorksModalOpen.value = false;
-};
+    methods: {
+        translate,
 
-const faqs = ref([
-    {question: 'howItWorks.faq1Question', answer: 'howItWorks.faq1Answer'},
-    {question: 'howItWorks.faq2Question', answer: 'howItWorks.faq2Answer'},
-    {question: 'howItWorks.faq3Question', answer: 'howItWorks.faq3Answer'},
-    {question: 'howItWorks.faq4Question', answer: 'howItWorks.faq4Answer'},
-    {question: 'howItWorks.faq5Question', answer: 'howItWorks.faq5Answer'},
-]);
+        openModal() {
+            try {
+                this.isHowItWorksModalOpen = true;
+            } catch (error) {
+                this.handleError('Failed to open modal', error);
+            }
+        },
 
-defineExpose({openModal});
+        closeHowItWorksModal() {
+            try {
+                this.isHowItWorksModalOpen = false;
+            } catch (error) {
+                this.handleError('Failed to close modal', error);
+            }
+        },
+
+        handleError(message, error) {
+            console.error(message, error);
+        },
+
+    }
+}
 </script>
 
 <style scoped>

@@ -89,7 +89,7 @@ Route::get('/UserSettings', function () {
 })->name('UserSettings');
 
 Route::get('/Support', function () {
-    return Inertia::render('Users/UserDashboard/Support');
+    return Inertia::render('Users/Support');
 })->name('Support');
 
 // Routes for public sections

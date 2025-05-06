@@ -30,6 +30,8 @@
 </template>
 
 <script>
+//Todo:title/shareLink/shareButton/shareTitle/shareMessage/shareFallback
+
 import { translate } from "@/store/languageStore";
 
 export default {

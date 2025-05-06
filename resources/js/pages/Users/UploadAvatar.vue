@@ -1,62 +1,71 @@
 <template>
-  <div class="upload-avatar">
-    <v-avatar size="200px">
-      <img :src="avatarPreview || avatar" alt="User Avatar" />
-    </v-avatar>
-    <input type="file" accept="image/*" @change="onFileChange" hidden ref="fileInput" />
-    <v-btn @click="handleButtonClick" class="mt-2 btn" :color="isUploaded ? 'success' : 'primary'">
-      {{ isUploaded ? translate('profile.saveChanges') : translate('profile.changeAvatar') }}
-    </v-btn>
-  </div>
+    <div class="upload-avatar">
+        <v-avatar size="200px">
+            <img :src="avatarPreview || avatar" alt="User Avatar" />
+        </v-avatar>
+        <input type="file" accept="image/*" @change="onFileChange" hidden ref="fileInput" />
+        <v-btn @click="handleButtonClick" class="mt-2 btn" :color="isUploaded ? 'success' : 'primary'">
+            {{ isUploaded ? translate('profile.saveChanges') : translate('profile.changeAvatar') }}
+        </v-btn>
+    </div>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+//Todo:image/user_id/is_uploaded
 
-import { ref, watch } from "vue";
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
-const avatar = ref("/avatar-2.png");
-const avatarPreview = ref(null);
-const isUploaded = ref(false);
-const fileInput = ref(null);
+export default {
+    data() {
+        return {
+            avatar: "/avatar-2.png",
+            avatarPreview: null,
+            isUploaded: false,
+        };
+    },
+    methods: {
+        translate,
 
-const onFileChange = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      avatarPreview.value = reader.result;
-      isUploaded.value = true;
-    };
-    reader.readAsDataURL(file);
-  }
+        onFileChange(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    this.avatarPreview = reader.result;
+                    this.isUploaded = true;
+                };
+                reader.readAsDataURL(file);
+            }
+        },
+        handleButtonClick() {
+            if (!this.isUploaded) {
+                this.$refs.fileInput.click();
+            } else {
+                this.avatar = this.avatarPreview;
+                this.isUploaded = false;
+            }
+        },
+    },
+    watch: {
+        avatar(newAvatar) {
+            const event = new CustomEvent("update-avatar", { detail: newAvatar });
+            window.dispatchEvent(event);
+        },
+    },
 };
-
-const handleButtonClick = () => {
-  if (!isUploaded.value) {
-    fileInput.value.click();
-  } else {
-    avatar.value = avatarPreview.value;
-    isUploaded.value = false;
-  }
-};
-
-watch(avatar, (newAvatar) => {
-  const event = new CustomEvent("update-avatar", { detail: newAvatar });
-  window.dispatchEvent(event);
-});
 </script>
 
 <style scoped>
 .upload-avatar {
-  text-align: center;
+    text-align: center;
 }
 
 .upload-avatar img {
-  object-fit: cover;
-  width: 50%;
-  height: 50%;
-  border-radius: 50%;
+    object-fit: cover;
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
 }
 </style>
+
+

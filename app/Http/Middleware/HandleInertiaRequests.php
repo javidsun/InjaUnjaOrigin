@@ -37,7 +37,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             //TODO : per esempio qua posso mettere
-            'auth.user'=>'javid' ?? null
+            //'auth.user'=>'javid' ?? null
             //TODO : poi lo chiamo come $page.props.auth.user
             // TODO : posso fare copia da inertia documentation questa parte di codice
         ]);

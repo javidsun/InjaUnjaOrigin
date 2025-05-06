@@ -112,7 +112,8 @@ export default {
                 name: this.name,
                 email: this.email,
                 password: this.password,
-                password_confirmation: this.password, // Per la conferma in Laravel
+                password_confirmation: this.password, // Corretto per la regola 'confirmed' di Laravel
+                provider:'traditional'
             };
             console.log('form data sarebe : : : ', formData);
 
@@ -131,8 +132,22 @@ export default {
                 }
                 console.log(response);
             } catch (error) {
-                console.error('Errore durante la registrazione:', error);
-            } finally {
+                console.error('Errore durante la registrazione (catch block):', error);
+                if (error.response && error.response.data) {
+                    this.error = error.response.data.message || 'Errore generico dal server.';
+                    if (error.response.data.errors) {
+                        // Concatena i messaggi di errore specifici dei campi
+                        const fieldErrors = Object.values(error.response.data.errors).flat().join(' ');
+                        this.error = `${this.error} (${fieldErrors})`;
+                        console.error('Errori specifici:', error.response.data.errors);
+                    }
+                } else if (error.request) {
+                    this.error = 'Nessuna risposta dal server. Controlla la connessione.';
+                    console.error('Errore di richiesta (nessuna risposta):', error.request);
+                } else {
+                    this.error = 'Errore imprevisto nella configurazione della richiesta.';
+                    console.error('Errore generico JS:', error.message);
+                }            } finally {
                 this.loading = false;
             }
         },

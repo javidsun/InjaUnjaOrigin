@@ -13,7 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use InvalidArgumentException;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -29,11 +29,20 @@ class AuthController extends Controller
     {
         try {
             Log::info('request sarebbe '.var_export($request->all(), true));
+
+            $validatedData = $request->validated();
+
             $authStrategy = $this->authProviderFactory->make($request->input(UserJson::PROVIDER, UserJson::TRADITIONAL));
 
-            $request->validated() ?
-                $user = $authStrategy->register($request->all()) :
-                throw new InvalidArgumentException('Register Request Validation Failed');
+            $registrationPayload = $validatedData;
+            if (! isset($registrationPayload[UserJson::PROVIDER])) {
+                $registrationPayload[UserJson::PROVIDER] = $request->input(UserJson::PROVIDER, UserJson::TRADITIONAL);
+            }
+            if (! isset($registrationPayload[UserJson::PROVIDER_ID])) {
+                $registrationPayload[UserJson::PROVIDER_ID] = null;
+            }
+
+            $user = $authStrategy->register($registrationPayload);
 
             return response()->json([
                 UserJson::USER => [
@@ -43,12 +52,26 @@ class AuthController extends Controller
                     UserJson::PROVIDER => $user->getProvider(),
                 ],
             ]);
-        } catch (\Throwable $e) {
-            new Exception($e->getMessage());
+        } catch (ValidationException $e) {
+            Log::error('AUTH_CONTROLLER_REGISTER: ValidationException: '.$e->getMessage(), ['errors' => $e->errors()]);
 
             return response()->json([
+                'success' => false,
                 UserJson::MESSAGE => $e->getMessage(),
+                'errors' => $e->errors(),
             ], 422);
+        } catch (\Throwable $e) {
+            Log::error('AUTH_CONTROLLER_REGISTER: Throwable: '.$e->getMessage(), [
+                'exception_class' => get_class($e),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                UserJson::MESSAGE => 'Si è verificato un errore durante la registrazione. Riprova più tardi.',
+            ], 500);
         }
     }
     // TODO : quando va con successo vorrei che torna a pagina precedente e chiude questa pagina e riempisce textbox

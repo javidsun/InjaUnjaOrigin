@@ -33,7 +33,7 @@ class User extends Authenticate implements ModelEntityConvertable
      *
      * @var bool
      */
-    public $incrementing = false; // Importante per chiavi non numeriche auto-incrementanti
+    public $incrementing = false;
 
     /**
      * Il tipo di dato della chiave primaria.
@@ -49,12 +49,12 @@ class User extends Authenticate implements ModelEntityConvertable
      * @var array<int, string>
      */
     protected $fillable = [
-        'id', // Se generi e imposti l'ULID prima di chiamare create()
+        UserJson::ID,
         UserJson::NAME,
         UserJson::EMAIL,
-        UserJson::PASSWORD, // !!! AGGIUNGI QUESTO !!!
-        UserJson::PROVIDER, // Aggiungi se lo imposti via mass assignment
-        UserJson::PROVIDER_ID, // Aggiungi se lo imposti via mass assignment
+        UserJson::PASSWORD,
+        UserJson::PROVIDER,
+        UserJson::PROVIDER_ID,
     ];
 
     /**
@@ -64,10 +64,9 @@ class User extends Authenticate implements ModelEntityConvertable
      */
     protected $hidden = [
         UserJson::PASSWORD,
-        'remember_token', // Tipicamente nascosto
+        'remember_token',
     ];
 
-    // Aggiungi un mutator per l'ID se usi Ulid per assicurarti che sia trattato correttamente
     protected static function booted(): void
     {
         static::creating(function ($model) {
@@ -80,18 +79,17 @@ class User extends Authenticate implements ModelEntityConvertable
     public function toEntity(): UserEntity
     {
         return new UserEntity(
-            $this->id instanceof Ulid ? $this->id : new Ulid($this->id), // Assicura che sia un Ulid
-            $this->name,
-            $this->email,
-            null, // Non esporre la password hashata all'entità in questo modo di solito
-            $this->provider,
-            $this->provider_id
+            id: $this->id instanceof Ulid ? $this->id : new Ulid($this->id), // Assicura che sia un Ulid
+            name: $this->name,
+            email: $this->email,
+            password: null, // Non esporre la password hashata all'entità in questo modo di solito
+            provider: $this->provider,
+            providerId: $this->provider_id
         );
     }
 
-    public static function fromEntity2(UserEntity|Entity $entity): self
+    public static function fromEntity(UserEntity|Entity $entity): self
     {
-        // /TODO : ho dubbio di questo devo sapere ci sta o no
         return new self([
             UserJson::ID => $entity->getId()?->toRfc4122(),
             UserJson::NAME => $entity->getName(),
@@ -100,43 +98,6 @@ class User extends Authenticate implements ModelEntityConvertable
             UserJson::PROVIDER => $entity->getProvider(),
             UserJson::PROVIDER_ID => $entity->getProviderId(),
         ]);
-    }
-
-    public static function fromEntity(UserEntity|Entity $entity): self
-    {
-        $data = [
-            UserJson::NAME => $entity->getName(),
-            UserJson::EMAIL => $entity->getEmail(),
-        ];
-        if ($entity->getId()) { // Se l'ID è già nell'entità (es. per un update)
-            $data[UserJson::ID] = $entity->getId()->toString(); // o toRfc4122() se preferisci quel formato per la stringa
-        }
-        if ($entity->getPassword()) {
-            $data[UserJson::PASSWORD] = Hash::make($entity->getPassword());
-        }
-        if ($entity->getProvider()) {
-            $data[UserJson::PROVIDER] = $entity->getProvider();
-        }
-        if ($entity->getProviderId()) {
-            $data[UserJson::PROVIDER_ID] = $entity->getProviderId();
-        }
-        // return new self($data); // Se gli attributi sono in $fillable
-        // Oppure, se il repository si occupa di creare/trovare e poi popolare:
-        $model = new self;
-        $model->id = $data[UserJson::ID] ?? (string) Ulid::generate(); // Assicura che l'ID sia settato
-        $model->name = $data[UserJson::NAME];
-        $model->email = $data[UserJson::EMAIL];
-        if (isset($data[UserJson::PASSWORD])) {
-            $model->password = $data[UserJson::PASSWORD];
-        }
-        if (isset($data[UserJson::PROVIDER])) {
-            $model->provider = $data[UserJson::PROVIDER];
-        }
-        if (isset($data[UserJson::PROVIDER_ID])) {
-            $model->provider_id = $data[UserJson::PROVIDER_ID];
-        }
-
-        return $model;
     }
 
     public function homeAnnouncements(): HasMany

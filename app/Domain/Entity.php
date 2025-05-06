@@ -2,17 +2,26 @@
 
 namespace App\Domain;
 
+use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionException;
+use RuntimeException;
 use Symfony\Component\Uid\Ulid;
 
 abstract class Entity
 {
 
     /**
-     * @throws ReflectionException
+     * Crea un'istanza dell'entità figlia a partire da un array di dati,
+     * mappando i dati ai parametri del costruttore.
+     *
+     * @param array $data  array di dati da cui idratare l'entità.
+     * @return static L'istanza dell'entità figlia idratata.
+     * @throws ReflectionException Se la reflection fallisce.
+     * @throws InvalidArgumentException Se mancano parametri richiesti o ci sono tipi incompatibili.
+     * @throws RuntimeException Se l'entità non ha un costruttore (o se decidi che è un errore).
      */
-    public function fromArray(array $data): static
+    public static function fromArray(array $data): static
     {
         $reflection = new ReflectionClass(static::class);
         $constructor = $reflection->getConstructor();

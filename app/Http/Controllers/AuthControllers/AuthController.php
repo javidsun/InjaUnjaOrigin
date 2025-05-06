@@ -4,7 +4,6 @@ namespace App\Http\Controllers\AuthControllers;
 
 use App\Constant\TableParametersConst\AuthConst\UserJson;
 use App\Domain\Controllers\Controller;
-use App\Domain\Services\Auth\AuthServicesContract;
 use App\DTOs\Controller\DTOControllerResponse;
 use App\Factories\AuthProviderFactory;
 use App\Http\Requests\Auth\RegisterRequest;
@@ -13,15 +12,12 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
     public function __construct(
-        // protected ?AuthServicesContract $authServices = null,
         protected ?AuthProviderFactory $authProviderFactory = null
     ) {
-        // $this->authServices ??= app(AuthServicesContract::class);
         $this->authProviderFactory ??= app(AuthProviderFactory::class);
     }
 
@@ -29,7 +25,6 @@ class AuthController extends Controller
     {
         try {
             Log::info('request sarebbe '.var_export($request->all(), true));
-
             $validatedData = $request->validated();
 
             $authStrategy = $this->authProviderFactory->make($request->input(UserJson::PROVIDER, UserJson::TRADITIONAL));
@@ -52,14 +47,6 @@ class AuthController extends Controller
                     UserJson::PROVIDER => $user->getProvider(),
                 ],
             ]);
-        } catch (ValidationException $e) {
-            Log::error('AUTH_CONTROLLER_REGISTER: ValidationException: '.$e->getMessage(), ['errors' => $e->errors()]);
-
-            return response()->json([
-                'success' => false,
-                UserJson::MESSAGE => $e->getMessage(),
-                'errors' => $e->errors(),
-            ], 422);
         } catch (\Throwable $e) {
             Log::error('AUTH_CONTROLLER_REGISTER: Throwable: '.$e->getMessage(), [
                 'exception_class' => get_class($e),

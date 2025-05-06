@@ -23,23 +23,42 @@
     </v-dialog>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+//Todo:title/ description
 
-import {ref} from 'vue';
-import {translate} from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
-const isModalOpen = ref(false);
+export default {
+    name: 'CurrencyDialog',
+    data() {
+        return {
+            isModalOpen: false
+        }
+    },
+    methods: {
+        translate,
 
-const openModal = () => {
-    isModalOpen.value = true;
-};
+        openModal() {
+            try {
+                this.isModalOpen = true;
+            } catch (error) {
+                this.handleError('Failed to open modal', error);
+            }
+        },
 
-const closeModal = () => {
-    isModalOpen.value = false;
-};
+        closeModal() {
+            try {
+                this.isModalOpen = false;
+            } catch (error) {
+                this.handleError('Failed to close modal', error);
+            }
+        },
 
-defineExpose({openModal});
+        handleError(message, error) {
+            console.error(message, error);
+        }
+    }
+}
 </script>
 
 <style scoped>

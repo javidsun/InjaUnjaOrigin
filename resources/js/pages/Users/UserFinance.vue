@@ -27,7 +27,7 @@
                     <v-card-text>
                         <p><strong>{{ translate('Finance.id') }}:</strong> {{ selectedPayment.id }}</p>
                         <p><strong>{{ translate('Finance.amount') }}:</strong> {{ finalAmount }} {{
-                            translate('housescontent.Euro') }}</p>
+                                translate('housescontent.Euro') }}</p>
                         <p><strong>{{ translate('Finance.status') }}:</strong> <span
                             :class="getStatusClass(selectedPayment.status)">{{ translate('Finance.' + selectedPayment.status) }}</span>
                         </p>
@@ -38,38 +38,30 @@
                         <v-card-text>
                             <v-row>
                                 <v-col cols="6">{{ translate('Finance.totalAmount') }}:</v-col>
-                                <v-col cols="6" class="text-right">{{ totalAmount }} {{ translate('housescontent.Euro')
-                                    }}
-                                </v-col>
+                                <v-col cols="6" class="text-right">{{ totalAmount }} {{ translate('housescontent.Euro') }}</v-col>
                             </v-row>
                             <v-row>
                                 <v-col cols="6">{{ translate('Finance.extraFee') }}:</v-col>
-                                <v-col cols="6" class="text-right">{{ extraFee }} {{ translate('housescontent.Euro')
-                                    }}
-                                </v-col>
+                                <v-col cols="6" class="text-right">{{ extraFee }} {{ translate('housescontent.Euro') }}</v-col>
                             </v-row>
                             <v-row>
                                 <v-col cols="6">{{ translate('Finance.tax') }} (10%):</v-col>
-                                <v-col cols="6" class="text-right">{{ tax }} {{ translate('housescontent.Euro') }}
-                                </v-col>
+                                <v-col cols="6" class="text-right">{{ tax }} {{ translate('housescontent.Euro') }}</v-col>
                             </v-row>
                             <v-row>
                                 <v-col cols="6" class="font-weight-bold">{{ translate('Finance.finalAmount') }}:</v-col>
-                                <v-col cols="6" class="text-right font-weight-bold">{{ finalAmount }} {{
-                                    translate('housescontent.Euro') }}
-                                </v-col>
+                                <v-col cols="6" class="text-right font-weight-bold">{{ finalAmount }} {{ translate('housescontent.Euro') }}</v-col>
                             </v-row>
                         </v-card-text>
 
                         <v-divider class="my-4"></v-divider>
                         <v-card-title class="details-subtitle">{{ translate('Finance.paymentMethod') }}</v-card-title>
                         <v-card-text>
-                            <p><strong>{{ translate('Finance.paymentMethod') }}:</strong> {{ selectedPaymentMethod }}
-                            </p>
+                            <p><strong>{{ translate('Finance.paymentMethod') }}:</strong> {{ selectedPaymentMethod }}</p>
                         </v-card-text>
 
                         <v-divider class="my-4"></v-divider>
-                        <v-card-title class="details-subtitle">{{ t('Finance.locationDetails') }}</v-card-title>
+                        <v-card-title class="details-subtitle">{{ translate('Finance.locationDetails') }}</v-card-title>
                         <v-card-text>
                             <p><strong>{{ translate('Finance.location') }}:</strong> {{ selectedFinance.location }}</p>
                             <p><strong>{{ translate('Finance.host') }}:</strong> {{ selectedFinance.host }}</p>
@@ -88,16 +80,15 @@
 </template>
 
 <script>
-//TODO : composition --> option & const & error warning
+//Todo:id/status/amount/tax/extraFee/
+//Todo:finance:id/location/location/host/rating/price/period/type/image
+//Todo:paymentMethod:transactionReference/createdAt
 
 import UserSidebar from './Layout.vue';
 import jsPDF from 'jspdf';
-import {translate} from "@/store/languageStore.js";
+import {translate} from "@/store/languageStore";
 
 export default {
-    setup() {
-        return {translate};
-    },
     components: {
         UserSidebar,
     },
@@ -109,17 +100,10 @@ export default {
             selectedPaymentMethod: 'Credit card',
             tab: 'all',
             headers: [
-                {text: translate('Finance.id'), value: 'id'},
-                {text: translate('Finance.finalAmount'), value: 'finalAmount'},
-                {text: translate('Finance.status'), value: 'status'},
-                {text: translate('Finance.actions'), value: 'actions', sortable: false}
-            ],
-            payments: [
-                {id: 12554, status: 'successful', financeId: 0},
-                {id: 25462, status: 'cancelled', financeId: 1},
-                {id: 84355, status: 'processing', financeId: 2},
-                {id: 92554, status: 'cancelled', financeId: 3},
-                {id: 98545, status: 'successful', financeId: 4},
+                { text: translate('Finance.id'), value: 'id' },
+                { text: translate('Finance.finalAmount'), value: 'finalAmount' },
+                { text: translate('Finance.status'), value: 'status' },
+                { text: translate('Finance.actions'), value: 'actions', sortable: false }
             ],
             Finance: [
                 {
@@ -145,42 +129,54 @@ export default {
                     extraFee: 8
                 },
                 {
-                    location: "بروکسل،بلژیک",
-                    host: "مالک کامیاب",
-                    rating: "5",
-                    price: "10",
+                    location: "Location 3",
+                    host: "Host 3",
+                    rating: "4.5",
+                    price: "25",
+                    period: "شبانه",
+                    type: "home",
+                    image: "",
+                    coordinates: [0, 0],
+                    extraFee: 3
+                },
+                {
+                    location: "Location 4",
+                    host: "Host 4",
+                    rating: "4.2",
+                    price: "30",
                     period: "روزانه",
                     type: "apartment",
-                    image: "rectangle-750.png",
-                    coordinates: [50.8549, 4.3479],
-                    extraFee: 20
+                    image: "",
+                    coordinates: [0, 0],
+                    extraFee: 4
                 },
                 {
-                    location: "بروکسل،بلژیک",
-                    host: "میزبان سام",
-                    rating: "3.8",
+                    location: "Location 5",
+                    host: "Host 5",
+                    rating: "4.7",
                     price: "22",
-                    type: "bed",
                     period: "شبانه",
-                    image: "rectangle-2210.png",
-                    coordinates: [50.8521, 4.3459],
-                    extraFee: 5
-                },
-                {
-                    location: "بروکسل،بلژیک",
-                    host: "مالک کامیاب",
-                    rating: "5",
-                    price: "25",
-                    type: "tent",
-                    period: "روزانه",
-                    image: "rectangle-2200.png",
-                    coordinates: [50.8535, 4.3498],
-                    extraFee: 10
-                },
+                    type: "home",
+                    image: "",
+                    coordinates: [0, 0],
+                    extraFee: 2
+                }
+            ],
+            payments: [
+                { id: 12554, status: 'successful', financeId: 0 },
+                { id: 25462, status: 'cancelled', financeId: 1 },
+                { id: 84355, status: 'processing', financeId: 0 },
+                { id: 92554, status: 'cancelled', financeId: 1 },
+                { id: 98545, status: 'successful', financeId: 0 },
+
             ],
         };
     },
     computed: {
+        selectedPaymentMethod() {
+            return this.selectedPayment.method || 'Credit card';
+        },
+
         totalAmount() {
             return this.selectedFinance ? parseFloat(this.selectedFinance.price) : 0;
         },
@@ -196,6 +192,12 @@ export default {
         finalAmountForTable() {
             return this.payments.map(payment => {
                 const financeItem = this.Finance[payment.financeId];
+                if (!financeItem) {
+                    return {
+                        ...payment,
+                        finalAmount: '0.00'
+                    };
+                }
                 const price = parseFloat(financeItem.price);
                 const tax = (price * 0.1).toFixed(2);
                 const extraFee = financeItem.extraFee;
@@ -221,13 +223,23 @@ export default {
             }
         },
     },
-
     methods: {
+        translate,
+
         showDetails(payment) {
             this.selectedPayment = payment;
-            this.selectedFinance = this.Finance[payment.financeId];
+            this.selectedFinance = this.Finance[payment.financeId] || {
+                location: "N/A",
+                host: "N/A",
+                rating: "N/A",
+                price: "0",
+                period: "N/A",
+                type: "N/A",
+                extraFee: 0
+            };
             this.dialog = true;
         },
+
         getStatusClass(status) {
             switch (status) {
                 case 'successful':
@@ -249,7 +261,7 @@ export default {
 
             const tableData = successfulPayments.map(payment => [
                 payment.id,
-                `${payment.finalAmount} یورو`,
+                `${payment.finalAmount} Euro`,
                 translate('Finance.' + payment.status)
             ]);
 
@@ -258,8 +270,8 @@ export default {
                 body: tableData,
                 startY: 20,
                 theme: 'grid',
-                styles: {font: 'tahoma', fontStyle: 'normal', halign: 'center'},
-                headStyles: {fillColor: [76, 175, 80]},
+                styles: { font: 'tahoma', fontStyle: 'normal', halign: 'center' },
+                headStyles: { fillColor: [76, 175, 80] },
             });
 
             doc.save('successful_payments.pdf');
@@ -347,22 +359,19 @@ export default {
     color: white;
 }
 
-/* کلاس‌های وضعیت */
 .success {
-    color: #4CAF50; /* سبز */
+    color: #4CAF50;
     font-weight: bold;
 }
 
 .processing {
-    color: #FFC107; /* زرد */
+    color: #FFC107;
     font-weight: bold;
 }
 
 .cancelled {
-    color: #F44336; /* قرمز */
+    color: #F44336;
     font-weight: bold;
 }
 </style>
-<script setup lang="ts">
-import UserSidebar from "@/pages/Users/UserSidebar.vue";
-</script>
+

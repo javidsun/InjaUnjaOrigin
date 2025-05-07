@@ -1,40 +1,53 @@
+
 <template>
     <div id="app">
         <router-view />
     </div>
 </template>
 
-<script setup>
-//TODO  : composition --> option & const
+<script>
 import { createVuetify } from 'vuetify';
 import 'vuetify/styles';
 import { aliases, mdi } from 'vuetify/iconsets/mdi';
-import { ref, watch } from "vue";
 
-const isDarkMode = ref(true);
-
-const vuetify = createVuetify({
-    theme: {
-        defaultTheme: 'dark',
-        icons: {
-            defaultSet: 'mdi',
-            aliases,
-            sets: {mdi},
-        },
+export default {
+    data() {
+        return {
+            isDarkMode: true,
+        };
     },
-});
-watch(isDarkMode, (newValue) => {
-    const body = document.body;
-    if (newValue) {
-        body.classList.add("dark-mode");
-        body.classList.remove("light-mode");
-    } else {
-        body.classList.add("light-mode");
-        body.classList.remove("dark-mode");
-    }
-});
-
+    created() {
+        this.setTheme(this.isDarkMode);
+    },
+    methods: {
+        setTheme(isDark) {
+            const body = document.body;
+            if (isDark) {
+                body.classList.add("dark-mode");
+                body.classList.remove("light-mode");
+            } else {
+                body.classList.add("light-mode");
+                body.classList.remove("dark-mode");
+            }
+        },
+        toggleDarkMode() {
+            this.isDarkMode = !this.isDarkMode;
+            this.setTheme(this.isDarkMode);
+        }
+    },
+    vuetify: createVuetify({
+        theme: {
+            defaultTheme: 'dark',
+            icons: {
+                defaultSet: 'mdi',
+                aliases,
+                sets: { mdi },
+            },
+        },
+    }),
+};
 </script>
+
 <style>
 :root {
     --background-color: #121213;
@@ -54,7 +67,6 @@ watch(isDarkMode, (newValue) => {
     --report-back-color: #b6d2e3;
     --report-back2-color: #c6d8ef;
     --v-surface: #ecf1ff;
-    --v-primary-darken1: #27243d;
     --backgroundcards-color--groups: #2a2a3a;
     --backgroundcards2-color--groups: #cccccc;
     --backgroundcards3-color--groups: #161626;
@@ -87,7 +99,6 @@ watch(isDarkMode, (newValue) => {
     --text-card-color--groups: #cccccc;
     --backgroundcards-color--profile: #2c294f;
     --border-color:#2a2a3b;
-
 }
 
 body {
@@ -99,6 +110,7 @@ button {
     background-color: var(--primary-color);
     color: var(--text-color);
 }
+
 .light-mode {
     --background-color: #F8FAFC;
     --liner-background: linear-gradient(135deg, #a79ada, #eaeaea);
@@ -126,7 +138,6 @@ button {
     --background-color--groups2: #676767;
     --price-color: #dee8f6;
     --background-color--groups3: #858585;
-
 }
 
 </style>

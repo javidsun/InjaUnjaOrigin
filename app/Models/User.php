@@ -67,6 +67,7 @@ class User extends Authenticate implements ModelEntityConvertable
         'remember_token',
     ];
 
+
     protected static function booted(): void
     {
         static::creating(function ($model) {

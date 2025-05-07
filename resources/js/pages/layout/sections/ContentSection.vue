@@ -53,10 +53,6 @@ export default {
             images: {
                 mainBanner: "untitled-design-5-110.png",
                 groups: [
-                    "untitled-design-20-250.png",
-                    "untitled-design-20-230.png",
-                    "untitled-design-20-240.png",
-                    "Untitled design (10) 8.png",
                 ],
                 advertisements: [
                     { image: "untitled-design-18-60.png", text: "First advertisement text" },

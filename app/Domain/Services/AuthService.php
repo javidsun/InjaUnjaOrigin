@@ -6,6 +6,7 @@ use App\Domain\Entity;
 use App\Domain\Repositories\UserRepositoryInterface;
 use App\Domain\Services\Auth\RegisterStrategyContract;
 use App\Entities\UserEntity;
+use Illuminate\Support\Facades\Log;
 use ReflectionException;
 
 abstract class AuthService implements RegisterStrategyContract
@@ -28,6 +29,8 @@ abstract class AuthService implements RegisterStrategyContract
 
     public function login(array $data):UserEntity
     {
+        $user = $this->userRepositoryInterface->get($data);
+        Log::info('user:'.var_export($user, true));
         return $this->userRepositoryInterface->get($data);
     }
 }

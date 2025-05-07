@@ -2,34 +2,34 @@
 
 namespace App\Infrastructure\EloquentRepository;
 
-use App\Domain\Entity;
 use App\Domain\Repositories\UserRepositoryInterface;
 use App\Entities\UserEntity;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class EloquentUserRepository implements UserRepositoryInterface
 {
-
     public function save(UserEntity $user): UserEntity
     {
         $model = User::fromEntity($user);
         $model->save();
+
         return $model->toEntity();
     }
 
     public function findByProvider(string $provider, string $providerId): ?UserEntity
     {
-        $user = User::where('provider', $provider)->where('provider_id', $providerId)->first();
-        return $user?->toEntity();
+        return User::where('provider', $provider)->where('provider_id', $providerId)->first()->toEntity();
     }
 
     public function get(array $data): UserEntity
     {
-        $userModel = User::where('provider', $data['provider'])
-            ->where('name', $data['name'])
+        $user = User::where('provider', $data['provider'])
             ->where('email', $data['email'])
-            ->where('password', $data['password'])
-            ->first();
-        return $userModel?->toEntity();
+            ->first()
+            ->toEntity();
+        Log::info('user model sarebbe :'.var_export($user, true));
+
+        return $user;
     }
 }

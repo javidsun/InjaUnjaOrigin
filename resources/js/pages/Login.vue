@@ -160,14 +160,17 @@ export default {
                 if (this.emailErrors || this.passwordErrors) {
                     return;
                 }
+                console.log(this.form)
                 const userLoginData = {
                     email: this.form.email,
-                    password: this.password,
+                    password: this.form.password,
                     provider:'traditional'
                 };
+                console.log('cosa invia ',userLoginData);
 
-                const loginResponse = await apiService.
-                axiosToBackend().get('/api/login',userLoginData);
+                const loginResponse = await apiService.axiosToBackend().get('/api/login', {
+                    params: userLoginData // Invia userLoginData come parametri URL
+                });
 
                 this.userLogged = loginResponse.data;
 

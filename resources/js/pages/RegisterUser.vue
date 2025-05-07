@@ -115,11 +115,8 @@ export default {
                 password_confirmation: this.password, // Corretto per la regola 'confirmed' di Laravel
                 provider:'traditional'
             };
-            console.log('form data sarebe : : : ', formData);
 
             try {
-                //await apiService.axiosToBackend().get('/sanctum/csrf-cookie');
-                console.log('csrf cookie settato',formData);
                 const response = await apiService.axiosToBackend().post('/api/register', formData);
 
                 console.log('response', response);

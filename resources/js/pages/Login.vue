@@ -107,11 +107,13 @@
 
 <script>
 import { translate } from "@/store/languageStore";
+import apiService from "@/globalServices/apiService.js";
 
 export default {
     name: "Login",
     data() {
         return {
+            userLogged : undefined,
             loginDialogIsOpen: true,
             form: {
                 email: "",
@@ -133,7 +135,7 @@ export default {
             modalActive: false,
             selectedComponent: null,
             ForgotPassword: null,
-            Register: null
+            Register: null,
         };
     },
     methods: {
@@ -142,28 +144,47 @@ export default {
         openLoginDialog() {
             this.loginDialogIsOpen = true;
         },
-        handleLogin() {
-            this.emailErrors = "";
-            this.passwordErrors = "";
+        async handleLogin() {
+            try {
+                this.loading = true;
+                this.emailErrors = "";
+                this.passwordErrors = "";
 
-            if (!this.form.email) {
-                this.emailErrors = this.translate("login.emailRequired");
-            }
-            if (!this.form.password) {
-                this.passwordErrors = this.translate("login.passwordRequired");
-            }
+                if (!this.form.email) {
+                    this.emailErrors = this.translate("login.emailRequired");
+                }
+                if (!this.form.password) {
+                    this.passwordErrors = this.translate("login.passwordRequired");
+                }
 
-            if (this.emailErrors || this.passwordErrors) {
-                return;
-            }
+                if (this.emailErrors || this.passwordErrors) {
+                    return;
+                }
+                const userLoginData = {
+                    email: this.form.email,
+                    password: this.password,
+                    provider:'traditional'
+                };
 
-            this.loading = true;
-            setTimeout(() => {
-                this.snackbar.text = this.translate("login.loginSuccess");
-                this.snackbar.color = "success";
-                this.snackbar.show = true;
+                const loginResponse = await apiService.
+                axiosToBackend().get('/api/login',userLoginData);
+
+                this.userLogged = loginResponse.data;
+
+                if (loginResponse.data.success) {
+                    setTimeout(() => {
+                        this.snackbar.text = this.translate("login.loginSuccess");
+                        this.snackbar.color = "success";
+                        this.snackbar.show = true;
+                        this.loading = false;
+                    }, 1500);
+                }
+            } catch (error) {
+                console.log(error);
+            } finally {
                 this.loading = false;
-            }, 1500);
+                this.closeModal();
+            }
         },
         closeDialog() {
             this.loginDialogIsOpen = false;

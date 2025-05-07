@@ -158,35 +158,25 @@ export default {
                 }
 
                 if (this.emailErrors || this.passwordErrors) {
-                    return;
+                    throw new Error('username o password sono vuoti ');
+                    //TODO : @azizi ino  bayad joori manage konim ke age camp user pass khali boov modale login baste nashe
+
                 }
-                console.log(this.form)
                 const userLoginData = {
                     email: this.form.email,
                     password: this.form.password,
                     provider:'traditional'
                 };
-                console.log('cosa invia ',userLoginData);
-
-                const loginResponse = await apiService.axiosToBackend().get('/api/login', {
-                    params: userLoginData // Invia userLoginData come parametri URL
-                });
+                const loginResponse = await apiService.axiosToBackend().post('/api/login', userLoginData);
 
                 this.userLogged = loginResponse.data;
+                //TODO : @azizi agar userLogged khali bood uani hanooz login anjam nashode vaghti login anjam shod bayad redirect beshe too profile
 
-                if (loginResponse.data.success) {
-                    setTimeout(() => {
-                        this.snackbar.text = this.translate("login.loginSuccess");
-                        this.snackbar.color = "success";
-                        this.snackbar.show = true;
-                        this.loading = false;
-                    }, 1500);
-                }
             } catch (error) {
                 console.log(error);
             } finally {
                 this.loading = false;
-                this.closeModal();
+                this.closeDialog();
             }
         },
         closeDialog() {

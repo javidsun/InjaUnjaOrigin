@@ -512,9 +512,7 @@ export default {
             }
         },
 
-        /**
-         * Closes the chat modal
-         */
+
         closeChatModal() {
             try {
                 this.showChatModal = false;
@@ -524,21 +522,15 @@ export default {
             }
         },
 
-        /**
-         * Toggles container expansion state
-         */
         toggleExpand() {
-            try {
-                this.isExpanded = !this.isExpanded;
-                this.$emit('expand', this.isExpanded);
-            } catch (error) {
-                this.handleError('Error toggling expand', error);
+            this.isExpanded = !this.isExpanded;
+            this.$emit('expand', this.isExpanded);
+
+            if (this.isExpanded) {
+                this.$emit('hide-side-content');
             }
         },
 
-        /**
-         * Sends a new chat message
-         */
         sendMessage() {
             try {
                 if (this.newMessage.trim()) {
@@ -554,11 +546,6 @@ export default {
             }
         },
 
-        /**
-         * Sanitizes message content
-         * @param {string} message - The message to sanitize
-         * @returns {string} The sanitized message
-         */
         sanitizeMessage(message) {
             try {
                 message = message.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, '***');
@@ -570,9 +557,6 @@ export default {
             }
         },
 
-        /**
-         * Saves selected dates to reservation
-         */
         saveDates() {
             try {
                 let startDate = new Date(this.selectedDates[0]);
@@ -587,10 +571,6 @@ export default {
             }
         },
 
-        /**
-         * Opens reservation modal for a specific apartment
-         * @param {Object} apartment - The apartment object
-         */
         openReservationModal(apartment) {
             try {
                 this.selectedApartment = apartment;
@@ -600,10 +580,6 @@ export default {
             }
         },
 
-        /**
-         * Filters apartments by type
-         * @param {string} type - The apartment type to filter by
-         */
         filterApartments(type) {
             try {
                 this.selectedType = type;
@@ -615,9 +591,6 @@ export default {
             }
         },
 
-        /**
-         * Loads more apartments (simulated)
-         */
         loadMoreApartments() {
             try {
                 if (this.loading) return;
@@ -654,10 +627,6 @@ export default {
             }
         },
 
-        /**
-         * Opens apartment detail view
-         * @param {Object} item - The apartment object
-         */
         openApartmentDetail(item) {
             try {
                 this.selectedApartment = item;
@@ -667,9 +636,6 @@ export default {
             }
         },
 
-        /**
-         * Closes the modal
-         */
         closeModal() {
             try {
                 this.localShow = false;
@@ -678,9 +644,7 @@ export default {
             }
         },
 
-        /**
-         * Opens guest edit modal
-         */
+
         editGuests() {
             try {
                 this.showEditGuestsModal = true;
@@ -689,9 +653,6 @@ export default {
             }
         },
 
-        /**
-         * Saves guest information
-         */
         saveGuestInfo() {
             try {
                 this.showEditGuestsModal = false;
@@ -700,9 +661,6 @@ export default {
             }
         },
 
-        /**
-         * Closes the houses content view
-         */
         closeHousesContent() {
             try {
                 this.$emit('close');
@@ -712,13 +670,7 @@ export default {
             }
         },
 
-        /**
-         * Handles errors consistently
-         * @param {string} message - Error message
-         * @param {Error} error - The error object
-         */
         handleError(message, error) {
-            // You can replace this with your preferred error handling (e.g., show error to user)
             console.error(message, error);
             this.$emit('error', { message, error });
         }

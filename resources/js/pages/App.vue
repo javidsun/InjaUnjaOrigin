@@ -74,6 +74,15 @@ export default {
     --backgroundcards-color--profile: #2c294f;
     --border-color:#2a2a3b;
 }
+.bubble-slideshow {
+    --bubble-size: 100px;
+    --bubble-delay: 0s;
+    position: relative;
+    height: 300px;
+    width: 100%;
+    margin-top: 40px;
+    overflow: hidden;
+}
 
 .dark-mode {
     --background-color: #161626FF;

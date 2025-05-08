@@ -23,35 +23,37 @@ const props = defineProps({
 
 <style>
 .v-carousel {
-  width: 267px;
-  height: 133px;
+  width: 800px;
+  height: 500px;
   margin: auto;
   position: relative;
+
 }
 
 .ad-container {
-  margin-top: 10px;
+  margin-top: 20px;
   width: 100%;
-  height: 50%;
+  height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid #858585;
-  border-radius: 12px;
   text-align: center;
+  border-radius: 30px !important;
 }
 
 .ad-image {
+  margin-top: 20px;
   width: 100%;
   height: 80%;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 30px !important;
+
 }
 
 .ad-text {
   margin-top: 10px;
-  font-size: 12px;
+  font-size: 20px;
   color: var(--txt-color);
 }
 

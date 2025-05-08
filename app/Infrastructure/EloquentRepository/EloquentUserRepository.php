@@ -23,7 +23,9 @@ class EloquentUserRepository implements UserRepositoryInterface
 
     public function findByProvider(string $provider, string $providerId): ?UserEntity
     {
-        return User::where('provider', $provider)->where('provider_id', $providerId)->first()->toEntity();
+        return User::where('provider', $provider)
+            ->where('provider_id', $providerId)->first()
+            ->toEntity();
     }
 
     public function get(array $data): UserEntity

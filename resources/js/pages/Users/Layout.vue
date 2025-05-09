@@ -61,6 +61,7 @@ export default {
         };
     },
     methods: {
+        translate,
         navigateTo(path) {
             this.router.push(path);
             this.menuActive = false;

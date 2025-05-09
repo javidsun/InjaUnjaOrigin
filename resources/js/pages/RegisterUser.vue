@@ -15,7 +15,21 @@
                                 contain
                             />
                         </div>
-                        <v-alert v-if="error" type="error" dismissible class="mt-3">
+
+                        <v-alert
+                            v-if="successMessage"
+                            type="success"
+                            dismissible
+                            class="mt-3"
+                        >
+                            {{ successMessage }}
+                        </v-alert>
+                        <v-alert
+                            v-if="error"
+                            type="error"
+                            dismissible
+                            class="mt-3"
+                        >
                             {{ error }}
                         </v-alert>
                         <v-card-text>
@@ -30,8 +44,8 @@
                                 <v-text-field
                                     v-model="email"
                                     :rules="[
-                                v => !!v || 'L\'email è obbligatoria',
-                                v => /.+@.+\..+/.test(v) || 'L\'email deve essere valida']"
+                              v => !!v || 'L\'email è obbligatoria',
+                              v => /.+@.+\..+/.test(v) || 'L\'email deve essere valida']"
                                     label="Email"
                                     prepend-icon="mdi-email"
                                     required
@@ -39,8 +53,8 @@
                                 <v-text-field
                                     v-model="confirmEmail"
                                     :rules="[
-                                v => !!v || 'La conferma dell\'email è obbligatoria',
-                                v => v === email || 'Le email non corrispondono']"
+                              v => !!v || 'La conferma dell\'email è obbligatoria',
+                              v => v === email || 'Le email non corrispondono']"
                                     label="Conferma Email"
                                     prepend-icon="mdi-email-check"
                                     required
@@ -80,7 +94,7 @@
 
 <script>
 import InjaUnjaLogo from "@/assets/images/logo1.png"
-import apiService from "@/globalServices/apiService.js";
+import apiService from "@/globalServices/apiService";
 
 export default {
     name: "Register", //salam
@@ -95,6 +109,8 @@ export default {
             loading: false,
             logo: null,
             error: null,
+            successMessage: null
+
         };
     },
     created() {
@@ -115,38 +131,37 @@ export default {
                 password_confirmation: this.password, // Corretto per la regola 'confirmed' di Laravel
                 provider:'traditional'
             };
-
             try {
                 const response = await apiService.axiosToBackend().post('/api/register', formData);
+                if (response.data.success || response.status === 200) {
+                    this.successMessage = 'Registration successful! Redirecting...';
+                    localStorage.setItem('authToken', response.data.token);
 
-                console.log('response', response);
+                    setTimeout(() => {
+                        window.location.href = '/UserProfile';
+                    }, 1500);
 
-                if (response.data.success) {
-                    console.log('Registrazione completata:', response.data);
-                    // this.$router.push('/dashboard'); // Redirige dopo la registrazione
                 } else {
                     this.error = response.data.message;
                 }
-                console.log(response);
             } catch (error) {
-                console.error('Errore durante la registrazione (catch block):', error);
-                if (error.response && error.response.data) {
-                    this.error = error.response.data.message || 'Errore generico dal server.';
+                if (error.response && error.response.status === 422) {
+                    this.error = error.response.data.message || "This email is already registered. Please use a different email or login.";
                     if (error.response.data.errors) {
-                        // Concatena i messaggi di errore specifici dei campi
                         const fieldErrors = Object.values(error.response.data.errors).flat().join(' ');
                         this.error = `${this.error} (${fieldErrors})`;
-                        console.error('Errori specifici:', error.response.data.errors);
                     }
                 } else if (error.request) {
                     this.error = 'Nessuna risposta dal server. Controlla la connessione.';
-                    console.error('Errore di richiesta (nessuna risposta):', error.request);
                 } else {
                     this.error = 'Errore imprevisto nella configurazione della richiesta.';
-                    console.error('Errore generico JS:', error.message);
-                }            } finally {
+                }
+
+            }
+            finally {
                 this.loading = false;
             }
+
         },
     }
 };

@@ -17,7 +17,17 @@ Route::get('/UserDashboard', function () {
 Route::get('/UserProfile', function () {
     return Inertia::render('Users/UserDashboard/UserProfile');
 });
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/UserProfile', function () {
+        return Inertia::render('Users/UserDashboard/UserProfile');
+    })->name('profile');
 
+    Route::get('/UserDashboard', function () {
+        return Inertia::render('Users/UserDashboard/UserDashboard');
+    })->name('dashboard');
+});
+
+Route::post('/api/complete-profile', [ProfileController::class, 'completeProfile']);
 Route::get('/MyReservations', function () {
     return Inertia::render('Users/Reserv/MyReservations');
 })->name('MyReservations');

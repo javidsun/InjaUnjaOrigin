@@ -202,7 +202,7 @@ import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
 import { translate } from "@/store/languageStore.js";
 
-const drawer = ref(true);
+let drawer = ref(true);
 
 const users = ref([
     "Ali Alavi",

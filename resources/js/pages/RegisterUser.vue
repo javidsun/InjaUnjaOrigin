@@ -97,7 +97,7 @@ import InjaUnjaLogo from "@/assets/images/logo1.png"
 import apiService from "@/globalServices/apiService";
 
 export default {
-    name: "Register", //salam
+    name: "Register",
     data() {
         return {
             openRegisterDialog: true,
@@ -118,7 +118,7 @@ export default {
     },
     methods: {
         coseDialog() {
-            this.$emit('closeRegisterDialog');
+            this.openRegisterDialog = false;
         },
         async register() {
             this.loading = true;

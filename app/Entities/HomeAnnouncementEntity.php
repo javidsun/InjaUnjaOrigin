@@ -2,42 +2,30 @@
 
 namespace App\Entities;
 
-use App\Domain\Entity;
-use DateTimeImmutable;
+use App\Domain\Entity\Entity;
+use Illuminate\Support\Facades\Date;
+use Symfony\Component\Uid\Ulid;
 
 class HomeAnnouncementEntity extends Entity
 {
     public function __construct(
-        protected readonly ?string $id,
-        protected readonly string  $user_id,
-        protected string           $title,
-        protected string           $content,
-        protected string           $status,
-        protected bool             $is_pinned,
-        protected bool             $is_pinned_full,
-        protected ?string           $subtitle,
-        protected ?string           $link,
-        protected ?string  $description,
-        protected ?string           $image,
-    )
-    {
+        public readonly Ulid $id,
+        public readonly Ulid $user_id,
+        public readonly Ulid $location_id,
+        public readonly string $title,
+        public readonly string $description,
+        public readonly float $price_per_night,
+        public readonly int $num_rooms,
+        public readonly int $num_bathrooms,
+        public readonly int $square_meters,
+        public readonly int $max_quests,
+        public readonly mixed $amenities,
+        public readonly string $main_image_path,
+        public readonly mixed $additional_image_path,
+        public readonly Date $availability_start_date,
+        public readonly Date $availability_end_date,
+        public readonly bool $is_active,
+    ) {
     }
-
-    public function getId(): ?string{return $this->id;}
-
-    public function getUserId(): string{return $this->user_id;}
-
-    public function getTitle(): string{return $this->title;}
-    public function getContent(): string{return $this->content;}
-    public function getStatus(): string{return $this->status;}
-    public function getIsPinned(): bool{return $this->is_pinned;}
-    public function getIsPinnedFull(): bool{return $this->is_pinned_full;}
-    public function getSubtitle(): string{return $this->subtitle;}
-    public function getLink(): string{return $this->link;}
-
-    public function getDescription(): string{return $this->description;}
-
-    public function getImage(): string{return $this->image;}
-
 
 }

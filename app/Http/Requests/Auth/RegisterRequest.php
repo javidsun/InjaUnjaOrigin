@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Constant\TableParametersConst\AuthConst\UserJson;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -17,10 +18,12 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'provider' => 'nullable|string',
+            UserJson::NAME => 'required|string|max:255',
+            UserJson::EMAIL => 'required|string|email|max:255|unique:users',
+            UserJson::PASSWORD => 'required|string|min:8|confirmed',
+            UserJson::PROVIDER => 'nullable|string',
+            UserJson::ROLES => 'nullable|array',
+            UserJson::PERMISSIONS => 'nullable|array',
         ];
     }
 
@@ -33,5 +36,7 @@ class RegisterRequest extends FormRequest
             'message' => 'I dati forniti non sono validi.', // Messaggio più descrittivo
             'errors' => $validator->errors()->toArray(), // Array degli errori specifici per campo
         ], 422)); // Usa 422 per errori di validazione
+        // TODO JAVID: creo un documentazione per conoscere tipo di codice di errori JAVID
+
     }
 }

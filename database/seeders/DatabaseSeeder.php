@@ -10,10 +10,15 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     * viene lanciato quando esegui questo commando
+     * php artisan db:seed
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // quando vuoi lanciare più seeder
+        $this->call([
+            RolesAndPermissionsSeeder::class,
+        ]);
 
         User::factory()->create([
             'name' => 'Test User',

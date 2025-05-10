@@ -15,18 +15,25 @@ class HomeAnnouncementPostRequest extends FormRequest
 
     public function rules(): array
     {
+        // TODO : da modificare questo per request di creazione
         $array = [
-            HomeAnnouncementJson::USER_ID=> 'required|string',
-            HomeAnnouncementJson::TITLE=> 'required|string',
-            HomeAnnouncementJson::CONTENT=> 'required|string',
-            HomeAnnouncementJson::STATUS=> 'required|string',
-            HomeAnnouncementJson::IS_PINNED=> 'required|boolean',
-            HomeAnnouncementJson::IS_PINNED_FULL=> 'required|boolean',
-            HomeAnnouncementJson::SUBTITLE=> 'nullable|string',
-            HomeAnnouncementJson::LINK=> 'nullable|string',
-            HomeAnnouncementJson::DESCRIPTION=> 'nullable|string',
-            HomeAnnouncementJson::IMAGE=> 'nullable|string',
+            HomeAnnouncementJson::USER_ID => 'required|ulid',
+            HomeAnnouncementJson::LOCATION_ID => 'required|ulid',
+            HomeAnnouncementJson::TITLE => 'required|string',
+            HomeAnnouncementJson::DESCRIPTION => 'required|string',
+            HomeAnnouncementJson::PRICE_PER_NIGHT => 'required|numeric',
+            HomeAnnouncementJson::NUM_ROOMS => 'required|numeric',
+            HomeAnnouncementJson::NUM_BATHROOMS => 'required|numeric',
+            HomeAnnouncementJson::SQUARE_METERS => 'required|numeric',
+            HomeAnnouncementJson::MAX_QUESTS => 'required|numeric',
+            HomeAnnouncementJson::AMENITIES => 'required|json',
+            HomeAnnouncementJson::MAIN_IMAGE_PATH => 'required|string',
+            HomeAnnouncementJson::ADDITIONAL_IMAGE_PATHS => 'required|string',
+            HomeAnnouncementJson::AVAILABILITY_START_DATE => 'required|date',
+            HomeAnnouncementJson::AVAILABILITY_END_DATE => 'required|date',
+            HomeAnnouncementJson::IS_ACTIVE => 'required|bool',
         ];
+
         return $array;
     }
 

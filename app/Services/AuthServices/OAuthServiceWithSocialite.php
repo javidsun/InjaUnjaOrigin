@@ -13,14 +13,15 @@ use Laravel\Socialite\Contracts\User as SocialUser;
 
 class OAuthServiceWithSocialite extends AuthService implements AuthServicesContract
 {
-    public function __construct(
-    ) {
-        Parent::__construct();
+    public function __construct()
+    {
+        parent::__construct();
     }
 
     public function loginWithOAuth(SocialUser $socialUser, string $socialProvider): JsonResponse
     {
-        $socialId =match($socialProvider) {
+        // TODO JAVID : non è gestito ancora
+        $socialId = match ($socialProvider) {
             SocialiteDeriveConst::GOOGLE => UserJson::GOOGLE_ID,
             SocialiteDeriveConst::FACEBOOK => UserJson::FACEBOOK_ID,
             SocialiteDeriveConst::TWITTER => Userjson::TWITTER_ID,
@@ -52,6 +53,6 @@ class OAuthServiceWithSocialite extends AuthService implements AuthServicesContr
 
     public function logout(Request $request): JsonResponse
     {
-        // TODO: Implement logout() method.
+        // TODO JAVID : Implement logout() method.
     }
 }

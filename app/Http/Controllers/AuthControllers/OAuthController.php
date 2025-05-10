@@ -17,11 +17,11 @@ class OAuthController extends AuthController
 
     public function redirect($provider): RedirectResponse
     {
-        try {
+        /*try {
             return Socialite::driver($provider)->redirect();
         } catch (\Exception $exception) {
             return new RedirectResponse($exception->getMessage());
-        }
+        }*/
     }
 
     /**
@@ -29,7 +29,7 @@ class OAuthController extends AuthController
      */
     public function callback($provider): JsonResponse
     {
-        try {
+        /*ry {
             $socialUser = Socialite::driver($provider)->user();
 
             return $this->authServices->loginWithOAuth($socialUser, $provider);
@@ -39,6 +39,6 @@ class OAuthController extends AuthController
                 UserJson::MESSAGE => 'Errore durante il login con ' . ucfirst($provider),
                 'error' => $e->getMessage(),
             ], 500);
-        }
+        }*/
     }
 }

@@ -19,8 +19,16 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('friends_relationship', function (Blueprint $table) {
-            $table->ulid()->primary();
+            $table->ulid('user_id');
+            $table->ulid('friend_id');
             $table->timestamps();
+
+            // Chiave primaria composta
+            $table->primary(['user_id', 'friend_id']);
+
+            // Chiavi esterne
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('friend_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -3,42 +3,58 @@
 namespace App\Models;
 
 use App\Constant\TableParametersConst\AnnouncementConst\HomeAnnouncementJson;
-use App\Domain\Entity;
-use App\DTOs\ModelEntityConvertable;
+use App\Domain\Entity\Entity;
+use App\Domain\Model\Model;
 use App\Entities\HomeAnnouncementEntity;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Foundation\Mix;
+use Illuminate\Support\Facades\Date;
 use Symfony\Component\Uid\Ulid;
-
 
 /**
  * @property Ulid $id
  * @property Ulid $user_id
+ * @property Ulid $location_id
  * @property string $title
- * @property string content
- * @property string status
- * @property bool is_pinned
- * @property bool is_pinned_full
- * @property string|null subtitle
- * @property string|null link
- * @property string|null description
- * @property string|null image
+ * @property string $description
+ * @property float $price_per_night
+ * @property int $num_rooms
+ * @property int $num_bathrooms
+ * @property int $square_meters
+ * @property int $max_quests
+ * @property mix $amenities
+ * @property string $main_image_path
+ * @property mix $additional_image_paths
+ * @property date $availability_start_date
+ * @property date $availability_end_date
+ * @property bool $is_active
  */
-class HomeAnnouncement extends Model implements ModelEntityConvertable
+class HomeAnnouncement extends Model
 {
+    public $incrementing = false;
+
     protected $fillable = [
-        homeAnnouncementJson::USER_ID,
-        homeAnnouncementJson::TITLE,
-        HomeAnnouncementJson::CONTENT,
-        HomeAnnouncementJson::STATUS,
-        HomeAnnouncementJson::IS_PINNED,
-        HomeAnnouncementJson::IS_PINNED_FULL,
-    ];
-    protected $hidden = [
-        HomeAnnouncementJson::SUBTITLE,
-        HomeAnnouncementJson::LINK,
+        HomeAnnouncementJson::ID,
+        HomeAnnouncementJson::USER_ID,
+        HomeAnnouncementJson::LOCATION_ID,
+        HomeAnnouncementJson::TITLE,
         HomeAnnouncementJson::DESCRIPTION,
-        HomeAnnouncementJson::IMAGE,
+        HomeAnnouncementJson::PRICE_PER_NIGHT,
+        HomeAnnouncementJson::NUM_ROOMS,
+        HomeAnnouncementJson::NUM_BATHROOMS,
+        HomeAnnouncementJson::SQUARE_METERS,
+        HomeAnnouncementJson::MAX_QUESTS,
+        HomeAnnouncementJson::AMENITIES,
+        HomeAnnouncementJson::MAIN_IMAGE_PATH,
+        HomeAnnouncementJson::ADDITIONAL_IMAGE_PATHS,
+        HomeAnnouncementJson::AVAILABILITY_START_DATE,
+        HomeAnnouncementJson::AVAILABILITY_END_DATE,
+        HomeAnnouncementJson::IS_ACTIVE,
+    ];
+
+    protected $hidden = [
+
     ];
 
     public function user(): BelongsTo
@@ -51,32 +67,47 @@ class HomeAnnouncement extends Model implements ModelEntityConvertable
         return new HomeAnnouncementEntity(
             $this->id,
             $this->user_id,
+            $this->location_id,
             $this->title,
-            $this->content,
-            $this->status,
-            $this->is_pinned,
-            $this->is_pinned_full,
-            $this->subtitle,
-            $this->link,
             $this->description,
-            $this->image
+            $this->price_per_night,
+            $this->num_rooms,
+            $this->num_bathrooms,
+            $this->square_meters,
+            $this->max_quests,
+            $this->amenities,
+            $this->main_image_path,
+            $this->additional_image_paths,
+            $this->availability_start_date,
+            $this->availability_end_date,
+            $this->is_active,
         );
     }
 
     public static function fromEntity(HomeAnnouncementEntity|Entity $entity): self
     {
         return new self([
-            HomeAnnouncementJson::ID => $entity->getId(),
-            HomeAnnouncementJson::USER_ID => $entity->getUserId(),
-            HomeAnnouncementJson::TITLE => $entity->getTitle(),
-            HomeAnnouncementJson::CONTENT => $entity->getContent(),
-            HomeAnnouncementJson::STATUS => $entity->getStatus(),
-            HomeAnnouncementJson::IS_PINNED => $entity->getIsPinned(),
-            HomeAnnouncementJson::IS_PINNED_FULL => $entity->getIsPinnedFull(),
-            HomeAnnouncementJson::SUBTITLE => $entity->getSubtitle(),
-            HomeAnnouncementJson::LINK => $entity->getLink(),
-            HomeAnnouncementJson::DESCRIPTION => $entity->getDescription(),
-            HomeAnnouncementJson::IMAGE => $entity->getImage(),
+            HomeAnnouncementJson::USER_ID => $entity->id,
+            HomeAnnouncementJson::LOCATION_ID => $entity->location_id,
+            HomeAnnouncementJson::TITLE => $entity->title,
+            HomeAnnouncementJson::DESCRIPTION => $entity->description,
+            HomeAnnouncementJson::PRICE_PER_NIGHT => $entity->price_per_night,
+            HomeAnnouncementJson::NUM_ROOMS => $entity->num_rooms,
+            HomeAnnouncementJson::NUM_BATHROOMS => $entity->num_bathrooms,
+            HomeAnnouncementJson::SQUARE_METERS => $entity->square_meters,
+            HomeAnnouncementJson::MAX_QUESTS => $entity->max_quests,
+            HomeAnnouncementJson::AMENITIES => $entity->amenities,
+            HomeAnnouncementJson::MAIN_IMAGE_PATH => $entity->main_image_path,
+            HomeAnnouncementJson::ADDITIONAL_IMAGE_PATHS => $entity->additional_image_path,
+            HomeAnnouncementJson::AVAILABILITY_START_DATE => $entity->availability_start_date,
+            HomeAnnouncementJson::AVAILABILITY_END_DATE => $entity->availability_end_date,
+            HomeAnnouncementJson::IS_ACTIVE => $entity->is_active,
         ]);
+    }
+
+    public function homeAnnouncements(): HasOne
+    {
+        return $this->hasOne(Location::class);
+
     }
 }

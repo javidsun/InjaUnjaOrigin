@@ -3,13 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-
-
 Route::get('/functional', function () {
     return Inertia::render('Admin/dashboard_main/functional');
 });
-
-
 
 Route::get('/warning', function () {
     return Inertia::render('Admin/dashboard_main/warning');
@@ -53,7 +49,7 @@ Route::get('/SupportSystem', function () {
 Route::get('/UserManagement', function () {
     return Inertia::render('Admin/Sidebar_sections/UserManagement');
 });
-    Route::get('/AdsHouse', function () {
+Route::get('/AdsHouse', function () {
     return Inertia::render('Admin/Sidebar_sections/AdsHouse');
 });
 Route::get('/CancellationsDetails', function () {

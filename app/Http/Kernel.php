@@ -6,16 +6,16 @@ use Symfony\Component\HttpKernel\HttpKernel;
 
 class Kernel extends HttpKernel
 {
-
     protected array $middleware = [];
 
     protected array $middlewareGroups = [
+        // TODO JAVID : backed route da mettere a posto creazione di constant pattern e key e documentazione per ogni di questi middleware
         'api' => [
             'throttle:api',
-            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+        // TODO JAVID : frontend route da mettere a posto creazione di constant pattern e key e documentazione per ogni di questi middleware
         'web' => [
             \App\Http\Middleware\CustomVerifyCsrfToken::class,
             \App\Http\Middleware\EncryptCookies::class,
@@ -24,12 +24,11 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            'role_or_permission' => \App\Http\Middleware\EnsureUserHasRoleOrPermission::class,
+
         ],
     ];
+
     protected array $routeMiddleware = [
-            'auth.token' => \App\Http\Middleware\AuthTokenMiddleware::class,
     ];
-
-
-
 }

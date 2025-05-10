@@ -81,7 +81,6 @@
         <Terms ref="terms"/>
         <Policy ref="policy"/>
 
-
     </UserSidebar>
 </template>
 
@@ -107,8 +106,30 @@ import { Inertia } from '@inertiajs/inertia';
 import { translate } from "@/store/languageStore";
 
 export default {
+    components: {
+        UserSidebar,
+        SettingModal,
+        SecurityModal,
+        PaymentsModal,
+        AccessModal,
+        CurrencyModal,
+        NotificationsModals,
+        PrivacySharing,
+        Guide,
+        GiftModal,
+        Suggestfriend,
+        SupportModal,
+        ReportModal,
+        HowItWorksModal,
+        FeedbackModal,
+        Terms,
+        Policy
+    },
+
     data() {
         return {
+            showAccessModal: false,
+
             userProfileImage: '/avatar-2.png',
             userName: 'Zahra Azizi',
             isModalOpen: false,
@@ -284,5 +305,4 @@ export default {
     font-size: 16px;
     color: red;
 }
-
 </style>

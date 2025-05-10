@@ -86,76 +86,72 @@
     </v-dialog>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+import { translate } from "@/store/languageStore";
 
-import { ref } from 'vue';
-import { translate } from "@/store/languageStore.js";
-
-const isModalOpen = ref(false);
-const isChangePasswordDialogOpen = ref(false);
-const isMessageModalOpen = ref(false);
-const lastPasswordUpdate = ref(translate('security.oneMonthAgo'));
-const isAccountActive = ref(true);
-const currentPassword = ref('');
-const newPassword = ref('');
-const confirmNewPassword = ref('');
-const showCurrentPassword = ref(false);
-const showNewPassword = ref(false);
-const showConfirmPassword = ref(false);
-const messageTitle = ref('');
-const messageContent = ref('');
-
-const openModal = () => {
-    isModalOpen.value = true;
-};
-
-const closeModal = () => {
-    isModalOpen.value = false;
-};
-
-const openChangePasswordDialog = () => {
-    isChangePasswordDialogOpen.value = true;
-};
-
-const closeChangePasswordDialog = () => {
-    isChangePasswordDialogOpen.value = false;
-    resetPasswordFields();
-};
-
-const resetPasswordFields = () => {
-    currentPassword.value = '';
-    newPassword.value = '';
-    confirmNewPassword.value = '';
-};
-
-const submitNewPassword = () => {
-    if (newPassword.value !== confirmNewPassword.value) {
-        showMessage(translate('security.error'), translate('security.passwordMismatch'));
-        return;
+export default {
+    data() {
+        return {
+            isModalOpen: false,
+            isChangePasswordDialogOpen: false,
+            isMessageModalOpen: false,
+            lastPasswordUpdate: this.translate('security.oneMonthAgo'),
+            isAccountActive: true,
+            currentPassword: '',
+            newPassword: '',
+            confirmNewPassword: '',
+            showCurrentPassword: false,
+            showNewPassword: false,
+            showConfirmPassword: false,
+            messageTitle: '',
+            messageContent: ''
+        };
+    },
+    methods: {
+        openModal() {
+            this.isModalOpen = true;
+        },
+        closeModal() {
+            this.isModalOpen = false;
+        },
+        openChangePasswordDialog() {
+            this.isChangePasswordDialogOpen = true;
+        },
+        closeChangePasswordDialog() {
+            this.isChangePasswordDialogOpen = false;
+            this.resetPasswordFields();
+        },
+        resetPasswordFields() {
+            this.currentPassword = '';
+            this.newPassword = '';
+            this.confirmNewPassword = '';
+        },
+        submitNewPassword() {
+            if (this.newPassword !== this.confirmNewPassword) {
+                this.showMessage(this.translate('security.error'), this.translate('security.passwordMismatch'));
+                return;
+            }
+            this.lastPasswordUpdate = new Date().toLocaleString('en');
+            this.showMessage(this.translate('security.success'), this.translate('security.passwordChanged'));
+            this.closeChangePasswordDialog();
+        },
+        toggleAccountStatus() {
+            const action = this.isAccountActive ? this.translate('security.deactivate') : this.translate('security.activate');
+            const confirmMessage = this.translate('security.confirmAccountAction').replace('{action}', action);
+            if (confirm(confirmMessage)) {
+                this.isAccountActive = !this.isAccountActive;
+                const successMessage = this.translate('security.accountActionSuccess').replace('{action}', action);
+                this.showMessage(this.translate('security.success'), successMessage);
+            }
+        },
+        showMessage(title, content) {
+            this.messageTitle = title;
+            this.messageContent = content;
+            this.isMessageModalOpen = true;
+        },
+        translate,
     }
-    lastPasswordUpdate.value = new Date().toLocaleString('en');
-    showMessage(translate('security.success'), translate('security.passwordChanged'));
-    closeChangePasswordDialog();
 };
-
-const toggleAccountStatus = () => {
-    const action = isAccountActive.value ? translate('security.deactivate') : translate('security.activate');
-    const confirmMessage = translate('security.confirmAccountAction').replace('{action}', action);
-    if (confirm(confirmMessage)) {
-        isAccountActive.value = !isAccountActive.value;
-        const successMessage = translate('security.accountActionSuccess').replace('{action}', action);
-        showMessage(translate('security.success'), successMessage);
-    }
-};
-
-const showMessage = (title, content) => {
-    messageTitle.value = title;
-    messageContent.value = content;
-    isMessageModalOpen.value = true;
-};
-
-defineExpose({ openModal });
 </script>
 
 <style scoped>

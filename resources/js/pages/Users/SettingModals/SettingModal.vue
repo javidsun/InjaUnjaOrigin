@@ -48,69 +48,66 @@
     </v-dialog>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
-
-import { ref } from 'vue';
+<script>
 import { translate } from "@/store/languageStore.js";
 
-const isOpen = ref(false);
-const isEditing = ref(false);
-const userProfileImage = ref('/avatar-2.png');
-const userName = ref('آرش');
-const user = ref({
-    school: 'Polino',
-    job: 'Developer',
-    hobbies: 'Reading',
-    traits: 'Creative',
-    birthYear: '1990',
-    languages: 'English, Persian',
-    location: 'Tehran',
-    more: 'فارغ التحصیل رشته معماری و بازاریابی دیجیتال. علاقه مند به سفر و تجربه کردن و آشنا شدن با فرهنگ های جدید. آشنا شدن با ادم های جدید.'
-});
-
-const labels = {
-
-    school: translate('setting.school'),
-    job: translate('setting.job'),
-    hobbies: translate('setting.hobbies'),
-    traits: translate('setting.traits'),
-    birthYear: translate('setting.birthYear'),
-    languages: translate('setting.languages'),
-    location: translate('setting.location'),
-    more: translate('setting.more'),
-};
-
-const icons = {
-    school: 'mdi-school',
-    job: 'mdi-briefcase',
-    hobbies: 'mdi-heart',
-    traits: 'mdi-star',
-    birthYear: 'mdi-cake',
-    languages: 'mdi-translate',
-    location: 'mdi-map-marker',
-};
-
-const openModal = () => {
-    isOpen.value = true;
-};
-
-const closeModal = () => {
-    isOpen.value = false;
-    isEditing.value = false;
-};
-
-const toggleEdit = () => {
-    if (isEditing.value) {
-        console.log('ذخیره تغییرات:', user.value);
+export default {
+    data() {
+        return {
+            isOpen: false,
+            isEditing: false,
+            userProfileImage: '/avatar-2.png',
+            userName: 'آرش',
+            user: {
+                school: 'Polino',
+                job: 'Developer',
+                hobbies: 'Reading',
+                traits: 'Creative',
+                birthYear: '1990',
+                languages: 'English, Persian',
+                location: 'Tehran',
+                more: 'فارغ التحصیل رشته معماری و بازاریابی دیجیتال. علاقه مند به سفر و تجربه کردن و آشنا شدن با فرهنگ های جدید. آشنا شدن با ادم های جدید.'
+            },
+            labels: {
+                school: 'setting.school',
+                job: 'setting.job',
+                hobbies: 'setting.hobbies',
+                traits: 'setting.traits',
+                birthYear: 'setting.birthYear',
+                languages: 'setting.languages',
+                location: 'setting.location',
+                more: 'setting.more',
+            },
+            icons: {
+                school: 'mdi-school',
+                job: 'mdi-briefcase',
+                hobbies: 'mdi-heart',
+                traits: 'mdi-star',
+                birthYear: 'mdi-cake',
+                languages: 'mdi-translate',
+                location: 'mdi-map-marker',
+            }
+        }
+    },
+    methods: {
+        openModal() {
+            this.isOpen = true;
+        },
+        closeModal() {
+            this.isOpen = false;
+            this.isEditing = false;
+        },
+        toggleEdit() {
+            if (this.isEditing) {
+                console.log('ذخیره تغییرات:', this.user);
+            }
+            this.isEditing = !this.isEditing;
+        },
+        translate(key) {
+            return translate(key);
+        }
     }
-    isEditing.value = !isEditing.value;
-};
-
-defineExpose({
-    openModal,
-    closeModal,
-});
+}
 </script>
 
 <style scoped>
@@ -248,7 +245,7 @@ defineExpose({
         font-size: 1.2rem;
     }
     .list-item-content{
-    max-width: 100%;
+        max-width: 100%;
 
     }
     .list-item-content .v-list-item-title {

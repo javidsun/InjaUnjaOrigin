@@ -17,6 +17,24 @@
                             />
                         </div>
 
+                        <v-alert
+                            v-if="successMessage"
+                            type="success"
+                            dismissible
+                            class="mt-3"
+                        >
+                            {{ successMessage }}
+                        </v-alert>
+
+                        <v-alert
+                            v-if="error"
+                            type="error"
+                            dismissible
+                            class="mt-3"
+                        >
+                            {{ error }}
+                        </v-alert>
+
                         <v-card-text>
                             <v-form @submit.prevent="handleLogin" ref="form">
                                 <v-text-field
@@ -53,10 +71,11 @@
                             </v-form>
                         </v-card-text>
 
+                        <v-list-item @click="goToForgotPassword">
+                            <v-list-item-title>{{ translate("login.forgotPassword") }}</v-list-item-title>
+                        </v-list-item>
+
                         <v-card-text>
-                            <v-list-item @click="openModal(goToForgotPassword)">
-                                <v-list-item-title>{{ translate("login.forgotPassword") }}</v-list-item-title>
-                            </v-list-item>
                             <v-btn
                                 color="primary"
                                 class="login-btn"
@@ -92,28 +111,24 @@
                     </v-card>
                 </v-col>
             </v-row>
-
-            <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout">
-                {{ snackbar.text }}
-                <template v-slot:actions>
-                    <v-btn color="white" @click="snackbar.show = false">
-                        {{ translate('login.close') }}
-                    </v-btn>
-                </template>
-            </v-snackbar>
         </v-container>
+    </v-dialog>
+    <v-dialog v-model="modalActive" max-width="500px">
+        <component :is="selectedComponent" @close="modalActive = false" />
     </v-dialog>
 </template>
 
 <script>
 import { translate } from "@/store/languageStore";
-import apiService from "@/globalServices/apiService.js";
+import apiService from "@/globalServices/apiService";
+import forgot_password from "./layout/menu_component/forgot-password.vue";
 
 export default {
     name: "Login",
     data() {
         return {
-            userLogged : undefined,
+            forgot_password,
+            userLogged: undefined,
             loginDialogIsOpen: true,
             form: {
                 email: "",
@@ -124,18 +139,14 @@ export default {
             loading: false,
             logo: new URL('../../../public/inja-unja.png', import.meta.url).href,
             loginAttempts: 0,
-            snackbar: {
-                show: false,
-                text: "",
-                color: "",
-                timeout: 3000,
-            },
             emailErrors: "",
             passwordErrors: "",
             modalActive: false,
             selectedComponent: null,
             ForgotPassword: null,
             Register: null,
+            successMessage: null,
+            error: null
         };
     },
     methods: {
@@ -144,58 +155,80 @@ export default {
         openLoginDialog() {
             this.loginDialogIsOpen = true;
         },
+
         async handleLogin() {
             try {
                 this.loading = true;
+                this.error = null;
+                this.successMessage = null;
                 this.emailErrors = "";
                 this.passwordErrors = "";
 
                 if (!this.form.email) {
                     this.emailErrors = this.translate("login.emailRequired");
+                    throw new Error('Email is required');
                 }
                 if (!this.form.password) {
                     this.passwordErrors = this.translate("login.passwordRequired");
+                    throw new Error('Password is required');
                 }
 
-                if (this.emailErrors || this.passwordErrors) {
-                    throw new Error('username o password sono vuoti ');
-                    //TODO : @azizi ino  bayad joori manage konim ke age camp user pass khali boov modale login baste nashe
-
-                }
                 const userLoginData = {
                     email: this.form.email,
                     password: this.form.password,
-                    provider:'traditional'
+                    provider: 'traditional'
                 };
+
                 const loginResponse = await apiService.axiosToBackend().post('/api/login', userLoginData);
 
-                this.userLogged = loginResponse.data;
-                //TODO : @azizi agar userLogged khali bood uani hanooz login anjam nashode vaghti login anjam shod bayad redirect beshe too profile
+                if (loginResponse.data.success || loginResponse.status === 200) {
+                    this.userLogged = loginResponse.data;
+                    this.successMessage = this.translate('Login successful! Redirecting...');
+
+                    localStorage.setItem('authToken', loginResponse.data.token);
+                    setTimeout(() => {
+                        window.location.href = '/UserDashboard';
+                    }, 1500);
+                } else {
+                    this.error = loginResponse.data.message || this.translate('login.loginFailed');
+                    this.loginAttempts++;
+                }
 
             } catch (error) {
-                console.log(error);
+                console.error('Login error:', error);
+
+                if (error.response) {
+                    if (error.response.status === 401) {
+                        this.error = this.translate('login.invalidCredentials');
+                    } else if (error.response.status === 422) {
+                        this.error = error.response.data.message || "Invalid input data";
+                    } else {
+                        this.error = this.translate('login.loginFailed');
+                    }
+                } else if (error.request) {
+                    this.error = this.translate('login.noServerResponse');
+                } else {
+                    this.error = this.translate('login.unexpectedError');
+                }
+
+                this.loginAttempts++;
             } finally {
                 this.loading = false;
-                this.closeDialog();
             }
         },
+
         closeDialog() {
             this.loginDialogIsOpen = false;
         },
+
         async openModal(component) {
             this.modalActive = false;
             this.selectedComponent = component;
             this.modalActive = true;
         },
         async goToForgotPassword() {
-            try {
-                const module = await import('./layout/menu_component/forgot-password.vue');
-                this.ForgotPassword = module.default;
-                this.selectedComponent = this.ForgotPassword;
-                this.modalActive = true;
-            } catch (error) {
-                console.error("Failed to load ForgotPassword component:", error);
-            }
+            this.selectedComponent = forgot_password;
+            this.modalActive = true;
         },
         async goToRegister() {
             try {
@@ -217,12 +250,10 @@ export default {
             console.log(`Logging in with ${provider}`);
         },
     },
-    created() {
-        this.goToForgotPassword().catch(() => {});
-        this.goToRegister().catch(() => {});
-    }
+
 };
 </script>
+
 <style scoped>
 .login-btn {
     width: 100%;
@@ -250,4 +281,3 @@ export default {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 </style>
-

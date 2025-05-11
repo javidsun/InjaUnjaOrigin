@@ -83,7 +83,7 @@
 //Todo:{validation_messages: amount_required/amount_positive/email_required/email_valid}
 //Todo:{business_rules: minimum_amount/maximum_amount/expiration_days/currency}
 
-import { translate } from "@/store/languageStore";
+import { translate } from "@/store/languageStore.js";
 
 export default {
     name: 'GiftCardComponent',

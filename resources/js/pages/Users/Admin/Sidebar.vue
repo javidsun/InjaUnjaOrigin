@@ -27,7 +27,7 @@
 <script>
 //Todo:{routes:AdminDashboard /UserManagement /ads_management/AdsHouse/vehicles/events/AdsTraveler/Finance/ReservationManagement/Analytics/Notifications/SupportSystem}
 
-import { translate } from "@/store/languageStore";
+import { translate } from "@/store/languageStore.js";
 
 export default {
     name: 'SidebarComponent',

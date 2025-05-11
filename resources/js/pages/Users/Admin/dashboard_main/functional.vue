@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { translate } from "@/store/languageStore";
+import { translate } from "@/store/languageStore.js";
 
 export default {
     name: 'functional',
@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style>
-@import '../../../../css/@core/template/lib/@layouts/styles/cards.scss';
+@import '../../../../../css/@core/template/lib/@layouts/styles/cards.scss';
 
 .text-body-1{
     font-size: 20px !important;

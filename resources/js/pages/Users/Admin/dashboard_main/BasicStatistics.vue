@@ -19,7 +19,7 @@
 
 <script>
 //Todo:title/ value
-import { translate } from "../../../store/languageStore";
+import { translate } from "../../../../store/languageStore.js";
 
 export default {
     name: 'BasicStatistics',
@@ -41,7 +41,7 @@ export default {
 
 <style>
 
-@import '../../../../css/@core/template/lib/@layouts/styles/cards.scss';
+@import '../../../../../css/@core/template/lib/@layouts/styles/cards.scss';
 
 @media (max-width: 950px) {
     .fontsize {

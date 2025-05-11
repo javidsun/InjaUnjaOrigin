@@ -35,7 +35,7 @@ import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
 import travelers from '../../layout/sections/Groups/Travel Ads/TravelersContent.vue';
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
-import { translate } from "@/store/languageStore";
+import { translate } from "@/store/languageStore.js";
 
 export default {
     name: 'MainLayout',

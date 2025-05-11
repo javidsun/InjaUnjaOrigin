@@ -176,7 +176,7 @@ import Sidebar from "../Sidebar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
 import ApexChart from "vue3-apexcharts";
-import { translate } from "@/store/languageStore";
+import { translate } from "@/store/languageStore.js";
 
 export default {
     components: {

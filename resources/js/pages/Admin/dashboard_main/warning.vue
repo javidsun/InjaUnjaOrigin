@@ -103,7 +103,7 @@ export default {
 </script>
 
 <style scoped>
-@import '../../../../../css/@core/template/lib/@layouts/styles/cards.scss';
+@import '../../../../css/@core/template/lib/@layouts/styles/cards.scss';
 
 .card-container {
     padding-top: 50px;

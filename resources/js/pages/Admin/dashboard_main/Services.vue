@@ -102,7 +102,7 @@ export default {
 }
 </script>
 <style scoped>
-@import '../../../../../css/@core/template/lib/@layouts/styles/cards.scss';
+@import '../../../../css/@core/template/lib/@layouts/styles/cards.scss';
 
 @media (max-width: 950px) {
     .fontsize {

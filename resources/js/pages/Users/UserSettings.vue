@@ -80,6 +80,7 @@
         <FeedbackModal ref="feedbackModal"/>
         <Terms ref="terms"/>
         <Policy ref="policy"/>
+        <RoleAndPermissionModal ref="RoleAndPermission"/>
 
     </UserSidebar>
 </template>
@@ -102,6 +103,8 @@ import HowItWorksModal from './SettingModals/HowItWorksModal.vue';
 import FeedbackModal from './SettingModals/FeedbackModal.vue';
 import Terms from './SettingModals/Terms.vue';
 import Policy from './SettingModals/Policy.vue';
+import RoleAndPermissionModal from './SettingModals/RoleAndPermissionModal.vue';
+
 import { Inertia } from '@inertiajs/inertia';
 import { translate } from "@/store/languageStore";
 
@@ -123,7 +126,8 @@ export default {
         HowItWorksModal,
         FeedbackModal,
         Terms,
-        Policy
+        Policy,
+        RoleAndPermissionModal
     },
 
     data() {
@@ -135,11 +139,12 @@ export default {
             isModalOpen: false,
             settingsItems: [
                 { title: "setting.personalInfo", icon: "mdi-account", link: "/SettingModal" },
+                { title: "setting.RoleAndPermission", icon: "mdi-information", link: "/RoleAndPermissionModal" },
+                { title: "setting.notifications", icon: "mdi-bell", link: "/NotificationsModals" },
                 { title: "setting.loginSecurity", icon: "mdi-security", link: "/SecurityModal" },
                 { title: "setting.payments", icon: "mdi-credit-card", link: "/PaymentsModal" },
                 { title: "setting.access", icon: "mdi-lock", link: "/AccessModal" },
                 { title: "setting.currency", icon: "mdi-currency-eur", link: "/CurrencyModal" },
-                { title: "setting.notifications", icon: "mdi-bell", link: "/NotificationsModals" },
                 { title: "setting.privacySharing", icon: "mdi-lock-outline", link: "/PrivacySharing" }
             ],
             referralItems: [
@@ -181,7 +186,10 @@ export default {
                 '/HowItWorksModal': 'howItWorksModal',
                 '/FeedbackModal': 'feedbackModal',
                 '/Terms': 'terms',
-                '/Policy': 'policy'
+                '/Policy': 'policy',
+                '/RoleAndPermissionModal': 'RoleAndPermission',
+
+
             };
 
             const modalRef = modalMap[link];

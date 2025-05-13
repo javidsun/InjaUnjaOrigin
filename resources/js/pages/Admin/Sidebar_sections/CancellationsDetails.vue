@@ -7,7 +7,6 @@
                 </div>
             </v-col>
             <v-spacer />
-            <Searchbar />
             <v-spacer />
             <Darkmood class="darkmood"/>
             <LanguageSwitcher class="language" />
@@ -152,7 +151,6 @@
 //Todo:{user_cancellations:id/name/reason/date/userName/status/amount}
 
 import Sidebar from "../Sidebar.vue";
-import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
 import { translate } from "@/store/languageStore";
@@ -161,7 +159,6 @@ import * as XLSX from 'xlsx';
 export default {
     components: {
         Sidebar,
-        Searchbar,
         Darkmood,
         LanguageSwitcher
     },

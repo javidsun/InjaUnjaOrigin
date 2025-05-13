@@ -57,3 +57,6 @@ Route::get('/InjaUnja', function () {
 Route::get('/GiftCardatFirst', function () {
     return Inertia::render('layout/menu_component/GiftCardatFirst');
 });
+Route::get('/RoleAndPermission', function () {
+    return Inertia::render('layout/menu_component/RoleAndPermissionModal');
+});

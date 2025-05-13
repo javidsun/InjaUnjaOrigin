@@ -761,6 +761,7 @@ export default {
         Image_selection: "انتخاب تصاویر",
     },
     setting: {
+        RoleAndPermission:"نقش و مجوز",
         settings: "تنظیمات",
         host: "میزبان",
         referrals: "ارجاعات و اعتبارات",

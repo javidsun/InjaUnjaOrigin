@@ -604,6 +604,7 @@ export default {
 
     },
     setting: {
+        RoleAndPermission:"RoleAndPermission",
         settings: "Settings",
         host: "Host",
         referrals: "Referrals & Credits",

@@ -47,7 +47,6 @@
 
 <script>
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
-import Searchbar from "../layout/Header/search/Searchbar.vue";
 import Darkmood from "../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../layout/Header/LanguageSwitcher.vue";
 import Footer from "../layout/Footer.vue";
@@ -63,7 +62,6 @@ import { translate } from "@/store/languageStore";
 export default {
     name: 'DashboardLayout',
     components: {
-        Searchbar,
         Darkmood,
         LanguageSwitcher,
         Footer,

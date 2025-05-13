@@ -85,7 +85,6 @@ export default {
     box-shadow: none !important;
     overflow: visible;
     position: relative;
-    z-index: 9999;
 }
 .v-row {
     margin: 0 !important;

@@ -7,7 +7,6 @@
                 </div>
             </v-col>
             <v-spacer />
-            <Searchbar />
             <v-spacer />
             <Darkmood class="darkmood"/>
             <LanguageSwitcher class="language" />
@@ -31,7 +30,6 @@
 //Todo:{getHouses:url/description}{response:{success:data}{error:message/code}
 
 import Sidebar from "../Sidebar.vue";
-import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
 import Houses from '../../layout/sections/Groups/House Ads/HousesContent.vue';
@@ -41,7 +39,6 @@ export default {
     name: 'AdsHouse',
     components: {
         Sidebar,
-        Searchbar,
         Darkmood,
         LanguageSwitcher,
         Houses

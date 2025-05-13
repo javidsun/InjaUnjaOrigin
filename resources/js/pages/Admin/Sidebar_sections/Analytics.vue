@@ -7,7 +7,6 @@
                 </div>
             </v-col>
             <v-spacer />
-            <Searchbar />
             <v-spacer />
             <Darkmood class="darkmood"/>
             <LanguageSwitcher class="language" />
@@ -174,7 +173,6 @@
 //todo:{reservationsThisMonth/averageHostIncome/approvalRate/cancellationRate}{revenueByCategory:categoryKey/revenue/conversionRate}
 
 import Sidebar from "../Sidebar.vue";
-import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
 import ApexChart from "vue3-apexcharts";
@@ -183,7 +181,6 @@ import { translate } from "@/store/languageStore";
 export default {
     components: {
         Sidebar,
-        Searchbar,
         Darkmood,
         LanguageSwitcher,
         ApexChart

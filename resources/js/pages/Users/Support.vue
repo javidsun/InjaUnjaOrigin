@@ -54,10 +54,15 @@
 
 <script>
 import { translate } from "@/store/languageStore";
+import UserSidebar from './Layout.vue';
 
 export default {
+    components: {
+        UserSidebar
+    },
     data() {
         return {
+
             isHelpModalOpen: false,
             searchQuery: '',
             selectedQuestion: null,

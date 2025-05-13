@@ -387,7 +387,6 @@ export default {
         idCard: "شماره کارت",
         passport: "عکس پاسپورت",
         saveChanges: "ذخیره تغییرات",
-        changeAvatar: "تغییر عکس پروفایل",
         logout: "خروج از حساب",
         address: "آدرس",
         emergencyContact: "تماس اضطراری",

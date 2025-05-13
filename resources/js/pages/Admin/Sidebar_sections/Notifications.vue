@@ -7,7 +7,6 @@
                 </div>
             </v-col>
             <v-spacer />
-            <Searchbar />
             <v-spacer />
             <Darkmood class="darkmood" />
             <LanguageSwitcher class="language" />
@@ -197,10 +196,9 @@
 
 import { ref, computed } from 'vue';
 import Sidebar from "../Sidebar.vue";
-import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
 let drawer = ref(true);
 

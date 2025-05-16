@@ -1108,6 +1108,8 @@
 
 <script>
 import { translate } from "@/store/languageStore";
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 
 export default {
     name: 'TravelCompanionModal',

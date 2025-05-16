@@ -17,6 +17,24 @@
                             />
                         </div>
 
+                        <v-alert
+                            v-if="successMessage"
+                            type="success"
+                            dismissible
+                            class="mt-3"
+                        >
+                            {{ successMessage }}
+                        </v-alert>
+
+                        <v-alert
+                            v-if="error"
+                            type="error"
+                            dismissible
+                            class="mt-3"
+                        >
+                            {{ error }}
+                        </v-alert>
+
                         <v-card-text>
                             <v-form @submit.prevent="handleLogin" ref="form">
                                 <v-text-field
@@ -53,13 +71,11 @@
                             </v-form>
                         </v-card-text>
 
+                        <v-list-item @click="goToForgotPassword">
+                            <v-list-item-title>{{ translate("login.forgotPassword") }}</v-list-item-title>
+                        </v-list-item>
+
                         <v-card-text>
-                            <v-dialog v-model="modalActive" max-width="500px">
-                                <component :is="selectedComponent" @close="modalActive = false"></component>
-                            </v-dialog>
-                            <v-list-item @click="openModal(goToForgotPassword)">
-                                <v-list-item-title>{{ translate("login.forgotPassword") }}</v-list-item-title>
-                            </v-list-item>
                             <v-btn
                                 color="primary"
                                 class="login-btn"
@@ -95,166 +111,173 @@
                     </v-card>
                 </v-col>
             </v-row>
-
-            <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout">
-                {{ snackbar.text }}
-                <template v-slot:actions>
-                    <v-btn color="white" @click="snackbar.show = false">
-                        {{ translate('login.close') }}
-                    </v-btn>
-                </template>
-            </v-snackbar>
         </v-container>
+    </v-dialog>
+    <v-dialog v-model="modalActive" max-width="500px">
+        <component :is="selectedComponent" @close="modalActive = false" />
     </v-dialog>
 </template>
 
 <script>
-import { ref, reactive } from "vue";
-import InjaUnjaLogo from "../../../public/inja-unja.png";
-import { translate } from "../store/languageStore";
-import Register from "./RegisterUser.vue";
-import ForgotPassword from "./layout/menu_component/forgot-password.vue";
+import { translate } from "@/store/languageStore";
+import apiService from "@/globalServices/apiService";
+import forgot_password from "./layout/menu_component/forgot-password.vue";
 
 export default {
-    //TODO : is option but modify const
     name: "Login",
-    setup(_, { emit }) {
-        const modalActive = ref(false);
-        const selectedComponent = ref(null);
-        const form = ref({
-            email: "",
-            password: "",
-            remember: false,
-        });
-        const loginDialogIsOpen = ref(true);
-        const isPasswordVisible = ref(false);
-        const loading = ref(false);
-        const logo = ref(InjaUnjaLogo);
-        const loginAttempts = ref(0);
-        const snackbar = reactive({
-            show: false,
-            text: "",
-            color: "",
-            timeout: 3000,
-        });
-
-        const emailErrors = ref("");
-        const passwordErrors = ref("");
-
-        const openLoginDialog = () => {
-            loginDialogIsOpen.value = true;
-        };
-
-        const handleLogin = () => {
-            emailErrors.value = "";
-            passwordErrors.value = "";
-
-            if (!form.value.email) {
-                emailErrors.value = translate("login.emailRequired");
-            }
-            if (!form.value.password) {
-                passwordErrors.value = translate("login.passwordRequired");
-            }
-
-            if (emailErrors.value || passwordErrors.value) {
-                return;
-            }
-
-            loading.value = true;
-            setTimeout(() => {
-                snackbar.text = translate("login.loginSuccess");
-                snackbar.color = "success";
-                snackbar.show = true;
-            }, 1500);
-
-            loading.value = false;
-        };
-
-        const closeDialog = () => {
-            loginDialogIsOpen.value = false;
-        };
-        const openModal = (component) => {
-            modalActive.value = false;
-            selectedComponent.value = component;
-            modalActive.value = true;
-        };
-
-        const goToForgotPassword = () => {
-            selectedComponent.value = ForgotPassword;
-            modalActive.value = true;
-        };
-
-        const goToRegister = () => {
-            selectedComponent.value = Register;
-            modalActive.value = true;
-        };
-
+    data() {
         return {
-            loginDialogIsOpen,
-            openLoginDialog,
-            form,
-            isPasswordVisible,
-            loading,
-            logo,
-            loginAttempts,
-            snackbar,
-            emailErrors,
-            passwordErrors,
-            handleLogin,
-            closeDialog,
-            goToForgotPassword,
-            goToRegister,
-            openModal,
-            translate,
-            modalActive,
-            selectedComponent,
+            forgot_password,
+            userLogged: undefined,
+            loginDialogIsOpen: true,
+            form: {
+                email: "",
+                password: "",
+                remember: false,
+            },
+            isPasswordVisible: false,
+            loading: false,
+            logo: new URL('../../../public/inja-unja.png', import.meta.url).href,
+            loginAttempts: 0,
+            emailErrors: "",
+            passwordErrors: "",
+            modalActive: false,
+            selectedComponent: null,
+            ForgotPassword: null,
+            Register: null,
+            successMessage: null,
+            error: null
         };
     },
+    methods: {
+        translate,
+
+        openLoginDialog() {
+            this.loginDialogIsOpen = true;
+        },
+
+        async handleLogin() {
+            try {
+                this.loading = true;
+                this.error = null;
+                this.successMessage = null;
+                this.emailErrors = "";
+                this.passwordErrors = "";
+
+                if (!this.form.email) {
+                    this.emailErrors = this.translate("login.emailRequired");
+                    throw new Error('Email is required');
+                }
+                if (!this.form.password) {
+                    this.passwordErrors = this.translate("login.passwordRequired");
+                    throw new Error('Password is required');
+                }
+
+                const userLoginData = {
+                    email: this.form.email,
+                    password: this.form.password,
+                    provider: 'traditional'
+                };
+
+                const loginResponse = await apiService.axiosToBackend().post('/api/login', userLoginData);
+
+                if (loginResponse.data.success || loginResponse.status === 200) {
+                    this.userLogged = loginResponse.data;
+                    this.successMessage = this.translate('Login successful! Redirecting...');
+
+                    localStorage.setItem('authToken', loginResponse.data.token);
+                    setTimeout(() => {
+                        window.location.href = '/UserDashboard';
+                    }, 1500);
+                } else {
+                    this.error = loginResponse.data.message || this.translate('login.loginFailed');
+                    this.loginAttempts++;
+                }
+
+            } catch (error) {
+                console.error('Login error:', error);
+
+                if (error.response) {
+                    if (error.response.status === 401) {
+                        this.error = this.translate('login.invalidCredentials');
+                    } else if (error.response.status === 422) {
+                        this.error = error.response.data.message || "Invalid input data";
+                    } else {
+                        this.error = this.translate('login.loginFailed');
+                    }
+                } else if (error.request) {
+                    this.error = this.translate('login.noServerResponse');
+                } else {
+                    this.error = this.translate('login.unexpectedError');
+                }
+
+                this.loginAttempts++;
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        closeDialog() {
+            this.loginDialogIsOpen = false;
+        },
+
+        async openModal(component) {
+            this.modalActive = false;
+            this.selectedComponent = component;
+            this.modalActive = true;
+        },
+        async goToForgotPassword() {
+            this.selectedComponent = forgot_password;
+            this.modalActive = true;
+        },
+        async goToRegister() {
+            try {
+                const module = await import('./RegisterUser.vue');
+                this.Register = module.default;
+                this.selectedComponent = this.Register;
+                this.modalActive = true;
+            } catch (error) {
+                console.error("Failed to load Register component:", error);
+            }
+        },
+        clearEmailError() {
+            this.emailErrors = "";
+        },
+        clearPasswordError() {
+            this.passwordErrors = "";
+        },
+        socialLogin(provider) {
+            console.log(`Logging in with ${provider}`);
+        },
+    },
+
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .login-btn {
-    width: 70%;
-    height: 50px;
-    font-size: 16px;
-    border-radius: 8px;
-    transition: all 0.3s ease-in-out;
-    margin-left: 70px;
-    &:hover {
-        background-color: #1e88e5 !important;
-        transform: scale(1.05);
-    }
-
-    &:active {
-        transform: scale(0.98);
-    }
+    width: 100%;
+    margin-top: 10px;
 }
 
-.container__login {
-    .v-card {
-        transition: all 0.3s ease-in-out;
-    }
+.red--text {
+    color: #ff5252 !important;
+    font-weight: bold;
+    animation: pulse 1.5s infinite;
+}
 
-    .v-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
-    }
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
 
-    .v-btn {
-        transition: all 0.2s ease-in-out;
-    }
 
-    .v-btn:hover {
-        transform: scale(1.05);
-    }
+.fontsize3 {
+    font-size: 0.9rem;
+}
 
-    .text-center {
-        text-align: center;
-    }
-
-    .mb-3 {
-        margin-bottom: 1rem;
-    }
+.v-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 </style>

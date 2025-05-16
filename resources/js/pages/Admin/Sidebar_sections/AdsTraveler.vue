@@ -7,7 +7,6 @@
                 </div>
             </v-col>
             <v-spacer />
-            <Searchbar />
             <v-spacer />
             <Darkmood class="darkmood"/>
             <LanguageSwitcher class="language" />
@@ -32,7 +31,6 @@
 //Todo : contactInfo:email/phone
 
 import Sidebar from "../Sidebar.vue";
-import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
 import travelers from '../../layout/sections/Groups/Travel Ads/TravelersContent.vue';
@@ -43,7 +41,6 @@ export default {
     name: 'MainLayout',
     components: {
         Sidebar,
-        Searchbar,
         Darkmood,
         LanguageSwitcher,
         travelers

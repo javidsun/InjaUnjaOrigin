@@ -7,7 +7,6 @@
                 <v-btn icon @click="closeFeedbackModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
-
             </v-card-title>
             <v-divider></v-divider>
 
@@ -19,17 +18,16 @@
 
                 <p class="feedback-question">{{ translate('feedback.selectFeedbackType') }}</p>
 
-
                 <v-radio-group v-model="selectedFeedbackCategory">
                     <v-radio
                         v-for="(category, index) in feedbackCategories"
                         :key="index"
-                        :label="t(category.label)"
+                        :label="translate(category.label)"
                         :value="category.value"
                     ></v-radio>
                 </v-radio-group>
 
-                <v-btn @click="submitFeedback" color="primary" large class="submit-btn">
+                <v-btn @click="handleSubmitFeedback" color="primary" large class="submit-btn">
                     {{ translate('feedback.submitButton') }}
                 </v-btn>
 
@@ -38,7 +36,7 @@
                 <p class="contact-title"><strong>{{ translate('feedback.contactTitle') }}</strong></p>
                 <p class="contact-subtitle">{{ translate('feedback.contactSubtitle') }}</p>
 
-                <v-btn @click="contactSupport" color="secondary" large class="contact-btn">
+                <v-btn @click="handleContactSupport" color="secondary" large class="contact-btn">
                     {{ translate('feedback.contactButton') }}
                 </v-btn>
             </v-card-text>
@@ -46,56 +44,78 @@
     </v-dialog>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+//Todo:{category/message/userId:if user is logged in}
+// Todo: message/contactEmail/userId
+// Todo: description/submitButton/submitSuccess/submitError/selectCategoryWarning/Experiences/Hosting/
+// Todo: contactTitle:contactMessage /contactButton/contactError
 
-import {ref} from 'vue';
-import {translate} from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
-const isFeedbackModalOpen = ref(false);
+export default {
+    name: 'FeedbackModal',
+    data() {
+        return {
+            isFeedbackModalOpen: false,
+            selectedFeedbackCategory: '',
+            feedbackCategories: [
+                {label: 'feedback.category1', value: 'Experiences'},
+                {label: 'feedback.category2', value: 'Hosting'},
+                {label: 'feedback.category3', value: 'Guest'},
+            ]
+        }
+    },
+    methods: {
+        translate,
 
-const openModal = () => {
-    isFeedbackModalOpen.value = true;
-};
+        openModal() {
+            this.isFeedbackModalOpen = true
+        },
+        closeFeedbackModal() {
+            this.isFeedbackModalOpen = false
+        },
+        async handleSubmitFeedback() {
+            try {
+                if (!this.selectedFeedbackCategory) {
+                    this.showAlert(this.translate('feedback.selectCategoryWarning'))
+                    return
+                }
+                this.showAlert(this.translate('feedback.submitSuccess'))
+                this.closeFeedbackModal()
+            } catch (error) {
+                this.showAlert(this.translate('feedback.submitError'))
+                this.logError('Feedback submission failed:', error)
+            }
+        },
+        async handleContactSupport() {
+            try {
+                const url = window.location.href
+                const supportDetails = this.translate('support.contactMessage', {query: this.selectedFeedbackCategory})
 
-const closeFeedbackModal = () => {
-    isFeedbackModalOpen.value = false;
-};
-
-const selectedFeedbackType = ref('');
-const feedbackTypes = ref([
-    translate('feedback.feedbackType1'),
-    translate('feedback.feedbackType2'),
-    translate('feedback.feedbackType3'),
-]);
-
-const selectedFeedbackCategory = ref('');
-const feedbackCategories = ref([
-    {label: 'feedback.category1', value: 'Experiences'},
-    {label: 'feedback.category2', value: 'Hosting'},
-    {label: 'feedback.category3', value: 'Guest'},
-]);
-
-const submitFeedback = () => {
-    alert(t('feedback.submitSuccess'));
-};
-
-const contactSupport = () => {
-    const url = window.location.href;
-    const supportDetails = t('support.contactMessage', {query: selectedFeedbackType.value});
-
-    if (navigator.share) {
-        navigator.share({
-            title: t('support.contactTitle'),
-            text: supportDetails,
-            url: url,
-        }).catch((error) => console.error("Error sharing:", error));
-    } else {
-        alert(t('support.contactFallback'));
+                if (navigator.share) {
+                    await navigator.share({
+                        title: this.translate('support.contactTitle'),
+                        text: supportDetails,
+                        url: url,
+                    })
+                } else {
+                    this.showAlert(this.translate('support.contactFallback'))
+                }
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    this.logError('Contact support failed:', error)
+                    this.showAlert(this.translate('support.contactError'))
+                }
+            }
+        },
+        showAlert(message) {
+            alert(message)
+        },
+        logError(message, error) {
+            console.error(message, error)
+        }
     }
-};
-
-defineExpose({openModal});
+}
 </script>
 
 <style scoped>

@@ -27,9 +27,6 @@ Route::get('/dashboard', function () {
 Route::get('/', function () {
     return Inertia::render('Home2');
 });
-Route::get('/', function () {
-    return Inertia::render('Home2');
-});
 Route::get('/register', function () {
     return Inertia::render('RegisterUser');
 });
@@ -88,11 +85,6 @@ Route::get('/UserSettings', function () {
     return Inertia::render('Users/UserDashboard/UserSettings');
 })->name('UserSettings');
 
-Route::get('/Support', function () {
-    return Inertia::render('Users/UserDashboard/Support');
-})->name('Support');
-
-// Routes for public sections
 Route::get('/houses', function () {
     return Inertia::render('Houses');
 })->name('houses');

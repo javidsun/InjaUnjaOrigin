@@ -9,7 +9,12 @@
             class="group-image-container"
             @click="handleGroupSelection(index)"
         >
-            <div class="image-box">
+            <div class="image-box"
+                 :class="{
+                         'is-hovered': hoverIndex === index,
+                         'shrunk-icon': selectedGroup !== null,
+                         'expanded-state': isExpanded
+                     }">
                 <v-img :src="group" class="group-image" />
             </div>
             <div v-if="selectedGroup === index" class="selection-indicator">
@@ -21,60 +26,37 @@
 
 <script>
 export default {
-    name: 'Groups',
     props: {
         groupImages: {
             type: Array,
-            required: true,
-            validator: function(value) {
-                try {
-                    return Array.isArray(value) && value.every(item => typeof item === 'string');
-                } catch (error) {
-                    console.error('Invalid groupImages prop:', error);
-                    return false;
-                }
-            }
+            required: true
+        },
+        selectedGroup: {
+            type: Number,
+            default: null
+        },
+        isExpanded: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
         return {
-            selectedGroup: null
+            hoverIndex: null
         };
     },
     methods: {
         handleGroupSelection(index) {
-            try {
-                if (index < 0 || index >= this.groupImages.length) {
-                    throw new Error('Invalid group index selected');
-                }
-
-                this.selectedGroup = index;
-                this.$emit('selectGroup', index);
-
-                this.$vuetify.goTo('.group-row', {
-                    duration: 300,
-                    offset: 0,
-                    easing: 'easeInOutCubic'
-                });
-
-            } catch (error) {
-                console.error('Error in group selection:', error.message);
-                this.showErrorFeedback();
-            }
+            this.$emit('selectGroup', index);
         },
-        showErrorFeedback() {
-            try {
-                const errorElements = document.querySelectorAll('.group-image-container');
-                errorElements.forEach(el => {
-                    el.classList.add('error-shake');
-                    setTimeout(() => el.classList.remove('error-shake'), 500);
-                });
-            } catch (error) {
-                console.error('Error showing feedback:', error);
-            }
+        setHover(index) {
+            this.hoverIndex = index;
+        },
+        clearHover() {
+            this.hoverIndex = null;
         }
     }
-};
+}
 </script>
 
 <style scoped>
@@ -96,6 +78,7 @@ export default {
     align-items: center;
     flex: 1 1 calc(25% - 10px);
     max-width: calc(25% - 10px);
+    cursor: pointer;
 }
 
 .selection-indicator {
@@ -110,33 +93,57 @@ export default {
 .image-box {
     width: 80%;
     aspect-ratio: 1;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    overflow: visible;
-    transition: transform 0.3s ease-in-out;
-    background-color: var(--background-color--groups);
     min-width: 150px;
     min-height: 150px;
+    transition: all 0.3s ease;
+}
+.image-box.expanded-state {
+    transform: scale(0.99) !important;
+    min-width: 100px !important;
+    min-height: 100px !important;
+}
+.image-box.shrunk-icon {
+    transform: scale(0.8);
 }
 
-.image-box:hover {
-    transform: scale(1.05);
+.image-box.is-hovered,
+.group-image-container:hover .image-box {
+    transform: scale(1.1) translateY(-5px);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.9),
+    0 6px 12px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.9);
 }
 
 .group-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
+    transition: transform 0.3s ease-out;
 }
 
 .group-image-container:hover .group-image {
-    transform: scale(0.9);
-    cursor: pointer;
+    transform: scale(0.96) rotate(2deg);
 }
 
-.error-shake {
-    animation: shake 0.5s;
+.group-image-container:active .image-box {
+    transform: scale(0.98) translateY(1px);
+}
+
+.shrunk-icon {
+    animation: shrinkAndMove 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    pointer-events: none;
+    opacity: 0.7;
+    position: relative;
+    z-index: 10;
+}
+@keyframes shrinkAndMove {
+    0% {
+        transform: scale(1) translateX(0);
+    }
+    100% {
+        transform: scale(0.8) translateX(10%);
+    }
 }
 
 @keyframes shake {
@@ -146,17 +153,32 @@ export default {
 }
 
 @media (min-width: 960px) {
-    .group-row {
-        justify-content: flex-start;
+    .shrunk-icon {
+        animation: none;
+        transform: scale(0.8) translateX(10%);
+        opacity: 0.7;
     }
 
-    .group-image-container {
-        flex: 1 1 25%;
+    .group-row {
+        overflow: hidden;
+        padding: 0 250px;
     }
+
     .image-box {
-        width: 30%;
-        min-width: 110px;
-        min-height: 110px;
+        width: 70%;
+        min-width: 180px;
+        min-height: 180px;
+    }
+
+    .image-box.expanded-state {
+        transform: scale(0.70) !important;
+        min-width: 90px !important;
+        min-height: 90px !important;
+    }
+
+
+    .group-image-container {
+        overflow: visible;
     }
 }
 
@@ -202,11 +224,16 @@ export default {
     .group-row {
         justify-content: flex-start;
     }
-
     .image-box {
-        width: 5%;
         min-width: 80px;
         min-height: 80px;
     }
+
+    .image-box.expanded-state {
+        transform: scale(0.65) !important;
+        min-width: 60px !important;
+        min-height: 60px !important;
+    }
+
 }
 </style>

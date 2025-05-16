@@ -1,92 +1,121 @@
 <template>
     <UserSidebar>
+        <v-container fluid class="back">
+            <v-row>
+                <v-col cols="12">
+                    <v-card class="mb-4" outlined>
+                        <v-card-title class="text-h5 title">
+                            {{ translate("UserReservation.AllReservations") }}
+                        </v-card-title>
+                    </v-card>
+                </v-col>
+            </v-row>
 
-    <v-container fluid class="back">
-        <v-row>
-            <v-col cols="12">
-                <v-card class="mb-4" outlined>
-                    <v-card-title class="text-h5 title">
-                        {{ translate("UserReservation.AllReservations") }}
-                    </v-card-title>
-                </v-card>
-            </v-col>
-        </v-row>
-
-        <v-row>
-            <v-col
-                v-for="(reservation, index) in reservations"
-                :key="index"
-                cols="12"
-                sm="6"
-                md="4"
-            >
-                <v-card outlined class="reservation-card" @click="$inertia.visit(`/ReservationDetails/${index + 1}`)">
-                    <v-img
-                        :src="reservation.image"
-                        aspect-ratio="1.7"
-                        class="reservation-image"
-                    ></v-img>
-                    <v-card-title>
-                        <v-icon :color="reservation.color" class="reservation-icon">
-                            {{ reservation.icon }}
-                        </v-icon>
-                        {{ reservation.title }}
-                    </v-card-title>
-                    <v-card-subtitle class="reservation-date">
-                        {{ reservation.date }}
-                    </v-card-subtitle>
-                    <v-card-text class="title">
-                        {{ reservation.description }}
-                    </v-card-text>
-                </v-card>
-            </v-col>
-        </v-row>
-    </v-container>
+            <v-row>
+                <v-col
+                    v-for="(reservation, index) in reservations"
+                    :key="index"
+                    cols="12"
+                    sm="6"
+                    md="4"
+                >
+                    <v-card outlined class="reservation-card" @click="navigateToReservationDetails(index)">
+                        <v-img
+                            :src="reservation.image"
+                            aspect-ratio="1.7"
+                            class="reservation-image"
+                        ></v-img>
+                        <v-card-title>
+                            <v-icon :color="reservation.color" class="reservation-icon">
+                                {{ reservation.icon }}
+                            </v-icon>
+                            {{ reservation.title }}
+                        </v-card-title>
+                        <v-card-subtitle class="reservation-date">
+                            {{ reservation.date }}
+                        </v-card-subtitle>
+                        <v-card-text class="title">
+                            {{ reservation.description }}
+                        </v-card-text>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-container>
     </UserSidebar>
-
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+//Todo:id/title/date/icon/color/image/description/status/created_at/updated_at
 
-import { ref } from "vue";
-import { translate } from "@/store/languageStore.js";
 import UserSidebar from '../Layout.vue';
+import { translate } from "@/store/languageStore";
 
-const reservations = ref([
-    {
-        title: t("HouseReservation"),
-        date: "2025-01-01",
-        icon: "mdi-home",
-        color: "blue",
-        image: "/ads/house.svg",
-        description: "رزرو خانه برای تاریخ 2025-01-01"
+export default {
+    name: 'UserReservations',
+    components: {
+        UserSidebar
     },
-    {
-        title: t("CarReservation"),
-        date: "2024-12-29",
-        icon: "mdi-car",
-        color: "green",
-        image: "/ads/car.svg",
-        description: "رزرو ماشین برای تاریخ 2024-12-29"
+    data() {
+        return {
+            reservations: [
+                {
+                    title: this.translate("HouseReservation"),
+                    date: "2025-01-01",
+                    icon: "mdi-home",
+                    color: "blue",
+                    image: "/ads/house.svg",
+                    description: "رزرو خانه برای تاریخ 2025-01-01"
+                },
+                {
+                    title: this.translate("CarReservation"),
+                    date: "2024-12-29",
+                    icon: "mdi-car",
+                    color: "green",
+                    image: "/ads/car.svg",
+                    description: "رزرو ماشین برای تاریخ 2024-12-29"
+                },
+                {
+                    title: this.translate("EventReservation"),
+                    date: "2024-12-25",
+                    icon: "mdi-calendar",
+                    color: "purple",
+                    image: "/ads/event.svg",
+                    description: "رزرو بلیط رویداد برای تاریخ 2024-12-25"
+                },
+                {
+                    title: this.translate("TravelerReservation"),
+                    date: "2024-12-20",
+                    icon: "mdi-account-group",
+                    color: "orange",
+                    image: "/ads/firend.svg",
+                    description: "رزرو گروه مسافران برای تاریخ 2024-12-20"
+                }
+            ]
+        };
     },
-    {
-        title: t("EventReservation"),
-        date: "2024-12-25",
-        icon: "mdi-calendar",
-        color: "purple",
-        image: "/ads/event.svg",
-        description: "رزرو بلیط رویداد برای تاریخ 2024-12-25"
-    },
-    {
-        title: t("TravelerReservation"),
-        date: "2024-12-20",
-        icon: "mdi-account-group",
-        color: "orange",
-        image: "/ads/firend.svg",
-        description: "رزرو گروه مسافران برای تاریخ 2024-12-20"
-    },
-]);
+    methods: {
+        translate,
+
+        navigateToReservationDetails(reservationId) {
+            try {
+                this.$inertia.visit(`/ReservationDetails/${reservationId + 1}`);
+            } catch (error) {
+                this.showErrorAlert('Failed to navigate to reservation details');
+                console.error('Navigation error:', error);
+            }
+        },
+
+        showErrorAlert(message) {
+            this.$emit('show-alert', {
+                type: 'error',
+                title: 'Error',
+                text: message,
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#ff4444'
+            });
+        },
+    }
+};
 </script>
 
 <style scoped>
@@ -137,7 +166,5 @@ const reservations = ref([
 }
 .back{
     background-color: var(--background-color--groups3);
-
 }
-
 </style>

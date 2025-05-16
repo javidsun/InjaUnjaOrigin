@@ -34,39 +34,49 @@
     </v-app>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+//Todo:userProfileImage/isDarkMode: true/drawer: true/menuActive: true/navigateTo:logout
 
-import {ref, onMounted} from "vue";
-import Searchbar from "../layout/Header/search/Searchbar.vue";
-import Darkmood from "../layout/Header/Darkmood.vue";
 import {translate} from "@/store/languageStore";
 import UserSidebar from "./UserSidebar.vue";
 import {useRouter} from 'vue-router';
+import Darkmood from "../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../layout/Header/LanguageSwitcher.vue";
 import Footer from "../layout/Footer.vue";
 
-const userProfileImage = ref('/avatar-2.png');
-const isDarkMode = ref(true);
-const drawer = ref(true);
-const menuActive = ref(false);
-const router = useRouter();
-
-const navigateTo = (path) => {
-    router.push(path);
-    menuActive.value = false;
+export default {
+    components: {
+        Darkmood,
+        LanguageSwitcher,
+        UserSidebar,
+        Footer
+    },
+    data() {
+        return {
+            userProfileImage: '/avatar-2.png',
+            isDarkMode: true,
+            drawer: true,
+            menuActive: false,
+            router: useRouter()
+        };
+    },
+    methods: {
+        translate,
+        navigateTo(path) {
+            this.router.push(path);
+            this.menuActive = false;
+        },
+        logout() {
+            console.log("Log out of your account...");
+            window.location.href = "/";
+        }
+    },
+    mounted() {
+        window.addEventListener("update-avatar", (event) => {
+            this.userProfileImage = event.detail;
+        });
+    }
 };
-
-const logout = () => {
-    console.log("Log out of your account...");
-    window.location.href = "/";
-};
-
-onMounted(() => {
-    window.addEventListener("update-avatar", (event) => {
-        userProfileImage.value = event.detail;
-    });
-});
 </script>
 
 <style scoped>

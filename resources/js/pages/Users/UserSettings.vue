@@ -80,19 +80,14 @@
         <FeedbackModal ref="feedbackModal"/>
         <Terms ref="terms"/>
         <Policy ref="policy"/>
-
+        <RoleAndPermissionModal ref="RoleAndPermission"/>
 
     </UserSidebar>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
-
-import {ref} from 'vue';
-import {Inertia} from '@inertiajs/inertia';
+<script>
 import UserSidebar from './Layout.vue';
 import SettingModal from './SettingModals/SettingModal.vue';
-import {translate} from "@/store/languageStore.js";
 import SecurityModal from './SettingModals/SecurityModal.vue';
 import PaymentsModal from './SettingModals/PaymentsModal.vue';
 import AccessModal from './SettingModals/AccessModal.vue';
@@ -108,101 +103,104 @@ import HowItWorksModal from './SettingModals/HowItWorksModal.vue';
 import FeedbackModal from './SettingModals/FeedbackModal.vue';
 import Terms from './SettingModals/Terms.vue';
 import Policy from './SettingModals/Policy.vue';
+import RoleAndPermissionModal from './SettingModals/RoleAndPermissionModal.vue';
 
-const isModalOpen = ref(false);
+import { Inertia } from '@inertiajs/inertia';
+import { translate } from "@/store/languageStore";
 
-const openModal = () => {
-    isModalOpen.value = true;
-};
+export default {
+    components: {
+        UserSidebar,
+        SettingModal,
+        SecurityModal,
+        PaymentsModal,
+        AccessModal,
+        CurrencyModal,
+        NotificationsModals,
+        PrivacySharing,
+        Guide,
+        GiftModal,
+        Suggestfriend,
+        SupportModal,
+        ReportModal,
+        HowItWorksModal,
+        FeedbackModal,
+        Terms,
+        Policy,
+        RoleAndPermissionModal
+    },
 
-const settingModal = ref(null);
-const securityModal = ref(null);
-const paymentsModal = ref(null);
-const accessModal = ref(null);
-const currencyModal = ref(null);
-const notificationsModals = ref(null);
-const privacysharing = ref(null);
-const guide = ref(null);
-const giftModal = ref(null);
-const suggestfriend = ref(null);
-const supportModal = ref(null);
-const reportModal = ref(null);
-const howItWorksModal = ref(null);
-const feedbackModal = ref(null);
-const terms = ref(null);
-const policy = ref(null);
+    data() {
+        return {
+            showAccessModal: false,
 
-const goToPage = (link) => {
-    Inertia.visit(link);
-};
+            userProfileImage: '/avatar-2.png',
+            userName: 'Zahra Azizi',
+            isModalOpen: false,
+            settingsItems: [
+                { title: "setting.personalInfo", icon: "mdi-account", link: "/SettingModal" },
+                { title: "setting.RoleAndPermission", icon: "mdi-information", link: "/RoleAndPermissionModal" },
+                { title: "setting.notifications", icon: "mdi-bell", link: "/NotificationsModals" },
+                { title: "setting.loginSecurity", icon: "mdi-security", link: "/SecurityModal" },
+                { title: "setting.payments", icon: "mdi-credit-card", link: "/PaymentsModal" },
+                { title: "setting.access", icon: "mdi-lock", link: "/AccessModal" },
+                { title: "setting.currency", icon: "mdi-currency-eur", link: "/CurrencyModal" },
+                { title: "setting.privacySharing", icon: "mdi-lock-outline", link: "/PrivacySharing" }
+            ],
+            referralItems: [
+                { title: "setting.giftCard", icon: "mdi-gift", link: "/GiftModal" },
+                { title: "setting.referHost", icon: "mdi-account-group", link: "/Suggestfriend" }
+            ],
+            supportItems: [
+                { title: "setting.supportCenter", icon: "mdi-headset", link: "/SupportModal" },
+                { title: "setting.reportIssues", icon: "mdi-alert", link: "/ReportModal" },
+                { title: "setting.howItWorks", icon: "mdi-information", link: "/HowItWorksModal" },
+                { title: "setting.feedback", icon: "mdi-comment", link: "/FeedbackModal" }
+            ],
+            policyItems: [
+                { title: "setting.termsOfService", icon: "mdi-file-document", link: "/Terms" },
+                { title: "setting.privacyPolicy", icon: "mdi-lock-check", link: "/Policy" }
+            ]
+        };
+    },
+    methods: {
+        translate,
+
+        goToPage(link) {
+            Inertia.visit(link);
+        },
+        handleSettingClick(link) {
+            const modalMap = {
+                '/SettingModal': 'settingModal',
+                '/SecurityModal': 'securityModal',
+                '/PaymentsModal': 'paymentsModal',
+                '/AccessModal': 'accessModal',
+                '/CurrencyModal': 'currencyModal',
+                '/NotificationsModals': 'notificationsModals',
+                '/PrivacySharing': 'privacysharing',
+                '/Guide': 'guide',
+                '/GiftModal': 'giftModal',
+                '/Suggestfriend': 'suggestfriend',
+                '/SupportModal': 'supportModal',
+                '/ReportModal': 'reportModal',
+                '/HowItWorksModal': 'howItWorksModal',
+                '/FeedbackModal': 'feedbackModal',
+                '/Terms': 'terms',
+                '/Policy': 'policy',
+                '/RoleAndPermissionModal': 'RoleAndPermission',
 
 
-const handleSettingClick = (link) => {
-    if (link === '/SettingModal') {
-        settingModal.value.openModal();
-    } else if (link === '/SecurityModal') {
-        securityModal.value.openModal();
-    } else if (link === '/PaymentsModal') {
-        paymentsModal.value.openModal();
-    } else if (link === '/AccessModal') {
-        accessModal.value.openModal();
-    } else if (link === '/CurrencyModal') {
-        currencyModal.value.openModal();
-    } else if (link === '/NotificationsModals') {
-        notificationsModals.value.openModal();
-    } else if (link === '/PrivacySharing') {
-        privacysharing.value.openModal();
-    } else if (link === '/Guide') {
-        guide.value.openModal();
-    } else if (link === '/GiftModal') {
-        giftModal.value.openModal();
-    } else if (link === '/Suggestfriend') {
-        suggestfriend.value.openModal();
-    } else if (link === '/SupportModal') {
-        supportModal.value.openModal();
-    } else if (link === '/ReportModal') {
-        reportModal.value.openModal();
-    } else if (link === '/HowItWorksModal') {
-        howItWorksModal.value.openModal();
-    } else if (link === '/FeedbackModal') {
-        feedbackModal.value.openModal();
-    } else if (link === '/Terms') {
-        terms.value.openModal();
-    } else if (link === '/Policy') {
-        policy.value.openModal();
-    } else {
-        goToPage(link);
+            };
+
+            const modalRef = modalMap[link];
+            if (modalRef) {
+                this.$refs[modalRef].openModal();
+            } else {
+                this.goToPage(link);
+            }
+        }
     }
 };
-const userProfileImage = ref('/avatar-2.png');
-const userName = ref('Zahra Azizi');
-
-const settingsItems = [
-    {title: "setting.personalInfo", icon: "mdi-account", link: "/SettingModal"},
-    {title: "setting.loginSecurity", icon: "mdi-security", link: "/SecurityModal"},
-    {title: "setting.payments", icon: "mdi-credit-card", link: "/PaymentsModal"},
-    {title: "setting.access", icon: "mdi-lock", link: "/AccessModal"},
-    {title: "setting.currency", icon: "mdi-currency-eur", link: "/CurrencyModal"},
-    {title: "setting.notifications", icon: "mdi-bell", link: "/NotificationsModals"},
-    {title: "setting.privacySharing", icon: "mdi-lock-outline", link: "/PrivacySharing"}
-];
-
-const referralItems = [
-    {title: "setting.giftCard", icon: "mdi-gift", link: "/GiftModal"},
-    {title: "setting.referHost", icon: "mdi-account-group", link: "/Suggestfriend"}
-];
-
-const supportItems = [
-    {title: "setting.supportCenter", icon: "mdi-headset", link: "/SupportModal"},
-    {title: "setting.reportIssues", icon: "mdi-alert", link: "/ReportModal"},
-    {title: "setting.howItWorks", icon: "mdi-information", link: "/HowItWorksModal"},
-    {title: "setting.feedback", icon: "mdi-comment", link: "/FeedbackModal"}
-];
-
-const policyItems = [
-    {title: "setting.termsOfService", icon: "mdi-file-document", link: "/Terms"},
-    {title: "setting.privacyPolicy", icon: "mdi-lock-check", link: "/Policy"}
-];
 </script>
 
 <style scoped>
@@ -315,5 +313,4 @@ const policyItems = [
     font-size: 16px;
     color: red;
 }
-
 </style>

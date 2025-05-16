@@ -83,12 +83,12 @@ export default {
         },
 
         showSuccess(message) {
-            this.$store.dispatch('showNotification', {
+            this.$emit('show-alert', {
                 type: 'success',
-                message: message
+                message: message,
+                duration: 3000
             });
         },
-
         showAlert(message) {
             this.$store.dispatch('showNotification', {
                 type: 'warning',

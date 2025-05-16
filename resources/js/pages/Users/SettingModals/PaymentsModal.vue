@@ -2,7 +2,7 @@
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card class="modal-container">
             <v-card-title class="header">
-                <span>{{ translate ('payments.title') }}</span>
+                <span>{{ translate('payments.title') }}</span>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
@@ -20,10 +20,8 @@
                             </v-list-item-title>
                         </v-list-item>
                         <v-list-item @click="openOnlinePaymentModal">
-
                             <v-list-item-title>
                                 <v-icon class="icon">mdi-credit-card</v-icon>
-
                                 {{ translate('payments.onlinePayment') }}
                             </v-list-item-title>
                         </v-list-item>
@@ -31,7 +29,6 @@
                 </div>
 
                 <div class="your-payments">
-
                     <h3 class="section-title">{{ translate('payments.yourPayments') }}</h3>
                     <v-divider class="my-2"></v-divider>
                     <v-btn block @click="goToPage('/UserFinance')" class="action-btn">
@@ -61,6 +58,7 @@
                             outlined
                             dense
                             required
+                            :rules="amountRules"
                         ></v-text-field>
                         <v-card-actions>
                             <v-spacer></v-spacer>
@@ -84,6 +82,8 @@
                             outlined
                             dense
                             required
+                            :rules="cardNumberRules"
+                            mask="####-####-####-####"
                         ></v-text-field>
                         <v-text-field
                             v-model="expiryDate"
@@ -91,6 +91,8 @@
                             outlined
                             dense
                             required
+                            :rules="expiryDateRules"
+                            mask="##/##"
                         ></v-text-field>
                         <v-text-field
                             v-model="cvv"
@@ -99,6 +101,8 @@
                             outlined
                             dense
                             required
+                            :rules="cvvRules"
+                            mask="###"
                         ></v-text-field>
                         <v-card-actions>
                             <v-spacer></v-spacer>
@@ -134,85 +138,149 @@
                 </v-card-text>
             </v-card>
         </v-dialog>
+
+        <v-snackbar
+            v-model="showAlert"
+            :color="alertColor"
+            timeout="3000"
+            top
+            right
+        >
+            {{ alertMessage }}
+            <template v-slot:action="{ attrs }">
+                <v-btn
+                    text
+                    v-bind="attrs"
+                    @click="showAlert = false"
+                >
+                    <v-icon>mdi-close</v-icon>
+                </v-btn>
+            </template>
+        </v-snackbar>
     </v-dialog>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+//Todo:walletCharge:amount
+//Todo:onlinePayment:cardNumber/expiryDate/cvv/amount/transactionId
+//Todo:coupons:code/discount/validUntil/image
+//Todo:applyCoupon:code/discountAmount/message
+//Todo:validationMessages:amountRequired/cardNumberRequired/cardNumberValid:must be 16 digits/expiryDateRequired/cvvRequired
 
-import {ref} from 'vue';
-import {useRouter} from 'vue-router';
-import {translate} from "@/store/languageStore.js";
-import {Inertia} from "@inertiajs/inertia";
+import { translate } from "@/store/languageStore";
 
-const isModalOpen = ref(false);
-const isWalletChargeModalOpen = ref(false);
-const isOnlinePaymentModalOpen = ref(false);
-const isCouponsModalOpen = ref(false);
-const chargeAmount = ref('');
-const cardNumber = ref('');
-const expiryDate = ref('');
-const cvv = ref('');
-const coupons = ref([
-    {code: 'SUMMER2023', discount: 5, image: '/coupon1.jpg'},
-    {code: 'WINTER2023', discount: 10, image: '/coupon3.jpg'},
-]);
+export default {
+    name: 'PaymentModal',
+    data() {
+        return {
+            isModalOpen: false,
+            isWalletChargeModalOpen: false,
+            isOnlinePaymentModalOpen: false,
+            isCouponsModalOpen: false,
+            chargeAmount: '',
+            cardNumber: '',
+            expiryDate: '',
+            cvv: '',
+            coupons: [
+                {code: 'SUMMER2023', discount: 5, image: '/coupon1.jpg'},
+                {code: 'WINTER2023', discount: 10, image: '/coupon3.jpg'},
+            ],
+            showAlert: false,
+            alertMessage: '',
+            alertColor: 'success',
+            amountRules: [
+                v => !!v || this.translate('payments.amountRequired'),
+                v => (v && v > 0) || this.translate('payments.amountPositive')
+            ],
+            cardNumberRules: [
+                v => !!v || this.translate('payments.cardNumberRequired'),
+                v => (v && v.length === 19) || this.translate('payments.cardNumberValid')
+            ],
+            expiryDateRules: [
+                v => !!v || this.translate('payments.expiryDateRequired'),
+                v => /^\d{2}\/\d{2}$/.test(v) || this.translate('payments.expiryDateValid')
+            ],
+            cvvRules: [
+                v => !!v || this.translate('payments.cvvRequired'),
+                v => (v && v.length === 3) || this.translate('payments.cvvValid')
+            ]
+        }
+    },
+    methods: {
+        translate,
 
-const applyCoupon = (coupon) => {
-    console.log('Coupon applied:', coupon.code);
-    closeCouponsModal();
-};
+        openModal() {
+            this.isModalOpen = true;
+        },
+        closeModal() {
+            this.isModalOpen = false;
+        },
+        openWalletChargeModal() {
+            this.isWalletChargeModalOpen = true;
+        },
+        closeWalletChargeModal() {
+            this.isWalletChargeModalOpen = false;
+            this.chargeAmount = '';
+        },
+        openOnlinePaymentModal() {
+            this.isOnlinePaymentModalOpen = true;
+        },
+        closeOnlinePaymentModal() {
+            this.isOnlinePaymentModalOpen = false;
+            this.cardNumber = '';
+            this.expiryDate = '';
+            this.cvv = '';
+        },
+        openCouponsModal() {
+            this.isCouponsModalOpen = true;
+        },
+        closeCouponsModal() {
+            this.isCouponsModalOpen = false;
+        },
+        applyCoupon(coupon) {
+            navigator.clipboard.writeText(coupon.code).then(() => {
+                this.showAlertMessage(this.translate('payments.couponCopied'), 'success');
+            }).catch(() => {
+                this.showAlertMessage(this.translate('payments.copyFailed'), 'error');
+            });
+            this.closeCouponsModal();
+        },
+        goToPage(link) {
+            this.$inertia.visit(link);
+        },
+        submitWalletCharge() {
+            if (!this.chargeAmount || this.chargeAmount <= 0) {
+                this.showAlertMessage(this.translate('payments.amountInvalid'), 'error');
+                return;
+            }
+            this.showAlertMessage(this.translate('payments.walletChargeSuccess'), 'success');
+            this.closeWalletChargeModal();
+        },
+        submitOnlinePayment() {
+            if (!this.validateCard()) {
+                this.showAlertMessage(this.translate('payments.cardInvalid'), 'error');
+                return;
+            }
 
-const router = useRouter();
+            console.log('Online payment:', this.cardNumber, this.expiryDate, this.cvv);
+            this.showAlertMessage(this.translate('payments.paymentSuccess'), 'success');
+            this.closeOnlinePaymentModal();
+        },
+        validateCard() {
+            return this.cardNumber && this.cardNumber.length === 19 &&
+                this.expiryDate && /^\d{2}\/\d{2}$/.test(this.expiryDate) &&
+                this.cvv && this.cvv.length === 3;
+        },
+        showAlertMessage(message, color) {
+            this.alertMessage = message;
+            this.alertColor = color;
+            this.showAlert = true;
+        },
 
-const openModal = () => {
-    isModalOpen.value = true;
-};
-
-const closeModal = () => {
-    isModalOpen.value = false;
-};
-
-const openWalletChargeModal = () => {
-    isWalletChargeModalOpen.value = true;
-};
-
-const closeWalletChargeModal = () => {
-    isWalletChargeModalOpen.value = false;
-};
-
-const openOnlinePaymentModal = () => {
-    isOnlinePaymentModalOpen.value = true;
-};
-
-const closeOnlinePaymentModal = () => {
-    isOnlinePaymentModalOpen.value = false;
-};
-
-const openCouponsModal = () => {
-    isCouponsModalOpen.value = true;
-};
-
-const closeCouponsModal = () => {
-    isCouponsModalOpen.value = false;
-};
-
-const goToPage = (link) => {
-    Inertia.visit(link);
-};
-
-const submitWalletCharge = () => {
-    console.log('شارژ کیف پول:', chargeAmount.value);
-    closeWalletChargeModal();
-};
-
-const submitOnlinePayment = () => {
-    console.log('پرداخت آنلاین:', cardNumber.value, expiryDate.value, cvv.value);
-    closeOnlinePaymentModal();
-};
-
-defineExpose({openModal});
+    }
+}
 </script>
+
 <style scoped>
 .modal-container {
     border-radius: 15px !important;
@@ -294,7 +362,6 @@ defineExpose({openModal});
     color: #8c9eff;
     size: 120px;
 }
-
 
 @media (max-width: 600px) {
     .section-title {

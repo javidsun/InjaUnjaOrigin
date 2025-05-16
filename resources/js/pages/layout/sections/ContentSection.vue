@@ -1,37 +1,41 @@
 <template>
-    <v-row class="content-section">
-        <v-col cols="12" md="7" class="move-down">
-            <Group :groupImages="images.groups" @selectGroup="handleGroupSelect" />
-            <div class="divider"></div>
-            <div v-if="isMobile || isExpanded">
+    <div>
+        <v-row class="content-section">
+            <v-col cols="12" :md="isGroupSelected && !isExpanded ? 8 : 12"
+                   class="move-down"
+                   :class="{
+                       'desktop-centered': !isGroupSelected && !isMobile,
+                       'left-content': isGroupSelected && !isExpanded
+                   }">
+                <Group :groupImages="images.groups"
+                       @selectGroup="handleGroupSelect"
+                       :selectedGroup="selectedGroup"
+                       :is-expanded="isExpanded" />
+                <div class="divider"></div>
+
                 <Advertisements
-                    v-if="selectedGroup === null"
+                    v-if="!isExpanded"
                     :advertisements="images.advertisements"
-                    :class="{ 'expanded-advertisements': isExpanded }"
+                    :class="{ 'shrunk-ads': isGroupSelected }"
                 />
-                <div v-else class="selected-group-content" :class="{ 'expanded': isExpanded }">
+            </v-col>
+
+            <v-col v-if="isGroupSelected && !isMobile && !isExpanded" cols="12" md="4" class="selected-group-side">
+                <div class="selected-group-content">
                     <component :is="selectedComponent" @close="handleClose" @expand="handleExpand" />
                 </div>
-            </div>
+            </v-col>
 
-            <div v-else>
-                <Advertisements :advertisements="images.advertisements" />
-            </div>
-        </v-col>
-
-        <v-col cols="12" md="5" class="main-banner-container d-none d-md-block">
-            <MainBanner v-if="isExpanded || selectedGroup === null" :bannerImage="images.mainBanner" />
-            <div v-else class="selected-group-content">
+            <v-col v-if="isExpanded" cols="12" class="expanded-content">
                 <component :is="selectedComponent" @close="handleClose" @expand="handleExpand" />
-            </div>
-        </v-col>
-    </v-row>
+            </v-col>
+        </v-row>
+    </div>
 </template>
 
 <script>
 import Group from "../sections/Groups/Groups.vue";
 import Advertisements from "./Advertisements.vue";
-import MainBanner from "./MainBanner.vue";
 import TravelersContent from "./Groups/Travel Ads/TravelersContent.vue";
 import HousesContent from "./Groups/House Ads/HousesContent.vue";
 import VehiclesContent from "./Groups/Vehicles Ads/VehiclesContent.vue";
@@ -42,7 +46,6 @@ export default {
     components: {
         Group,
         Advertisements,
-        MainBanner: MainBanner,
         TravelersContent,
         HousesContent,
         VehiclesContent,
@@ -51,16 +54,16 @@ export default {
     data() {
         return {
             images: {
-                mainBanner: "untitled-design-5-110.png",
                 groups: [
-                    "untitled-design-20-250.png",
-                    "untitled-design-20-230.png",
-                    "untitled-design-20-240.png",
-                    "Untitled design (10) 8.png",
+                    "Traveler.ico",
+                    "House.ico",
+                    "Vehicles.ico",
+                    "Event.ico",
                 ],
                 advertisements: [
                     { image: "untitled-design-18-60.png", text: "First advertisement text" },
                     { image: "untitled-design-19-20.png", text: "Second advertisement text" },
+                    { image: "untitled-design-19-21.png", text: "third advertisement text" },
                 ],
             },
             isExpanded: false,
@@ -82,6 +85,9 @@ export default {
                 this.handleError("Error determining selected component", error);
                 return null;
             }
+        },
+        isGroupSelected() {
+            return this.selectedGroup !== null;
         }
     },
     mounted() {
@@ -110,6 +116,7 @@ export default {
         handleClose() {
             try {
                 this.selectedGroup = null;
+                this.isExpanded = false;
                 this.$emit('groupClosed');
             } catch (error) {
                 this.handleError("Error closing group", error);
@@ -135,12 +142,36 @@ export default {
                 message: message,
                 error: error?.message || 'Unknown error'
             });
-        }
+        },
     }
 }
 </script>
 
 <style scoped>
+.left-content {
+    animation: slideLeft 0.5s ease-out forwards;
+}
+@keyframes slideLeft {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-16.66%);
+    }
+}
+.expanded-content {
+    margin-top: 30px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.shrunk-ads {
+    transform: scale(0.5);
+    transform-origin: center;
+    margin: 0 auto;
+    width: 50%;
+}
+
+
 .divider {
     height: 1px;
     width: 90%;
@@ -152,9 +183,12 @@ export default {
 }
 .content-section {
     margin-top: 30px;
+    position: relative;
+    z-index: 2;
 }
+
 .selected-group-content.expanded {
-    max-width: 100%;
+    max-width: 5%;
     margin: 0 auto;
 }
 .selected-group-content {
@@ -163,8 +197,61 @@ export default {
     align-items: center;
     padding: 20px;
 }
-.expanded-advertisements {
-    max-width: 100%;
-    margin: 0 auto;
+
+.desktop-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.selected-group-side {
+    animation: slideFromRight 0.5s ease-out forwards;
+    margin-top: 30px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+@keyframes slideFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (min-width: 960px) {
+    .left-content {
+        animation: none;
+        transform: none;
+    }
+
+    .shrunk-ads {
+        animation: none;
+        transform: none;
+    }
+
+    :deep(.advertisement-item) {
+        width: 200% !important;
+        max-width: 1200px !important;
+        margin: 0 auto;
+    }
+    .desktop-centered .group-row {
+        justify-content: center;
+    }
+    .desktop-centered .divider {
+        width: 70%;
+        margin: 0 auto;
+    }
 }
 </style>

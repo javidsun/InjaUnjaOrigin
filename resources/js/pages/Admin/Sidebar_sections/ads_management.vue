@@ -7,7 +7,6 @@
                 </div>
             </v-col>
             <v-spacer />
-            <Searchbar />
             <v-spacer />
             <Darkmood class="darkmood"/>
             <LanguageSwitcher class="language" />
@@ -303,14 +302,12 @@ import { translate } from "@/store/languageStore";
 import Sidebar from "../Sidebar.vue";
 import { ref,reactive, computed } from 'vue';
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
-import Searchbar from "../../layout/Header/search/Searchbar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
 
 export default {
     components: {
         Sidebar,
-        Searchbar,
         Darkmood,
         LanguageSwitcher
     },

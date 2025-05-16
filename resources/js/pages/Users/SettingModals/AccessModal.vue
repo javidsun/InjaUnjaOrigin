@@ -36,43 +36,67 @@
     </v-dialog>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+//Todo:{zoomLevel/panDirection
 
-import {ref} from 'vue';
-import {useRouter} from 'vue-router';
-import {translate} from "@/store/languageStore.js";
-import {Inertia} from "@inertiajs/inertia";
+import { translate } from "@/store/languageStore";
 
-const isModalOpen = ref(false);
-const router = useRouter();
+export default {
+    name: 'Access',
 
-const openModal = () => {
-    isModalOpen.value = true;
-};
+    data() {
+        return {
+            isModalOpen: false,
+            zoomLevel: 5,
+            panDirection: 0,
+            panLabels: ['Up', 'Right', 'Down', 'Left']
+        }
+    },
 
-const closeModal = () => {
-    isModalOpen.value = false;
-};
+    methods: {
+        translate,
 
-const goToPage = (link) => {
-    Inertia.visit(link);
-};
+        openModal() {
+            try {
+                this.isModalOpen = true;
+            } catch (error) {
+                this.handleError('Failed to open modal', error);
+            }
+        },
 
-const zoomLevel = ref(5);
-const panDirection = ref(0);
+        closeModal() {
+            try {
+                this.isModalOpen = false;
+            } catch (error) {
+                this.handleError('Failed to close modal', error);
+            }
+        },
 
-const updateZoom = () => {
-    console.log(`Zoom Level: ${zoomLevel.value}`);
-};
+        updateZoom() {
+            try {
+                //Todo: Send zoom level to backend
+                console.log(`Zoom Level: ${this.zoomLevel}`);
+            } catch (error) {
+                this.handleError('Failed to update zoom', error);
+            }
+        },
 
-const panLabels = ['Up', 'Right', 'Down', 'Left'];
+        updatePan() {
+            try {
+                //Todo: Send pan direction to backend
+                console.log(`Pan Direction: ${this.panLabels[this.panDirection]}`);
+            } catch (error) {
+                this.handleError('Failed to update pan', error);
+            }
+        },
 
-const updatePan = () => {
-    console.log(`Pan Direction: ${panLabels[panDirection.value]}`);
-};
+        handleError(message, error) {
+            console.error(message, error);
+            this.$emit('error', { message, error });
+        }
+    },
 
-defineExpose({openModal});
+}
 </script>
 
 <style scoped>

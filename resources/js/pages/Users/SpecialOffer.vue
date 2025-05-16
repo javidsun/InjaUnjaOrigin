@@ -31,7 +31,6 @@
                         <div class="carousel-content">
                             <h3>{{ translate('AdsCarousel.ModernHouse1') }}</h3>
                             <p>{{ translate('AdsCarousel.ModernHouseDescription1') }}</p>
-
                         </div>
                     </v-carousel-item>
                 </v-carousel>
@@ -54,44 +53,49 @@
     </v-container>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+//Todo:title/description/image/link
 
-import {ref} from "vue";
-import {translate} from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
-const specialOffer = ref({
-    title: "پیشنهاد ویژه برای شما",
-    description: "یک خانه شیک و زیبا برای اجاره.",
-    image: "/ads/special-offer.jpg",
-    link: "/ads/special",
-});
-
-const latestAds = ref([
-    {
-        title: "خانه مدرن شماره 1",
-        description: "خانه‌ای مدرن با امکانات کامل.",
-        image: "/ads/house1.jpg",
-        link: "/ads/1",
+export default {
+    data() {
+        return {
+            specialOffer: {
+                title: "پیشنهاد ویژه برای شما",
+                description: "یک خانه شیک و زیبا برای اجاره.",
+                image: "/ads/special-offer.jpg",
+                link: "/ads/special",
+            },
+            latestAds: [
+                {
+                    title: "خانه مدرن شماره 1",
+                    description: "خانه‌ای مدرن با امکانات کامل.",
+                    image: "/ads/house1.jpg",
+                    link: "/ads/1",
+                },
+                {
+                    title: "خانه زیبا شماره 2",
+                    description: "مکانی آرام و زیبا برای اقامت.",
+                    image: "/ads/house2.jpg",
+                    link: "/ads/2",
+                },
+            ],
+            topRatedAd: {
+                title: "خانه برتر",
+                description: "این خانه بیشترین امتیاز را دریافت کرده است.",
+                image: "/ads/top-rated.jpg",
+                link: "/ads/top-rated",
+            },
+        };
     },
-    {
-        title: "خانه زیبا شماره 2",
-        description: "مکانی آرام و زیبا برای اقامت.",
-        image: "/ads/house2.jpg",
-        link: "/ads/2",
+    methods: {
+        translate,
     },
-]);
-
-const topRatedAd = ref({
-    title: "خانه برتر",
-    description: "این خانه بیشترین امتیاز را دریافت کرده است.",
-    image: "/ads/top-rated.jpg",
-    link: "/ads/top-rated",
-});
+};
 </script>
 
 <style scoped>
-
 .dashboard {
     margin-top: 20px;
     font-family: '2 Baran', sans-serif;
@@ -158,3 +162,4 @@ const topRatedAd = ref({
     }
 }
 </style>
+

@@ -403,14 +403,13 @@ export default {
         country: "Country",
         accountInfo: "Account Info",
         saveChanges: "Save Changes",
-        changeAvatar: "Change Avatar",
+        changeAvatar: "Change Image",
         logout: "Log out of account",
         address: "Address",
         emergencyContact: "EmergencyContact",
         idCard: "IdCard",
         passport: "Passport Image",
         saveChanges: "Save Changes",
-        changeAvatar: "Change Avatar",
         logout: "Log out of account",
         address: "Address",
         emergencyContact: "EmergencyContact",
@@ -604,6 +603,7 @@ export default {
 
     },
     setting: {
+        RoleAndPermission:"RoleAndPermission",
         settings: "Settings",
         host: "Host",
         referrals: "Referrals & Credits",

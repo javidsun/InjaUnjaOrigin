@@ -387,7 +387,6 @@ export default {
         idCard: "شماره کارت",
         passport: "عکس پاسپورت",
         saveChanges: "ذخیره تغییرات",
-        changeAvatar: "تغییر عکس پروفایل",
         logout: "خروج از حساب",
         address: "آدرس",
         emergencyContact: "تماس اضطراری",
@@ -761,6 +760,7 @@ export default {
         Image_selection: "انتخاب تصاویر",
     },
     setting: {
+        RoleAndPermission:"نقش و مجوز",
         settings: "تنظیمات",
         host: "میزبان",
         referrals: "ارجاعات و اعتبارات",

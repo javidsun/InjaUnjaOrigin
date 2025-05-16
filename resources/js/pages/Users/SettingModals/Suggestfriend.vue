@@ -29,36 +29,45 @@
     </v-dialog>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+//Todo:title/shareLink/shareButton/shareTitle/shareMessage/shareFallback
 
-import {ref} from 'vue';
-import {translate} from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
-const isfriendModalOpen = ref(false);
+export default {
+    name: 'SuggestFriend',
 
-const openModal = () => {
-    isfriendModalOpen.value = true;
+    data() {
+        return {
+            isfriendModalOpen: false,
+        };
+    },
+
+    methods: {
+        translate,
+
+        openModal() {
+            this.isfriendModalOpen = true;
+        },
+        closeModal() {
+            this.isfriendModalOpen = false;
+        },
+        shareLink() {
+            const url = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: translate('friendInvite.shareTitle'),
+                    text: translate('friendInvite.shareMessage'),
+                    url: url
+                }).catch((error) => console.error("❌ Error sharing:", error));
+            } else {
+                alert(translate('friendInvite.shareFallback'));
+            }
+        }
+    },
+
+    expose: ['openModal']
 };
-
-const closeModal = () => {
-    isfriendModalOpen.value = false;
-};
-
-const shareLink = () => {
-    const url = window.location.href;
-    if (navigator.share) {
-        navigator.share({
-            title: translate('friendInvite.shareTitle'),
-            text: translate('friendInvite.shareMessage'),
-            url: url
-        }).catch((error) => console.error("Error sharing:", error));
-    } else {
-        alert(t('friendInvite.shareFallback'));
-    }
-};
-defineExpose({openModal});
-
 </script>
 
 <style scoped>

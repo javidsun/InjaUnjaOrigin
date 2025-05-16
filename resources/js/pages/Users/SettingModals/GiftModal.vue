@@ -11,8 +11,7 @@
             <v-divider></v-divider>
 
             <v-card-text class="modal-content">
-                <p>{{ translate('giftCard.walletBalance') }}: {{ walletBalance }} {{ translate('giftCard.currency')
-                    }}</p>
+                <p>{{ translate('giftCard.walletBalance') }}: {{ walletBalance }} {{ translate('giftCard.currency') }}</p>
 
                 <v-form @submit.prevent="confirmGiftCardPurchase">
                     <v-text-field
@@ -55,8 +54,7 @@
                         <v-card-text>
                             <div class="gift-card-details">
                                 <p>{{ translate('giftCard.issueDate') }}: {{ new Date().toLocaleDateString() }}</p>
-                                <p>{{ translate('giftCard.amount') }}: {{ giftCardAmount }} {{
-                                    translate('giftCard.currency') }}</p>
+                                <p>{{ translate('giftCard.amount') }}: {{ giftCardAmount }} {{ translate('giftCard.currency') }}</p>
                                 <p>{{ translate('giftCard.giftCardRecipientLabel') }}: {{ giftCardRecipient }}</p>
                                 <p>{{ translate('giftCard.giftCardMessageLabel') }}: {{ giftCardMessage }}</p>
                                 <p>{{ translate('giftCard.expiryDate') }}: {{ expiryDate }}</p>
@@ -112,12 +110,10 @@
                         <v-list-item v-for="(card, index) in giftCards" :key="index">
                             <v-list-item-content>
                                 <v-list-item-title>
-                                    {{ translate('giftCard.amount') }}: {{ card.amount }} {{
-                                    translate('giftCard.currency') }}
+                                    {{ translate('giftCard.amount') }}: {{ card.amount }} {{ translate('giftCard.currency') }}
                                 </v-list-item-title>
                                 <v-list-item-subtitle>
-                                    {{ translate('giftCard.issueDate') }}: {{ new Date(card.date).toLocaleDateString()
-                                    }} <br/>
+                                    {{ translate('giftCard.issueDate') }}: {{ new Date(card.date).toLocaleDateString() }} <br/>
                                     {{ translate('giftCard.expiryDate') }}: {{ card.expiryDate }}
                                 </v-list-item-subtitle>
                             </v-list-item-content>
@@ -134,83 +130,122 @@
     </v-dialog>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+import { translate } from "@/store/languageStore";
 
-import {ref} from 'vue';
-import {translate} from "@/store/languageStore.js";
+export default {
+    data() {
+        return {
+            isModalOpen: false,
+            isHistoryModalOpen: false,
+            isConfirmationModalOpen: false,
+            giftCardAmount: 0,
+            giftCardRecipient: '',
+            giftCardMessage: '',
+            walletBalance: 150,
+            expiryDate: '',
+            giftCards: []
+        }
+    },
+    methods: {
+        translate,
 
-const isModalOpen = ref(false);
-const isHistoryModalOpen = ref(false);
-const isConfirmationModalOpen = ref(false);
-const giftCardAmount = ref(0);
-const giftCardRecipient = ref('');
-const giftCardMessage = ref('');
-const walletBalance = ref(150);
-const expiryDate = ref('');
-const giftCards = ref([]);
+        calculateExpiryDate() {
+            try {
+                const expiry = new Date();
+                expiry.setMonth(expiry.getMonth() + 3);
 
-const calculateExpiryDate = () => {
-    const expiry = new Date();
-    expiry.setMonth(expiry.getMonth() + 3);
+                const year = expiry.getFullYear();
+                const month = String(expiry.getMonth() + 1).padStart(2, '0');
+                const day = String(expiry.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            } catch (error) {
+                console.error('Error calculating expiry date:', error);
+                return '';
+            }
+        },
+        openModal() {
+            try {
+                this.isModalOpen = true;
+                this.expiryDate = this.calculateExpiryDate();
+            } catch (error) {
+                console.error('Error opening modal:', error);
+            }
+        },
+        closeModal() {
+            try {
+                this.isModalOpen = false;
+                this.giftCardAmount = 0;
+                this.giftCardRecipient = '';
+                this.giftCardMessage = '';
+            } catch (error) {
+                console.error('Error closing modal:', error);
+            }
+        },
+        confirmGiftCardPurchase() {
+            try {
+                if (this.giftCardAmount > this.walletBalance) {
+                    alert(this.translate('giftCard.insufficientBalance'));
+                    return;
+                }
 
-    const year = expiry.getFullYear();
-    const month = String(expiry.getMonth() + 1).padStart(2, '0');
-    const day = String(expiry.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-};
+                this.isConfirmationModalOpen = true;
+            } catch (error) {
+                console.error('Error confirming gift card purchase:', error);
+            }
+        },
+        cancelPurchase() {
+            try {
+                this.isConfirmationModalOpen = false;
+            } catch (error) {
+                console.error('Error canceling purchase:', error);
+            }
+        },
+        viewGiftCardHistory() {
+            try {
+                this.isHistoryModalOpen = true;
+            } catch (error) {
+                console.error('Error viewing gift card history:', error);
+            }
+        },
+        closeHistoryModal() {
+            try {
+                this.isHistoryModalOpen = false;
+            } catch (error) {
+                console.error('Error closing history modal:', error);
+            }
+        },
+        async sendGiftCard() {
+            try {
+                const url = window.location.href;
+                const giftCardDetails = `Amount: ${this.giftCardAmount} ${this.translate('giftCard.currency')}, Recipient: ${this.giftCardRecipient}, Expiry Date: ${this.expiryDate}`;
 
-const openModal = () => {
-    isModalOpen.value = true;
-    expiryDate.value = calculateExpiryDate();
-};
+                if (navigator.share) {
+                    await navigator.share({
+                        title: this.translate('friendInvite.shareTitle'),
+                        text: `${this.translate('friendInvite.shareMessage')} - ${giftCardDetails}`,
+                        url: url
+                    });
+                } else {
+                    alert(this.translate('friendInvite.shareFallback'));
+                }
 
-const closeModal = () => {
-    isModalOpen.value = false;
-    giftCardAmount.value = 0;
-    giftCardRecipient.value = '';
-    giftCardMessage.value = '';
-};
+                this.giftCards.push({
+                    amount: this.giftCardAmount,
+                    recipient: this.giftCardRecipient,
+                    date: new Date().toISOString(),
+                    expiryDate: this.expiryDate
+                });
 
-const confirmGiftCardPurchase = () => {
-    if (giftCardAmount.value > walletBalance.value) {
-        alert(translate('giftCard.insufficientBalance'));
-        return;
+                this.closeModal();
+                this.isConfirmationModalOpen = false;
+            } catch (error) {
+                console.error('Error sending gift card:', error);
+            }
+        }
     }
-
-    isConfirmationModalOpen.value = true;
-};
-
-const cancelPurchase = () => {
-    isConfirmationModalOpen.value = false;
-};
-
-const viewGiftCardHistory = () => {
-    isHistoryModalOpen.value = true;
-};
-
-const closeHistoryModal = () => {
-    isHistoryModalOpen.value = false;
-};
-
-const sendGiftCard = () => {
-    const url = window.location.href;
-    const giftCardDetails = `Amount: ${giftCardAmount.value} ${translate('giftCard.currency')}, Recipient: ${giftCardRecipient.value}, Expiry Date: ${expiryDate.value}`;
-
-    if (navigator.share) {
-        navigator.share({
-            title: translate('friendInvite.shareTitle'),
-            text: `${translate('friendInvite.shareMessage')} - ${giftCardDetails}`,
-            url: url
-        }).catch((error) => console.error("Error sharing:", error));
-    } else {
-        alert(t('friendInvite.shareFallback'));
-    }
-};
-
-defineExpose({openModal});
+}
 </script>
-
 
 <style scoped>
 .gift-card-details {
@@ -233,7 +268,6 @@ defineExpose({openModal});
     transform: rotate(90deg);
 }
 
-
 .image-container {
     margin-bottom: 1rem;
 }
@@ -248,5 +282,4 @@ defineExpose({openModal});
     padding: 2rem;
     background-color: #3b3b3b;
 }
-
 </style>

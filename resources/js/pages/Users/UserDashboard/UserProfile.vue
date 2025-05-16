@@ -14,12 +14,11 @@
             <v-row class="profile-header">
                 <v-col cols="12" class="text-center">
                     <UploadAvatar/>
-
                     <h2 class="user-name">{{ userName }}</h2>
                     <p class="user-email">{{ userEmail }}</p>
+                    <p class="tip-text">For more trust, it's better to use your real photo</p>
                 </v-col>
             </v-row>
-
 
             <v-row class="profile-actions1">
                 <v-col cols="5">
@@ -34,26 +33,41 @@
                     <h3>{{ translate('profile.accountInfo') }}</h3>
                     <v-form v-if="isEditing" @submit.prevent="saveProfile" class="profile-info3">
                         <v-list class="profile-info3">
-
                             <v-list-item v-for="(item, index) in editableInfo" :key="index"
                                          class="fade-in profile-info">
                                 <v-list-item-content>
                                     <v-list-item-title class="edit">
                                         {{ translate(item.label) }}:
                                         <template v-if="item.label === 'profile.passport'">
+                                            <v-btn color="primary" @click="documentDialog = true">
+                                                Attach
+                                            </v-btn>
+
+                                            <v-dialog v-model="documentDialog" max-width="500">
+                                                <v-card>
+                                                    <v-card-title>Select Document Type</v-card-title>
+                                                    <v-card-actions>
+                                                        <v-btn color="primary" @click="selectDocument('passport')">Passport</v-btn>
+                                                        <v-btn color="primary" @click="selectDocument('license')">Driver License</v-btn>
+                                                        <v-btn color="primary" @click="selectDocument('id')">ID Card</v-btn>
+                                                    </v-card-actions>
+                                                </v-card>
+                                            </v-dialog>
+
                                             <v-file-input
+                                                v-if="selectedDocumentType"
                                                 v-model="passportFile"
+                                                :label="`Upload ${selectedDocumentType}`"
                                                 accept=".jpg,.png,.pdf"
-                                                label="Upload Passport"
                                                 outlined
                                                 dense
-                                                :rules="getValidationRules('profile.passport')"
                                                 @change="previewPassport"
                                             />
+
                                             <v-img
-                                                v-if="item.preview"
-                                                :src="item.preview"
-                                                alt="Passport Preview"
+                                                v-if="passportPreview"
+                                                :src="passportPreview"
+                                                alt="Document Preview"
                                                 max-width="100"
                                                 class="passport-preview"
                                             />
@@ -84,7 +98,6 @@
                                     </v-chip>
                                 </v-list-item-title>
                             </v-list-item-content>
-
                             <v-img
                                 v-if="item.label === 'profile.passport' && passportPreview"
                                 :src="passportPreview"
@@ -93,7 +106,6 @@
                                 class="passport-preview"
                             />
                         </v-list-item>
-
                     </v-list>
                 </v-col>
             </v-row>
@@ -114,155 +126,165 @@
     </Layout>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+//Todo:username/billingEmail/passport/contact/taxId/address/image
 
-import {ref, onMounted} from "vue";
 import Layout from "../Layout.vue";
 import Footer from "../../layout/Footer.vue";
-import {translate} from "@/store/languageStore.js";
 import UploadAvatar from "../UploadAvatar.vue";
+import { translate } from "@/store/languageStore";
 
-const userProfileImage = ref("/avatar-2.png");
-const userName = ref("Zahra Azizi");
-const userEmail = ref("zahra@example.com");
+export default {
+    components: {
+        Layout,
+        Footer,
+        UploadAvatar
+    },
+    data() {
+        return {
 
-const userInfo = ref([
-    {label: "profile.username", value: "", icon: "mdi-account", status: "confirmed"},
-    {label: "profile.billingEmail", value: "", icon: "mdi-email", status: "confirmed"},
-    {label: "profile.passport", value: null, icon: "mdi-card-account-details", status: "not confirmed"},
-    {label: "profile.contact", value: "", icon: "mdi-phone", status: "confirmed"},
-    {label: "profile.taxId", value: "", icon: "mdi-numeric", status: "confirmed"},
-    {label: "profile.language", value: "", icon: "mdi-translate", status: "confirmed"},
-    {label: "profile.country", value: "", icon: "mdi-map-marker", status: "confirmed"},
-    {label: "profile.address", value: "", icon: "mdi-map-marker", status: "Awaiting confirmation"},
-    {label: "profile.emergencyContact", value: "", icon: "mdi-phone", status: "Awaiting confirmation"},
-    {label: "profile.idCard", value: "", icon: "mdi-card-account-details", status: "not confirmed"},
-]);
+            userProfileImage: "/avatar-2.png",
+            userName: "Zahra Azizi",
+            userEmail: "zahra@example.com",
+            passportFile: null,
+            passportPreview: null,
+            mandatoryModal: false,
+            isEditing: false,
+            documentDialog: false,
+            selectedDocumentType:null,
+            menuItems: [
+            ],
+            userInfo: [
+                {label: "profile.username", value: "", status: "confirmed"},
+                {label: "profile.billingEmail", value: "", status: "confirmed"},
+                {label: "profile.passport", value: null, status: "not confirmed"},
+                {label: "profile.contact", value: "", status: "confirmed"},
+                {label: "profile.taxId", value: "", status: "confirmed"},
+                {label: "profile.address", value: "", status: "Awaiting confirmation"},
+            ],
+            editableInfo: []
+        }
+    },
+    mounted() {
+        this.checkMandatoryFields();
+        this.editableInfo = [...this.userInfo];
+    },
+    methods: {
+        translate,
 
-const passportFile = ref(null);
-const passportPreview = ref(null);
-const mandatoryModal = ref(false);
-
-onMounted(() => {
-    checkMandatoryFields();
-});
-
-const checkMandatoryFields = () => {
-    const requiredFields = ["profile.username", "profile.billingEmail", "profile.contact", "profile.passport"];
-    const missingFields = userInfo.value.filter(item => requiredFields.includes(item.label) && !item.value);
-
-    if (missingFields.length > 0) {
-        mandatoryModal.value = true;
-    }
-};
-const previewProfileImage = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            userProfileImage.value = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-};
-
-const previewPassport = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            passportPreview.value = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    } else {
-        passportPreview.value = null;
-    }
-};
-
-const editableInfo = ref([...userInfo.value]);
-
-const isEditing = ref(false);
-
-const editProfile = () => {
-    isEditing.value = !isEditing.value;
-    if (isEditing.value) {
-        editableInfo.value = userInfo.value.map(item => {
-            if (item.label === "profile.passport" && item.preview) {
-                return {...item, preview: item.preview};
+        openDocumentDialog() {
+            this.documentDialog = true;
+        },
+        selectDocument(type) {
+            this.selectedDocumentType = type;
+            this.documentDialog = false;
+        },
+        previewPassport() {
+            if (!this.passportFile) {
+                this.passportPreview = null;
+                return;
             }
-            return item;
-        });
-    }
-};
-const saveProfile = () => {
-    const requiredFields = ["profile.username", "profile.billingEmail", "profile.contact"];
-    const missingFields = editableInfo.value.filter(item => requiredFields.includes(item.label) && (!item.value || item.value === null));
 
-    if (!passportFile.value) {
-        missingFields.push({label: "profile.passport"});
-    }
+            const file = this.passportFile instanceof File ? this.passportFile : this.passportFile[0];
 
-    if (missingFields.length > 0) {
-        mandatoryModal.value = true;
-        return;
-    }
-    userInfo.value = [...editableInfo.value];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.passportPreview = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                this.passportPreview = null;
+            }
+        },
 
-    if (passportFile.value) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            passportPreview.value = e.target.result;
-        };
-        reader.readAsDataURL(passportFile.value);
-    }
+        checkMandatoryFields() {
+            const requiredFields = ["profile.username", "profile.billingEmail", "profile.contact", "profile.passport"];
+            const missingFields = this.userInfo.filter(item => requiredFields.includes(item.label) && !item.value);
 
-    isEditing.value = false;
-};
+            if (missingFields.length > 0) {
+                this.mandatoryModal = true;
+            }
+        },
+        editProfile() {
+            this.isEditing = !this.isEditing;
+            if (this.isEditing) {
+                this.editableInfo = this.userInfo.map(item => {
+                    if (item.label === "profile.passport" && item.preview) {
+                        return {...item, preview: item.preview};
+                    }
+                    return item;
+                });
+            }
+        },
+        saveProfile() {
+            const requiredFields = ["profile.username", "profile.billingEmail", "profile.contact"];
+            const missingFields = this.editableInfo.filter(item => requiredFields.includes(item.label) && (!item.value || item.value === null));
+
+            if (!this.passportFile) {
+                missingFields.push({label: "profile.passport"});
+            }
+
+            if (missingFields.length > 0) {
+                this.mandatoryModal = true;
+                return;
+            }
+            this.userInfo = [...this.editableInfo];
+
+            if (this.passportFile) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.passportPreview = e.target.result;
+                };
+                reader.readAsDataURL(this.passportFile);
+            }
+
+            this.isEditing = false;
+        },
+        getStatusColor(status) {
+            switch (status) {
+                case "confirmed":
+                    return "green";
+                case "Awaiting confirmation":
+                    return "yellow";
+                case "not confirmed":
+                    return "red";
+                default:
+                    return "grey";
+            }
+        },
+        formatDisplayValue(item) {
+            if (item.label === "profile.contact") {
+                return item.value.replace(/(\d{4})(\d{3})(\d{4})/, "+98$1****$3");
+            }
+            return item.value;
+        },
+        getValidationRules(label) {
+            if (label === "profile.username") {
+                return [(v) => !!v || "Username is required"];
+            }
+            if (label === "profile.billingEmail") {
+                return [
+                    (v) => !!v || "Email is required",
+                    (v) => /.+@.+\..+/.test(v) || "Invalid email format",
+                ];
+            }
+            if (label === "profile.contact") {
+                return [
+                    (v) => !!v || "Contact number is required",
+                    (v) => /^\d+$/.test(v) || "The contact number must be numbers only",
+                    (v) => v.length === 11 || "The contact number must be 11 digits",
+                ];
+            }
+            if (label === "profile.passport") {
+                return [(v) => !!v || "Passport upload is required"];
+            }
+            return [];
+        },
 
 
-const getStatusColor = (status) => {
-    switch (status) {
-        case "confirmed":
-            return "green";
-        case "Awaiting confirmation":
-            return "yellow";
-        case "not confirmed":
-            return "red";
-        default:
-            return "grey";
     }
-};
-
-const formatDisplayValue = (item) => {
-    if (item.label === "profile.contact" || item.label === "profile.emergencyContact") {
-        return item.value.replace(/(\d{4})(\d{3})(\d{4})/, "+98$1****$3");
-    }
-    return item.value;
-};
-
-const getValidationRules = (label) => {
-    if (label === "profile.username") {
-        return [(v) => !!v || "Username is required"];
-    }
-    if (label === "profile.billingEmail") {
-        return [
-            (v) => !!v || "Email is required",
-            (v) => /.+@.+\..+/.test(v) || "Invalid email format",
-        ];
-    }
-    if (label === "profile.contact") {
-        return [
-            (v) => !!v || "Contact number is required",
-            (v) => /^\d+$/.test(v) || "The contact number must be numbers only",
-            (v) => v.length === 11 || "The contact number must be 11 digits",
-        ];
-    }
-    if (label === "profile.passport") {
-        return [(v) => !!v || "Passport upload is required"];
-    }
-    return [];
-};
+}
 </script>
 
 <style scoped>
@@ -281,15 +303,10 @@ const getValidationRules = (label) => {
     margin-bottom: 20px;
 }
 
-.profile-avatar img {
-    border-radius: 50%;
-    border: 4px solid #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s;
-}
-
-.profile-avatar img:hover {
-    transform: scale(1.1);
+.tip-text {
+    color: #ff9800;
+    font-style: italic;
+    margin-top: 10px;
 }
 
 .user-name {

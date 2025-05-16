@@ -63,70 +63,71 @@
     </v-dialog>
 </template>
 
-<script setup>
-//TODO : composition --> option & const & error warning
+<script>
+//Todo:questions/contact/id
 
-import { ref, computed } from 'vue';
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
+export default {
+    name: "SupportModal",
+    data() {
+        return {
+            isSupportModalOpen: false,
+            isHelpModalOpen: false,
+            searchQuery: '',
+            selectedQuestion: null,
+            supportQuestions: [
+                { title: 'support.cancelGuest', answer: 'support.cancelGuestAnswer' },
+                { title: 'support.accountSettings', answer: 'support.accountSettingsAnswer' },
+                { title: 'support.refundHost', answer: 'support.refundHostAnswer' },
+                { title: 'support.hostingGoals', answer: 'support.hostingGoalsAnswer' },
+                { title: 'support.prepareListings', answer: 'support.prepareListingsAnswer' },
+                { title: 'support.payments', answer: 'support.paymentsAnswer' },
+                { title: 'support.manageExperiences', answer: 'support.manageExperiencesAnswer' },
+                { title: 'support.coHost', answer: 'support.coHostAnswer' },
+                { title: 'support.billHelp', answer: 'support.billHelpAnswer' },
+            ]
+        };
+    },
+    computed: {
+        filteredQuestions() {
+            return this.supportQuestions.filter((question) =>
+                translate(question.title).toLowerCase().includes(this.searchQuery.toLowerCase())
+            );
+        }
+    },
+    methods: {
+        translate,
 
-const isSupportModalOpen = ref(false);
+        openModal() {
+            this.isSupportModalOpen = true;
+        },
+        closeSupportModal() {
+            this.isSupportModalOpen = false;
+        },
+        openHelpModal(question) {
+            this.selectedQuestion = question;
+            this.isHelpModalOpen = true;
+        },
+        closeHelpModal() {
+            this.isHelpModalOpen = false;
+        },
+        contactSupport() {
+            const url = window.location.href;
+            const supportDetails = translate('support.contactMessage', { query: this.searchQuery });
 
-const openModal = () => {
-    isSupportModalOpen.value = true;
-};
-
-const closeSupportModal = () => {
-    isSupportModalOpen.value = false;
-};
-
-const isHelpModalOpen = ref(false);
-const searchQuery = ref('');
-const selectedQuestion = ref(null);
-
-const supportQuestions = ref([
-    { title: 'support.cancelGuest', answer: 'support.cancelGuestAnswer' },
-    { title: 'support.accountSettings', answer: 'support.accountSettingsAnswer' },
-    { title: 'support.refundHost', answer: 'support.refundHostAnswer' },
-    { title: 'support.hostingGoals', answer: 'support.hostingGoalsAnswer' },
-    { title: 'support.prepareListings', answer: 'support.prepareListingsAnswer' },
-    { title: 'support.payments', answer: 'support.paymentsAnswer' },
-    { title: 'support.manageExperiences', answer: 'support.manageExperiencesAnswer' },
-    { title: 'support.coHost', answer: 'support.coHostAnswer' },
-    { title: 'support.billHelp', answer: 'support.billHelpAnswer' },
-]);
-
-const filteredQuestions = computed(() => {
-    return supportQuestions.value.filter(question =>
-        translate(question.title).toLowerCase().includes(searchQuery.value.toLowerCase())
-    );
-});
-
-const openHelpModal = (question) => {
-    selectedQuestion.value = question;
-    isHelpModalOpen.value = true;
-};
-
-const closeHelpModal = () => {
-    isHelpModalOpen.value = false;
-};
-
-const contactSupport = () => {
-    const url = window.location.href;
-    const supportDetails = translate('support.contactMessage', { query: searchQuery.value });
-
-    if (navigator.share) {
-        navigator.share({
-            title: translate('support.contactTitle'),
-            text: supportDetails,
-            url: url,
-        }).catch((error) => console.error("Error sharing:", error));
-    } else {
-        alert(translate('support.contactFallback'));
+            if (navigator.share) {
+                navigator.share({
+                    title: translate('support.contactTitle'),
+                    text: supportDetails,
+                    url: url,
+                }).catch((error) => console.error("Error sharing:", error));
+            } else {
+                alert(translate('support.contactFallback'));
+            }
+        }
     }
 };
-
-defineExpose({ openModal });
 </script>
 
 <style scoped>

@@ -31,12 +31,6 @@
     <v-main :class="{ 'main-expanded': drawer, 'main-collapsed': !drawer }">
       <v-container fluid >
         <v-row>
-          <v-col cols="9" id="userInfo">
-            <WarningUser />
-          </v-col>
-          <v-col cols="3" id="userSpecifications">
-            <userSpecifications />
-          </v-col>
           <v-col cols="12" id="specialOffer">
             <SpecialOffer class="SpecialOffer" />
           </v-col>
@@ -51,86 +45,90 @@
     <Footer app class="footer">...</Footer>
   </Layout>
 </template>
-<script setup>
-//TODO : composition --> option & const & error warning
 
-import { ref, nextTick } from 'vue';
+
+<script>
 import Footer from "../../layout/Footer.vue";
-import WarningUser from '../../Users/UserDashboard/WarningUser.vue';
-import userSpecifications from '../../Users/UserDashboard/userSpecifications.vue';
 import SpecialOffer from '../SpecialOffer.vue';
-import { translate } from "@/store/languageStore.js";
-import UserProfile from '../../Users/UserDashboard/UserProfile.vue';
+import { translate } from "@/store/languageStore";
 import UserReservations from '../Reserv/UserReservations.vue';
 import Layout from '../Layout.vue';
-import { useRouter } from 'vue-router';
 
-const router = useRouter();
-
-const tutorialCompleted = ref(false);
-const showModal = ref(false);
-const currentStep = ref(0);
-const steps = [
-  { id: "dashboardIcon", message: "Learn the site in ten seconds." },
-  { id: "userInfo", message: "This section displays important information about your account." },
-  { id: "specialOffer", message: "Follow special offers here." },
-  { id: "userReservations", message: "Your recent reservations are in this section." },
-];
-
-const startTutorial = () => {
-  showModal.value = true;
-  highlightStep(steps[currentStep.value]?.id);
-  localStorage.setItem("tutorialShown", "true");
+export default {
+    name: "UserDashboard",
+    components: {
+        Layout,
+        Footer,
+        SpecialOffer,
+        UserReservations,
+    },
+    data() {
+        return {
+            router: this.$router,
+            tutorialCompleted: false,
+            showModal: false,
+            currentStep: 0,
+            steps: [
+                { id: "dashboardIcon", message: "Learn the site in ten seconds." },
+                { id: "userInfo", message: "This section displays important information about your account." },
+                { id: "specialOffer", message: "Follow special offers here." },
+                { id: "userReservations", message: "Your recent reservations are in this section." },
+            ],
+        };
+    },
+    mounted() {
+        if (localStorage.getItem("tutorialShown") !== "true") {
+            this.startTutorial();
+        }
+    },
+    methods: {
+        translate,
+        startTutorial() {
+            this.showModal = true;
+            this.highlightStep(this.steps[this.currentStep]?.id);
+            localStorage.setItem("tutorialShown", "true");
+        },
+        skipTutorial() {
+            this.showModal = false;
+            localStorage.setItem("tutorialShown", "true");
+            this.removeHighlights();
+        },
+        nextStep() {
+            if (this.currentStep < this.steps.length - 1) {
+                this.currentStep++;
+                this.highlightStep(this.steps[this.currentStep]?.id);
+            } else {
+                this.finishTutorial();
+            }
+        },
+        finishTutorial() {
+            this.tutorialCompleted = true;
+            this.showModal = false;
+            this.drawer = true;
+            this.removeHighlights();
+        },
+        removeHighlights() {
+            this.steps.forEach((step) => {
+                const element = document.getElementById(step.id);
+                if (element) {
+                    element.style.outline = '';
+                }
+            });
+        },
+        highlightStep(elementId) {
+            this.$nextTick(() => {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.style.outline = "3px solid #42A5F5";
+                    element.style.transition = "outline 0.3s ease-in-out";
+                    element.scrollIntoView({ behavior: "smooth", block: "center" });
+                } else {
+                    console.error(`Element with id ${elementId} not found.`);
+                }
+            });
+        },
+    },
 };
-
-const skipTutorial = () => {
-  showModal.value = false;
-  localStorage.setItem("tutorialShown", "true");
-  removeHighlights();
-};
-
-const nextStep = () => {
-  if (currentStep.value < steps.length - 1) {
-    currentStep.value++;
-    highlightStep(steps[currentStep.value]?.id);
-  } else {
-    finishTutorial();
-  }
-};
-
-const finishTutorial = () => {
-  tutorialCompleted.value = true;
-  showModal.value = false;
-  drawer.value = true;
-  removeHighlights();
-};
-
-const removeHighlights = () => {
-  steps.forEach(step => {
-    const element = document.getElementById(step.id);
-    if (element) {
-      element.style.outline = '';
-    }
-  });
-};
-
-const highlightStep = (elementId) => {
-  nextTick(() => {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.style.outline = "3px solid #42A5F5";
-      element.style.transition = "outline 0.3s ease-in-out";
-      element.scrollIntoView({ behavior: "smooth", block: "center" });
-    } else {
-      console.error(`Element with id ${elementId} not found.`);
-    }
-  });
-};
-
-const isTutorialShown = localStorage.getItem("tutorialShown") === "true";
-if (!isTutorialShown) {
-  startTutorial();
-}
 </script>
 
 <style scoped>

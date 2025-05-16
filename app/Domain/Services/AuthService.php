@@ -2,7 +2,6 @@
 
 namespace App\Domain\Services;
 
-use App\Domain\Entity;
 use App\Domain\Repositories\UserRepositoryInterface;
 use App\Domain\Services\Auth\RegisterStrategyContract;
 use App\Entities\UserEntity;

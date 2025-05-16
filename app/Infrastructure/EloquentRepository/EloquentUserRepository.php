@@ -23,15 +23,15 @@ class EloquentUserRepository implements UserRepositoryInterface
 
     public function findByProvider(string $provider, string $providerId): ?UserEntity
     {
-        return User::where('provider', $provider)
-            ->where('provider_id', $providerId)->first()
+        return User::where(UserJson::PROVIDER, $provider)
+            ->where(UserJson::PROVIDER_ID, $providerId)->first()
             ->toEntity();
     }
 
     public function get(array $data): UserEntity
     {
-        $userModel = User::where('provider', $data['provider'])
-            ->where('email', $data['email'])
+        $userModel = User::where(UserJson::PROVIDER, $data[UserJson::PROVIDER])
+            ->where(UserJson::EMAIL, $data[UserJson::EMAIL])
             ->first();
 
         if (!$userModel) {
@@ -39,7 +39,7 @@ class EloquentUserRepository implements UserRepositoryInterface
             throw new NotFoundHttpException('Utente non trovato.');
         }
 
-        if ($data['provider'] === UserJson::TRADITIONAL && !Hash::check($data['password'], $userModel->password)) {
+        if ($data[UserJson::PROVIDER] === UserJson::TRADITIONAL && !Hash::check($data[UserJson::PASSWORD], $userModel->password)) {
             Log::warning('Password errata per utente con email: ' . $data['email']);
             throw new UnauthorizedHttpException('', 'Password non corretta.');
         }

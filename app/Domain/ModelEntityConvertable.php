@@ -1,9 +1,8 @@
 <?php
 
-namespace App\DTOs;
+namespace App\Domain;
 
-use App\Domain\Entity;
-use App\Entities\UserEntity;
+use App\Domain\Entity\Entity;
 
 interface ModelEntityConvertable
 {

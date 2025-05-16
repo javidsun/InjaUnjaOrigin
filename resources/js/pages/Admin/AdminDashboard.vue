@@ -57,7 +57,7 @@ import Report from './dashboard_main/Reports.vue'
 import Services from './dashboard_main/Services.vue'
 import functional from './dashboard_main/functional.vue'
 import UserTable from './dashboard_main/UserTable.vue'
-import { translate } from "@/store/languageStore";
+import { translate } from "@/store/languageStore.js";
 
 export default {
     name: 'DashboardLayout',

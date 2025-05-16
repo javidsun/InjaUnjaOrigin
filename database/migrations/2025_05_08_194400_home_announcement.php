@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,26 +12,26 @@ return new class extends Migration
     {
         Schema::create('home_announcement', function (Blueprint $table) {
             $table->ulid('id')->primary();
+
+            // Relazioni
             $table->foreignUlid('user_id')->constrained()->onDelete('cascade');
+            $table->foreignUlid('location_id')->constrained(); // adesso funziona, cerca `locations`
+
+            // Altri campi
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('address');
-            $table->string('city');
-            $table->string('postal_code');
-            $table->string('country');
-            $table->decimal('price-for-night');
+            $table->decimal('price_per_night', 8, 2);
             $table->integer('num_rooms');
             $table->integer('num_bathrooms');
             $table->integer('square_meters');
             $table->integer('max_guests');
-            $table->json('amenities'); // JSON o text, per elencare servizi come 'wifi', 'cucina', 'parcheggio', ecc. JSON è più flessibile)
+            $table->json('amenities'); // lista servizi in formato JSON
             $table->string('main_image_path');
             $table->json('additional_image_paths');
             $table->date('availability_start_date');
             $table->date('availability_end_date');
             $table->boolean('is_active');
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
+            $table->timestamps(); // Questo sostituisce created_at e updated_at manuali
         });
     }
 

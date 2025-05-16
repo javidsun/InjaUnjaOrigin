@@ -104,7 +104,7 @@
 //Todo:  "conversionRate: value/ total /labels:Reservation, Visit
 //revenueByCategory: {categoryKey /revenue
 // geoActivity:cityKey /countryKey /bookings
-import { translate } from "@/store/languageStore";
+import { translate } from "@/store/languageStore.js";
 import ApexChart from "vue3-apexcharts";
 
 export default {

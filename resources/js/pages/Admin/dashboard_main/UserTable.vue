@@ -58,7 +58,7 @@
 <script>
 //Todo: users: [id /fullName /company /role:  (editor/author/maintainer/admin/subscriber) /username /country/contact/email/currentPlan/status/image]
 
-import { translate } from "@/store/languageStore";
+import { translate } from "@/store/languageStore.js";
 
 export default {
     name: 'UserTable',

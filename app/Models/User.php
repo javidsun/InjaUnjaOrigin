@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Constant\TableParametersConst\AuthConst\UserJson;
-use App\Domain\Entity;
-use App\DTOs\ModelEntityConvertable;
+use App\Domain\Entity\Entity;
+use App\Domain\ModelEntityConvertable;
 use App\Entities\UserEntity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -13,6 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticate;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 use Symfony\Component\Uid\Ulid;
 
 /**
@@ -25,7 +26,7 @@ use Symfony\Component\Uid\Ulid;
  */
 class User extends Authenticate implements ModelEntityConvertable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, HasRoles, Notifiable;
 
     /**
      * Indica se gli ID sono auto-incrementanti.
@@ -62,11 +63,11 @@ class User extends Authenticate implements ModelEntityConvertable
      *
      * @var array<int, string>
      */
+    // TODO JAVID : controllo per funzionamento di remember_token e fare documentazione di questo
     protected $hidden = [
         UserJson::PASSWORD,
         'remember_token',
     ];
-
 
     protected static function booted(): void
     {
@@ -89,15 +90,19 @@ class User extends Authenticate implements ModelEntityConvertable
         );
     }
 
-    public static function fromEntity(UserEntity|Entity $entity): self
+    public static function fromEntity(Entity $entity): self
     {
+        if (! $entity instanceof UserEntity) {
+            throw new \InvalidArgumentException('Entity must be an instance of UserEntity.');
+        }
+
         return new self([
-            UserJson::ID => $entity->getId()?->toRfc4122(),
-            UserJson::NAME => $entity->getName(),
-            UserJson::EMAIL => $entity->getEmail(),
-            UserJson::PASSWORD => $entity->getPassword() ? Hash::make($entity->getPassword()) : null,
-            UserJson::PROVIDER => $entity->getProvider(),
-            UserJson::PROVIDER_ID => $entity->getProviderId(),
+            UserJson::ID => $entity->id?->toRfc4122(),
+            UserJson::NAME => $entity->name,
+            UserJson::EMAIL => $entity->email,
+            UserJson::PASSWORD => $entity->password ? Hash::make($entity->password) : null,
+            UserJson::PROVIDER => $entity->provider,
+            UserJson::PROVIDER_ID => $entity->providerId,
         ]);
     }
 

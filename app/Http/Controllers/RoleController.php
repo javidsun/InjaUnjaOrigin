@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Constant\TableParametersConst\AuthConst\UserJson;
-use App\Constant\TableParametersConst\RoleJson;
 use App\Domain\Controllers\Controller;
 use App\Domain\Services\RoleServiceContract;
-use App\Http\Requests\Role\RolePostRequest;
-use Illuminate\Http\JsonResponse;
-use PHPUnit\Event\Code\Throwable;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class RoleController extends Controller
 {
@@ -17,20 +14,10 @@ class RoleController extends Controller
         $this->roleService ??= app(RoleServiceContract::class);
     }
 
-    public function create(RolePostRequest $request): JsonResponse
+    public function index(): Response
     {
-        try {
-            $request->validated()
-                ? $this->roleService->create($request->validated())
-                : throw new \InvalidArgumentException('Invalid data');
-
-            return response()->json([
-                RoleJson::MESSAGE => 'Role created successfully'
-            ]);
-        } catch (\Throwable $throwable) {
-            return response()->json([
-                RoleJson::MESSAGE => $throwable->getMessage()
-            ], 422);
-        }
+        return Inertia::render('Admin/Dashboard', [
+            'user' => auth()->user()->load('roles', 'permissions'),
+        ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Constant\TableParametersConst\AuthConst\UserJson;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -25,9 +26,9 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'nullable|string|email|max:255',
-            'password' => 'nullable|string|min:8',
-            'provider' => 'nullable|string'
+            UserJson::EMAIL => 'nullable|string|email|max:255',
+            UserJson::PASSWORD => 'nullable|string|min:8',
+            UserJson::PROVIDER => 'nullable|string',
         ];
     }
 
@@ -40,5 +41,6 @@ class LoginRequest extends FormRequest
             'message' => 'I dati forniti non sono validi.', // Messaggio più descrittivo
             'errors' => $validator->errors()->toArray(), // Array degli errori specifici per campo
         ], 422)); // Usa 422 per errori di validazione
+        // TODO JAVID : creazione di documentazione
     }
 }

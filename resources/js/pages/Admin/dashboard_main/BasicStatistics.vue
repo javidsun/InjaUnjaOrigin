@@ -19,7 +19,7 @@
 
 <script>
 //Todo:title/ value
-import { translate } from "../../../store/languageStore";
+import { translate } from "../../../store/languageStore.js";
 
 export default {
     name: 'BasicStatistics',

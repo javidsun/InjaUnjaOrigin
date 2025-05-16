@@ -10,6 +10,10 @@ class UserJson
 
     public const USER = 'user';
 
+    public const ROLES = 'roles';
+
+    public const PERMISSIONS = 'permissions';
+
     public const TOKEN = 'token';
 
     public const ID = 'id';

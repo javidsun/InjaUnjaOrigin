@@ -1,76 +1,62 @@
-<?php return array (
-  'beyondcode/laravel-er-diagram-generator' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'BeyondCode\\ErdGenerator\\ErdGeneratorServiceProvider',
-    ),
-  ),
-  'inertiajs/inertia-laravel' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Inertia\\ServiceProvider',
-    ),
-  ),
-  'laravel/pail' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Pail\\PailServiceProvider',
-    ),
-  ),
-  'laravel/sail' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Sail\\SailServiceProvider',
-    ),
-  ),
-  'laravel/sanctum' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Sanctum\\SanctumServiceProvider',
-    ),
-  ),
-  'laravel/socialite' => 
-  array (
-    'aliases' => 
-    array (
-      'Socialite' => 'Laravel\\Socialite\\Facades\\Socialite',
-    ),
-    'providers' => 
-    array (
-      0 => 'Laravel\\Socialite\\SocialiteServiceProvider',
-    ),
-  ),
-  'laravel/tinker' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Tinker\\TinkerServiceProvider',
-    ),
-  ),
-  'nesbot/carbon' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Carbon\\Laravel\\ServiceProvider',
-    ),
-  ),
-  'nunomaduro/collision' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
-    ),
-  ),
-  'nunomaduro/termwind' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Termwind\\Laravel\\TermwindServiceProvider',
-    ),
-  ),
-);
+<?php
+
+return [
+    'beyondcode/laravel-er-diagram-generator' => [
+        'providers' => [
+            0 => 'BeyondCode\\ErdGenerator\\ErdGeneratorServiceProvider',
+        ],
+    ],
+    'inertiajs/inertia-laravel' => [
+        'providers' => [
+            0 => 'Inertia\\ServiceProvider',
+        ],
+    ],
+    'laravel/pail' => [
+        'providers' => [
+            0 => 'Laravel\\Pail\\PailServiceProvider',
+        ],
+    ],
+    'laravel/sail' => [
+        'providers' => [
+            0 => 'Laravel\\Sail\\SailServiceProvider',
+        ],
+    ],
+    'laravel/sanctum' => [
+        'providers' => [
+            0 => 'Laravel\\Sanctum\\SanctumServiceProvider',
+        ],
+    ],
+    'laravel/socialite' => [
+        'aliases' => [
+            'Socialite' => 'Laravel\\Socialite\\Facades\\Socialite',
+        ],
+        'providers' => [
+            0 => 'Laravel\\Socialite\\SocialiteServiceProvider',
+        ],
+    ],
+    'laravel/tinker' => [
+        'providers' => [
+            0 => 'Laravel\\Tinker\\TinkerServiceProvider',
+        ],
+    ],
+    'nesbot/carbon' => [
+        'providers' => [
+            0 => 'Carbon\\Laravel\\ServiceProvider',
+        ],
+    ],
+    'nunomaduro/collision' => [
+        'providers' => [
+            0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
+        ],
+    ],
+    'nunomaduro/termwind' => [
+        'providers' => [
+            0 => 'Termwind\\Laravel\\TermwindServiceProvider',
+        ],
+    ],
+    'spatie/laravel-permission' => [
+        'providers' => [
+            0 => 'Spatie\\Permission\\PermissionServiceProvider',
+        ],
+    ],
+];

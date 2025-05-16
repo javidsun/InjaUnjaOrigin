@@ -2,32 +2,15 @@
 
 namespace App\Entities;
 
-use App\Domain\Entity;
+use App\Domain\Entity\Entity;
 use Symfony\Component\Uid\Ulid;
 
 class RoleEntity extends Entity
 {
     public function __construct(
-        protected ?Ulid   $id,
-        protected string  $name,
-        protected ?string $description = null,
-    )
-    {
+        public ?Ulid $id,
+        public string $name,
+        public string $guardName,
+    ) {
     }
-
-    public function getId(): ?Ulid
-    {
-        return $this->id;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
 }

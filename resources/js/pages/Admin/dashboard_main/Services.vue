@@ -25,7 +25,7 @@
 <script>
 //Todo:title/count/route/active
 
-import { translate } from "@/store/languageStore";
+import { translate } from "@/store/languageStore.js";
 
 export default {
     name: 'ServiceCardsDashboard',

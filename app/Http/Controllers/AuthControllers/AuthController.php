@@ -37,10 +37,10 @@ class AuthController extends Controller
 
             return response()->json([
                 UserJson::USER => [
-                    UserJson::ID => (string) $user->getId(),
-                    UserJson::NAME => $user->getName(),
-                    UserJson::EMAIL => $user->getEmail(),
-                    UserJson::PROVIDER => $user->getProvider(),
+                    UserJson::ID => (string) $user->id,
+                    UserJson::NAME => $user->name,
+                    UserJson::EMAIL => $user->email,
+                    UserJson::PROVIDER => $user->provider,
                 ],
             ]);
         } catch (\Throwable $e) {

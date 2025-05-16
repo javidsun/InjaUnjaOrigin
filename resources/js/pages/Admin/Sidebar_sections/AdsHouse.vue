@@ -33,7 +33,7 @@ import Sidebar from "../Sidebar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
 import Houses from '../../layout/sections/Groups/House Ads/HousesContent.vue';
-import { translate } from "@/store/languageStore";
+import { translate } from "@/store/languageStore.js";
 
 export default {
     name: 'AdsHouse',

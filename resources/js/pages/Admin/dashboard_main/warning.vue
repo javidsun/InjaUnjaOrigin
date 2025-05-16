@@ -2,7 +2,7 @@
     <v-row class="gy-4">
         <v-col cols="12" sm="6" md="3">
             <div class="card-container fontsize">
-                <img src="/public/avatar1.svg" alt="Avatar" class="avatar" />
+                <img src="/avatar1.svg" alt="Avatar" class="avatar" />
                 <v-card class="card-info" @click="handleCardClick('follow-up')">
                     <v-card-text>
                         <h1 class="card-info2">{{ cardData.followUp.count }}</h1>
@@ -14,7 +14,7 @@
 
         <v-col cols="12" sm="6" md="3">
             <div class="card-container fontsize">
-                <img src="/public/avatar4.svg" alt="Avatar" class="avatar avatar4" />
+                <img src="/avatar4.svg" alt="Avatar" class="avatar avatar4" />
                 <v-card class="card-success" @click="handleCardClick('successful')">
                     <v-card-text>
                         <h1 class="card-info2">{{ cardData.successful.count }}</h1>
@@ -25,7 +25,7 @@
         </v-col>
         <v-col cols="12" sm="6" md="3">
             <div class="card-container fontsize">
-                <img src="/public/avatar3.svg" alt="Avatar" class="avatar" />
+                <img src="/avatar3.svg" alt="Avatar" class="avatar" />
                 <v-card class="card-warning" @click="handleCardClick('pending')">
                     <v-card-text>
                         <h1 class="card-info2">{{ cardData.pending.count }}</h1>
@@ -37,7 +37,7 @@
 
         <v-col cols="12" sm="6" md="3">
             <div class="card-container fontsize">
-                <img src="/public/avatar2.svg" alt="Avatar" class="avatar" />
+                <img src="/avatar2.svg" alt="Avatar" class="avatar" />
                 <v-card class="card-error" @click="handleCardClick('cancelled')">
                     <v-card-text>
                         <h1 class="card-info2">{{ cardData.cancelled.count }}</h1>
@@ -53,7 +53,7 @@
 //Todo:dashboard_stats": {follow_up: count/ label }/{successful: count/ label }/{pending: count/ label }/{cancelled: count/ label }
 
 
-import { translate } from "@/store/languageStore";
+import { translate } from "@/store/languageStore.js";
 
 export default {
     name: "warning",

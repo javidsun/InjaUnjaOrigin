@@ -298,7 +298,7 @@
 <script>
 //Todo: Ad Model (House Type): id/title/description/category/basePrice/serviceFee/discountPercent/hostType/locationFeatures/status/images/type/active
 //Todo: Ad Model (Companion Type):{id/title/description/origin/destination/travelDate/price/genderPreference/travelType/status/type/active/smokingAllowed/petsAllowed/images
-import { translate } from "@/store/languageStore";
+import { translate } from "@/store/languageStore.js";
 import Sidebar from "../Sidebar.vue";
 import { ref,reactive, computed } from 'vue';
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";

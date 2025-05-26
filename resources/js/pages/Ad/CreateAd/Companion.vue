@@ -1110,6 +1110,7 @@
 import { translate } from "@/store/languageStore";
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import imageUploadService from '@/services/imageUploadService';
 
 export default {
     name: 'TravelCompanionModal',
@@ -1612,73 +1613,80 @@ export default {
             },
 
             triggerFileInput() {
-                this.$refs.fileInput.click()
+                this.$refs.fileInput.click();
             },
 
-            handleFileUpload(event) {
+            async handleFileUpload(event) {
                 try {
-                    const files = event.target.files
-                    if (files.length + this.uploadedPhotos.length > 10) {
-                        alert(this.translate('Ad.MaxPhotosWarning'))
-                        return
+                    const files = event.target.files;
+                    if (!files.length) return;
+
+                    const newPhotos = await imageUploadService.openGallery(10, 5);
+
+                    if (newPhotos.length + this.uploadedPhotos.length > 10) {
+                        alert(this.translate('Ad.MaxPhotosWarning'));
+                        return;
                     }
 
-                    Array.from(files).forEach(file => {
-                        if (file.type.match('image.*')) {
-                            const reader = new FileReader()
-                            reader.onload = (e) => {
-                                this.uploadedPhotos.push({
-                                    file,
-                                    preview: e.target.result,
-                                    description: ''
-                                })
-                            }
-                            reader.readAsDataURL(file)
-                        }
-                    })
+                    this.uploadedPhotos = [...this.uploadedPhotos, ...newPhotos];
                 } catch (error) {
-                    this.showError("Error handling file upload", error)
+                    console.error("Error handling file upload:", error);
+                    alert(error.message || this.translate('Ad.UploadError'));
                 }
             },
 
-            removePhoto(index) {
-                this.uploadedPhotos.splice(index, 1)
-            },
-
-            triggerPlanFileInput() {
-                this.$refs.planFileInput.click()
-            },
-
-            handlePlanFileUpload(event) {
+            async handlePlanFileUpload(event) {
                 try {
-                    const file = event.target.files[0]
-                    if (!file) return
+                    const file = event.target.files[0];
+                    if (!file) return;
 
-                    const validTypes = ['application/pdf', 'image/jpeg', 'image/png']
+                    const validTypes = ['application/pdf', 'image/jpeg', 'image/png'];
                     if (!validTypes.includes(file.type)) {
-                        alert(this.translate('Ad.InvalidFileType'))
-                        return
+                        alert(this.translate('Ad.InvalidFileType'));
+                        return;
                     }
 
                     if (file.size > 5 * 1024 * 1024) {
-                        alert(this.translate('Ad.FileTooLarge'))
-                        return
+                        alert(this.translate('Ad.FileTooLarge'));
+                        return;
                     }
 
-                    this.uploadedPlanFile = file
-                    this.travelPlanText = ''
+                    this.uploadedPlanFile = file;
+                    this.travelPlanText = '';
 
                     if (file.type.includes('image')) {
-                        const reader = new FileReader()
-                        reader.onload = (e) => {
-                            this.uploadedPlanFilePreview = e.target.result
-                        }
-                        reader.readAsDataURL(file)
+                        // استفاده از سرویس برای خواندن فایل تصویر
+                        this.uploadedPlanFilePreview = await imageUploadService.readFileAsDataURL(file);
                     }
                 } catch (error) {
-                    this.showError("Error handling plan file upload", error)
+                    console.error("Error handling plan file upload:", error);
+                    alert(this.translate('Ad.UploadError'));
                 }
             },
+            removePhoto(index) {
+                this.uploadedPhotos.splice(index, 1);
+            },
+
+            getPhotoPreviews() {
+                return this.uploadedPhotos.map(photo => photo.preview);
+            },
+
+            async openCamera() {
+                try {
+                    const photo = await imageUploadService.openCamera(5);
+                    if (photo && this.uploadedPhotos.length < 10) {
+                        this.uploadedPhotos.push(photo);
+                    }
+                } catch (error) {
+                    console.error("Error opening camera:", error);
+                    alert(error.message || this.translate('Ad.CameraError'));
+                }
+            },
+
+            triggerPlanFileInput() {
+                this.$refs.planFileInput.click();
+            },
+
 
             removeUploadedFile() {
                 this.uploadedPlanFile = null

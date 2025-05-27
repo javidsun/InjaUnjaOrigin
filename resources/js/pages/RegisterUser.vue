@@ -101,7 +101,7 @@ import InjaUnjaLogo from "@/assets/images/logo1.png"
 import apiService from "@/globalServices/apiService";
 
 export default {
-    name: "Register",
+    name: "RegisterUser",
     data() {
         return {
             openRegisterDialog: true,

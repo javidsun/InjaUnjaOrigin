@@ -105,7 +105,7 @@
             v-if="loginPage"
             @closeDialog="closeDialog"
         />
-        <Register
+        <RegisterUser
             v-if="registerPageIsOpen"
             @closeRegisterDialog="closeRegisterDialog"
         />
@@ -125,8 +125,9 @@ import AppDrawer from "@/pages/layout/AppDrawer.vue";
 import DefaultLogo from "@/assets/images/logo.png"
 import Login from "@/pages/Login.vue";
 import Register from "@/pages/RegisterUser.vue";
+import RegisterUser from "@/pages/RegisterUser.vue";
 export default {
-    components: {Register, Login, AppDrawer},
+    components: {RegisterUser, Login, AppDrawer},
     data(){
         return {
             registerPageIsOpen:false,

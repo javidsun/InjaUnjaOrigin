@@ -1021,7 +1021,7 @@
                     <v-col cols="12" md="6" class="pa-4">
 
                         <div class="mb-3">
-                                <div class="text-subtitle-1 font-weight-bold Text3">
+                            <div class="text-subtitle-1 font-weight-bold Text3">
                                 <v-icon small>mdi-map-marker</v-icon>
                                 {{ translate('Ad.From') }}:
                             </div>
@@ -1110,6 +1110,7 @@
 import { translate } from "@/store/languageStore";
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import imageUploadService from '@/services/imageUploadService';
 
 export default {
     name: 'TravelCompanionModal',
@@ -1226,640 +1227,647 @@ export default {
                 { key: "warm", label: "Traits.warm", img: "/Travel 024.png" },
             ]
         },
-            totalCompanions() {
-                return this.maleCompanionCount + this.femaleCompanionCount + this.anyGenderCompanionCount
-            },
-            isDateSelectionValid() {
-                return this.selectedDates.length > 0
+        totalCompanions() {
+            return this.maleCompanionCount + this.femaleCompanionCount + this.anyGenderCompanionCount
+        },
+        isDateSelectionValid() {
+            return this.selectedDates.length > 0
+        }
+    },
+    methods: {
+        translate,
+
+        setActiveModal(step) {
+            this.currentStep = step
+            this.resetAllModals()
+
+            switch(step) {
+                case 1: this.showModal = true; break
+                case 2: this.showStep1 = true; break
+                case 3: this.showStep2 = true; break
+                case 4: this.showStep3 = true; break
+                case 5: this.showStep4 = true; break
+                case 6: this.showStep5 = true; break
+                case 7: this.showStep6 = true; break
+                case 8: this.showStep7 = true; break
+                case 9: this.showStep9 = true; break
+                case 10: this.showStep10 = true; break
+                case 11: this.showStep11 = true; break
+                case 12: this.showStep12 = true; break
+                case 13: this.showStep13 = true; break
+                case 14: this.showStep14 = true; break
+                case 15: this.showStep15 = true; break
             }
         },
-        methods: {
-            translate,
 
-            setActiveModal(step) {
-                this.currentStep = step
-                this.resetAllModals()
+        resetAllModals() {
+            this.showModal = false
+            this.showStep1 = false
+            this.showStep2 = false
+            this.showStep3 = false
+            this.showStep4 = false
+            this.showStep5 = false
+            this.showStep6 = false
+            this.showStep7 = false
+            this.showStep9 = false
+            this.showStep10 = false
+            this.showStep11 = false
+            this.showStep12 = false
+            this.showStep13 = false
+            this.showStep14 = false
+            this.showStep15 = false
+        },
 
-                switch(step) {
-                    case 1: this.showModal = true; break
-                    case 2: this.showStep1 = true; break
-                    case 3: this.showStep2 = true; break
-                    case 4: this.showStep3 = true; break
-                    case 5: this.showStep4 = true; break
-                    case 6: this.showStep5 = true; break
-                    case 7: this.showStep6 = true; break
-                    case 8: this.showStep7 = true; break
-                    case 9: this.showStep9 = true; break
-                    case 10: this.showStep10 = true; break
-                    case 11: this.showStep11 = true; break
-                    case 12: this.showStep12 = true; break
-                    case 13: this.showStep13 = true; break
-                    case 14: this.showStep14 = true; break
-                    case 15: this.showStep15 = true; break
-                }
-            },
+        closeModal() {
+            this.setActiveModal(0)
+        },
 
-            resetAllModals() {
-                this.showModal = false
-                this.showStep1 = false
-                this.showStep2 = false
-                this.showStep3 = false
-                this.showStep4 = false
-                this.showStep5 = false
-                this.showStep6 = false
-                this.showStep7 = false
-                this.showStep9 = false
-                this.showStep10 = false
-                this.showStep11 = false
-                this.showStep12 = false
-                this.showStep13 = false
-                this.showStep14 = false
-                this.showStep15 = false
-            },
+        openModal(type) {
+            if (type === "companion") {
+                this.setActiveModal(2)
+            }
+        },
 
-            closeModal() {
-                this.setActiveModal(0)
-            },
+        goNext() {
+            this.setActiveModal(this.currentStep + 1)
+            if (this.currentStep === 3) {
+                this.$nextTick(() => {
+                    this.initMap()
+                })
+            }
+        },
+        confirmDestination () {
+            this.setActiveModal(this.currentStep + 1)
+        },
 
-            openModal(type) {
-                if (type === "companion") {
-                    this.setActiveModal(2)
-                }
-            },
+        goBack() {
+            if (this.currentStep === 2) {
+                this.$nextTick(() => {
+                    this.initMap()
+                })
+            }
 
-            goNext() {
-                this.setActiveModal(this.currentStep + 1)
-                if (this.currentStep === 3) {
-                    this.$nextTick(() => {
-                        this.initMap()
-                    })
-                }
-            },
-             confirmDestination () {
-                 this.setActiveModal(this.currentStep + 1)
-            },
+            if (this.currentStep === 14) {
+                this.setActiveModal(13)
+            } else {
+                this.setActiveModal(this.currentStep - 1)
+            }
+        },
 
-            goBack() {
-                if (this.currentStep === 2) {
-                    this.$nextTick(() => {
-                        this.initMap()
-                    })
-                }
+        closeCompanionModal() {
+            this.setActiveModal(0)
+        },
 
-                if (this.currentStep === 14) {
-                    this.setActiveModal(13)
-                } else {
-                    this.setActiveModal(this.currentStep - 1)
-                }
-            },
+        saveAndExit() {
+            this.saveState()
+            this.resetAllModals()
+        },
 
-            closeCompanionModal() {
-                this.setActiveModal(0)
-            },
-
-            saveAndExit() {
-                this.saveState()
-                this.resetAllModals()
-            },
-
-            async searchLocation() {
-                if (this.destinationSearch.length < 3) {
-                    this.searchResults = []
-                    return
-                }
-
-                try {
-                    const response = await fetch(
-                        `https://nominatim.openstreetmap.org/search?format=json&q=${this.destinationSearch}&limit=5`
-                    )
-                    const data = await response.json()
-                    this.searchResults = data
-                } catch (error) {
-                    this.showError("Error searching location", error)
-                    this.searchResults = []
-                }
-            },
-
-            selectLocation(location) {
-                this.selectedDestination = {
-                    display_name: location.display_name,
-                    lat: location.lat,
-                    lon: location.lon
-                }
-                this.destinationSearch = location.display_name
+        async searchLocation() {
+            if (this.destinationSearch.length < 3) {
                 this.searchResults = []
+                return
+            }
 
-                if (this.map) {
-                    const latLng = L.latLng(parseFloat(location.lat), parseFloat(location.lon))
-                    this.map.setView(latLng, 13)
+            try {
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/search?format=json&q=${this.destinationSearch}&limit=5`
+                )
+                const data = await response.json()
+                this.searchResults = data
+            } catch (error) {
+                this.showError("Error searching location", error)
+                this.searchResults = []
+            }
+        },
+
+        selectLocation(location) {
+            this.selectedDestination = {
+                display_name: location.display_name,
+                lat: location.lat,
+                lon: location.lon
+            }
+            this.destinationSearch = location.display_name
+            this.searchResults = []
+
+            if (this.map) {
+                const latLng = L.latLng(parseFloat(location.lat), parseFloat(location.lon))
+                this.map.setView(latLng, 13)
+
+                if (this.marker) {
+                    this.map.removeLayer(this.marker)
+                }
+
+                this.marker = L.marker(latLng).addTo(this.map)
+
+                if (this.userLocation) {
+                    this.drawRoute(this.userLocation, latLng)
+                }
+            }
+        },
+
+        async searchOriginLocation() {
+            if (this.originSearch.length < 3) {
+                this.originSearchResults = []
+                return
+            }
+
+            try {
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/search?format=json&q=${this.originSearch}&limit=5`
+                )
+                const data = await response.json()
+                this.originSearchResults = data
+            } catch (error) {
+                this.showError("Error searching origin location", error)
+                this.originSearchResults = []
+            }
+        },
+
+        selectOriginLocation(location) {
+            this.selectedOrigin = {
+                display_name: location.display_name,
+                lat: location.lat,
+                lon: location.lon
+            }
+            this.originSearch = location.display_name
+            this.originSearchResults = []
+
+            if (this.map) {
+                const latLng = L.latLng(parseFloat(location.lat), parseFloat(location.lon))
+
+                if (this.userLocationMarker) {
+                    this.map.removeLayer(this.userLocationMarker)
+                }
+
+                this.userLocationMarker = L.marker(latLng, {
+                    icon: L.divIcon({
+                        className: 'user-location-marker',
+                        html: '<div style="background-color: #4285F4; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>',
+                        iconSize: [20, 20],
+                        iconAnchor: [10, 10]
+                    })
+                }).addTo(this.map)
+                    .bindPopup(this.translate('Ad.SelectedOrigin')).openPopup()
+
+                this.userLocation = latLng
+
+                if (this.selectedDestination) {
+                    this.drawRoute(latLng, L.latLng(this.selectedDestination.lat, this.selectedDestination.lon))
+                }
+            }
+        },
+
+        async initMap() {
+            await this.$nextTick()
+            const mapElement = document.getElementById('destinationMap')
+            if (!mapElement || mapElement._leaflet_id) return
+
+            if (this.map) {
+                this.map.remove()
+                this.map = null
+                this.marker = null
+                this.userLocationMarker = null
+                this.routeLine = null
+            }
+
+            this.map = L.map('destinationMap', {
+                zoomControl: true,
+                doubleClickZoom: true,
+                closePopupOnClick: true,
+                dragging: true,
+                zoomSnap: 0.5
+            })
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(this.map)
+
+            this.map.setView([35.6892, 51.3890], 13)
+
+            if (navigator.geolocation && !this.selectedOrigin) {
+                navigator.geolocation.getCurrentPosition(
+                    async (position) => {
+                        try {
+                            const userLatLng = L.latLng(
+                                position.coords.latitude,
+                                position.coords.longitude
+                            )
+
+                            this.userLocation = userLatLng
+
+                            await this.updateUserLocationAddress(position.coords.latitude, position.coords.longitude)
+
+                            this.userLocationMarker = L.marker(userLatLng, {
+                                icon: L.divIcon({
+                                    className: 'user-location-marker',
+                                    html: '<div style="background-color: #4285F4; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>',
+                                    iconSize: [20, 20],
+                                    iconAnchor: [10, 10]
+                                })
+                            }).addTo(this.map)
+                                .bindPopup(this.translate('Ad.YourCurrentLocation')).openPopup()
+
+                            this.map.setView(userLatLng, 13)
+                            await this.updateSelectedLocation(position.coords.latitude, position.coords.longitude)
+
+                            if (this.selectedDestination) {
+                                this.drawRoute(userLatLng, L.latLng(this.selectedDestination.lat, this.selectedDestination.lon))
+                            }
+                        } catch (error) {
+                            this.showError("Error initializing user location", error)
+                        }
+                    },
+                    (error) => {
+                        this.showError("Error getting user location", error)
+                        this.updateSelectedLocation(35.6892, 51.3890)
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 5000,
+                        maximumAge: 0
+                    }
+                )
+            } else if (this.selectedOrigin) {
+                const latLng = L.latLng(parseFloat(this.selectedOrigin.lat), parseFloat(this.selectedOrigin.lon))
+                this.userLocation = latLng
+                this.map.setView(latLng, 13)
+
+                if (this.selectedDestination) {
+                    this.drawRoute(latLng, L.latLng(this.selectedDestination.lat, this.selectedDestination.lon))
+                }
+            } else {
+                this.showError("Geolocation is not supported by this browser")
+                this.updateSelectedLocation(35.6892, 51.3890)
+            }
+
+            this.map.on('click', async (e) => {
+                try {
+                    const { lat, lng } = e.latlng
 
                     if (this.marker) {
                         this.map.removeLayer(this.marker)
                     }
 
-                    this.marker = L.marker(latLng).addTo(this.map)
+                    this.marker = L.marker([lat, lng]).addTo(this.map)
+                    await this.updateSelectedLocation(lat, lng)
 
                     if (this.userLocation) {
-                        this.drawRoute(this.userLocation, latLng)
-                    }
-                }
-            },
-
-            async searchOriginLocation() {
-                if (this.originSearch.length < 3) {
-                    this.originSearchResults = []
-                    return
-                }
-
-                try {
-                    const response = await fetch(
-                        `https://nominatim.openstreetmap.org/search?format=json&q=${this.originSearch}&limit=5`
-                    )
-                    const data = await response.json()
-                    this.originSearchResults = data
-                } catch (error) {
-                    this.showError("Error searching origin location", error)
-                    this.originSearchResults = []
-                }
-            },
-
-            selectOriginLocation(location) {
-                this.selectedOrigin = {
-                    display_name: location.display_name,
-                    lat: location.lat,
-                    lon: location.lon
-                }
-                this.originSearch = location.display_name
-                this.originSearchResults = []
-
-                if (this.map) {
-                    const latLng = L.latLng(parseFloat(location.lat), parseFloat(location.lon))
-
-                    if (this.userLocationMarker) {
-                        this.map.removeLayer(this.userLocationMarker)
-                    }
-
-                    this.userLocationMarker = L.marker(latLng, {
-                        icon: L.divIcon({
-                            className: 'user-location-marker',
-                            html: '<div style="background-color: #4285F4; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>',
-                            iconSize: [20, 20],
-                            iconAnchor: [10, 10]
-                        })
-                    }).addTo(this.map)
-                        .bindPopup(this.translate('Ad.SelectedOrigin')).openPopup()
-
-                    this.userLocation = latLng
-
-                    if (this.selectedDestination) {
-                        this.drawRoute(latLng, L.latLng(this.selectedDestination.lat, this.selectedDestination.lon))
-                    }
-                }
-            },
-
-            async initMap() {
-                await this.$nextTick()
-                const mapElement = document.getElementById('destinationMap')
-                if (!mapElement || mapElement._leaflet_id) return
-
-                if (this.map) {
-                    this.map.remove()
-                    this.map = null
-                    this.marker = null
-                    this.userLocationMarker = null
-                    this.routeLine = null
-                }
-
-                this.map = L.map('destinationMap', {
-                    zoomControl: true,
-                    doubleClickZoom: true,
-                    closePopupOnClick: true,
-                    dragging: true,
-                    zoomSnap: 0.5
-                })
-
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(this.map)
-
-                this.map.setView([35.6892, 51.3890], 13)
-
-                if (navigator.geolocation && !this.selectedOrigin) {
-                    navigator.geolocation.getCurrentPosition(
-                        async (position) => {
-                            try {
-                                const userLatLng = L.latLng(
-                                    position.coords.latitude,
-                                    position.coords.longitude
-                                )
-
-                                this.userLocation = userLatLng
-
-                                await this.updateUserLocationAddress(position.coords.latitude, position.coords.longitude)
-
-                                this.userLocationMarker = L.marker(userLatLng, {
-                                    icon: L.divIcon({
-                                        className: 'user-location-marker',
-                                        html: '<div style="background-color: #4285F4; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>',
-                                        iconSize: [20, 20],
-                                        iconAnchor: [10, 10]
-                                    })
-                                }).addTo(this.map)
-                                    .bindPopup(this.translate('Ad.YourCurrentLocation')).openPopup()
-
-                                this.map.setView(userLatLng, 13)
-                                await this.updateSelectedLocation(position.coords.latitude, position.coords.longitude)
-
-                                if (this.selectedDestination) {
-                                    this.drawRoute(userLatLng, L.latLng(this.selectedDestination.lat, this.selectedDestination.lon))
-                                }
-                            } catch (error) {
-                                this.showError("Error initializing user location", error)
-                            }
-                        },
-                        (error) => {
-                            this.showError("Error getting user location", error)
-                            this.updateSelectedLocation(35.6892, 51.3890)
-                        },
-                        {
-                            enableHighAccuracy: true,
-                            timeout: 5000,
-                            maximumAge: 0
-                        }
-                    )
-                } else if (this.selectedOrigin) {
-                    const latLng = L.latLng(parseFloat(this.selectedOrigin.lat), parseFloat(this.selectedOrigin.lon))
-                    this.userLocation = latLng
-                    this.map.setView(latLng, 13)
-
-                    if (this.selectedDestination) {
-                        this.drawRoute(latLng, L.latLng(this.selectedDestination.lat, this.selectedDestination.lon))
-                    }
-                } else {
-                    this.showError("Geolocation is not supported by this browser")
-                    this.updateSelectedLocation(35.6892, 51.3890)
-                }
-
-                this.map.on('click', async (e) => {
-                    try {
-                        const { lat, lng } = e.latlng
-
-                        if (this.marker) {
-                            this.map.removeLayer(this.marker)
-                        }
-
-                        this.marker = L.marker([lat, lng]).addTo(this.map)
-                        await this.updateSelectedLocation(lat, lng)
-
-                        if (this.userLocation) {
-                            this.drawRoute(this.userLocation, e.latlng)
-                        }
-                    } catch (error) {
-                        this.showError("Error handling map click", error)
-                    }
-                })
-            },
-
-            async updateUserLocationAddress(lat, lng) {
-                try {
-                    const response = await fetch(
-                        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
-                    )
-                    const data = await response.json()
-
-                    if (data) {
-                        this.userLocationAddress = data.display_name
+                        this.drawRoute(this.userLocation, e.latlng)
                     }
                 } catch (error) {
-                    this.showError("Error getting user location address", error)
-                    this.userLocationAddress = null
+                    this.showError("Error handling map click", error)
                 }
-            },
+            })
+        },
 
-            async drawRoute(start, end) {
-                if (this.routeLine) {
-                    this.map.removeLayer(this.routeLine)
-                }
-
-                this.routeLine = L.polyline([start, end], {
-                    color: '#007bff',
-                    weight: 3,
-                    opacity: 0.7,
-                    dashArray: '5, 5'
-                }).addTo(this.map)
-
-                const calculatedDistance = start.distanceTo(end) / 1000
-                this.distance = calculatedDistance.toFixed(1) + ' km'
-
-                this.map.fitBounds([start, end], { padding: [50, 50] })
-
-                const midpoint = L.latLng(
-                    (start.lat + end.lat) / 2,
-                    (start.lng + end.lng) / 2
+        async updateUserLocationAddress(lat, lng) {
+            try {
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
                 )
+                const data = await response.json()
 
-                this.routeLine.bindPopup(this.distance, {
-                    className: 'distance-popup',
-                    autoClose: false,
-                    closeOnClick: false
-                }).openPopup()
-            },
+                if (data) {
+                    this.userLocationAddress = data.display_name
+                }
+            } catch (error) {
+                this.showError("Error getting user location address", error)
+                this.userLocationAddress = null
+            }
+        },
 
-            async updateSelectedLocation(lat, lng) {
-                try {
-                    const response = await fetch(
-                        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
-                    )
-                    const data = await response.json()
+        async drawRoute(start, end) {
+            if (this.routeLine) {
+                this.map.removeLayer(this.routeLine)
+            }
 
-                    if (data) {
-                        this.selectedDestination = {
-                            display_name: data.display_name,
-                            lat: lat.toString(),
-                            lon: lng.toString()
-                        }
-                        this.destinationSearch = data.display_name
+            this.routeLine = L.polyline([start, end], {
+                color: '#007bff',
+                weight: 3,
+                opacity: 0.7,
+                dashArray: '5, 5'
+            }).addTo(this.map)
+
+            const calculatedDistance = start.distanceTo(end) / 1000
+            this.distance = calculatedDistance.toFixed(1) + ' km'
+
+            this.map.fitBounds([start, end], { padding: [50, 50] })
+
+            const midpoint = L.latLng(
+                (start.lat + end.lat) / 2,
+                (start.lng + end.lng) / 2
+            )
+
+            this.routeLine.bindPopup(this.distance, {
+                className: 'distance-popup',
+                autoClose: false,
+                closeOnClick: false
+            }).openPopup()
+        },
+
+        async updateSelectedLocation(lat, lng) {
+            try {
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
+                )
+                const data = await response.json()
+
+                if (data) {
+                    this.selectedDestination = {
+                        display_name: data.display_name,
+                        lat: lat.toString(),
+                        lon: lng.toString()
                     }
-                } catch (error) {
-                    this.showError("Error getting location details", error)
+                    this.destinationSearch = data.display_name
                 }
-            },
+            } catch (error) {
+                this.showError("Error getting location details", error)
+            }
+        },
 
-            selectStyle(style) {
-                this.selectedStyle = style
-            },
+        selectStyle(style) {
+            this.selectedStyle = style
+        },
 
-            confirmTravelStyle() {
-                if (!this.selectedStyle) {
-                    this.styleError = true
-                } else {
-                    this.styleError = false
-                    this.setActiveModal(this.currentStep + 1)
-                }
-            },
-
-            toggleTrait(key) {
-                if (this.selectedTraits.includes(key)) {
-                    this.selectedTraits = this.selectedTraits.filter((k) => k !== key)
-                } else {
-                    this.selectedTraits.push(key)
-                }
-            },
-
-            confirmPersonalityTraits() {
-                console.log("Selected traits:", this.selectedTraits)
+        confirmTravelStyle() {
+            if (!this.selectedStyle) {
+                this.styleError = true
+            } else {
+                this.styleError = false
                 this.setActiveModal(this.currentStep + 1)
-            },
+            }
+        },
 
-            triggerFileInput() {
-                this.$refs.fileInput.click()
-            },
+        toggleTrait(key) {
+            if (this.selectedTraits.includes(key)) {
+                this.selectedTraits = this.selectedTraits.filter((k) => k !== key)
+            } else {
+                this.selectedTraits.push(key)
+            }
+        },
 
-            handleFileUpload(event) {
-                try {
-                    const files = event.target.files
-                    if (files.length + this.uploadedPhotos.length > 10) {
-                        alert(this.translate('Ad.MaxPhotosWarning'))
-                        return
-                    }
+        confirmPersonalityTraits() {
+            console.log("Selected traits:", this.selectedTraits)
+            this.setActiveModal(this.currentStep + 1)
+        },
 
-                    Array.from(files).forEach(file => {
-                        if (file.type.match('image.*')) {
-                            const reader = new FileReader()
-                            reader.onload = (e) => {
-                                this.uploadedPhotos.push({
-                                    file,
-                                    preview: e.target.result,
-                                    description: ''
-                                })
-                            }
-                            reader.readAsDataURL(file)
-                        }
-                    })
-                } catch (error) {
-                    this.showError("Error handling file upload", error)
+        triggerFileInput() {
+            this.$refs.fileInput.click();
+        },
+
+        async handleFileUpload(event) {
+            try {
+                const files = event.target.files;
+                if (!files.length) return;
+
+                const newPhotos = await imageUploadService.openGallery(10, 5);
+
+                if (newPhotos.length + this.uploadedPhotos.length > 10) {
+                    alert(this.translate('Ad.MaxPhotosWarning'));
+                    return;
                 }
-            },
 
-            removePhoto(index) {
-                this.uploadedPhotos.splice(index, 1)
-            },
+                this.uploadedPhotos = [...this.uploadedPhotos, ...newPhotos];
+            } catch (error) {
+                console.error("Error handling file upload:", error);
+                alert(error.message || this.translate('Ad.UploadError'));
+            }
+        },
 
-            triggerPlanFileInput() {
-                this.$refs.planFileInput.click()
-            },
+        async handlePlanFileUpload(event) {
+            try {
+                const file = event.target.files[0];
+                if (!file) return;
 
-            handlePlanFileUpload(event) {
-                try {
-                    const file = event.target.files[0]
-                    if (!file) return
-
-                    const validTypes = ['application/pdf', 'image/jpeg', 'image/png']
-                    if (!validTypes.includes(file.type)) {
-                        alert(this.translate('Ad.InvalidFileType'))
-                        return
-                    }
-
-                    if (file.size > 5 * 1024 * 1024) {
-                        alert(this.translate('Ad.FileTooLarge'))
-                        return
-                    }
-
-                    this.uploadedPlanFile = file
-                    this.travelPlanText = ''
-
-                    if (file.type.includes('image')) {
-                        const reader = new FileReader()
-                        reader.onload = (e) => {
-                            this.uploadedPlanFilePreview = e.target.result
-                        }
-                        reader.readAsDataURL(file)
-                    }
-                } catch (error) {
-                    this.showError("Error handling plan file upload", error)
+                const validTypes = ['application/pdf', 'image/jpeg', 'image/png'];
+                if (!validTypes.includes(file.type)) {
+                    alert(this.translate('Ad.InvalidFileType'));
+                    return;
                 }
-            },
 
-            removeUploadedFile() {
-                this.uploadedPlanFile = null
-                this.uploadedPlanFilePreview = null
-            },
+                if (file.size > 5 * 1024 * 1024) {
+                    alert(this.translate('Ad.FileTooLarge'));
+                    return;
+                }
 
-            getFileIcon(fileType) {
-                if (fileType.includes('image')) return 'mdi-image'
-                if (fileType.includes('pdf')) return 'mdi-file-pdf'
-                return 'mdi-file'
-            },
+                this.uploadedPlanFile = file;
+                this.travelPlanText = '';
 
-            isImageFile(fileType) {
-                return fileType.includes('image')
-            },
+                if (file.type.includes('image')) {
+                    // استفاده از سرویس برای خواندن فایل تصویر
+                    this.uploadedPlanFilePreview = await imageUploadService.readFileAsDataURL(file);
+                }
+            } catch (error) {
+                console.error("Error handling plan file upload:", error);
+                alert(this.translate('Ad.UploadError'));
+            }
+        },
+        removePhoto(index) {
+            this.uploadedPhotos.splice(index, 1);
+        },
 
-            formatFileSize(bytes) {
-                if (bytes === 0) return '0 Bytes'
-                const k = 1024
-                const sizes = ['Bytes', 'KB', 'MB', 'GB']
-                const i = Math.floor(Math.log(bytes) / Math.log(k))
-                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
-            },
+        getPhotoPreviews() {
+            return this.uploadedPhotos.map(photo => photo.preview);
+        },
 
-            confirmTravelPlan() {
-                console.log('Travel plan:', {
+        async openCamera() {
+            try {
+                const photo = await imageUploadService.openCamera(5);
+                if (photo && this.uploadedPhotos.length < 10) {
+                    this.uploadedPhotos.push(photo);
+                }
+            } catch (error) {
+                console.error("Error opening camera:", error);
+                alert(error.message || this.translate('Ad.CameraError'));
+            }
+        },
+
+        triggerPlanFileInput() {
+            this.$refs.planFileInput.click();
+        },
+
+
+        removeUploadedFile() {
+            this.uploadedPlanFile = null
+            this.uploadedPlanFilePreview = null
+        },
+
+        getFileIcon(fileType) {
+            if (fileType.includes('image')) return 'mdi-image'
+            if (fileType.includes('pdf')) return 'mdi-file-pdf'
+            return 'mdi-file'
+        },
+
+        isImageFile(fileType) {
+            return fileType.includes('image')
+        },
+
+        formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes'
+            const k = 1024
+            const sizes = ['Bytes', 'KB', 'MB', 'GB']
+            const i = Math.floor(Math.log(bytes) / Math.log(k))
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+        },
+
+        confirmTravelPlan() {
+            console.log('Travel plan:', {
+                text: this.travelPlanText,
+                file: this.uploadedPlanFile
+            })
+            this.setActiveModal(this.currentStep + 1)
+        },
+
+        incrementCompanionCount(type) {
+            switch(type) {
+                case 'male': this.maleCompanionCount++; break
+                case 'female': this.femaleCompanionCount++; break
+                case 'any': this.anyGenderCompanionCount++; break
+                case 'current': this.currentCompanionCount++; break
+                case 'needed': this.neededCompanionCount++; break
+            }
+        },
+
+        decrementCompanionCount(type) {
+            switch(type) {
+                case 'male': if (this.maleCompanionCount > 0) this.maleCompanionCount--; break
+                case 'female': if (this.femaleCompanionCount > 0) this.femaleCompanionCount--; break
+                case 'any': if (this.anyGenderCompanionCount > 0) this.anyGenderCompanionCount--; break
+                case 'current': if (this.currentCompanionCount > 0) this.currentCompanionCount--; break
+                case 'needed': if (this.neededCompanionCount > 0) this.neededCompanionCount--; break
+            }
+        },
+
+        confirmCompanionCount() {
+            this.setActiveModal(this.currentStep + 1)
+        },
+
+        clearSelectedDates() {
+            this.selectedDates = []
+        },
+
+        formatSelectedDates() {
+            if (this.selectedDates.length === 0) return ''
+
+            const formattedDates = this.selectedDates.map(date => {
+                const d = new Date(date)
+                return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`
+            }).sort((a, b) => new Date(a) - new Date(b))
+
+            return formattedDates.join(', ')
+        },
+
+        formatSelectedDatesRange() {
+            if (this.selectedDates.length === 0) return ''
+
+            const sortedDates = [...this.selectedDates].sort()
+            const firstDate = new Date(sortedDates[0])
+            const lastDate = new Date(sortedDates[sortedDates.length - 1])
+
+            return `${firstDate.getDate()} ${this.translate(`Month.${firstDate.getMonth()}`)} - ${lastDate.getDate()} ${this.translate(`Month.${lastDate.getMonth()}`)}`
+        },
+
+        showEssentialTips() {
+            this.showEssentialTipsModal = true
+        },
+
+        confirmSafetyGuidelines() {
+            console.log('Safety guidelines confirmed')
+            this.setActiveModal(this.currentStep + 1)
+        },
+
+        publishListing() {
+            this.setActiveModal(this.currentStep + 1)
+        },
+
+        publishAd() {
+            console.log('Ad published:', {
+                destination: this.selectedDestination,
+                dates: this.selectedDates,
+                style: this.selectedStyle,
+                budget: this.budgetAmount,
+                traits: this.selectedTraits,
+                photos: this.uploadedPhotos,
+                plan: {
                     text: this.travelPlanText,
                     file: this.uploadedPlanFile
-                })
-                this.setActiveModal(this.currentStep + 1)
-            },
-
-            incrementCompanionCount(type) {
-                switch(type) {
-                    case 'male': this.maleCompanionCount++; break
-                    case 'female': this.femaleCompanionCount++; break
-                    case 'any': this.anyGenderCompanionCount++; break
-                    case 'current': this.currentCompanionCount++; break
-                    case 'needed': this.neededCompanionCount++; break
-                }
-            },
-
-            decrementCompanionCount(type) {
-                switch(type) {
-                    case 'male': if (this.maleCompanionCount > 0) this.maleCompanionCount--; break
-                    case 'female': if (this.femaleCompanionCount > 0) this.femaleCompanionCount--; break
-                    case 'any': if (this.anyGenderCompanionCount > 0) this.anyGenderCompanionCount--; break
-                    case 'current': if (this.currentCompanionCount > 0) this.currentCompanionCount--; break
-                    case 'needed': if (this.neededCompanionCount > 0) this.neededCompanionCount--; break
-                }
-            },
-
-            confirmCompanionCount() {
-                this.setActiveModal(this.currentStep + 1)
-            },
-
-            clearSelectedDates() {
-                this.selectedDates = []
-            },
-
-            formatSelectedDates() {
-                if (this.selectedDates.length === 0) return ''
-
-                const formattedDates = this.selectedDates.map(date => {
-                    const d = new Date(date)
-                    return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`
-                }).sort((a, b) => new Date(a) - new Date(b))
-
-                return formattedDates.join(', ')
-            },
-
-            formatSelectedDatesRange() {
-                if (this.selectedDates.length === 0) return ''
-
-                const sortedDates = [...this.selectedDates].sort()
-                const firstDate = new Date(sortedDates[0])
-                const lastDate = new Date(sortedDates[sortedDates.length - 1])
-
-                return `${firstDate.getDate()} ${this.translate(`Month.${firstDate.getMonth()}`)} - ${lastDate.getDate()} ${this.translate(`Month.${lastDate.getMonth()}`)}`
-            },
-
-            showEssentialTips() {
-                this.showEssentialTipsModal = true
-            },
-
-            confirmSafetyGuidelines() {
-                console.log('Safety guidelines confirmed')
-                this.setActiveModal(this.currentStep + 1)
-            },
-
-            publishListing() {
-                this.setActiveModal(this.currentStep + 1)
-            },
-
-            publishAd() {
-                console.log('Ad published:', {
-                    destination: this.selectedDestination,
-                    dates: this.selectedDates,
-                    style: this.selectedStyle,
-                    budget: this.budgetAmount,
-                    traits: this.selectedTraits,
-                    photos: this.uploadedPhotos,
-                    plan: {
-                        text: this.travelPlanText,
-                        file: this.uploadedPlanFile
-                    },
-                    companions: {
-                        current: this.currentCompanionCount,
-                        needed: this.neededCompanionCount,
-                        male: this.maleCompanionCount,
-                        female: this.femaleCompanionCount,
-                        any: this.anyGenderCompanionCount
-                    },
-                    description: this.additionalDescription
-                })
-
-                this.clearSavedData()
-                this.resetAllModals()
-            },
-
-            saveState() {
-                localStorage.setItem('travelCompanionState', JSON.stringify({
-                    currentStep: this.currentStep,
-                    selectedOrigin: this.selectedOrigin,
-                    selectedDestination: this.selectedDestination,
-                    selectedStyle: this.selectedStyle,
-                    budgetAmount: this.budgetAmount,
-                    selectedTraits: this.selectedTraits,
-                    uploadedPhotos: this.uploadedPhotos,
-                    travelPlanText: this.travelPlanText,
-                    uploadedPlanFile: this.uploadedPlanFile
-                }))
-            },
-
-            loadState() {
-                try {
-                    const savedState = localStorage.getItem('travelCompanionState')
-                    if (savedState) {
-                        const state = JSON.parse(savedState)
-                        this.currentStep = state.currentStep
-                        this.selectedOrigin = state.selectedOrigin || null
-                        this.selectedDestination = state.selectedDestination
-                        this.selectedStyle = state.selectedStyle
-                        this.budgetAmount = state.budgetAmount
-                        this.selectedTraits = state.selectedTraits || []
-                        this.uploadedPhotos = state.uploadedPhotos || []
-                        this.travelPlanText = state.travelPlanText || ''
-                        this.uploadedPlanFile = state.uploadedPlanFile || null
-                    }
-                } catch (error) {
-                    this.showError("Error loading saved state", error)
-                }
-            },
-
-            clearSavedData() {
-                localStorage.removeItem('travelCompanionState')
-            },
-
-            showError(message, error = null) {
-                console.error(message, error)
-            }
-        },
-        mounted() {
-            delete L.Icon.Default.prototype._getIconUrl
-            L.Icon.Default.mergeOptions({
-                iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
-                iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-                shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png'
+                },
+                companions: {
+                    current: this.currentCompanionCount,
+                    needed: this.neededCompanionCount,
+                    male: this.maleCompanionCount,
+                    female: this.femaleCompanionCount,
+                    any: this.anyGenderCompanionCount
+                },
+                description: this.additionalDescription
             })
 
-            this.loadState()
-            if (this.modelValue) {
-                this.setActiveModal(this.currentStep || 1)
+            this.clearSavedData()
+            this.resetAllModals()
+        },
+
+        saveState() {
+            localStorage.setItem('travelCompanionState', JSON.stringify({
+                currentStep: this.currentStep,
+                selectedOrigin: this.selectedOrigin,
+                selectedDestination: this.selectedDestination,
+                selectedStyle: this.selectedStyle,
+                budgetAmount: this.budgetAmount,
+                selectedTraits: this.selectedTraits,
+                uploadedPhotos: this.uploadedPhotos,
+                travelPlanText: this.travelPlanText,
+                uploadedPlanFile: this.uploadedPlanFile
+            }))
+        },
+
+        loadState() {
+            try {
+                const savedState = localStorage.getItem('travelCompanionState')
+                if (savedState) {
+                    const state = JSON.parse(savedState)
+                    this.currentStep = state.currentStep
+                    this.selectedOrigin = state.selectedOrigin || null
+                    this.selectedDestination = state.selectedDestination
+                    this.selectedStyle = state.selectedStyle
+                    this.budgetAmount = state.budgetAmount
+                    this.selectedTraits = state.selectedTraits || []
+                    this.uploadedPhotos = state.uploadedPhotos || []
+                    this.travelPlanText = state.travelPlanText || ''
+                    this.uploadedPlanFile = state.uploadedPlanFile || null
+                }
+            } catch (error) {
+                this.showError("Error loading saved state", error)
             }
         },
-        beforeUnmount() {
-            if (this.map) {
-                this.map.remove()
-                this.map = null
-            }
+
+        clearSavedData() {
+            localStorage.removeItem('travelCompanionState')
+        },
+
+        showError(message, error = null) {
+            console.error(message, error)
         }
+    },
+    mounted() {
+        delete L.Icon.Default.prototype._getIconUrl
+        L.Icon.Default.mergeOptions({
+            iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
+            iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+            shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png'
+        })
+
+        this.loadState()
+        if (this.modelValue) {
+            this.setActiveModal(this.currentStep || 1)
+        }
+    },
+    beforeUnmount() {
+        if (this.map) {
+            this.map.remove()
+            this.map = null
+        }
+    }
 
 }
 </script>

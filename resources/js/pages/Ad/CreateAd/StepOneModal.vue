@@ -600,6 +600,7 @@
 //Todo: status:published
 
 import { translate } from "../../../store/languageStore";
+import imageUploadService from '@/services/imageUploadService';
 
 export default {
     props: {
@@ -869,106 +870,29 @@ export default {
 
         async openGallery() {
             try {
-                if (navigator.permissions) {
-                    const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
-                    if (permissionStatus.state === 'denied') {
-                        alert('Please enable gallery access in your browser settings');
-                        return;
-                    }
-                }
-
-                const input = document.createElement("input");
-                input.type = "file";
-                input.accept = "image/*";
-                input.multiple = true;
-                input.onchange = (event) => {
-                    const files = Array.from(event.target.files);
-                    if (files.length > 0) {
-                        const maxImages = 10;
-                        const remainingSlots = maxImages - this.uploadedImages.length;
-
-                        if (remainingSlots <= 0) {
-                            alert(`You can upload maximum ${maxImages} images`);
-                            return;
-                        }
-
-                        const validFiles = files.slice(0, remainingSlots);
-
-                        validFiles.forEach(file => {
-                            if (file.size > 2 * 1024 * 1024) {
-                                alert(`Image ${file.name} is too large (max 2MB)`);
-                                return;
-                            }
-
-                            const reader = new FileReader();
-                            reader.onload = (e) => {
-                                this.uploadedImages.push(e.target.result);
-                            };
-                            reader.readAsDataURL(file);
-                        });
-                    }
-                };
-                input.click();
+                const images = await imageUploadService.openGallery(10, 2);
+                const remainingSlots = 10 - this.uploadedImages.length;
+                this.uploadedImages.push(...images.slice(0, remainingSlots));
             } catch (error) {
                 console.error("Error in openGallery:", error);
-                alert("An error occurred while opening the gallery");
+                alert(error.message);
+            }
+        },
+
+        async openCamera() {
+            try {
+                const image = await imageUploadService.openCamera(2);
+                if (image && this.uploadedImages.length < 10) {
+                    this.uploadedImages.push(image);
+                }
+            } catch (error) {
+                console.error("Error in openCamera:", error);
+                alert(error.message);
             }
         },
 
         removeImage(index) {
             this.uploadedImages.splice(index, 1);
-        },
-
-        openCamera() {
-            try {
-                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                    navigator.mediaDevices.getUserMedia({video: true})
-                        .then((stream) => {
-                            const video = document.createElement('video');
-                            video.srcObject = stream;
-                            video.play();
-
-                            const captureButton = document.createElement('button');
-                            captureButton.textContent = 'Capture';
-                            document.body.appendChild(captureButton);
-
-                            captureButton.addEventListener('click', () => {
-                                const canvas = document.createElement('canvas');
-                                const context = canvas.getContext('2d');
-                                canvas.width = video.videoWidth;
-                                canvas.height = video.videoHeight;
-                                context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-                                const imageData = canvas.toDataURL('image/png');
-
-                                const size = imageData.length * 0.75;
-                                if (size > 2 * 1024 * 1024) {
-                                    alert("Captured image is too large (max 2MB)");
-                                    return;
-                                }
-
-                                if (this.uploadedImages.length >= 10) {
-                                    alert("You can upload maximum 10 images");
-                                    return;
-                                }
-
-                                this.uploadedImages.push(imageData);
-
-                                stream.getTracks().forEach(track => track.stop());
-                                document.body.removeChild(captureButton);
-                                document.body.removeChild(video);
-                            });
-                        })
-                        .catch((err) => {
-                            alert("Camera access not possible: " + err);
-                        });
-                } else {
-                    alert("This browser doesn't support camera access.");
-                }
-            } catch (error) {
-                console.error("Error in openCamera:", error);
-                alert("An error occurred while accessing the camera");
-            }
         },
 
         initMap() {

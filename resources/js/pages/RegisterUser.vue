@@ -1,11 +1,13 @@
 <template>
-    <v-dialog v-model="openRegisterDialog">
+    <v-dialog v-model="openRegisterDialog" @click:outside="closeDialog" persistent="false" >
+        <template #default>
+
         <v-container class="container__register">
             <v-row align="center" justify="center">
                 <v-col cols="12" sm="8" md="6" lg="4">
                     <v-card class="elevation-12 rounded-lg" border>
                         <div class="d-flex justify-end align-center" style="padding-top: 10px">
-                            <v-icon class="mr-2" @click="coseDialog">mdi-close</v-icon>
+                            <v-icon class="mr-2" @click="closeDialog">mdi-close</v-icon>
                         </div>
                         <div class="d-flex align-center justify-center mt-1">
                             <v-img
@@ -89,6 +91,7 @@
                 </v-col>
             </v-row>
         </v-container>
+        </template>
     </v-dialog>
 </template>
 
@@ -97,7 +100,7 @@ import InjaUnjaLogo from "@/assets/images/logo1.png"
 import apiService from "@/globalServices/apiService";
 
 export default {
-    name: "Register", //salam
+    name: "Register",
     data() {
         return {
             openRegisterDialog: true,
@@ -117,9 +120,11 @@ export default {
         this.logo = InjaUnjaLogo;
     },
     methods: {
-        coseDialog() {
-            this.$emit('closeRegisterDialog');
+        closeDialog() {
+            this.openRegisterDialog = false;
+            this.$emit("close");
         },
+
         async register() {
             this.loading = true;
             this.error = null;

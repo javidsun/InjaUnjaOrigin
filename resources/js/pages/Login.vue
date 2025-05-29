@@ -113,9 +113,6 @@
             </v-row>
         </v-container>
     </v-dialog>
-    <v-dialog v-model="modalActive" max-width="500px">
-        <component :is="selectedComponent" @close="modalActive = false" />
-    </v-dialog>
 </template>
 
 <script>
@@ -152,7 +149,7 @@ export default {
     methods: {
         translate,
 
-        openLoginDialog() {
+        loginDialogIsOpen() {
             this.loginDialogIsOpen = true;
         },
 
@@ -219,6 +216,7 @@ export default {
 
         closeDialog() {
             this.loginDialogIsOpen = false;
+            this.$emit("close");
         },
 
         async openModal(component) {

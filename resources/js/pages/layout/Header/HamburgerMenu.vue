@@ -7,7 +7,7 @@
             <v-icon>mdi-menu</v-icon>
         </v-btn>
 
-        <v-menu v-model="menuActive" class="menu_open">
+        <v-menu v-model="menuActive" class="menu_open" close-on-content-click>
             <v-list dense>
                 <v-list-item-group>
                     <v-list-item
@@ -25,10 +25,19 @@
             </v-list>
         </v-menu>
 
-        <v-dialog v-show="modalActive" v-model="modalActive" max-width="900px" @update:modelValue="handleModalClose">
-            <v-card-text>
-                <component :is="selectedComponent" ref="modalRef"></component>
-            </v-card-text>
+        <v-dialog
+            v-model="modalActive"
+            max-width="900px"
+            persistent
+            @update:modelValue="handleModalClose"
+        >
+            <v-card>
+                <component
+                    :is="selectedComponent"
+                    ref="modalRef"
+                    @close="handleModalClose"
+                />
+            </v-card>
         </v-dialog>
     </div>
 </template>
@@ -81,14 +90,20 @@ export default {
         },
 
         handleModalClose() {
-            try {
-                this.modalActive = false;
-                this.selectedComponent = null;
-            } catch (error) {
-                this.showError("An error occurred while closing the modal", error);
-            }
-        },
+            this.modalActive = false;
+            this.menuActive = false;
+            this.selectedComponent = null;
 
+            if (this.modalRef && typeof this.modalRef.closeDialog === 'function') {
+                this.modalRef.closeDialog();
+            }
+            const overlays = document.querySelectorAll('.v-overlay');
+            overlays.forEach(overlay => {
+                if (overlay.style.display !== 'none') {
+                    overlay.style.display = 'none';
+                }
+            });
+        },
         showWarning(message) {
             console.warn(message);
             this.$emit('show-notification', {

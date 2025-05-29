@@ -1,5 +1,6 @@
 <template>
-    <v-dialog v-model="isSupportModalOpen" max-width="800px" transition="dialog-transition">
+
+    <v-dialog v-model="internalValue" max-width="800px" transition="dialog-transition">
         <v-card>
             <v-card-title class="support-header">
                 <span class="support-title">{{ translate('support.title') }}</span>
@@ -70,8 +71,16 @@ import { translate } from "@/store/languageStore";
 
 export default {
     name: "SupportModal",
+    props: {
+        modelValue: {
+            type: Boolean,
+            required: true
+        }
+    },
     data() {
         return {
+            internalValue: this.modelValue,
+
             isSupportModalOpen: false,
             isHelpModalOpen: false,
             searchQuery: '',
@@ -104,6 +113,8 @@ export default {
         },
         closeSupportModal() {
             this.isSupportModalOpen = false;
+            this.$emit("close");
+
         },
         openHelpModal(question) {
             this.selectedQuestion = question;
@@ -126,7 +137,16 @@ export default {
                 alert(translate('support.contactFallback'));
             }
         }
-    }
+    },
+    watch: {
+        modelValue(val) {
+            this.internalValue = val;
+        },
+        internalValue(val) {
+            this.$emit('update:modelValue', val);
+        }
+    },
+
 };
 </script>
 

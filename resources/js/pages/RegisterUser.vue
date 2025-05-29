@@ -7,8 +7,9 @@
                 <v-col cols="12" sm="8" md="6" lg="4">
                     <v-card class="elevation-12 rounded-lg" border>
                         <div class="d-flex justify-end align-center" style="padding-top: 10px">
-                            <v-icon class="mr-2" @click="closeDialog">mdi-close</v-icon>
+                            <v-icon class="mr-2 close-btn" @click="closeDialog">mdi-close</v-icon>
                         </div>
+
                         <div class="d-flex align-center justify-center mt-1">
                             <v-img
                                 :src="logo"
@@ -173,6 +174,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+.close-btn {
+    transition: transform 0.2s ease;
+}
+
+.close-btn:hover {
+    transform: rotate(90deg);
+}
+
 .container__register {
     .v-card {
         transition: all 0.3s ease-in-out;

@@ -36,7 +36,7 @@
                         </v-alert>
 
                         <v-card-text>
-                            <v-form @submit.prevent="handleLogin" ref="form">
+                            <v-form @submit.prevent="login" ref="form">
                                 <v-text-field
                                     v-model="form.email"
                                     :label="translate('login.email')"
@@ -79,7 +79,7 @@
                             <v-btn
                                 color="primary"
                                 class="login-btn"
-                                @click="handleLogin"
+                                @click="login"
                                 :loading="loading"
                                 :disabled="loginAttempts >= 5"
                             >
@@ -150,6 +150,62 @@ export default {
         };
     },
     methods: {
+        async login() {
+            this.loading = true;
+            this.error = null;
+            this.successMessage = null;
+
+            const formData = {
+                email: this.form.email,
+                password: this.form.password,
+                provider: 'traditional'
+            };
+
+            try {
+                const response = await apiService.axiosToBackend().post('/login', formData);
+
+                this.successMessage = 'Login successful! Redirecting...';
+
+                // Salva il token di accesso.
+                localStorage.setItem('access_token', response.data.access_token);
+
+                // Se avessi bisogno dei dati utente, e il backend li restituisse:
+                // localStorage.setItem('user_data', JSON.stringify(response.data.user));
+
+                setTimeout(() => {
+                    // Modifica il percorso di reindirizzamento se '/UserProfile' non è la tua rotta SPA
+                    window.location.href = '/UserProfile';
+                }, 1500);
+
+            } catch (error) {
+                if (error.response) {
+
+                    const statusCode = error.response.status;
+                    const responseData = error.response.data;
+
+                    if (statusCode === 422) {
+                        this.error = responseData.message || "Validation failed.";
+                        if (responseData.errors) {
+                            const fieldErrors = Object.values(responseData.errors).flat().join(' ');
+                            this.error = `${this.error} ${fieldErrors ? '(' + fieldErrors + ')' : ''}`;
+                        }
+                    } else if (statusCode === 401) {
+                        this.error = responseData.message || "Invalid credentials. Please check your email and password.";
+                    } else if (statusCode === 500) {
+                        this.error = responseData.message || 'A server error occurred. Please try again later.';
+                    } else {
+                        this.error = responseData.message || `An error occurred with status: ${statusCode}`;
+                    }
+                } else if (error.request) {
+                    this.error = 'No response from the server. Please check your internet connection or server status.';
+                } else {
+                    this.error = 'An unexpected error occurred while setting up the request.';
+                    console.error('Axios request setup error or other JS error:', error); // Logga l'errore completo
+                }
+            } finally {
+                this.loading = false;
+            }
+        },
         translate,
 
         openLoginDialog() {

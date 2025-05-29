@@ -7,6 +7,7 @@ use App\Domain\Controllers\Controller;
 use App\Factories\AuthProviderFactory;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\LoginRequest;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 
@@ -33,35 +34,36 @@ class AuthController extends Controller
                 $registrationPayload[UserJson::PROVIDER_ID] = null;
             }
 
-            $user = $authStrategy->register($registrationPayload);
-
             return response()->json([
-                UserJson::USER => [
-                    UserJson::ID => (string) $user->id,
-                    UserJson::NAME => $user->name,
-                    UserJson::EMAIL => $user->email,
-                    UserJson::PROVIDER => $user->provider,
-                ],
+                'access_token' => $authStrategy->register($registrationPayload),
+                'token_type' => 'Bearer',
             ]);
-        } catch (\Throwable $e) {
-            Log::error('AUTH_CONTROLLER_REGISTER: Throwable: '.$e->getMessage(), [
+        } catch (Exception $e) {
+            Log::error('AUTH_CONTROLLER_LOGIN: Throwable: '.$e->getMessage(), [
                 'exception_class' => get_class($e),
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
                 'trace' => $e->getTraceAsString(),
             ]);
 
+            $statusCode = 500;
+            $message = 'Si è verificato un errore durante il login. Riprova più tardi.';
+
+            if ($e->getMessage() === 'Credenziali non valide.') {
+                $statusCode = 401;
+                $message = 'Credenziali non valide.';
+            }
+
             return response()->json([
                 'success' => false,
-                UserJson::MESSAGE => 'Si è verificato un errore durante la registrazione. Riprova più tardi.',
-            ], 500);
+                UserJson::MESSAGE => $message,
+            ], $statusCode);
         }
     }
 
     public function login(LoginRequest $request): JsonResponse
     {
         try {
-            Log::info('request sarebbe '.var_export($request->all(), true));
 
             $validatedData = $request->validated();
             $authStrategy = $this->authProviderFactory->make($request->input(UserJson::PROVIDER, UserJson::TRADITIONAL));
@@ -74,13 +76,9 @@ class AuthController extends Controller
                 $registrationPayload[UserJson::PROVIDER_ID] = null;
             }
 
-            $user = $authStrategy->login($registrationPayload);
-
             return response()->json([
-                UserJson::USER => [
-                    UserJson::NAME => $user->getName(),
-                    UserJson::EMAIL => $user->getEmail(),
-                ],
+                'access_token' => $authStrategy->login($registrationPayload),
+                'token_type' => 'Bearer',
             ]);
         } catch (\Throwable $e) {
             Log::error('AUTH_CONTROLLER_REGISTER: Throwable: '.$e->getMessage(), [

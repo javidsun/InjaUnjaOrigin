@@ -123,45 +123,60 @@ export default {
         async register() {
             this.loading = true;
             this.error = null;
+            this.successMessage = null;
 
             const formData = {
                 name: this.name,
                 email: this.email,
                 password: this.password,
-                password_confirmation: this.password, // Corretto per la regola 'confirmed' di Laravel
-                provider:'traditional'
+                password_confirmation: this.password,
+                provider: 'traditional'
             };
+
             try {
-                const response = await apiService.axiosToBackend().post('/api/register', formData);
-                if (response.data.success || response.status === 200) {
-                    this.successMessage = 'Registration successful! Redirecting...';
-                    localStorage.setItem('authToken', response.data.token);
+                const response = await apiService.axiosToBackend().post('/register', formData);
 
-                    setTimeout(() => {
-                        window.location.href = '/UserProfile';
-                    }, 1500);
 
-                } else {
-                    this.error = response.data.message;
-                }
+                this.successMessage = 'Registration successful! Redirecting...';
+
+                // Salva il token di accesso.
+                localStorage.setItem('access_token', response.data.access_token);
+
+                // Se avessi bisogno dei dati utente, e il backend li restituisse:
+                // localStorage.setItem('user_data', JSON.stringify(response.data.user));
+
+                setTimeout(() => {
+                    window.location.href = '/UserProfile';
+                }, 1500);
+
             } catch (error) {
-                if (error.response && error.response.status === 422) {
-                    this.error = error.response.data.message || "This email is already registered. Please use a different email or login.";
-                    if (error.response.data.errors) {
-                        const fieldErrors = Object.values(error.response.data.errors).flat().join(' ');
-                        this.error = `${this.error} (${fieldErrors})`;
+
+                if (error.response) {
+                    const statusCode = error.response.status;
+                    const responseData = error.response.data;
+
+                    if (statusCode === 422) {
+                        this.error = responseData.message || "Validation failed.";
+                        if (responseData.errors) {
+                            const fieldErrors = Object.values(responseData.errors).flat().join(' ');
+                            this.error = `${this.error} ${fieldErrors ? '(' + fieldErrors + ')' : ''}`;
+                        }
+                    } else if (statusCode === 401) {
+                        this.error = responseData.message || "Unauthorized. Invalid credentials.";
+                    } else if (statusCode === 500) { // Errore interno del server
+                        this.error = responseData.message || 'A server error occurred. Please try again later.';
+                    } else {
+                        this.error = responseData.message || `An error occurred with status: ${statusCode}`;
                     }
                 } else if (error.request) {
-                    this.error = 'Nessuna risposta dal server. Controlla la connessione.';
+                    this.error = 'No response from the server. Please check your internet connection or server status.';
                 } else {
-                    this.error = 'Errore imprevisto nella configurazione della richiesta.';
+                    this.error = 'An unexpected error occurred while setting up the request.';
+                    console.error('Axios request setup error or other JS error:', error); // Logga l'errore completo
                 }
-
-            }
-            finally {
+            } finally {
                 this.loading = false;
             }
-
         },
     }
 };

@@ -19,17 +19,20 @@ abstract class AuthService implements RegisterStrategyContract
     /**
      * @throws ReflectionException
      */
-    public function register(array $data): UserEntity
+    public function register(array $data): string
     {
         $userEntity = UserEntity::fromArray($data);
 
         return $this->userRepositoryInterface->save($userEntity);
     }
 
-    public function login(array $data):UserEntity
+    /**
+     * @throws ReflectionException
+     */
+    public function login(array $data):string
     {
-        $user = $this->userRepositoryInterface->get($data);
-        Log::info('user:'.var_export($user, true));
-        return $this->userRepositoryInterface->get($data);
+        $userEntity = UserEntity::fromArray($data);
+
+        return $this->userRepositoryInterface->login($userEntity);
     }
 }

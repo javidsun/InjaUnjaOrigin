@@ -12,8 +12,8 @@ class Kernel extends HttpKernel
         // TODO JAVID : backed route da mettere a posto creazione di constant pattern e key e documentazione per ogni di questi middleware
         'api' => [
             'throttle:api',
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api', //sanctum
+            \Illuminate\Routing\Middleware\SubstituteBindings::class, //sanctum
         ],
         // TODO JAVID : frontend route da mettere a posto creazione di constant pattern e key e documentazione per ogni di questi middleware
         'web' => [

@@ -63,10 +63,20 @@ class User extends Authenticate implements ModelEntityConvertable
      *
      * @var array<int, string>
      */
-    // TODO JAVID : controllo per funzionamento di remember_token e fare documentazione di questo
     protected $hidden = [
         UserJson::PASSWORD,
         'remember_token',
+    ];
+
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
     protected static function booted(): void

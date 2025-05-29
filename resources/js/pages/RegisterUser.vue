@@ -1,6 +1,7 @@
 <template>
+    <v-dialog v-model="openRegisterDialog" @click:outside="closeDialog" persistent="false" >
+        <template #default>
 
-    <v-dialog v-model="openRegisterDialog" @click:outside="closeDialog">
         <v-container class="container__register">
             <v-row align="center" justify="center">
                 <v-col cols="12" sm="8" md="6" lg="4">
@@ -90,6 +91,7 @@
                 </v-col>
             </v-row>
         </v-container>
+        </template>
     </v-dialog>
 </template>
 
@@ -120,6 +122,7 @@ export default {
     methods: {
         closeDialog() {
             this.openRegisterDialog = false;
+            this.$emit("close");
         },
 
         async register() {

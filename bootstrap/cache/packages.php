@@ -1,89 +1,89 @@
-<?php return array (
-  'beyondcode/laravel-er-diagram-generator' => 
-  array (
-    'providers' => 
-    array (
+<?php return array(
+  'beyondcode/laravel-er-diagram-generator' =>
+  array(
+    'providers' =>
+    array(
       0 => 'BeyondCode\\ErdGenerator\\ErdGeneratorServiceProvider',
     ),
   ),
-  'inertiajs/inertia-laravel' => 
-  array (
-    'providers' => 
-    array (
+  'inertiajs/inertia-laravel' =>
+  array(
+    'providers' =>
+    array(
       0 => 'Inertia\\ServiceProvider',
     ),
   ),
-  'laravel/pail' => 
-  array (
-    'providers' => 
-    array (
+  'laravel/pail' =>
+  array(
+    'providers' =>
+    array(
       0 => 'Laravel\\Pail\\PailServiceProvider',
     ),
   ),
-  'laravel/sail' => 
-  array (
-    'providers' => 
-    array (
+  'laravel/sail' =>
+  array(
+    'providers' =>
+    array(
       0 => 'Laravel\\Sail\\SailServiceProvider',
     ),
   ),
-  'laravel/sanctum' => 
-  array (
-    'providers' => 
-    array (
+  'laravel/sanctum' =>
+  array(
+    'providers' =>
+    array(
       0 => 'Laravel\\Sanctum\\SanctumServiceProvider',
     ),
   ),
-  'laravel/socialite' => 
-  array (
-    'aliases' => 
-    array (
+  'laravel/socialite' =>
+  array(
+    'aliases' =>
+    array(
       'Socialite' => 'Laravel\\Socialite\\Facades\\Socialite',
     ),
-    'providers' => 
-    array (
+    'providers' =>
+    array(
       0 => 'Laravel\\Socialite\\SocialiteServiceProvider',
     ),
   ),
-  'laravel/tinker' => 
-  array (
-    'providers' => 
-    array (
+  'laravel/tinker' =>
+  array(
+    'providers' =>
+    array(
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
     ),
   ),
-  'nesbot/carbon' => 
-  array (
-    'providers' => 
-    array (
+  'nesbot/carbon' =>
+  array(
+    'providers' =>
+    array(
       0 => 'Carbon\\Laravel\\ServiceProvider',
     ),
   ),
-  'nunomaduro/collision' => 
-  array (
-    'providers' => 
-    array (
+  'nunomaduro/collision' =>
+  array(
+    'providers' =>
+    array(
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
-  'nunomaduro/termwind' => 
-  array (
-    'providers' => 
-    array (
+  'nunomaduro/termwind' =>
+  array(
+    'providers' =>
+    array(
       0 => 'Termwind\\Laravel\\TermwindServiceProvider',
     ),
   ),
-  'spatie/laravel-permission' => 
-  array (
-    'providers' => 
-    array (
+  'spatie/laravel-permission' =>
+  array(
+    'providers' =>
+    array(
       0 => 'Spatie\\Permission\\PermissionServiceProvider',
     ),
   ),
-  'tightenco/ziggy' => 
-  array (
-    'providers' => 
-    array (
+  'tightenco/ziggy' =>
+  array(
+    'providers' =>
+    array(
       0 => 'Tighten\\Ziggy\\ZiggyServiceProvider',
     ),
   ),

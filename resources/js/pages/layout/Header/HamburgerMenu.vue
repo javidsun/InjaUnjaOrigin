@@ -35,6 +35,7 @@
                 <component
                     :is="selectedComponent"
                     ref="modalRef"
+                    v-model="modalActive"
                     @close="handleModalClose"
                 />
             </v-card>
@@ -65,6 +66,7 @@ export default {
                 { title: "menu.giftCard", icon: "mdi-gift", component: GiftModal },
                 { title: "menu.injaUnja", icon: "mdi-map-marker", component: InjaUnja },
                 { title: "menu.helpCenter", icon: "mdi-help-circle", component: HelpCenter }
+
             ]
         };
     },

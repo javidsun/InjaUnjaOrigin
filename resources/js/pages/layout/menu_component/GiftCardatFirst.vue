@@ -1,5 +1,6 @@
 <template>
-    <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
+    <v-dialog v-model="isModalOpen" max-width="500px" @click:outside="closeDialog">
+
         <v-card>
             <v-card-title class="gift-card-section">
                 <span>{{ translate('giftCard.giftCardTitle') }}</span>
@@ -69,7 +70,7 @@ export default {
     name: 'GiftCardModal',
     data() {
         return {
-            isModalOpen: false,
+            isModalOpen: true,
             giftCardData: {
                 amount: '',
                 recipient: '',
@@ -82,17 +83,20 @@ export default {
         translate,
 
         openModal() {
-            try {
-                this.isModalOpen = true;
-            } catch (error) {
-                this.handleError('Failed to open modal', error);
-            }
+            this.isModalOpen = true;
+
+        },
+
+        closeDialog() {
+            this.isModalOpen = false;
+            this.$emit("close");
         },
 
         handleCloseModal() {
             try {
                 this.isModalOpen = false;
                 this.resetFormData();
+                this.$emit("close");
             } catch (error) {
                 this.handleError('Failed to close modal', error);
             }

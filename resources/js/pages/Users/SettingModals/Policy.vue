@@ -2,7 +2,7 @@
     <v-dialog v-model="ispolicyModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>
             <v-card-title class="policy-header">
-                <span class="policy-title">{{ translate('policy.title') }}</span>
+                <span class="policy-title">{{ translate('GUIDE_POLICY_TITLE') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closePolicyModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -12,13 +12,13 @@
 
             <v-card-text class="policy-content text-center">
                 <div class="policy-section">
-                    <h3 class="section-title">{{ translate('policy.privacyPolicyTitle') }}</h3>
-                    <p class="section-description">{{ translate('policy.privacyPolicyDescription') }}</p>
+                    <h3 class="section-title">{{ translate('GUIDE_POLICY_PRIVACYPOLICYTITLE') }}</h3>
+                    <p class="section-description">{{ translate('GUIDE_POLICY_PRIVACYPOLICYDESCRIPTION') }}</p>
                 </div>
                 <v-divider></v-divider>
 
                 <div class="policy-section">
-                    <h3 class="section-title">{{ translate('policy.supplementaryDocumentsTitle') }}</h3>
+                    <h3 class="section-title">{{ translate('GUIDE_POLICY_SUPPLEMENTARYDOCUMENTSTITLE') }}</h3>
                     <ul class="document-list">
                         <li v-for="(document, index) in supplementaryDocuments" :key="index">
                             {{ translate(document) }}
@@ -29,31 +29,31 @@
                 <v-divider></v-divider>
 
                 <div class="policy-section">
-                    <h3 class="section-title">{{ translate('policy.relatedArticlesTitle') }}</h3>
-                    <p class="section-description">{{ translate('policy.relatedArticlesDescription') }}</p>
+                    <h3 class="section-title">{{ translate('GUIDE_POLICY_RELATEDARTICLESTITLE') }}</h3>
+                    <p class="section-description">{{ translate('GUIDE_POLICY_RELATEDARTICLESDESCRIPTION') }}</p>
                 </div>
                 <v-divider></v-divider>
 
                 <div class="policy-section">
-                    <h3 class="section-title">{{ translate('policy.hostSectionTitle') }}</h3>
-                    <p class="section-description">{{ translate('policy.hostSectionDescription') }}</p>
+                    <h3 class="section-title">{{ translate('GUIDE_POLICY_HOSTSECTIONTITLE') }}</h3>
+                    <p class="section-description">{{ translate('GUIDE_POLICY_HOSTSECTIONDESCRIPTION') }}</p>
                 </div>
                 <v-divider></v-divider>
 
                 <div class="policy-section">
-                    <h3 class="section-title">{{ translate('policy.termsUpdatesTitle') }}</h3>
-                    <p class="section-description">{{ translate('policy.termsUpdatesDescription') }}</p>
+                    <h3 class="section-title">{{ translate('GUIDE_POLICY_TERMSUPDATESTITLE') }}</h3>
+                    <p class="section-description">{{ translate('GUIDE_POLICY_TERMSUPDATESDESCRIPTION') }}</p>
                 </div>
             </v-card-text>
 
             <v-card-actions>
                 <v-btn color="error" @click="showConfirmation" class="mr-4">
                     <v-icon left>mdi-alert-circle</v-icon>
-                    {{ translate('policy.importantNotice') }}
+                    {{ translate('GUIDE_POLICY_IMPORTANT_NOTICE') }}
                 </v-btn>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" @click="acceptPolicy">
-                    {{ translate('policy.acceptButton') }}
+                    {{ translate('ACCEPT') }}
                 </v-btn>
             </v-card-actions>
         </v-card>

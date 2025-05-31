@@ -5,12 +5,12 @@
                 <v-card class="special-offer-card" outlined>
                     <v-img :src="specialOffer.image" height="200px"/>
                     <v-badge color="primary" content="Special offer" class="badge-title"></v-badge>
-                    <v-card-title class="card-title">{{ translate('SpecialOffer.Title') }}</v-card-title>
+                    <v-card-title class="card-title">{{ translate('SPECIALOFFER_TITLE') }}</v-card-title>
                     <v-divider></v-divider>
                     <v-card-text class="card-text">
-                        <p>{{ translate('SpecialOffer.Description') }}</p>
+                        <p>{{ translate('SPECIALOFFER_DESCRIPTION') }}</p>
                         <v-btn :to="specialOffer.link" color="secondary" outlined>
-                            {{ translate('SpecialOffer.ViewButton') }}
+                            {{ translate('SPECIALOFFER_VIEWBUTTON') }}
                         </v-btn>
                     </v-card-text>
                 </v-card>
@@ -29,8 +29,8 @@
                     >
                         <v-img :src="ad.image" height="350px"/>
                         <div class="carousel-content">
-                            <h3>{{ translate('AdsCarousel.ModernHouse1') }}</h3>
-                            <p>{{ translate('AdsCarousel.ModernHouseDescription1') }}</p>
+                            <h3>{{ translate('ADSCAROUSEL_MODERNHOUSE1') }}</h3>
+                            <p>{{ translate('ADSCAROUSEL_MODERNHOUSEDESCRIPTION1') }}</p>
                         </div>
                     </v-carousel-item>
                 </v-carousel>
@@ -39,12 +39,12 @@
             <v-col cols="12" md="3">
                 <v-card class="top-rated-card" outlined>
                     <v-img :src="topRatedAd.image" height="200px"/>
-                    <v-card-title class="card-title">{{ translate('TopRatedAd.Title') }}</v-card-title>
+                    <v-card-title class="card-title">{{ translate('TOPRATEDAD_TITLE') }}</v-card-title>
                     <v-divider></v-divider>
                     <v-card-text class="card-text">
-                        <p>{{ translate('TopRatedAd.Description') }}</p>
+                        <p>{{ translate('TOPRATEDAD_DESCRIPTION') }}</p>
                         <v-btn :to="topRatedAd.link" color="secondary" outlined>
-                            {{ translate('TopRatedAd.ViewButton') }}
+                            {{ translate('TOPRATEDAD_VIEWBUTTON') }}
                         </v-btn>
                     </v-card-text>
                 </v-card>

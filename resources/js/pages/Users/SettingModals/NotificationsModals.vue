@@ -6,28 +6,28 @@
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
 
-                <span>{{ translate('notifications.title') }}</span>
+                <span>{{ translate('NOTIFICATIONS_TITLE') }}</span>
                 <v-spacer></v-spacer>
             </v-card-title>
 
             <v-card-text class="modal-content">
                 <v-tabs v-model="tab" grow>
-                    <v-tab value="offers">{{ translate('notifications.offers') }}</v-tab>
-                    <v-tab value="account">{{ translate('notifications.account') }}</v-tab>
+                    <v-tab value="offers">{{ translate('NOTIFICATIONS_OFFERS') }}</v-tab>
+                    <v-tab value="account">{{ translate('NOTIFICATIONS_ACCOUNT') }}</v-tab>
                 </v-tabs>
 
                 <v-window v-model="tab">
                     <v-window-item value="offers">
                         <div class="tab-content">
                             <div class="section">
-                                <h3>{{ translate('notifications.hostInsights') }}</h3>
-                                <p>{{ translate('notifications.hostInsightsDesc') }}</p>
+                                <h3>{{ translate('NOTIFICATIONS_HOSTINSIGHTS') }}</h3>
+                                <p>{{ translate('NOTIFICATIONS_HOSTINSIGHTSDESC') }}</p>
                             </div>
 
                             <div class="section">
                                 <div class="toggle-item">
                                     <div>
-                                        <h4>{{ translate('notifications.recognition') }}</h4>
+                                        <h4>{{ translate('NOTIFICATIONS_RECOGNITION') }}</h4>
                                         <p :class="{'text-success': notifications.recognition, 'text-error': !notifications.recognition}">
                                             {{ notifications.recognition ? 'On: Email and Push' : 'Off' }}
                                         </p>
@@ -38,7 +38,7 @@
                             <div class="section">
                                 <div class="toggle-item">
                                     <div>
-                                        <h4>{{ translate('notifications.insights') }}</h4>
+                                        <h4>{{ translate('NOTIFICATIONS_INSIGHTS') }}</h4>
                                         <p :class="{'text-success': notifications.insights, 'text-error': !notifications.insights}">
                                             {{ notifications.insights ? 'On: Email and Push' : 'Off' }}
                                         </p>
@@ -50,7 +50,7 @@
                             <div class="section">
                                 <div class="toggle-item">
                                     <div>
-                                        <h4>{{ translate('notifications.pricing') }}</h4>
+                                        <h4>{{ translate('NOTIFICATIONS_PRICING') }}</h4>
                                         <p :class="{'text-success': notifications.pricing, 'text-error': !notifications.pricing}">
                                             {{ notifications.pricing ? 'On: Email and Push' : 'Off' }}
                                         </p>
@@ -62,7 +62,7 @@
                             <div class="section">
                                 <div class="toggle-item">
                                     <div>
-                                        <h4>{{ translate('notifications.hosting') }}</h4>
+                                        <h4>{{ translate('NOTIFICATIONS_HOSTING') }}</h4>
                                         <p :class="{'text-success': notifications.hosting, 'text-error': !notifications.hosting}">
                                             {{ notifications.hosting ? 'On: Email and Push' : 'Off' }}
                                         </p>
@@ -74,14 +74,14 @@
                             <v-divider></v-divider>
 
                             <div class="section">
-                                <h3>{{ translate('notifications.hostUpdates') }}</h3>
-                                <p>{{ translate('notifications.hostUpdatesDesc') }}</p>
+                                <h3>{{ translate('NOTIFICATIONS_HOSTUPDATES') }}</h3>
+                                <p>{{ translate('NOTIFICATIONS_HOSTUPDATESDESC') }}</p>
                             </div>
 
                             <div class="section">
                                 <div class="toggle-item">
                                     <div>
-                                        <h4>{{ translate('notifications.news') }}</h4>
+                                        <h4>{{ translate('NOTIFICATIONS_NEWS') }}</h4>
                                         <p :class="{'text-success': notifications.news, 'text-error': !notifications.news}">
                                             {{ notifications.news ? 'On: Email and Push' : 'Off' }}
                                         </p>
@@ -93,7 +93,7 @@
                             <div class="section">
                                 <div class="toggle-item">
                                     <div>
-                                        <h4>{{ translate('notifications.regulations') }}</h4>
+                                        <h4>{{ translate('NOTIFICATIONS_REGULATIONS') }}</h4>
                                         <p :class="{'text-success': notifications.regulations, 'text-error': !notifications.regulations}">
                                             {{ notifications.regulations ? 'On: Email and Push' : 'Off' }}
                                         </p>
@@ -105,14 +105,14 @@
                             <v-divider></v-divider>
 
                             <div class="section">
-                                <h3>{{ translate('notifications.travelTips') }}</h3>
-                                <p>{{ translate('notifications.travelTipsDesc') }}</p>
+                                <h3>{{ translate('NOTIFICATIONS_TRAVELTIPS') }}</h3>
+                                <p>{{ translate('NOTIFICATIONS_TRAVELTIPSDESC') }}</p>
                             </div>
 
                             <div class="section">
                                 <div class="toggle-item">
                                     <div>
-                                        <h4>{{ translate('notifications.inspiration') }}</h4>
+                                        <h4>{{ translate('NOTIFICATIONS_INSPIRATION') }}</h4>
                                         <p :class="{'text-success': notifications.inspiration, 'text-error': !notifications.inspiration}">
                                             {{ notifications.inspiration ? 'On: Email and Push' : 'Off' }}
                                         </p>
@@ -124,7 +124,7 @@
                             <div class="section">
                                 <div class="toggle-item">
                                     <div>
-                                        <h4>{{ translate('notifications.tripPlanning') }}</h4>
+                                        <h4>{{ translate('NOTIFICATIONS_TRIPPLANNING') }}</h4>
                                         <p :class="{'text-success': notifications.tripPlanning, 'text-error': !notifications.tripPlanning}">
                                             {{ notifications.tripPlanning ? 'On: Email and Push' : 'Off' }}
                                         </p>
@@ -135,14 +135,14 @@
                             <v-divider></v-divider>
 
                             <div class="section">
-                                <h3>{{ translate('notifications.injaonjaUpdates') }}</h3>
-                                <p>{{ translate('notifications.injaonjaUpdatesDesc') }}</p>
+                                <h3>{{ translate('NOTIFICATIONS_INJAONJAUPDATES') }}</h3>
+                                <p>{{ translate('NOTIFICATIONS_INJAONJAUPDATESDESC') }}</p>
                             </div>
 
                             <div class="section">
                                 <div class="toggle-item">
                                     <div>
-                                        <h4>{{ translate('notifications.injaonjaNews') }}</h4>
+                                        <h4>{{ translate('NOTIFICATIONS_INJAONJANEWS') }}</h4>
                                         <p :class="{'text-success': notifications.injaonjaNews, 'text-error': !notifications.injaonjaNews}">
                                             {{ notifications.injaonjaNews ? 'On: Email and Push' : 'Off' }}
                                         </p>
@@ -154,7 +154,7 @@
                             <div class="section">
                                 <div class="toggle-item">
                                     <div>
-                                        <h4>{{ translate('notifications.feedback') }}</h4>
+                                        <h4>{{ translate('NOTIFICATIONS_FEEDBACK') }}</h4>
                                         <p :class="{'text-success': notifications.feedback, 'text-error': !notifications.feedback}">
                                             {{ notifications.feedback ? 'On: Email and Push' : 'Off' }}
                                         </p>
@@ -166,7 +166,7 @@
                             <div class="section">
                                 <div class="toggle-item">
                                     <div>
-                                        <h4>{{ translate('notifications.tripRegulations') }}</h4>
+                                        <h4>{{ translate('NOTIFICATIONS_TRIPREGULATIONS') }}</h4>
                                         <p :class="{'text-success': notifications.tripRegulations, 'text-error': !notifications.tripRegulations}">
                                             {{ notifications.tripRegulations ? 'On: Email and Push' : 'Off' }}
                                         </p>
@@ -178,14 +178,14 @@
                             <v-divider></v-divider>
 
                             <div class="section">
-                                <h3>{{ translate('notifications.unsubscribe') }}</h3>
-                                <p>{{ translate('notifications.unsubscribeDesc') }}</p>
+                                <h3>{{ translate('NOTIFICATIONS_UNSUBSCRIBE') }}</h3>
+                                <p>{{ translate('NOTIFICATIONS_UNSUBSCRIBEDESC') }}</p>
                             </div>
 
                             <div class="section">
                                 <div class="toggle-item">
                                     <div>
-                                        <h4>{{ translate('notifications.allOffers') }}</h4>
+                                        <h4>{{ translate('NOTIFICATIONS_ALLOFFERS') }}</h4>
                                         <p :class="{'text-success': notifications.allOffers, 'text-error': !notifications.allOffers}">
                                             {{ notifications.allOffers ? 'On: Email and Push' : 'Off' }}
                                         </p>
@@ -196,7 +196,7 @@
                             <div class="section">
                                 <div class="toggle-item">
                                     <div>
-                                        <h4>{{ translate('notifications.accountActivity') }}</h4>
+                                        <h4>{{ translate('NOTIFICATIONS_ACCOUNTACTIVITY') }}</h4>
                                         <p :class="{'text-success': notifications.accountActivity, 'text-error': !notifications.accountActivity}">
                                             {{ notifications.accountActivity ? 'On: Email and Push' : 'Off' }}
                                         </p>
@@ -207,7 +207,7 @@
                             <div class="section">
                                 <div class="toggle-item">
                                     <div>
-                                        <p>{{ translate('notifications.smsConsent') }}</p>
+                                        <p>{{ translate('NOTIFICATIONS_SMSCONSENT') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -217,15 +217,15 @@
                     <v-window-item value="account">
                         <div class="tab-content">
                             <div class="section">
-                                <h3>{{ translate('notifications.activityList') }}</h3>
-                                <p>{{ translate('notifications.remindersDesc') }}</p>
+                                <h3>{{ translate('NOTIFICATIONS_ACTIVITYLIST') }}</h3>
+                                <p>{{ translate('NOTIFICATIONS_REMINDERSDESC') }}</p>
                             </div>
                         </div>
 
                         <div class="section">
                             <div class="toggle-item">
                                 <div>
-                                    <h4>{{ translate('notifications.activityList') }}</h4>
+                                    <h4>{{ translate('NOTIFICATIONS_ACTIVITYLIST') }}</h4>
                                     <p :class="{'text-success': notifications.activityList, 'text-error': !notifications.activityList}">
                                         {{ notifications.activityList ? 'On: Email and Push' : 'Off' }}
                                     </p>
@@ -237,7 +237,7 @@
                         <div class="section">
                             <div class="toggle-item">
                                 <div>
-                                    <h4>{{ translate('notifications.guestPolicies') }}</h4>
+                                    <h4>{{ translate('NOTIFICATIONS_GUESTPOLICIES') }}</h4>
                                     <p :class="{'text-success': notifications.guestPolicies, 'text-error': !notifications.guestPolicies}">
                                         {{ notifications.guestPolicies ? 'On: Email and Push' : 'Off' }}
                                     </p>
@@ -249,7 +249,7 @@
                         <div class="section">
                             <div class="toggle-item">
                                 <div>
-                                    <h4>{{ translate('notifications.hostPolicies') }}</h4>
+                                    <h4>{{ translate('NOTIFICATIONS_HOSTPOLICIES') }}</h4>
                                     <p :class="{'text-success': notifications.hostPolicies, 'text-error': !notifications.hostPolicies}">
                                         {{ notifications.hostPolicies ? 'On: Email and Push' : 'Off' }}
                                     </p>
@@ -261,14 +261,14 @@
                         <v-divider></v-divider>
 
                         <div class="section">
-                            <h3>{{ translate('notifications.reminders') }}</h3>
-                            <p>{{ translate('notifications.remindersDesc') }}</p>
+                            <h3>{{ translate('NOTIFICATIONS_REMINDERS') }}</h3>
+                            <p>{{ translate('NOTIFICATIONS_REMINDERSDESC') }}</p>
                         </div>
 
                         <div class="section">
                             <div class="toggle-item">
                                 <div>
-                                    <h4>{{ translate('notifications.reminders') }}</h4>
+                                    <h4>{{ translate('NOTIFICATIONS_REMINDERS') }}</h4>
                                     <p :class="{'text-success': notifications.reminders, 'text-error': !notifications.reminders}">
                                         {{ notifications.reminders ? 'On: Email and Push' : 'Off' }}
                                     </p>
@@ -280,14 +280,14 @@
                         <v-divider></v-divider>
 
                         <div class="section">
-                            <h3>{{ translate('notifications.messages') }}</h3>
-                            <p>{{ translate('notifications.messagesDesc') }}</p>
+                            <h3>{{ translate('NOTIFICATIONS_MESSAGES') }}</h3>
+                            <p>{{ translate('NOTIFICATIONS_MESSAGESDESC') }}</p>
                         </div>
 
                         <div class="section">
                             <div class="toggle-item">
                                 <div>
-                                    <h4>{{ translate('notifications.messages') }}</h4>
+                                    <h4>{{ translate('NOTIFICATIONS_MESSAGES') }}</h4>
                                     <p :class="{'text-success': notifications.messages, 'text-error': !notifications.messages}">
                                         {{ notifications.messages ? 'On: Email and Push' : 'Off' }}
                                     </p>
@@ -299,7 +299,7 @@
                         <div class="section">
                             <div class="toggle-item">
                                 <div>
-                                    <p>{{ translate('notifications.smsConsent') }}</p>
+                                    <p>{{ translate('NOTIFICATIONS_SMSCONSENT') }}</p>
                                 </div>
                             </div>
                         </div>

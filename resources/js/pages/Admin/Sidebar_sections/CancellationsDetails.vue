@@ -21,7 +21,7 @@
                         <v-card class="elevation-4 rounded-lg pa-4">
                             <v-card-title class="text-h5 primary--text sizem">
                                 <v-icon class="mr-2">mdi-cancel</v-icon>
-                                {{ translate('Admin_Reports.cancellation_details') }}
+                                {{ translate('ADMIN_REPORTS_CANCELLATION_DETAILS') }}
                             </v-card-title>
                             <v-card-text>
                                 <v-row>
@@ -30,7 +30,7 @@
                                             <v-card-title class="text-h6">
                                                 {{ cancellationDetails.totalCancellations }}
                                             </v-card-title>
-                                            <v-card-subtitle>{{ translate('Admin_Reports.total_cancellations') }}</v-card-subtitle>
+                                            <v-card-subtitle>{{ translate('ADMIN_REPORTS_TOTAL_CANCELLATIONS') }}</v-card-subtitle>
                                             <v-card-actions>
                                                 <v-btn @click="exportData('total')" color="primary">Export</v-btn>
                                             </v-card-actions>
@@ -41,7 +41,7 @@
                                             <v-card-title class="text-h6">
                                                 {{ cancellationDetails.cancellationReasons[0].count }}
                                             </v-card-title>
-                                            <v-card-subtitle>{{ translate('Admin_Reports.host_schedule_change') }}</v-card-subtitle>
+                                            <v-card-subtitle>{{ translate('ADMIN_REPORTS_HOST_SCHEDULE_CHANGE') }}</v-card-subtitle>
                                             <v-card-actions>
                                                 <v-btn @click="exportData('total')" color="primary">Export</v-btn>
                                             </v-card-actions>
@@ -52,7 +52,7 @@
                                             <v-card-title class="text-h6">
                                                 {{ cancellationDetails.cancellationReasons[1].count }}
                                             </v-card-title>
-                                            <v-card-subtitle>{{ translate('Admin_Reports.payment_issue') }}</v-card-subtitle>
+                                            <v-card-subtitle>{{ translate('ADMIN_REPORTS_PAYMENT_ISSUE') }}</v-card-subtitle>
                                             <v-card-actions>
                                                 <v-btn @click="exportData('total')" color="primary">Export</v-btn>
                                             </v-card-actions>
@@ -63,7 +63,7 @@
                                             <v-card-title class="text-h6">
                                                 {{ cancellationDetails.cancellationReasons[2].count }}
                                             </v-card-title>
-                                            <v-card-subtitle>{{ translate('Admin_Reports.user_cancellations') }}</v-card-subtitle>
+                                            <v-card-subtitle>{{ translate('ADMIN_REPORTS_USER_CANCELLATIONS') }}</v-card-subtitle>
                                             <v-card-actions>
                                                 <v-btn @click="exportData('total')" color="primary">Export</v-btn>
                                             </v-card-actions>
@@ -80,7 +80,7 @@
                                     @click:row="showCancellationDetails"
                                 >
                                     <template v-slot:item.actions="{ item }">
-                                        <v-btn small @click.stop="openDetailModal(item)">{{ translate('Admin_Reports.details') }}</v-btn>
+                                        <v-btn small @click.stop="openDetailModal(item)">{{ translate('ADMIN_REPORTS_DETAILS') }}</v-btn>
                                     </template>
                                 </v-data-table>
                             </v-card-text>
@@ -99,10 +99,10 @@
                     <v-table>
                         <thead>
                         <tr>
-                            <th>{{ translate('Admin_Reports.id') }}</th>
-                            <th>{{ translate('Admin_Reports.user_name') }}</th>
-                            <th>{{ translate('Admin_Reports.reason') }}</th>
-                            <th>{{ translate('Admin_Reports.action') }}</th>
+                            <th>{{ translate('ADMIN_REPORTS_ID') }}</th>
+                            <th>{{ translate('ADMIN_REPORTS_USER_NAME') }}</th>
+                            <th>{{ translate('ADMIN_REPORTS_REASON') }}</th>
+                            <th>{{ translate('ADMIN_REPORTS_ACTION') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -111,7 +111,7 @@
                             <td>{{ item.userName }}</td>
                             <td>{{ item.reason }}</td>
                             <td>
-                                <v-btn small @click.stop="openDetailModal(item)">{{ translate('Admin_Reports.details') }}</v-btn>
+                                <v-btn small @click.stop="openDetailModal(item)">{{ translate('ADMIN_REPORTS_DETAILS') }}</v-btn>
                             </td>
                         </tr>
                         </tbody>
@@ -125,15 +125,15 @@
 
         <v-dialog v-model="detailModalOpen" max-width="600px">
             <v-card>
-                <v-card-title>{{ translate('Admin_Reports.cancellation_details') }}</v-card-title>
+                <v-card-title>{{ translate('ADMIN_REPORTS_CANCELLATION_DETAILS') }}</v-card-title>
                 <v-card-text>
-                    <p><strong>{{ translate('Admin_Reports.id') }}:</strong> {{ selectedDetail.id }}</p>
-                    <p><strong>{{ translate('Admin_Reports.order_name') }}:</strong> {{ selectedDetail.name }}</p>
-                    <p><strong>{{ translate('Admin_Reports.reason') }}:</strong> {{ selectedDetail.reason }}</p>
-                    <p><strong>{{ translate('Admin_Reports.date') }}:</strong> {{ selectedDetail.date }}</p>
-                    <p><strong>{{ translate('Admin_Reports.user_name') }}:</strong> {{ selectedDetail.userName }}</p>
-                    <p><strong>{{ translate('Admin_Reports.status') }}:</strong> {{ selectedDetail.status }}</p>
-                    <p><strong>{{ translate('Admin_Reports.amount') }}:</strong> {{ selectedDetail.amount }}</p>
+                    <p><strong>{{ translate('ADMIN_REPORTS_ID') }}:</strong> {{ selectedDetail.id }}</p>
+                    <p><strong>{{ translate('ADMIN_REPORTS_ORDER_NAME') }}:</strong> {{ selectedDetail.name }}</p>
+                    <p><strong>{{ translate('ADMIN_REPORTS_REASON') }}:</strong> {{ selectedDetail.reason }}</p>
+                    <p><strong>{{ translate('ADMIN_REPORTS_DATE') }}:</strong> {{ selectedDetail.date }}</p>
+                    <p><strong>{{ translate('ADMIN_REPORTS_USER_NAME') }}:</strong> {{ selectedDetail.userName }}</p>
+                    <p><strong>{{ translate('ADMIN_REPORTS_STATUS') }}:</strong> {{ selectedDetail.status }}</p>
+                    <p><strong>{{ translate('ADMIN_REPORTS_AMOUNT') }}:</strong> {{ selectedDetail.amount }}</p>
                 </v-card-text>
                 <v-card-actions>
                     <v-btn @click="detailModalOpen = false">Close</v-btn>
@@ -173,9 +173,9 @@ export default {
             cancellationDetails: {
                 totalCancellations: 15,
                 cancellationReasons: [
-                    { reasonKey: "Admin_Reports.host_schedule_change", count: 8, icon: "mdi-calendar-remove", color: "blue" },
-                    { reasonKey: "Admin_Reports.payment_issue", count: 5, icon: "mdi-credit-card-off", color: "red" },
-                    { reasonKey: "Admin_Reports.other", count: 2, icon: "mdi-help-circle", color: "gray" },
+                    { reasonKey: "ADMIN_REPORTS_HOST_SCHEDULE_CHANGE", count: 8, icon: "mdi-calendar-remove", color: "blue" },
+                    { reasonKey: "ADMIN_REPORTS_PAYMENT_ISSUE", count: 5, icon: "mdi-credit-card-off", color: "red" },
+                    { reasonKey: "ADMIN_REPORTS_OTHER", count: 2, icon: "mdi-help-circle", color: "gray" },
                 ],
             },
             cancellations: {
@@ -205,8 +205,8 @@ export default {
                 ],
             },
             cancellationTableHeaders: [
-                { textKey: "Admin_Reports.reason", value: "reason" },
-                { textKey: "Admin_Reports.count", value: "count" },
+                { textKey: "ADMIN_REPORTS_REASON", value: "reason" },
+                { textKey: "ADMIN_REPORTS_COUNT", value: "count" },
             ]
         }
     },

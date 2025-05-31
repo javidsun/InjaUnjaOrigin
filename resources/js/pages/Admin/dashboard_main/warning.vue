@@ -6,7 +6,7 @@
                 <v-card class="card-info" @click="handleCardClick('follow-up')">
                     <v-card-text>
                         <h1 class="card-info2">{{ cardData.followUp.count }}</h1>
-                        <h2 class="card-info3">{{ translate('warning.followUp') }}</h2>
+                        <h2 class="card-info3">{{ translate('WARNING_FOLLOWUP') }}</h2>
                     </v-card-text>
                 </v-card>
             </div>
@@ -18,7 +18,7 @@
                 <v-card class="card-success" @click="handleCardClick('successful')">
                     <v-card-text>
                         <h1 class="card-info2">{{ cardData.successful.count }}</h1>
-                        <h2 class="card-info3">{{ translate('warning.successfulRequests') }}</h2>
+                        <h2 class="card-info3">{{ translate('WARNING_SUCCESSFULREQUESTS') }}</h2>
                     </v-card-text>
                 </v-card>
             </div>
@@ -29,7 +29,7 @@
                 <v-card class="card-warning" @click="handleCardClick('pending')">
                     <v-card-text>
                         <h1 class="card-info2">{{ cardData.pending.count }}</h1>
-                        <h2 class="card-info3">{{ translate('warning.pendingRequests') }}</h2>
+                        <h2 class="card-info3">{{ translate('WARNING_PENDINGREQUESTS') }}</h2>
                     </v-card-text>
                 </v-card>
             </div>
@@ -41,7 +41,7 @@
                 <v-card class="card-error" @click="handleCardClick('cancelled')">
                     <v-card-text>
                         <h1 class="card-info2">{{ cardData.cancelled.count }}</h1>
-                        <h2 class="card-info3">{{ translate('warning.cancelledReservations') }}</h2>
+                        <h2 class="card-info3">{{ translate('WARNING_CANCELLEDRESERVATIONS') }}</h2>
                     </v-card-text>
                 </v-card>
             </div>
@@ -53,7 +53,7 @@
 //Todo:dashboard_stats": {follow_up: count/ label }/{successful: count/ label }/{pending: count/ label }/{cancelled: count/ label }
 
 
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
 export default {
     name: "warning",

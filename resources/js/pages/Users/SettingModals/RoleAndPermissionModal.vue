@@ -5,7 +5,7 @@
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
-                <span class="text-h5 font-weight-bold">مدیریت دسترسی‌ها و اعلان‌ها</span>
+                <span class="text-h5 font-weight-bold">{{ translate('ROLE_AND_PERMISSION') }}</span>
 
             </v-card-title>
 
@@ -13,11 +13,11 @@
                 <v-tabs v-model="tab" grow color="primary" slider-color="accent">
                     <v-tab value="role" class="font-weight-bold">
                         <v-icon left>mdi-account-star</v-icon>
-                        سطح دسترسی
+                        {{ translate('ACCESS_LEVEL') }}
                     </v-tab>
                     <v-tab value="permissions" class="font-weight-bold">
                         <v-icon left>mdi-key-chain</v-icon>
-                        دسترسی‌ها
+                        {{ translate('ACCESSES') }}
                     </v-tab>
 
                 </v-tabs>
@@ -25,7 +25,6 @@
                 <v-divider></v-divider>
 
                 <v-window v-model="tab">
-                    <!-- تب سطح دسترسی -->
                     <v-window-item value="role">
                         <div class="pa-6">
                             <v-alert
@@ -36,15 +35,26 @@
                             >
                                 <div class="d-flex align-center">
                                     <v-icon left>mdi-clock</v-icon>
-                                    <span>درخواست ارتقا به سطح <strong>{{ pendingRoleRequest.requestedRoleName }}</strong> در حال بررسی است</span>
+                                    <span>
+                                   {{ translate('REQUEST_LEVEL_UPGRADE') }}
+
+                                        <strong>{{ pendingRoleRequest.requestedRoleName }}</strong>
+                                   {{ translate('UNDER_REVIEW') }}
+
+                                    </span>
                                 </div>
-                                <div class="mt-2 text-caption">تاریخ درخواست: {{ pendingRoleRequest.date }}</div>
+                                <div class="mt-2 text-caption">
+
+                                    {{ translate('APPLICATION_DATE') }}
+
+                                    {{ pendingRoleRequest.date }}</div>
                             </v-alert>
 
                             <div class="current-role-box pa-4 mb-6 rounded-lg" :class="roleStatusClass">
                                 <h3 class="d-flex align-center mb-2">
                                     <v-icon :color="currentRole.color" class="ml-2">{{ currentRole.icon }}</v-icon>
-                                    سطح دسترسی فعلی:
+                                    {{ translate('CURRENT_ACCESS_LEVEL') }}
+
                                     <span :class="`${currentRole.color}--text font-weight-bold mr-1`">{{ currentRole.name }}</span>
                                 </h3>
                                 <p class="text-caption mb-0">{{ currentRole.description }}</p>
@@ -57,7 +67,9 @@
 
                             <h4 class="mb-3 d-flex align-center">
                                 <v-icon color="primary" class="ml-2">mdi-account-arrow-up</v-icon>
-                                درخواست تغییر سطح دسترسی
+
+                                {{ translate('REQUEST_CHANGE_LEVEL') }}
+
                             </h4>
 
                             <v-select
@@ -77,7 +89,8 @@
                                         <span class="font-weight-bold">{{ item.name }}</span>
                                         <span class="text-caption">{{ item.description }}</span>
                                         <v-chip x-small class="mt-1 align-self-start" :color="item.color" dark v-if="item.requiresApproval">
-                                            نیاز به تایید مدیر
+                                            {{ translate('REQUIRE_APPROVAL') }}
+
                                         </v-chip>
                                     </div>
                                 </template>
@@ -113,9 +126,14 @@
                         <div class="pa-6">
                             <div class="d-flex align-center mb-4">
                                 <v-icon color="primary" class="ml-2">mdi-shield-key</v-icon>
-                                <h3>دسترسی‌های اختصاصی شما</h3>
+                                <h3>
+                                    {{ translate('EXCLUSIVE_ACCESSES') }}
+                                </h3>
                             </div>
-                            <p class="text-caption mb-6">می‌توانید دسترسی‌های شخصی خود را در این بخش مدیریت کنید</p>
+                            <p class="text-caption mb-6">
+                                {{ translate('MANAGE_PERSONAL_ACCESS') }}
+
+                                </p>
 
                             <v-alert
                                 v-if="permissionChangesPending"
@@ -125,7 +143,10 @@
                             >
                                 <div class="d-flex align-center">
                                     <v-icon left>mdi-alert</v-icon>
-                                    <span>تغییرات ذخیره نشده دارید</span>
+                                    <span>
+                                   {{ translate('UNSAVED_CHANGE') }}
+
+                                    </span>
                                 </div>
                             </v-alert>
 
@@ -175,7 +196,8 @@
                                 :loading="isSavingPermissions"
                             >
                                 <v-icon left>mdi-content-save</v-icon>
-                                ذخیره تنظیمات
+                                {{ translate('SAVE') }}
+
                             </v-btn>
                         </div>
                     </v-window-item>
@@ -203,10 +225,12 @@
 </template>
 
 <script>
+import { translate } from '@/store/languageStore';
+
 export default {
     data() {
         return {
-
+            translate,
             isModalOpen: false,
             tab: 'role',
             notificationTab: 'offers',

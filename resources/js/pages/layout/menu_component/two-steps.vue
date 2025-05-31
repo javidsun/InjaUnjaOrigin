@@ -10,10 +10,10 @@
                         <img src="/assets/images/inja-unja.png" alt="Logo" className="logo-image"/>
                     </div>
                     <h4 className="mb-1 font fontsize">
-                        {{ translate('twoStep.greeting') }}
+                        {{ translate('TWOSTEP_GREETING') }}
                     </h4>
                     <p className="font fontsize2">
-                        {{ translate('twoStep.instruction') }}
+                        {{ translate('TWOSTEP_INSTRUCTION') }}
                     </p>
                 </VCardText>
 
@@ -22,7 +22,7 @@
                 <VForm @submit.prevent="onFinish" class="form_Style">
                     <VRow>
                         <VCol cols="12" class="form font form_Style mt-2">
-                            {{ translate('twoStep.enterCode') }}
+                            {{ translate('TWOSTEP_ENTERCODE') }}
 
                             <VOtpInput
                                 v-model="otp"
@@ -42,17 +42,17 @@
                                 class="font buttonfont1"
                                 color="light-purple"
                             >
-                                {{ translate('twoStep.verifyAccount') }}
+                                {{ translate('TWOSTEP_VERIFYACCOUNT') }}
                             </VBtn>
                         </VCol>
 
                         <VCol cols="12">
                             <div className="d-flex justify-center align-center flex-wrap">
                                 <span className="me-1">
-                                    {{ translate('twoStep.didntGetCode') }}
+                                    {{ translate('TWOSTEP_DIDNTGETCODE') }}
                                 </span>
                                 <a href="#">
-                                    {{ translate('twoStep.resend') }}
+                                    {{ translate('TWOSTEP_RESEND') }}
                                 </a>
                             </div>
                         </VCol>

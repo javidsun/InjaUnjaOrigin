@@ -79,7 +79,7 @@
                 <v-card-text class="message-text">{{ messageContent }}</v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="isMessageModalOpen = false">{{ translate('security.ok') }}</v-btn>
+                    <v-btn color="primary" @click="isMessageModalOpen = false">{{ translate('OK') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>

@@ -2,7 +2,7 @@
     <v-dialog v-model="isFeedbackModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>
             <v-card-title class="feedback-header">
-                <span class="feedback-title">{{ translate('feedback.title') }}</span>
+                <span class="feedback-title">{{ translate('FEEDBACK_TITLE') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeFeedbackModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -11,12 +11,12 @@
             <v-divider></v-divider>
 
             <v-card-text class="feedback-content">
-                <p class="description">{{ translate('feedback.description') }}</p>
+                <p class="description">{{ translate('FEEDBACK_DESCRIPTION') }}</p>
 
-                <p class="feedback-question">{{ translate('feedback.feedbackQuestion') }}</p>
+                <p class="feedback-question">{{ translate('FEEDBACK_FEEDBACKQUESTION') }}</p>
                 <v-divider/>
 
-                <p class="feedback-question">{{ translate('feedback.selectFeedbackType') }}</p>
+                <p class="feedback-question">{{ translate('FEEDBACK_SELECTFEEDBACKTYPE') }}</p>
 
                 <v-radio-group v-model="selectedFeedbackCategory">
                     <v-radio
@@ -28,16 +28,16 @@
                 </v-radio-group>
 
                 <v-btn @click="handleSubmitFeedback" color="primary" large class="submit-btn">
-                    {{ translate('feedback.submitButton') }}
+                    {{ translate('FEEDBACK_SUBMITBUTTON') }}
                 </v-btn>
 
                 <v-divider class="my-4"></v-divider>
 
-                <p class="contact-title"><strong>{{ translate('feedback.contactTitle') }}</strong></p>
-                <p class="contact-subtitle">{{ translate('feedback.contactSubtitle') }}</p>
+                <p class="contact-title"><strong>{{ translate('FEEDBACK_CONTACTTITLE') }}</strong></p>
+                <p class="contact-subtitle">{{ translate('FEEDBACK_CONTACTSUBTITLE') }}</p>
 
                 <v-btn @click="handleContactSupport" color="secondary" large class="contact-btn">
-                    {{ translate('feedback.contactButton') }}
+                    {{ translate('FEEDBACK_CONTACTBUTTON') }}
                 </v-btn>
             </v-card-text>
         </v-card>
@@ -59,9 +59,9 @@ export default {
             isFeedbackModalOpen: false,
             selectedFeedbackCategory: '',
             feedbackCategories: [
-                {label: 'feedback.category1', value: 'Experiences'},
-                {label: 'feedback.category2', value: 'Hosting'},
-                {label: 'feedback.category3', value: 'Guest'},
+                {label: 'FEEDBACK_CATEGORY1', value: 'Experiences'},
+                {label: 'FEEDBACK_CATEGORY2', value: 'Hosting'},
+                {label: 'FEEDBACK_CATEGORY3', value: 'Guest'},
             ]
         }
     },
@@ -77,34 +77,34 @@ export default {
         async handleSubmitFeedback() {
             try {
                 if (!this.selectedFeedbackCategory) {
-                    this.showAlert(this.translate('feedback.selectCategoryWarning'))
+                    this.showAlert(this.translate('FEEDBACK_SELECT_CATEGORY'))
                     return
                 }
-                this.showAlert(this.translate('feedback.submitSuccess'))
+                this.showAlert(this.translate('FEEDBACK_SUBMITSUCCESS'))
                 this.closeFeedbackModal()
             } catch (error) {
-                this.showAlert(this.translate('feedback.submitError'))
+                this.showAlert(this.translate('SUBMIT_ERROR'))
                 this.logError('Feedback submission failed:', error)
             }
         },
         async handleContactSupport() {
             try {
                 const url = window.location.href
-                const supportDetails = this.translate('support.contactMessage', {query: this.selectedFeedbackCategory})
+                const supportDetails = this.translate('GUIDE_SUPPORT_CONTACTMESSAGE', {query: this.selectedFeedbackCategory})
 
                 if (navigator.share) {
                     await navigator.share({
-                        title: this.translate('support.contactTitle'),
+                        title: this.translate('GUIDE_SUPPORT_CONTACTTITLE'),
                         text: supportDetails,
                         url: url,
                     })
                 } else {
-                    this.showAlert(this.translate('support.contactFallback'))
+                    this.showAlert(this.translate('GUIDE_SUPPORT_CONTACTFALLBACK'))
                 }
             } catch (error) {
                 if (error.name !== 'AbortError') {
                     this.logError('Contact support failed:', error)
-                    this.showAlert(this.translate('support.contactError'))
+                    this.showAlert(this.translate('ERROR'))
                 }
             }
         },

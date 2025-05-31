@@ -24,33 +24,33 @@
                         <v-card class="elevation-4 rounded-lg pa-4">
                             <v-card-title class="text-h5 primary--text sizem">
                                 <v-icon class="mr-2">mdi-bell</v-icon>
-                                {{ translate('Admin_notifications.notifications') }}
+                                {{ translate('ADMIN_NOTIFICATIONS_NOTIFICATIONS') }}
                             </v-card-title>
                             <v-card-text>
                                 <v-row>
                                     <v-col cols="12" md="6">
                                         <v-card class="pa-4">
                                             <v-card-title class="text-h6">
-                                                {{ translate('Admin_notifications.reservation_status') }}
+                                                {{ translate('ADMIN_NOTIFICATIONS_RESERVATION_STATUS') }}
                                             </v-card-title>
                                             <v-card-text>
                                                 <v-select
                                                     v-model="reservationNotification.users"
                                                     :items="users"
-                                                    :label="translate('Admin_notifications.user')"
+                                                    :label="translate('ADMIN_NOTIFICATIONS_USER')"
                                                     multiple
                                                     outlined
                                                 ></v-select>
                                                 <v-textarea
                                                     v-model="reservationNotification.message"
-                                                    :label="translate('Admin_notifications.alert_message')"
+                                                    :label="translate('ADMIN_NOTIFICATIONS_ALERT_MESSAGE')"
                                                     outlined
                                                 ></v-textarea>
                                                 <v-btn color="primary" @click="sendReservationNotification">
-                                                    {{ translate('Admin_notifications.send_notification') }}
+                                                    {{ translate('ADMIN_NOTIFICATIONS_SEND_NOTIFICATION') }}
                                                 </v-btn>
                                                 <v-btn color="secondary" @click="saveDraft" class="ml-2">
-                                                    {{ translate('Admin_notifications.save_draft') }}
+                                                    {{ translate('ADMIN_NOTIFICATIONS_SAVE_DRAFT') }}
                                                 </v-btn>
                                             </v-card-text>
                                         </v-card>
@@ -59,26 +59,26 @@
                                     <v-col cols="12" md="6">
                                         <v-card class="pa-4">
                                             <v-card-title class="text-h6">
-                                                {{ translate('Admin_notifications.system_alerts') }}
+                                                {{ translate('ADMIN_NOTIFICATIONS_SYSTEM_ALERTS') }}
                                             </v-card-title>
                                             <v-card-text>
                                                 <v-select
                                                     v-model="systemAlert.hosts"
                                                     :items="hosts"
-                                                    :label="translate('Admin_notifications.host')"
+                                                    :label="translate('ADMIN_NOTIFICATIONS_HOST')"
                                                     multiple
                                                     outlined
                                                 ></v-select>
                                                 <v-textarea
                                                     v-model="systemAlert.message"
-                                                    :label="translate('Admin_notifications.alert_message')"
+                                                    :label="translate('ADMIN_NOTIFICATIONS_ALERT_MESSAGE')"
                                                     outlined
                                                 ></v-textarea>
                                                 <v-btn color="primary" @click="sendSystemAlert">
-                                                    {{ translate('Admin_notifications.send_alert') }}
+                                                    {{ translate('ADMIN_NOTIFICATIONS_SEND_ALERT') }}
                                                 </v-btn>
                                                 <v-btn color="secondary" @click="saveDraft" class="ml-2">
-                                                    {{ translate('Admin_notifications.save_draft') }}
+                                                    {{ translate('ADMIN_NOTIFICATIONS_SAVE_DRAFT') }}
                                                 </v-btn>
                                             </v-card-text>
                                         </v-card>
@@ -89,14 +89,14 @@
                                     <v-col cols="12">
                                         <v-card class="pa-4">
                                             <v-card-title class="text-h6">
-                                                {{ translate('Admin_notifications.filter_notifications') }}
+                                                {{ translate('ADMIN_NOTIFICATIONS_FILTER_NOTIFICATIONS') }}
                                             </v-card-title>
                                             <v-card-text>
                                                 <v-row>
                                                     <v-col cols="12" md="4">
                                                         <v-text-field
                                                             v-model="searchQuery"
-                                                            :label="translate('Admin_notifications.search_message')"
+                                                            :label="translate('ADMIN_NOTIFICATIONS_SEARCH_MESSAGE')"
                                                             outlined
                                                         ></v-text-field>
                                                     </v-col>
@@ -104,7 +104,7 @@
                                                         <v-select
                                                             v-model="filterType"
                                                             :items="notificationTypes"
-                                                            :label="translate('Admin_notifications.filter_by_type')"
+                                                            :label="translate('ADMIN_NOTIFICATIONS_FILTER_BY_TYPE')"
                                                             outlined
                                                         ></v-select>
                                                     </v-col>
@@ -129,10 +129,10 @@
                                         <v-card class="pa-4">
                                             <v-card-text>
                                                 <v-tabs v-model="tab">
-                                                    <v-tab>{{ translate('Admin_notifications.all') }}</v-tab>
-                                                    <v-tab>{{ translate('Admin_notifications.reservation') }}</v-tab>
-                                                    <v-tab>{{ translate('Admin_notifications.system_alert') }}</v-tab>
-                                                    <v-tab>{{ translate('Admin_notifications.drafts') }}</v-tab>
+                                                    <v-tab>{{ translate('ADMIN_NOTIFICATIONS_ALL') }}</v-tab>
+                                                    <v-tab>{{ translate('ADMIN_NOTIFICATIONS_RESERVATION') }}</v-tab>
+                                                    <v-tab>{{ translate('ADMIN_NOTIFICATIONS_SYSTEM_ALERT') }}</v-tab>
+                                                    <v-tab>{{ translate('ADMIN_NOTIFICATIONS_DRAFTS') }}</v-tab>
                                                 </v-tabs>
                                                 <v-tabs-items v-model="tab">
                                                     <v-tab-item>
@@ -148,10 +148,10 @@
                                                             </template>
                                                             <template v-slot:item.actions="{ item }">
                                                                 <v-btn small color="primary" @click="markAsRead(item)">
-                                                                    {{ translate('Admin_notifications.mark_as_read') }}
+                                                                    {{ translate('ADMIN_NOTIFICATIONS_MARK_AS_READ') }}
                                                                 </v-btn>
                                                                 <v-btn small color="error" @click="deleteNotification(item)" class="ml-2">
-                                                                    {{ translate('Admin_notifications.delete') }}
+                                                                    {{ translate('ADMIN_NOTIFICATIONS_DELETE') }}
                                                                 </v-btn>
                                                             </template>
                                                         </v-data-table>
@@ -166,13 +166,13 @@
                                                         >
                                                             <template v-slot:item.actions="{ item }">
                                                                 <v-btn small color="primary" @click="editDraft(item)">
-                                                                    {{ translate('Admin_notifications.edit') }}
+                                                                    {{ translate('EDIT') }}
                                                                 </v-btn>
                                                                 <v-btn small color="success" @click="sendDraft(item)" class="ml-2">
-                                                                    {{ translate('Admin_notifications.send') }}
+                                                                    {{ translate('SEND') }}
                                                                 </v-btn>
                                                                 <v-btn small color="error" @click="deleteDraft(item)" class="ml-2">
-                                                                    {{ translate('Admin_notifications.delete') }}
+                                                                    {{ translate('Delete') }}
                                                                 </v-btn>
                                                             </template>
                                                         </v-data-table>
@@ -198,7 +198,7 @@ import { ref, computed } from 'vue';
 import Sidebar from "../Sidebar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
 let drawer = ref(true);
 
@@ -239,17 +239,17 @@ const unreadNotificationsCount = computed(() => {
 });
 
 const notificationHeaders = ref([
-    { text: translate('Admin_notifications.recipient'), value: "recipient" },
-    { text: translate('Admin_notifications.message'), value: "message" },
-    { text: translate('Admin_notifications.timestamp'), value: "timestamp" },
-    { text: translate('Admin_notifications.actions'), value: "actions" },
+    { text: translate('ADMIN_NOTIFICATIONS_RECIPIENT'), value: "recipient" },
+    { text: translate('ADMIN_NOTIFICATIONS_MESSAGE'), value: "message" },
+    { text: translate('ADMIN_NOTIFICATIONS_TIMESTAMP'), value: "timestamp" },
+    { text: translate('ADMIN_NOTIFICATIONS_ACTIONS'), value: "actions" },
 ]);
 
 const draftHeaders = ref([
-    { text: translate('Admin_notifications.type'), value: "type" },
-    { text: translate('Admin_notifications.recipients'), value: "recipients" },
-    { text: translate('Admin_notifications.message'), value: "message" },
-    { text: translate('Admin_notifications.actions'), value: "actions" },
+    { text: translate('ADMIN_NOTIFICATIONS_TYPE'), value: "type" },
+    { text: translate('ADMIN_NOTIFICATIONS_RECIPIENTS'), value: "recipients" },
+    { text: translate('ADMIN_NOTIFICATIONS_MESSAGE'), value: "message" },
+    { text: translate('ADMIN_NOTIFICATIONS_ACTIONS'), value: "actions" },
 ]);
 
 function sendReservationNotification() {

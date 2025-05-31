@@ -2,7 +2,7 @@
     <v-dialog v-model="isOpen" max-width="600px" transition="dialog-transition">
         <v-card class="modal-container">
             <v-card-title class="header">
-                <span>{{ translate('setting.personalInfo') }}</span>
+                <span>{{ translate('SETTING_PERSONALINFO') }}</span>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
@@ -13,7 +13,7 @@
                         <img :src="userProfileImage" alt="Profile Picture" />
                     </v-avatar>
                     <h3 class="user-name">{{ userName }}</h3>
-                    <v-chip color="blue" outlined class="verified-chip">{{ translate('setting.verified') }}</v-chip>
+                    <v-chip color="blue" outlined class="verified-chip">{{ translate('SETTING_VERIFIED') }}</v-chip>
                 </div>
                 <v-list class="info-list">
                     <v-list-item v-for="(item, key) in user" :key="key">
@@ -41,7 +41,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-btn block @click="toggleEdit" class="edit-btn">
-                    {{ isEditing ? translate("setting.save") : translate("setting.edit") }}
+                    {{ isEditing ? translate("SAVE") : translate("EDIT") }}
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
 export default {
     data() {

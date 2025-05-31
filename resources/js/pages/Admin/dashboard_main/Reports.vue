@@ -3,9 +3,9 @@
         <v-row>
             <v-col cols="12" md="4">
                 <v-card class="card-dashboard elevation-4 animated-card" @click="showTableDetails('conversionRate')">
-                    <v-card-title>{{ translate('re_dashboard.conversionRate') }}</v-card-title>
+                    <v-card-title>{{ translate('RE_DASHBOARD_CONVERSIONRATE') }}</v-card-title>
                     <v-card-text class="text1">
-                        <p>{{ translate('re_dashboard.conversionRateDescription') }}</p>
+                        <p>{{ translate('RE_DASHBOARD_CONVERSIONRATEDESCRIPTION') }}</p>
                         <apex-chart
                             v-if="chartData.conversionRate && chartData.conversionRate.options"
                             type="donut"
@@ -19,7 +19,7 @@
 
             <v-col cols="12" md="4">
                 <v-card class="card-dashboard elevation-4 animated-card" @click="showTableDetails('revenueByCategory')">
-                    <v-card-title>{{ translate('re_dashboard.revenueByCategory') }}</v-card-title>
+                    <v-card-title>{{ translate('RE_DASHBOARD_REVENUEBYCATEGORY') }}</v-card-title>
                     <v-card-text class="text1">
                         <apex-chart
                             v-if="chartData.revenueByCategory && chartData.revenueByCategory.options"
@@ -42,7 +42,7 @@
 
             <v-col cols="12" md="4">
                 <v-card class="card-dashboard elevation-4 animated-card text1" @click="showTableDetails('geoActivity')">
-                    <v-card-title>{{ translate('re_dashboard.geoActivity') }}</v-card-title>
+                    <v-card-title>{{ translate('RE_DASHBOARD_GEOACTIVITY') }}</v-card-title>
                     <v-card-text>
                         <apex-chart
                             v-if="chartData.revenueByCategory && chartData.revenueByCategory.options"
@@ -92,7 +92,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" @click="tableDetailsVisible = false">
-                        {{ translate('common.close') }}
+                        {{ translate('CLOSE') }}
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -116,25 +116,25 @@ export default {
         return {
             conversionRate: 25,
             revenueByCategory: [
-                { categoryKey: "re_dashboard.Home", revenue: 5000 },
-                { categoryKey: "re_dashboard.Car", revenue: 2000 },
-                { categoryKey: "re_dashboard.Others", revenue: 1000 },
+                { categoryKey: "RE_DASHBOARD_HOME", revenue: 5000 },
+                { categoryKey: "RE_DASHBOARD_CAR", revenue: 2000 },
+                { categoryKey: "RE_DASHBOARD_OTHERS", revenue: 1000 },
             ],
             topCities: [
-                { cityKey: "re_dashboard.Barcelona", countryKey: "re_dashboard.Spain", bookings: 120 },
-                { cityKey: "re_dashboard.Paris", countryKey: "re_dashboard.France", bookings: 110 },
-                { cityKey: "re_dashboard.Rome", countryKey: "re_dashboard.Italy", bookings: 100 },
-                { cityKey: "re_dashboard.Berlin", countryKey: "re_dashboard.Germany", bookings: 90 },
-                { cityKey: "re_dashboard.Amsterdam", countryKey: "re_dashboard.Netherlands", bookings: 80 },
+                { cityKey: "RE_DASHBOARD_BARCELONA", countryKey: "re_dashboard.Spain", bookings: 120 },
+                { cityKey: "RE_DASHBOARD_PARIS", countryKey: "re_dashboard.France", bookings: 110 },
+                { cityKey: "RE_DASHBOARD_ROME", countryKey: "re_dashboard.Italy", bookings: 100 },
+                { cityKey: "RE_DASHBOARD_BERLIN", countryKey: "re_dashboard.Germany", bookings: 90 },
+                { cityKey: "RE_DASHBOARD_AMSTERDAM", countryKey: "re_dashboard.Netherlands", bookings: 80 },
             ],
             tableHeaders: [
-                { textKey: "re_dashboard.category", key: "category" },
-                { textKey: "re_dashboard.revenue", key: "revenue" },
+                { textKey: "RE_DASHBOARD_CATEGORY", key: "category" },
+                { textKey: "RE_DASHBOARD_REVENUE", key: "revenue" },
             ],
             geoActivityHeaders: [
-                { textKey: "re_dashboard.city", key: "city" },
-                { textKey: "re_dashboard.country", key: "country" },
-                { textKey: "re_dashboard.bookings", key: "bookings" },
+                { textKey: "CITY", key: "city" },
+                { textKey: "COUNTRY", key: "country" },
+                { textKey: "BOOKING", key: "bookings" },
             ],
             tableDetailsVisible: false,
             tableDetailsKey: "",
@@ -183,8 +183,8 @@ export default {
                         chart: { id: "conversion-rate-chart", background: "transparent" },
                         legend: { position: "top" },
                         labels: [
-                            this.translate("re_dashboard.Reservation"),
-                            this.translate("re_dashboard.Visit")
+                            this.translate("RE_DASHBOARD_RESERVATION"),
+                            this.translate("RE_DASHBOARD_VISIT")
                         ],
                     },
                     series: [this.conversionRate, 100 - this.conversionRate],
@@ -198,7 +198,7 @@ export default {
                     },
                     series: [
                         {
-                            name: this.translate("re_dashboard.revenue"),
+                            name: this.translate("RE_DASHBOARD_REVENUE"),
                             data: this.computedRevenueByCategory.map(c => c.revenue),
                         },
                     ],
@@ -214,7 +214,7 @@ export default {
                     },
                     series: [
                         {
-                            name: this.translate("re_dashboard.Reservation"),
+                            name: this.translate("RE_DASHBOARD_RESERVATION"),
                             data: this.computedTopCities.map(city => city.bookings),
                         },
                     ],
@@ -225,11 +225,11 @@ export default {
             try {
                 switch (this.tableDetailsKey) {
                     case "conversionRate":
-                        return this.translate("re_dashboard.conversionRate");
+                        return this.translate("RE_DASHBOARD_CONVERSIONRATE");
                     case "revenueByCategory":
-                        return this.translate("re_dashboard.revenueByCategory");
+                        return this.translate("RE_DASHBOARD_REVENUEBYCATEGORY");
                     case "geoActivity":
-                        return this.translate("re_dashboard.geoActivity");
+                        return this.translate("RE_DASHBOARD_GEOACTIVITY");
                     default:
                         return "";
                 }

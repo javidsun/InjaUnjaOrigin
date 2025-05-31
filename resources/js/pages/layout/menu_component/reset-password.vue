@@ -10,10 +10,10 @@
                         <img src="/assets/images/inja-unja.png" alt="Logo" class="logo-image" />
                     </div>
                     <h4 class="mb-1 font fontsize">
-                        {{ translate('resetPassword.greeting') }}
+                        {{ translate('RESETPASSWORD_GREETING') }}
                     </h4>
                     <p class="font fontsize2">
-                        {{ translate('resetPassword.instructions') }}
+                        {{ translate('RESETPASSWORD_INSTRUCTIONS') }}
                     </p>
                 </VCardText>
 
@@ -22,8 +22,8 @@
                         <VCol cols="12" class="font">
                             <VTextField
                                 v-model="form.newPassword"
-                                :label="translate('resetPassword.newPassword')"
-                                :placeholder="translate('resetPassword.newPasswordPlaceholder')"
+                                :label="translate('RESETPASSWORD_NEWPASSWORD')"
+                                :placeholder="translate('RESETPASSWORD_NEWPASSWORDPLACEHOLDER')"
                                 outlined
                                 dense
                                 :type="isPasswordVisible ? 'text' : 'password'"
@@ -35,8 +35,8 @@
                         <VCol cols="12" class="font">
                             <VTextField
                                 v-model="form.confirmPassword"
-                                :label="translate('resetPassword.confirmPassword')"
-                                :placeholder="translate('resetPassword.confirmPasswordPlaceholder')"
+                                :label="translate('RESETPASSWORD_CONFIRMPASSWORD')"
+                                :placeholder="translate('RESETPASSWORD_CONFIRMPASSWORDPLACEHOLDER')"
                                 outlined
                                 dense
                                 :type="isConfirmPasswordVisible ? 'text' : 'password'"
@@ -47,7 +47,7 @@
 
                         <VCol cols="12" class="form2 mt-0">
                             <VBtn block type="submit" class="font buttonfont1" color="light-purple">
-                                {{ translate('resetPassword.reset') }}
+                                {{ translate('RESETPASSWORD_RESET') }}
                             </VBtn>
                         </VCol>
                     </VRow>
@@ -55,9 +55,9 @@
 
                 <VCardText class="text-center mt-4 form2 fontsize3 font">
                     <p>
-                        {{ translate('resetPassword.backToLogin') }}
+                        {{ translate('RESETPASSWORD_BACKTOLOGIN') }}
                         <RouterLink to="/Login" style="color: #4cc8ff" class="fontsize3">
-                            {{ translate('resetPassword.loginNow') }}
+                            {{ translate('RESETPASSWORD_LOGINNOW') }}
                         </RouterLink>
                     </p>
                 </VCardText>

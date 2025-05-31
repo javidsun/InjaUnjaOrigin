@@ -9,10 +9,10 @@
                         <img src="/assets/images/inja-unja.png" alt="Logo" className="logo-image"/>
                     </div>
                     <h4 className="mb-1 font fontsiz">
-                        {{ translate('forgotPassword.title') }}
+                        {{ translate('FORGOTPASSWORD_TITLE') }}
                     </h4>
                     <p className="font fontsize2">
-                        {{ translate('forgotPassword.instructions') }}
+                        {{ translate('FORGOTPASSWORD_INSTRUCTIONS') }}
                     </p>
                 </VCardText>
 
@@ -25,8 +25,8 @@
                         <VCol cols="12" class="form font form_Style">
                             <VTextField
                                 v-model="email"
-                                :label="translate('forgotPassword.email')"
-                                :placeholder="translate('forgotPassword.emailPlaceholder')"
+                                :label="translate('FORGOTPASSWORD_EMAIL')"
+                                :placeholder="translate('FORGOTPASSWORD_EMAILPLACEHOLDER')"
                                 outlined
                                 dense
                                 type="email"
@@ -34,7 +34,7 @@
                         </VCol>
                         <VCol cols="12" class="form2">
                             <VBtn block type="submit" class="font buttonfont1" color="light-purple">
-                                {{ translate('forgotPassword.sendResetLink') }}
+                                {{ translate('FORGOTPASSWORD_SENDRESETLINK') }}
                             </VBtn>
                         </VCol>
                     </VRow>
@@ -42,9 +42,9 @@
 
                 <VCardText class="text-center mt-4 form2 fontsize3 font">
                     <p>
-                        {{ translate('forgotPassword.rememberPassword') }}
+                        {{ translate('FORGOTPASSWORD_REMEMBERPASSWORD') }}
                         <RouterLink to="/login" style="color: #4cc8ff" class="fontsize3">
-                            {{ translate('forgotPassword.login') }}
+                            {{ translate('FORGOTPASSWORD_LOGIN') }}
                         </RouterLink>
                     </p>
                 </VCardText>
@@ -54,7 +54,7 @@
     <v-dialog v-model="dialog" max-width="400">
         <v-card :color="dialogColor">
             <v-card-title class="headline white--text">
-                {{ dialogColor === 'success' ? translate('general.success') : translate('general.error') }}
+                {{ dialogColor === 'success' ? translate('SUCCESS') : translate('ERROR') }}
             </v-card-title>
             <v-card-text class="white--text">
                 {{ dialogMessage }}
@@ -62,7 +62,7 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="white" text @click="dialog = false">
-                    {{ translate('general.ok') }}
+                    {{ translate('OK') }}
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -92,13 +92,13 @@ export default {
         async handleForgotPassword() {
             try {
                 if (!this.email) {
-                    this.showAlert(this.translate('forgotPassword.emailRequired'));
+                    this.showAlert(this.translate('FORGOTPASSWORD_EMAILREQUIRED'));
                     return;
                 }
 
                 // would be replaced with actual API call
                 await this.sendResetPasswordRequest(this.email);
-                this.showAlert(this.translate('forgotPassword.resetLinkSent'));
+                this.showAlert(this.translate('FORGOTPASSWORD_RESETLINKSENT'));
 
             } catch (error) {
                 this.handleError(error);
@@ -110,7 +110,7 @@ export default {
                 // Replace with actual API call
                 console.log('Sending reset link to:', email);
             } catch (error) {
-                throw new Error(this.translate('forgotPassword.errorOccurred'));
+                throw new Error(this.translate('FORGOTPASSWORD_ERROROCCURRED'));
             }
         },
 
@@ -122,7 +122,7 @@ export default {
 
         handleError(error) {
             console.error('Error:', error.message);
-            this.showAlert(error.message || this.translate('forgotPassword.errorOccurred'));
+            this.showAlert(error.message || this.translate('FORGOTPASSWORD_ERROROCCURRED'));
         }
     }
 };

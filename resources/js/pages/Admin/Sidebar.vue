@@ -27,7 +27,7 @@
 <script>
 //Todo:{routes:AdminDashboard /UserManagement /ads_management/AdsHouse/vehicles/events/AdsTraveler/Finance/ReservationManagement/Analytics/Notifications/SupportSystem}
 
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
 export default {
     name: 'SidebarComponent',
@@ -36,18 +36,18 @@ export default {
             drawer: false,
             activePage: "dashboard",
             menuItems: [
-                { title: "sidebar.dashboard", icon: "mdi-home", page: "AdminDashboard", link: "/AdminDashboard" },
-                { title: "sidebar.userManagement", icon: "mdi-account-multiple", page: "UserManagement", link: "/UserManagement" },
-                { title: "sidebar.ads", icon: "mdi-home", page: "ads_management", link: "/ads_management" },
-                { title: "sidebar.houses", icon: "mdi-home-city-outline", page: "houses", link: "/AdsHouse" },
-                { title: "sidebar.vehicles", icon: "mdi-car", page: "vehicles", link: "/vehicles" },
-                { title: "sidebar.events", icon: "mdi-calendar", page: "events", link: "/events" },
-                { title: "sidebar.travelers", icon: "mdi-account-group", page: "AdsTraveler", link: "/AdsTraveler" },
-                { title: "sidebar.finance", icon: "mdi-currency-usd", page: "Finance", link: "/Finance" },
-                { title: "sidebar.reserv", icon: "mdi-calendar-check", page: "ReservationManagement", link: "/ReservationManagement" },
-                { title: "sidebar.analytics", icon: "mdi-chart-areaspline", page: "Analytics", link: "/Analytics" },
-                { title: "sidebar.notifications", icon: "mdi-bell", page: "Notifications", link: "/Notifications" },
-                { title: "sidebar.SupportSystem", icon: "mdi-headset", page: "SupportSystem", link: "/SupportSystem" },
+                { title: "SIDEBAR_DASHBOARD", icon: "mdi-home", page: "AdminDashboard", link: "/AdminDashboard" },
+                { title: "SIDEBAR_USERMANAGEMENT", icon: "mdi-account-multiple", page: "UserManagement", link: "/UserManagement" },
+                { title: "SIDEBAR_ADS", icon: "mdi-home", page: "ads_management", link: "/ads_management" },
+                { title: "SIDEBAR_HOUSES", icon: "mdi-home-city-outline", page: "houses", link: "/AdsHouse" },
+                { title: "SIDEBAR_VEHICLES", icon: "mdi-car", page: "vehicles", link: "/vehicles" },
+                { title: "SIDEBAR_EVENTS", icon: "mdi-calendar", page: "events", link: "/events" },
+                { title: "SIDEBAR_TRAVELERS", icon: "mdi-account-group", page: "AdsTraveler", link: "/AdsTraveler" },
+                { title: "SIDEBAR_FINANCE", icon: "mdi-currency-usd", page: "Finance", link: "/Finance" },
+                { title: "SIDEBAR_RESERV", icon: "mdi-calendar-check", page: "ReservationManagement", link: "/ReservationManagement" },
+                { title: "SIDEBAR_ANALYTICS", icon: "mdi-chart-areaspline", page: "Analytics", link: "/Analytics" },
+                { title: "SIDEBAR_NOTIFICATIONS", icon: "mdi-bell", page: "Notifications", link: "/Notifications" },
+                { title: "SIDEBAR_SUPPORTSYSTEM", icon: "mdi-headset", page: "SupportSystem", link: "/SupportSystem" },
             ]
         }
     },

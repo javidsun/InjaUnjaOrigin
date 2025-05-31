@@ -1,7 +1,7 @@
 <template class="cards">
     <v-card class="reservation-summary-card" outlined>
         <v-card-title>
-            {{ translate("UserSidebar.RecentReservations") }}
+            {{ translate("USERSIDEBAR_RECENTRESERVATIONS") }}
         </v-card-title>
         <v-card-text>
             <v-row direction="rtl">
@@ -36,7 +36,7 @@
         </v-card-text>
         <v-card-actions>
             <v-btn :to="'/MyReservations'" color="primary" outlined class="ml-auto">
-                {{ translate("UserSidebar.ViewAllReservations") }}
+                {{ translate("USERSIDEBAR_VIEWALLRESERVATIONS") }}
             </v-btn>
         </v-card-actions>
     </v-card>
@@ -53,7 +53,7 @@ export default {
         return {
             recentReservations: [
                 {
-                    title: translate("UserSidebar.HouseReservation"),
+                    title: translate("USERSIDEBAR_HOUSERESERVATION"),
                     date: "2025-01-01",
                     icon: "mdi-home",
                     color: "blue",
@@ -61,7 +61,7 @@ export default {
                     type: "house"
                 },
                 {
-                    title: translate("UserSidebar.CarReservation"),
+                    title: translate("USERSIDEBAR_CARRESERVATION"),
                     date: "2024-12-29",
                     icon: "mdi-car",
                     color: "green",
@@ -69,7 +69,7 @@ export default {
                     type: "car"
                 },
                 {
-                    title: translate("UserSidebar.EventReservation"),
+                    title: translate("USERSIDEBAR_EVENTRESERVATION"),
                     date: "2024-12-25",
                     icon: "mdi-calendar",
                     color: "purple",
@@ -77,7 +77,7 @@ export default {
                     type: "event"
                 },
                 {
-                    title: translate("UserSidebar.TravelerReservation"),
+                    title: translate("USERSIDEBAR_TRAVELERRESERVATION"),
                     date: "2024-12-20",
                     icon: "mdi-account-group",
                     color: "orange",

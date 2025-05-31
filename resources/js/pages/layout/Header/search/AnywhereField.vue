@@ -17,12 +17,12 @@
                 </v-card-title>
                 <v-card-text>
                     <div class="options-menu-modal">
-                        <v-btn block @click="selectOption('Anywhere.flexible')">{{ translate('Anywhere.flexible') }}</v-btn>
-                        <v-btn block @click="selectOption('Anywhere.italy')">{{ translate('Anywhere.italy') }}</v-btn>
-                        <v-btn block @click="selectOption('Anywhere.spain')">{{ translate('Anywhere.spain') }}</v-btn>
-                        <v-btn block @click="selectOption('Anywhere.france')">{{ translate('Anywhere.france') }}</v-btn>
-                        <v-btn block @click="selectOption('Anywhere.turkey')">{{ translate('Anywhere.turkey') }}</v-btn>
-                        <v-btn block @click="selectOption('Anywhere.unitedStates')">{{ translate('Anywhere.unitedStates') }}</v-btn>
+                        <v-btn block @click="selectOption('Anywhere.flexible')">{{ translate('FLEXIBLE') }}</v-btn>
+                        <v-btn block @click="selectOption('Anywhere.italy')">{{ translate('ANYWHERE_ITALY') }}</v-btn>
+                        <v-btn block @click="selectOption('Anywhere.spain')">{{ translate('ANYWHERE_SPAIN') }}</v-btn>
+                        <v-btn block @click="selectOption('Anywhere.france')">{{ translate('ANYWHERE_FRANCE') }}</v-btn>
+                        <v-btn block @click="selectOption('Anywhere.turkey')">{{ translate('ANYWHERE_TURKEY') }}</v-btn>
+                        <v-btn block @click="selectOption('Anywhere.unitedStates')">{{ translate('ANYWHERE_UNITEDSTATES') }}</v-btn>
                     </div>
                 </v-card-text>
                 <v-card-actions>

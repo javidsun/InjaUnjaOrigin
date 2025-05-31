@@ -25,7 +25,7 @@
 <script>
 //Todo:title/count/route/active
 
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
 export default {
     name: 'ServiceCardsDashboard',
@@ -33,22 +33,22 @@ export default {
         return {
             cards: [
                 {
-                    title: "Services.house",
+                    title: "SERVICES_HOUSE",
                     count: 45,
                     route: "/AdsHouse",
                 },
                 {
-                    title: "Services.car",
+                    title: "SERVICES_CAR",
                     count: 12,
                     route: null,
                 },
                 {
-                    title: "Services.event",
+                    title: "SERVICES_EVENT",
                     count: 7,
                     route: null,
                 },
                 {
-                    title: "Services.travel",
+                    title: "SERVICES_TRAVEL",
                     count: 20,
                     route: "/AdsTraveler",
                 }
@@ -73,14 +73,14 @@ export default {
         showComingSoonMessage() {
             try {
                 this.$root.$emit('show-info-message', {
-                    title: this.translate('Messages.comingSoon'),
-                    text: this.translate('Messages.featureInDevelopment'),
+                    title: this.translate('COMINGSOON'),
+                    text: this.translate('FEATUREINDEVELOPMENT'),
                     timeout: 3000
                 });
             } catch (error) {
                 console.error('Error showing coming soon message:', error);
                 // Fallback to basic alert if Vuetify alert fails
-                alert(this.translate('Messages.featureInDevelopment'));
+                alert(this.translate('FEATUREINDEVELOPMENT'));
             }
         },
 
@@ -88,13 +88,13 @@ export default {
         handleNavigationError(error) {
             try {
                 this.$root.$emit('show-error-message', {
-                    title: this.translate('Messages.navigationError'),
-                    text: this.translate('Messages.navigationFailed'),
+                    title: this.translate('NAVIGATIONERROR'),
+                    text: this.translate('NAVIGATIONFAILED'),
                     timeout: 5000
                 });
             } catch (alertError) {
                 console.error('Error handling navigation error:', alertError);
-                alert(this.translate('Messages.navigationFailed'));
+                alert(this.translate('NAVIGATIONFAILED'));
             }
         },
 

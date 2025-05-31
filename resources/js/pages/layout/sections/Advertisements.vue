@@ -4,7 +4,7 @@
       <div class="ad-container">
         <v-img :src="ad.image" alt="Ad Image" class="ad-image" />
         <p class="ad-text">
-            {{ translate('advertisements.firstAd') }}
+            {{ translate('ADVERTISEMENTS_FIRSTAD') }}
         </p>
       </div>
     </v-carousel-item>

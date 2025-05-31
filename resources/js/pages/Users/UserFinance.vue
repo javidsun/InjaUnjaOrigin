@@ -2,20 +2,20 @@
     <UserSidebar class="back">
         <v-container class="payments-container">
             <v-tabs v-model="tab" background-color="primary" dark align-tabs="center">
-                <v-tab value="all">{{ translate('Finance.all') }}</v-tab>
-                <v-tab value="cancelled">{{ translate('Finance.cancelled') }}</v-tab>
-                <v-tab value="processing">{{ translate('Finance.processing') }}</v-tab>
-                <v-tab value="successful">{{ translate('Finance.successful') }}</v-tab>
+                <v-tab value="all">{{ translate('FINANCE_ALL') }}</v-tab>
+                <v-tab value="cancelled">{{ translate('FINANCE_CANCELLED') }}</v-tab>
+                <v-tab value="processing">{{ translate('FINANCE_PROCESSING') }}</v-tab>
+                <v-tab value="successful">{{ translate('FINANCE_SUCCESSFUL') }}</v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
                 <v-tab-item value="all">
                     <v-data-table :headers="headers" :items="filteredPayments" class="elevation-1 payment-table">
                         <template v-slot:item.actions="{ item }">
-                            <v-btn color="primary" @click="showDetails(item)">{{ translate('Finance.Details') }}</v-btn>
+                            <v-btn color="primary" @click="showDetails(item)">{{ translate('FINANCE_DETAILS') }}</v-btn>
                         </template>
                         <template v-slot:item.status="{ item }">
-                            <span :class="getStatusClass(item.status)">{{ translate('Finance.' + item.status) }}</span>
+                            <span :class="getStatusClass(item.status)">{{ translate( + item.status) }}</span>
                         </template>
                     </v-data-table>
                 </v-tab-item>
@@ -23,55 +23,55 @@
 
             <v-dialog v-model="dialog" max-width="500px">
                 <v-card class="payment-details-card modal1">
-                    <v-card-title class="details-title">{{ translate('Finance.paymentDetails') }}</v-card-title>
+                    <v-card-title class="details-title">{{ translate('FINANCE_PAYMENTDETAILS') }}</v-card-title>
                     <v-card-text>
-                        <p><strong>{{ translate('Finance.id') }}:</strong> {{ selectedPayment.id }}</p>
-                        <p><strong>{{ translate('Finance.amount') }}:</strong> {{ finalAmount }} {{
-                                translate('housescontent.Euro') }}</p>
-                        <p><strong>{{ translate('Finance.status') }}:</strong> <span
-                            :class="getStatusClass(selectedPayment.status)">{{ translate('Finance.' + selectedPayment.status) }}</span>
+                        <p><strong>{{ translate('FINANCE_ID') }}:</strong> {{ selectedPayment.id }}</p>
+                        <p><strong>{{ translate('FINANCE_AMOUNT') }}:</strong> {{ finalAmount }} {{
+                                translate('HOUSESCONTENT_EURO') }}</p>
+                        <p><strong>{{ translate('USERINFO_STATUS') }}:</strong> <span
+                            :class="getStatusClass(selectedPayment.status)">{{ translate( + selectedPayment.status) }}</span>
                         </p>
 
                         <v-divider class="my-4"></v-divider>
-                        <v-card-title class="details-subtitle">{{ translate('Finance.paymentDetails') }}</v-card-title>
+                        <v-card-title class="details-subtitle">{{ translate('FINANCE_PAYMENTDETAILS') }}</v-card-title>
 
                         <v-card-text>
                             <v-row>
-                                <v-col cols="6">{{ translate('Finance.totalAmount') }}:</v-col>
-                                <v-col cols="6" class="text-right">{{ totalAmount }} {{ translate('housescontent.Euro') }}</v-col>
+                                <v-col cols="6">{{ translate('FINANCE_TOTALAMOUNT') }}:</v-col>
+                                <v-col cols="6" class="text-right">{{ totalAmount }} {{ translate('HOUSESCONTENT_EURO') }}</v-col>
                             </v-row>
                             <v-row>
-                                <v-col cols="6">{{ translate('Finance.extraFee') }}:</v-col>
-                                <v-col cols="6" class="text-right">{{ extraFee }} {{ translate('housescontent.Euro') }}</v-col>
+                                <v-col cols="6">{{ translate('FINANCE_EXTRAFEE') }}:</v-col>
+                                <v-col cols="6" class="text-right">{{ extraFee }} {{ translate('HOUSESCONTENT_EURO') }}</v-col>
                             </v-row>
                             <v-row>
-                                <v-col cols="6">{{ translate('Finance.tax') }} (10%):</v-col>
-                                <v-col cols="6" class="text-right">{{ tax }} {{ translate('housescontent.Euro') }}</v-col>
+                                <v-col cols="6">{{ translate('FINANCE_TAX') }} (10%):</v-col>
+                                <v-col cols="6" class="text-right">{{ tax }} {{ translate('HOUSESCONTENT_EURO') }}</v-col>
                             </v-row>
                             <v-row>
                                 <v-col cols="6" class="font-weight-bold">{{ translate('Finance.finalAmount') }}:</v-col>
-                                <v-col cols="6" class="text-right font-weight-bold">{{ finalAmount }} {{ translate('housescontent.Euro') }}</v-col>
+                                <v-col cols="6" class="text-right font-weight-bold">{{ finalAmount }} {{ translate('HOUSESCONTENT_EURO') }}</v-col>
                             </v-row>
                         </v-card-text>
 
                         <v-divider class="my-4"></v-divider>
-                        <v-card-title class="details-subtitle">{{ translate('Finance.paymentMethod') }}</v-card-title>
+                        <v-card-title class="details-subtitle">{{ translate('FINANCE_PAYMENTMETHOD') }}</v-card-title>
                         <v-card-text>
-                            <p><strong>{{ translate('Finance.paymentMethod') }}:</strong> {{ selectedPaymentMethod }}</p>
+                            <p><strong>{{ translate('FINANCE_PAYMENTMETHOD') }}:</strong> {{ selectedPaymentMethod }}</p>
                         </v-card-text>
 
                         <v-divider class="my-4"></v-divider>
-                        <v-card-title class="details-subtitle">{{ translate('Finance.locationDetails') }}</v-card-title>
+                        <v-card-title class="details-subtitle">{{ translate('FINANCE_LOCATIONDETAILS') }}</v-card-title>
                         <v-card-text>
-                            <p><strong>{{ translate('Finance.location') }}:</strong> {{ selectedFinance.location }}</p>
-                            <p><strong>{{ translate('Finance.host') }}:</strong> {{ selectedFinance.host }}</p>
-                            <p><strong>{{ translate('Finance.rating') }}:</strong> {{ selectedFinance.rating }}</p>
-                            <p><strong>{{ translate('Finance.type') }}:</strong> {{ selectedFinance.type }}</p>
-                            <p><strong>{{ translate('Finance.period') }}:</strong> {{ selectedFinance.period }}</p>
+                            <p><strong>{{ translate('FINANCE_LOCATION') }}:</strong> {{ selectedFinance.location }}</p>
+                            <p><strong>{{ translate('FINANCE_HOST') }}:</strong> {{ selectedFinance.host }}</p>
+                            <p><strong>{{ translate('FINANCE_RATING') }}:</strong> {{ selectedFinance.rating }}</p>
+                            <p><strong>{{ translate('FINANCE_TYPE') }}:</strong> {{ selectedFinance.type }}</p>
+                            <p><strong>{{ translate('FINANCE_PERIOD') }}:</strong> {{ selectedFinance.period }}</p>
                         </v-card-text>
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn color="primary" @click="dialog = false">{{ translate('Finance.close') }}</v-btn>
+                        <v-btn color="primary" @click="dialog = false">{{ translate('CLOSE') }}</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -100,10 +100,10 @@ export default {
             selectedPaymentMethod: 'Credit card',
             tab: 'all',
             headers: [
-                { text: translate('Finance.id'), value: 'id' },
-                { text: translate('Finance.finalAmount'), value: 'finalAmount' },
-                { text: translate('Finance.status'), value: 'status' },
-                { text: translate('Finance.actions'), value: 'actions', sortable: false }
+                { text: translate('FINANCE_ID'), value: 'id' },
+                { text: translate('FINANCE_AMOUNT'), value: 'finalAmount' },
+                { text: translate('FINANCE_STATUS'), value: 'status' },
+                { text: translate('ADMIN_SUPPORT_ACTIONS'), value: 'actions', sortable: false }
             ],
             Finance: [
                 {

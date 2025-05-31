@@ -2,7 +2,7 @@
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
             <v-card-title class="gift-card-section">
-                <span>{{ translate('giftCard.giftCardTitle') }}</span>
+                <span>{{ translate('GUIDE_GIFTCARD_GIFTCARDTITLE') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="handleCloseModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -16,13 +16,13 @@
                 </div>
 
                 <p class="description">
-                    {{ translate('giftCard.giftCardDescription') }}
+                    {{ translate('GUIDE_GIFTCARD_GIFTCARDDESCRIPTION') }}
                 </p>
 
                 <v-form @submit.prevent="handleGiftCardPurchase">
                     <v-text-field
                         v-model="giftCardData.amount"
-                        :label="translate('giftCard.giftCardAmountLabel')"
+                        :label="translate('GUIDE_GIFTCARD_GIFTCARDAMOUNTLABEL')"
                         type="number"
                         required
                         outlined
@@ -32,7 +32,7 @@
 
                     <v-text-field
                         v-model="giftCardData.recipient"
-                        :label="translate('giftCard.giftCardRecipientLabel')"
+                        :label="translate('GUIDE_GIFTCARD_GIFTCARDRECIPIENTLABEL')"
                         type="email"
                         required
                         outlined
@@ -41,17 +41,17 @@
 
                     <v-textarea
                         v-model="giftCardData.message"
-                        :label="translate('giftCard.giftCardMessageLabel')"
+                        :label="translate('GUIDE_GIFTCARD_GIFTCARDMESSAGELABEL')"
                         outlined
                         class="mb-4"
                     ></v-textarea>
 
                     <div class="button-container">
                         <v-btn type="submit" color="primary" large>
-                            {{ translate('giftCard.confirmPurchase') }}
+                            {{ translate('GUIDE_GIFTCARD_CONFIRMPURCHASE') }}
                         </v-btn>
                         <v-btn @click="handleCloseModal" color="secondary" large class="ml-2">
-                            {{ translate('giftCard.cancel') }}
+                            {{ translate('CANCEL') }}
                         </v-btn>
                     </div>
                 </v-form>

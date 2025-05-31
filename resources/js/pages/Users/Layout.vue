@@ -19,7 +19,7 @@
             <v-menu v-model="menuActive" class="menu_open" right>
                 <v-list>
                     <v-list-item @click="logout">
-                        <v-list-item-title>{{ translate('profile.logout') }}</v-list-item-title>
+                        <v-list-item-title>{{ translate('PROFILE_LOGOUT') }}</v-list-item-title>
                     </v-list-item>
                 </v-list>
             </v-menu>

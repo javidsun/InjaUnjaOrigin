@@ -2,62 +2,62 @@
     <v-dialog v-model="isModalOpen" max-width="800px" transition="dialog-transition">
         <v-card>
             <v-card-title class="dialog-header">
-                <span>{{ translate('privacySharing.title') }}</span>
+                <span>{{ translate('PRIVACYSHARING_TITLE') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
             </v-card-title>
             <v-card-text class="modal-content">
-                <p class="description">{{ translate('privacySharing.description') }}</p>
+                <p class="description">{{ translate('PRIVACYSHARING_DESCRIPTION') }}</p>
                 <v-divider></v-divider>
 
                 <div class="section">
-                    <h3>{{ translate('privacySharing.requestData.title') }}</h3>
-                    <p>{{ translate('privacySharing.requestData.description') }}</p>
+                    <h3>{{ translate('PRIVACYSHARING_REQUESTDATA_TITLE') }}</h3>
+                    <p>{{ translate('PRIVACYSHARING_REQUESTDATA_DESCRIPTION') }}</p>
                     <div class="button-container">
                         <v-btn @click="downloadUserData" color="primary">
-                            {{ translate('privacySharing.requestData.button') }}
+                            {{ translate('PRIVACYSHARING_REQUESTDATA_BUTTON') }}
                         </v-btn>
                     </div>
                 </div>
                 <v-divider></v-divider>
 
                 <div class="section">
-                    <h3>{{ translate('privacySharing.deleteAccount.title') }}</h3>
-                    <p>{{ translate('privacySharing.deleteAccount.description') }}</p>
+                    <h3>{{ translate('PRIVACYSHARING_DELETEACCOUNT_TITLE') }}</h3>
+                    <p>{{ translate('PRIVACYSHARING_DELETEACCOUNT_DESCRIPTION') }}</p>
                     <div class="button-container">
                         <v-btn @click="showDeleteConfirmation" color="error">
-                            {{ translate('privacySharing.deleteAccount.button') }}
+                            {{ translate('PRIVACYSHARING_DELETEACCOUNT_BUTTON') }}
                         </v-btn>
                     </div>
                 </div>
                 <v-divider></v-divider>
 
                 <div class="section">
-                    <h3>{{ translate('privacySharing.thirdPartyTools.title') }}</h3>
-                    <p>{{ translate('privacySharing.thirdPartyTools.description') }}</p>
+                    <h3>{{ translate('PRIVACYSHARING_THIRDPARTYTOOLS_TITLE') }}</h3>
+                    <p>{{ translate('PRIVACYSHARING_THIRDPARTYTOOLS_DESCRIPTION') }}</p>
                     <div class="button-container">
                         <v-btn @click="showThirdPartyTools = true" color="primary">
-                            {{ translate('privacySharing.thirdPartyTools.button') }}
+                            {{ translate('PRIVACYSHARING_THIRDPARTYTOOLS_BUTTON') }}
                         </v-btn>
                     </div>
 
                     <v-expand-transition>
                         <div v-if="showThirdPartyTools" class="nested-section">
-                            <p>{{ translate('privacySharing.thirdPartyTools.nestedDescription') }}</p>
+                            <p>{{ translate('PRIVACYSHARING_THIRDPARTYTOOLS_NESTEDDESCRIPTION') }}</p>
                             <v-checkbox v-model="thirdPartySharing"
-                                        :label="translate('privacySharing.thirdPartyTools.sharingLabel')"></v-checkbox>
+                                        :label="translate('PRIVACYSHARING_THIRDPARTYTOOLS_SHARINGLABEL')"></v-checkbox>
                             <v-checkbox v-model="thirdPartyAnalytics"
-                                        :label="translate('privacySharing.thirdPartyTools.analyticsLabel')"></v-checkbox>
+                                        :label="translate('PRIVACYSHARING_THIRDPARTYTOOLS_ANALYTICSLABEL')"></v-checkbox>
                             <v-checkbox v-model="thirdPartyMarketing"
-                                        :label="translate('privacySharing.thirdPartyTools.marketingLabel')"></v-checkbox>
+                                        :label="translate('PRIVACYSHARING_THIRDPARTYTOOLS_MARKETINGLABEL')"></v-checkbox>
                             <div class="button-container">
                                 <v-btn @click="saveThirdPartySettings" color="primary">
-                                    {{ translate('privacySharing.thirdPartyTools.saveButton') }}
+                                    {{ translate('PRIVACYSHARING_THIRDPARTYTOOLS_SAVEBUTTON') }}
                                 </v-btn>
                                 <v-btn @click="showThirdPartyTools = false" color="secondary">
-                                    {{ translate('privacySharing.thirdPartyTools.closeButton') }}
+                                    {{ translate('CLOSE') }}
                                 </v-btn>
                             </div>
                         </div>
@@ -66,31 +66,31 @@
                 <v-divider></v-divider>
 
                 <div class="section">
-                    <h3>{{ translate('privacySharing.sharing.title') }}</h3>
-                    <p>{{ translate('privacySharing.sharing.description') }}</p>
+                    <h3>{{ translate('PRIVACYSHARING_SHARING_TITLE') }}</h3>
+                    <p>{{ translate('PRIVACYSHARING_SHARING_DESCRIPTION') }}</p>
                     <div class="button-container">
                         <v-btn @click="showSharing = true" color="primary">
-                            {{ translate('privacySharing.sharing.button') }}
+                            {{ translate('PRIVACYSHARING_SHARING_BUTTON') }}
                         </v-btn>
                     </div>
 
                     <v-expand-transition>
                         <div v-if="showSharing" class="nested-section">
-                            <p>{{ translate('privacySharing.sharing.nestedDescription') }}</p>
+                            <p>{{ translate('PRIVACYSHARING_SHARING_NESTEDDESCRIPTION') }}</p>
                             <v-radio-group v-model="profileVisibility">
                                 <v-radio value="public"
-                                         :label="translate('privacySharing.sharing.publicLabel')"></v-radio>
+                                         :label="translate('PRIVACYSHARING_SHARING_PUBLICLABEL')"></v-radio>
                                 <v-radio value="private"
-                                         :label="translate('privacySharing.sharing.privateLabel')"></v-radio>
+                                         :label="translate('PRIVACYSHARING_SHARING_PRIVATELABEL')"></v-radio>
                                 <v-radio value="custom"
-                                         :label="translate('privacySharing.sharing.customLabel')"></v-radio>
+                                         :label="translate('PRIVACYSHARING_SHARING_CUSTOMLABEL')"></v-radio>
                             </v-radio-group>
                             <div class="button-container">
                                 <v-btn @click="saveSharingSettings" color="primary">
-                                    {{ translate('privacySharing.sharing.saveButton') }}
+                                    {{ translate('PRIVACYSHARING_THIRDPARTYTOOLS_SAVEBUTTON') }}
                                 </v-btn>
                                 <v-btn @click="showSharing = false" color="secondary">
-                                    {{ translate('privacySharing.sharing.closeButton') }}
+                                    {{ translate('CLOSE') }}
                                 </v-btn>
                             </div>
                         </div>
@@ -99,17 +99,17 @@
                 <v-divider></v-divider>
 
                 <div class="section">
-                    <h3>{{ translate('privacySharing.services.title') }}</h3>
-                    <p>{{ translate('privacySharing.services.description') }}</p>
+                    <h3>{{ translate('DELETEACCOUNT_TITLE') }}</h3>
+                    <p>{{ translate('DELETEACCOUNT_DESCRIPTION') }}</p>
                     <div class="button-container">
                         <v-btn @click="showServices = true" color="primary">
-                            {{ translate('privacySharing.services.button') }}
+                            {{ translate('DELETEACCOUNT_BUTTON') }}
                         </v-btn>
                     </div>
 
                     <v-expand-transition>
                         <div v-if="showServices" class="nested-section">
-                            <p>{{ translate('privacySharing.services.nestedDescription') }}</p>
+                            <p>{{ translate('PRIVACYSHARING_SERVICES_NESTEDDESCRIPTION') }}</p>
                             <v-list>
                                 <v-list-item v-for="service in connectedServices" :key="service.id">
                                     <v-list-item-content>
@@ -127,7 +127,7 @@
                             </v-list>
                             <div class="button-container">
                                 <v-btn @click="showServices = false" color="secondary">
-                                    {{ translate('privacySharing.services.closeButton') }}
+                                    {{ translate('CLOSE') }}
                                 </v-btn>
                             </div>
                         </div>
@@ -141,19 +141,19 @@
         <v-card>
             <v-card-title class="error white--text">
                 <v-icon large color="white">mdi-alert-circle</v-icon>
-                <span class="ml-2">{{ translate('alerts.deleteAccount.title') }}</span>
+                <span class="ml-2">{{ translate('DELETEACCOUNT_TITLE') }}</span>
             </v-card-title>
             <v-card-text class="pa-4">
-                <p>{{ translate('alerts.deleteAccount.message') }}</p>
-                <p class="font-weight-bold mt-3">{{ translate('alerts.deleteAccount.warning') }}</p>
+                <p>{{ translate('DELETEACCOUNT_MESSAGE') }}</p>
+                <p class="font-weight-bold mt-3">{{ translate('DELETEACCOUNT_WARNING') }}</p>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="secondary" @click="showDeleteAlert = false">
-                    {{ translate('alerts.cancel') }}
+                    {{ translate('CANCEL') }}
                 </v-btn>
                 <v-btn color="error" @click="confirmDeleteAccount">
-                    {{ translate('alerts.deleteAccount.confirm') }}
+                    {{ translate('CONFIRM') }}
                 </v-btn>
             </v-card-actions>
         </v-card>

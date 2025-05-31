@@ -26,10 +26,10 @@ export default {
     data() {
         return {
             stats: [
-                { title: "Basics.activeUsers", value: '1,200', icon: 'mdi-account', color: 'primary' },
-                { title: "Basics.totalReservations", value: '350', icon: 'mdi-calendar-check', color: 'success' },
-                { title: "Basics.totalRevenue", value: '750K $', icon: 'mdi-cash', color: 'warning' },
-                { title: "Basics.activeAds", value: '120', icon: 'mdi-format-list-bulleted', color: 'info' },
+                { title: "BASICS_ACTIVEUSERS", value: '1,200', icon: 'mdi-account', color: 'primary' },
+                { title: "BASICS_TOTALRESERVATIONS", value: '350', icon: 'mdi-calendar-check', color: 'success' },
+                { title: "BASICS_TOTALREVENUE", value: '750K $', icon: 'mdi-cash', color: 'warning' },
+                { title: "BASICS_ACTIVEADS", value: '120', icon: 'mdi-format-list-bulleted', color: 'info' },
             ]
         }
     },

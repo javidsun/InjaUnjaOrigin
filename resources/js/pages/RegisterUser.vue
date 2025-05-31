@@ -22,7 +22,7 @@
                             dismissible
                             class="mt-3"
                         >
-                            {{ successMessage }}
+                            {{ translate(successMessage) }}
                         </v-alert>
                         <v-alert
                             v-if="error"
@@ -30,41 +30,41 @@
                             dismissible
                             class="mt-3"
                         >
-                            {{ error }}
+                            {{ translate(error) }}
                         </v-alert>
                         <v-card-text>
                             <v-form @submit.prevent="register" ref="form">
                                 <v-text-field
                                     v-model="name"
-                                    :rules="[v => !!v || 'Il nome è obbligatorio']"
-                                    label="Nome"
+                                    :rules="[v => !!v || translate('REGISTER_NAME_REQUIRED')]"
+                                    :label="translate('REGISTER_NAME')"
                                     prepend-icon="mdi-account"
                                     required
                                 ></v-text-field>
                                 <v-text-field
                                     v-model="email"
                                     :rules="[
-                              v => !!v || 'L\'email è obbligatoria',
-                              v => /.+@.+\..+/.test(v) || 'L\'email deve essere valida']"
-                                    label="Email"
+                              v => !!v || translate('REGISTER_EMAIL_REQUIRED'),
+                              v => /.+@.+\..+/.test(v) || translate('EMAIL_VALID')]"
+                                    :label="translate('REGISTER_EMAIL')"
                                     prepend-icon="mdi-email"
                                     required
                                 ></v-text-field>
                                 <v-text-field
                                     v-model="confirmEmail"
                                     :rules="[
-                              v => !!v || 'La conferma dell\'email è obbligatoria',
-                              v => v === email || 'Le email non corrispondono']"
-                                    label="Conferma Email"
+                              v => !!v || translate('VERIFICATION_EMAIL'),
+                              v => v === email || translate('EMAIL_MATCH_WARNING')]"
+                                    :label="translate('REGISTER_CONFIRMEMAIL')"
                                     prepend-icon="mdi-email-check"
                                     required
                                 ></v-text-field>
                                 <v-text-field
                                     v-model="password"
                                     :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                    :rules="[v => !!v || 'La password è obbligatoria']"
+                                    :rules="[v => !!v || translate('PASSWORDREQUIRED')]"
                                     :type="showPassword ? 'text' : 'password'"
-                                    label="Password"
+                                    :label="translate('REGISTER_PASSWORD')"
                                     prepend-icon="mdi-lock"
                                     @click:append="showPassword = !showPassword"
                                     required
@@ -74,12 +74,12 @@
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn-primary color="primary" @click="register" :loading="loading">
-                                Registrati
+                                {{ translate('REGISTER_REGISTER') }}
                             </v-btn-primary>
                         </v-card-actions>
                         <v-card-text class="text-center">
                             <v-divider class="my-3"></v-divider>
-                            <div class="text-body-2 mb-3">Oppure registrati con</div>
+                            <div class="text-body-2 mb-3">{{ translate('REGISTER_OR') }}</div>
                             <v-btn icon="mdi-google" color="red" variant="text" class="mx-2"></v-btn>
                             <v-btn icon="mdi-apple" color="black" variant="text" class="mx-2"></v-btn>
                             <v-btn icon="mdi-facebook" color="blue" variant="text" class="mx-2"></v-btn>
@@ -95,9 +95,10 @@
 <script>
 import InjaUnjaLogo from "@/assets/images/logo1.png"
 import apiService from "@/globalServices/apiService";
+import { translate } from "@/store/languageStore";
 
 export default {
-    name: "Register", //salam
+    name: "Register",
     data() {
         return {
             openRegisterDialog: true,
@@ -110,13 +111,13 @@ export default {
             logo: null,
             error: null,
             successMessage: null
-
         };
     },
     created() {
         this.logo = InjaUnjaLogo;
     },
     methods: {
+        translate,
         coseDialog() {
             this.$emit('closeRegisterDialog');
         },
@@ -128,13 +129,13 @@ export default {
                 name: this.name,
                 email: this.email,
                 password: this.password,
-                password_confirmation: this.password, // Corretto per la regola 'confirmed' di Laravel
+                password_confirmation: this.password,
                 provider:'traditional'
             };
             try {
                 const response = await apiService.axiosToBackend().post('/api/register', formData);
                 if (response.data.success || response.status === 200) {
-                    this.successMessage = 'Registration successful! Redirecting...';
+                    this.successMessage = 'REGISTRATION_SUCCESS';
                     localStorage.setItem('authToken', response.data.token);
 
                     setTimeout(() => {
@@ -146,22 +147,20 @@ export default {
                 }
             } catch (error) {
                 if (error.response && error.response.status === 422) {
-                    this.error = error.response.data.message || "This email is already registered. Please use a different email or login.";
+                    this.error = error.response.data.message || "EMAIL_ALREADY_REGISTERED";
                     if (error.response.data.errors) {
                         const fieldErrors = Object.values(error.response.data.errors).flat().join(' ');
                         this.error = `${this.error} (${fieldErrors})`;
                     }
                 } else if (error.request) {
-                    this.error = 'Nessuna risposta dal server. Controlla la connessione.';
+                    this.error = 'NO_SERVER_RESPONSE';
                 } else {
-                    this.error = 'Errore imprevisto nella configurazione della richiesta.';
+                    this.error = 'REQUEST_CONFIGURATION_ERROR';
                 }
-
             }
             finally {
                 this.loading = false;
             }
-
         },
     }
 };
@@ -193,6 +192,5 @@ export default {
     .mb-3 {
         margin-bottom: 1rem;
     }
-
 }
 </style>

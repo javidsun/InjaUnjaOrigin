@@ -21,10 +21,10 @@
                         <v-card class="elevation-2 rounded-lg border1">
                             <v-card-title class="text-h5 primary--text">
                                 <v-icon class="mr-2">mdi-account-multiple</v-icon>
-                                {{ translate('Admin_UserManagment.user_management') }}
+                                {{ translate('USER_MANAGMENT') }}
                             </v-card-title>
                             <v-card-subtitle class="text-body2">
-                                {{ translate('Admin_UserManagment.user_list_and_roles') }}
+                                {{ translate('USER_LIST_ROLES') }}
                             </v-card-subtitle>
                         </v-card>
                     </v-col>
@@ -35,7 +35,7 @@
                         <v-card class="elevation-2 rounded-lg border1">
                             <v-card-title>
                                 <v-btn color="primary" @click="openUserDialog" elevation="2" rounded>
-                                    {{ translate('Admin_UserManagment.add_new_user') }}
+                                    {{ translate('ADD_NEW_USER') }}
                                 </v-btn>
                             </v-card-title>
                             <v-data-table
@@ -64,28 +64,28 @@
                 <v-dialog v-model="userDialog" max-width="600px">
                     <v-card class="elevation-2 rounded-lg">
                         <v-card-title class="headline text-center">
-                            {{ editingUser ? translate('Admin_UserManagment.edit_user') : translate('Admin_UserManagment.add_new_user') }}
+                            {{ editingUser ? translate('EDIT_USER') : translate('ADD_NEW_USER') }}
                         </v-card-title>
                         <v-card-text>
                             <v-form ref="form" v-model="valid">
-                                <v-text-field v-model="userForm.name" :label="translate('Admin_UserManagment.user_name')" :rules="[rules.required]" outlined dense />
-                                <v-text-field v-model="userForm.email" :label="translate('Admin_UserManagment.user_email')" :rules="[rules.required, rules.email]" outlined dense />
+                                <v-text-field v-model="userForm.name" :label="translate('USER_NAME')" :rules="[rules.required]" outlined dense />
+                                <v-text-field v-model="userForm.email" :label="translate('USER_EMAIL')" :rules="[rules.required, rules.email]" outlined dense />
                                 <v-select
                                     v-model="userForm.role"
                                     :items="roles"
-                                    :label="translate('Admin_UserManagment.user_role')"
+                                    :label="translate('USERINFO_ROLE')"
                                     :rules="[rules.required]"
                                     outlined dense
                                 />
-                                <v-switch v-model="userForm.active" :label="translate('Admin_UserManagment.user_active')" color="primary" />
+                                <v-switch v-model="userForm.active" :label="translate('USER_ACTIVE')" color="primary" />
                             </v-form>
                         </v-card-text>
                         <v-card-actions class="justify-end">
                             <v-btn @click="userDialog = false" color="grey" outlined rounded>
-                                {{ translate('Admin_UserManagment.close') }}
+                                {{ translate('CLOSE') }}
                             </v-btn>
                             <v-btn @click="saveUser" color="primary" :disabled="!valid" rounded>
-                                {{ translate('Admin_UserManagment.save') }}
+                                {{ translate('SAVE') }}
                             </v-btn>
                         </v-card-actions>
                     </v-card>
@@ -94,7 +94,7 @@
                 <v-dialog v-model="historyDialog" max-width="800px">
                     <v-card class="elevation-2 rounded-lg">
                         <v-card-title class="headline">
-                            {{ translate('Admin_UserManagment.activity_history') }} {{ selectedUser.name }}
+                            {{ translate('ACTIVITY_HISTORY') }} {{ selectedUser.name }}
                         </v-card-title>
                         <v-card-text>
                             <v-data-table
@@ -113,7 +113,7 @@
                         </v-card-text>
                         <v-card-actions class="justify-end">
                             <v-btn @click="historyDialog = false" color="grey" outlined rounded>
-                                {{ translate('Admin_UserManagment.close') }}
+                                {{ translate('CLOSE') }}
                             </v-btn>
                         </v-card-actions>
                     </v-card>
@@ -130,7 +130,7 @@
 import Sidebar from "../Sidebar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
 export default {
     components: {
@@ -162,22 +162,22 @@ export default {
             },
 
             userHeaders: [
-                { text: translate('Admin_UserManagment.user_name'), align: 'start', key: 'name', sortable: true },
-                { text: translate('Admin_UserManagment.user_email'), key: 'email' },
-                { text: translate('Admin_UserManagment.user_role'), key: 'role' },
-                { text: translate('Admin_UserManagment.user_active'), key: 'active' },
-                { text: translate('Admin_UserManagment.actions'), key: 'actions', sortable: false }
+                { text: translate('USER_NAME'), align: 'start', key: 'name', sortable: true },
+                { text: translate('USER_EMAIL'), key: 'email' },
+                { text: translate('USERINFO_ROLE'), key: 'role' },
+                { text: translate('USER_ACTIVE'), key: 'active' },
+                { text: translate('ADMIN_SUPPORT_ACTIONS'), key: 'actions', sortable: false }
             ],
 
             activityHeaders: [
-                { text: translate('Admin_UserManagment.activity'), align: 'start', key: 'activity' },
-                { text: translate('Admin_UserManagment.date'), key: 'date' },
-                { text: translate('Admin_UserManagment.status'), key: 'status' }
+                { text: translate('ACTIVITY'), align: 'start', key: 'activity' },
+                { text: translate('ANYWEEK_DATE'), key: 'date' },
+                { text: translate('USERINFO_STATUS'), key: 'status' }
             ],
 
             rules: {
-                required: value => !!value || translate('Admin_UserManagment.validation.required'),
-                email: value => /.+@.+\..+/.test(value) || translate('Admin_UserManagment.validation.invalid_email')
+                required: value => !!value || translate('ADMIN_ADMANAGEMENT_VALIDATION_REQUIRED'),
+                email: value => /.+@.+\..+/.test(value) || translate('INVALID_EMAIL')
             }
         };
     },
@@ -193,9 +193,9 @@ export default {
 
         userActivities() {
             return [
-                { id: 1, activity: translate('Admin_UserManagment.activities.house_reservation'), date: '2025-03-10', status: translate('Admin_UserManagment.statuses.completed') },
-                { id: 2, activity: translate('Admin_UserManagment.activities.payment'), date: '2025-03-09', status: translate('Admin_UserManagment.statuses.pending') },
-                { id: 3, activity: translate('Admin_UserManagment.activities.comment'), date: '2025-03-08', status: translate('Admin_UserManagment.statuses.completed') }
+                { id: 1, activity: translate('HOUSE_RESERVATION'), date: '2025-03-10', status: translate('COMPLETED') },
+                { id: 2, activity: translate('PAYMENT'), date: '2025-03-09', status: translate('PENDING') },
+                { id: 3, activity: translate('COMMENT'), date: '2025-03-08', status: translate('COMPLETED') }
             ];
         }
     },
@@ -207,10 +207,10 @@ export default {
                 const userIndex = this.users.findIndex(u => u.id === user.id);
                 if (userIndex !== -1) {
                     this.users[userIndex].active = !this.users[userIndex].active;
-                    this.showSuccessMessage(translate('Admin_UserManagment.status_updated'));
+                    this.showSuccessMessage(translate('STATUS_UPDATED'));
                 }
             } catch (error) {
-                this.showErrorMessage(translate('Admin_UserManagment.status_update_failed'));
+                this.showErrorMessage(translate('STATUS_UPDATED_FAILED'));
             }
         },
 
@@ -228,7 +228,7 @@ export default {
                     const userIndex = this.users.findIndex(u => u.id === this.userForm.id);
                     if (userIndex !== -1) {
                         this.users[userIndex] = { ...this.userForm };
-                        this.showSuccessMessage(translate('Admin_UserManagment.user_updated'));
+                        this.showSuccessMessage(translate('USER_UPDATED'));
                     }
                 } else {
                     const newUser = {
@@ -236,12 +236,12 @@ export default {
                         id: this.users.length > 0 ? Math.max(...this.users.map(u => u.id)) + 1 : 1
                     };
                     this.users.push(newUser);
-                    this.showSuccessMessage(translate('Admin_UserManagment.user_added'));
+                    this.showSuccessMessage(translate('USER_ADDED'));
                 }
 
                 this.userDialog = false;
             } catch (error) {
-                this.showErrorMessage(translate('Admin_UserManagment.save_failed'));
+                this.showErrorMessage(translate('SAVE_FAILED'));
             }
         },
 
@@ -251,7 +251,7 @@ export default {
                 this.editingUser = true;
                 this.userDialog = true;
             } catch (error) {
-                this.showErrorMessage(translate('Admin_UserManagment.edit_failed'));
+                this.showErrorMessage(translate('EDIT_FAILED'));
             }
         },
 
@@ -260,7 +260,7 @@ export default {
                 this.selectedUser = user;
                 this.historyDialog = true;
             } catch (error) {
-                this.showErrorMessage(translate('Admin_UserManagment.history_load_failed'));
+                this.showErrorMessage(translate('HISTORY_LOAD_FAILED'));
             }
         },
 
@@ -286,7 +286,6 @@ export default {
 </script>
 
 <style scoped>
-/* Styles remain the same as original */
 .v-data-table th {
     background-color: #f0f0f0;
     font-weight: bold;

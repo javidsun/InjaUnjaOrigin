@@ -2,7 +2,7 @@
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
             <v-card-title class="dialog-header">
-                <span>{{ translate('currency.title') }}</span>
+                <span>{{ translate('CURRENCY_TITLE') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -10,13 +10,13 @@
             </v-card-title>
 
             <v-card-text class="modal-content">
-                <p>{{ translate('currency.message') }}</p>
+                <p>{{ translate('CURRENCY_MESSAGE') }}</p>
             </v-card-text>
 
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" @click="closeModal">
-                    {{ translate('currency.closeButton') }}
+                    {{ translate('CLOSE') }}
                 </v-btn>
             </v-card-actions>
         </v-card>

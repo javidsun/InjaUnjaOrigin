@@ -5,7 +5,7 @@
         </v-avatar>
         <input type="file" accept="image/*" @change="onFileChange" hidden ref="fileInput" />
         <v-btn @click="handleButtonClick" class="mt-2 btn" :color="isUploaded ? 'success' : 'primary'">
-            {{ isUploaded ? translate('profile.saveChanges') : translate('profile.changeAvatar') }}
+            {{ isUploaded ? translate('GUIDE_SAVECHANGES') : translate('PROFILE_CHANGEAVATAR') }}
         </v-btn>
     </div>
 </template>

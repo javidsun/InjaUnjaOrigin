@@ -14,16 +14,16 @@
   <v-dialog v-model="showModal" persistent max-width="400">
       <v-card>
         <v-card-text class="text-body-1">
-          <span>{{ translate("Tutorial.Step" + (currentStep + 1)) }}</span>
+          <span>{{ translate("TUTORIAL_STEP1" + (currentStep + 1)) }}</span>
         </v-card-text>
         <v-card-actions>
           <v-btn color="primary" @click="nextStep" v-if="currentStep < steps.length - 1">
-            {{ translate("Tutorial.NextStep") }}
+            {{ translate("TUTORIAL_NEXTSTEP") }}
           </v-btn>
           <v-btn color="primary" @click="finishTutorial" v-if="currentStep === steps.length - 1">
-            {{ translate("Tutorial.Finish") }}
+            {{ translate("TUTORIAL_FINISH") }}
           </v-btn>
-          <v-btn text @click="skipTutorial">{{ translate("Tutorial.Skip") }}</v-btn>
+          <v-btn text @click="skipTutorial">{{ translate("TUTORIAL_SKIP") }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

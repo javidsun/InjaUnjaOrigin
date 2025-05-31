@@ -23,14 +23,14 @@
             <v-row class="profile-actions1">
                 <v-col cols="5">
                     <v-btn class="profile-actions" block color="secondary" @click="editProfile">
-                        {{ translate('profile.editProfile') }}
+                        {{ translate('PROFILE_EDITPROFILE') }}
                     </v-btn>
                 </v-col>
             </v-row>
 
             <v-row class="profile-info" justify="center">
                 <v-col cols="12" sm="10" md="8">
-                    <h3>{{ translate('profile.accountInfo') }}</h3>
+                    <h3>{{ translate('PROFILE_ACCOUNTINFO') }}</h3>
                     <v-form v-if="isEditing" @submit.prevent="saveProfile" class="profile-info3">
                         <v-list class="profile-info3">
                             <v-list-item v-for="(item, index) in editableInfo" :key="index"
@@ -85,7 +85,7 @@
                                 </v-list-item-content>
                             </v-list-item>
                         </v-list>
-                        <v-btn color="success" type="submit">{{ translate('profile.saveChanges') }}</v-btn>
+                        <v-btn color="success" type="submit">{{ translate('SETTING_SAVECHANGES') }}</v-btn>
                     </v-form>
                     <v-list v-else class="profile-info3">
                         <v-list-item v-for="(item, index) in userInfo" :key="index" class="fade-in profile-info">
@@ -112,12 +112,14 @@
 
             <v-dialog v-model="mandatoryModal" max-width="500">
                 <v-card>
-                    <v-card-title class="headline">Please fill in mandatory fields</v-card-title>
+                    <v-card-title class="headline">
+                        {{ translate('FILL_FIELD') }}
+                        </v-card-title>
                     <v-card-text>
-                        Please upload your passport and other required fields.
+                        {{ translate('UPLOAD_REQUIERS') }}
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn color="primary" @click="mandatoryModal = false">OK</v-btn>
+                        <v-btn color="primary" @click="mandatoryModal = false">  {{ translate('OK') }}</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -155,12 +157,12 @@ export default {
             menuItems: [
             ],
             userInfo: [
-                {label: "profile.username", value: "", status: "confirmed"},
-                {label: "profile.billingEmail", value: "", status: "confirmed"},
-                {label: "profile.passport", value: null, status: "not confirmed"},
-                {label: "profile.contact", value: "", status: "confirmed"},
-                {label: "profile.taxId", value: "", status: "confirmed"},
-                {label: "profile.address", value: "", status: "Awaiting confirmation"},
+                {label: "REGISTER_USERNAME", value: "", status: "confirmed"},
+                {label: "PROFILE_BILLINGEMAIL", value: "", status: "confirmed"},
+                {label: "PROFILE_PASSPORT", value: null, status: "not confirmed"},
+                {label: "PROFILE_CONTACT", value: "", status: "confirmed"},
+                {label: "PROFILE_TAXID", value: "", status: "confirmed"},
+                {label: "PROFILE_ADDRESS", value: "", status: "Awaiting confirmation"},
             ],
             editableInfo: []
         }
@@ -199,7 +201,7 @@ export default {
         },
 
         checkMandatoryFields() {
-            const requiredFields = ["profile.username", "profile.billingEmail", "profile.contact", "profile.passport"];
+            const requiredFields = ["REGISTER_USERNAME", "PROFILE_BILLINGEMAIL", "profile.contact", "profile.passport"];
             const missingFields = this.userInfo.filter(item => requiredFields.includes(item.label) && !item.value);
 
             if (missingFields.length > 0) {
@@ -210,7 +212,7 @@ export default {
             this.isEditing = !this.isEditing;
             if (this.isEditing) {
                 this.editableInfo = this.userInfo.map(item => {
-                    if (item.label === "profile.passport" && item.preview) {
+                    if (item.label === "PROFILE_PASSPORT" && item.preview) {
                         return {...item, preview: item.preview};
                     }
                     return item;
@@ -218,11 +220,11 @@ export default {
             }
         },
         saveProfile() {
-            const requiredFields = ["profile.username", "profile.billingEmail", "profile.contact"];
+            const requiredFields = ["REGISTER_USERNAME", "PROFILE_BILLINGEMAIL", "profile.contact"];
             const missingFields = this.editableInfo.filter(item => requiredFields.includes(item.label) && (!item.value || item.value === null));
 
             if (!this.passportFile) {
-                missingFields.push({label: "profile.passport"});
+                missingFields.push({label: "PROFILE_PASSPORT"});
             }
 
             if (missingFields.length > 0) {
@@ -254,29 +256,29 @@ export default {
             }
         },
         formatDisplayValue(item) {
-            if (item.label === "profile.contact") {
+            if (item.label === "PROFILE_CONTACT") {
                 return item.value.replace(/(\d{4})(\d{3})(\d{4})/, "+98$1****$3");
             }
             return item.value;
         },
         getValidationRules(label) {
-            if (label === "profile.username") {
+            if (label === "REGISTER_USERNAME") {
                 return [(v) => !!v || "Username is required"];
             }
-            if (label === "profile.billingEmail") {
+            if (label === "PROFILE_BILLINGEMAIL") {
                 return [
                     (v) => !!v || "Email is required",
                     (v) => /.+@.+\..+/.test(v) || "Invalid email format",
                 ];
             }
-            if (label === "profile.contact") {
+            if (label === "PROFILE_CONTACT") {
                 return [
                     (v) => !!v || "Contact number is required",
                     (v) => /^\d+$/.test(v) || "The contact number must be numbers only",
                     (v) => v.length === 11 || "The contact number must be 11 digits",
                 ];
             }
-            if (label === "profile.passport") {
+            if (label === "PROFILE_PASSPORT") {
                 return [(v) => !!v || "Passport upload is required"];
             }
             return [];

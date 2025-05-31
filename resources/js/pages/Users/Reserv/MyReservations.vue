@@ -5,7 +5,7 @@
                 <v-col cols="12">
                     <v-card class="mb-4" outlined>
                         <v-card-title class="text-h5 title">
-                            {{ translate("UserReservation.AllReservations") }}
+                            {{ translate("USERRESERVATION_ALLRESERVATIONS") }}
                         </v-card-title>
                     </v-card>
                 </v-col>
@@ -59,7 +59,7 @@ export default {
         return {
             reservations: [
                 {
-                    title: this.translate("HouseReservation"),
+                    title: this.translate("USERRESERVATION_HOUSERESERVATION"),
                     date: "2025-01-01",
                     icon: "mdi-home",
                     color: "blue",
@@ -67,7 +67,7 @@ export default {
                     description: "رزرو خانه برای تاریخ 2025-01-01"
                 },
                 {
-                    title: this.translate("CarReservation"),
+                    title: this.translate("USERRESERVATION_CARRESERVATION"),
                     date: "2024-12-29",
                     icon: "mdi-car",
                     color: "green",
@@ -75,7 +75,7 @@ export default {
                     description: "رزرو ماشین برای تاریخ 2024-12-29"
                 },
                 {
-                    title: this.translate("EventReservation"),
+                    title: this.translate("USERRESERVATION_EVENTRESERVATION"),
                     date: "2024-12-25",
                     icon: "mdi-calendar",
                     color: "purple",
@@ -83,7 +83,7 @@ export default {
                     description: "رزرو بلیط رویداد برای تاریخ 2024-12-25"
                 },
                 {
-                    title: this.translate("TravelerReservation"),
+                    title: this.translate("USERRESERVATION_TRAVELERRESERVATION"),
                     date: "2024-12-20",
                     icon: "mdi-account-group",
                     color: "orange",

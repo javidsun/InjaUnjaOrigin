@@ -1,15 +1,15 @@
 <template>
     <v-card class="about-us-container">
         <v-card-title class="text-h4 text-center mb-4">
-            {{ translate("injaunja.title") }}
+            {{ translate("INJAUNJA_TITLE") }}
         </v-card-title>
 
         <v-card-text class="text-body-1 text-center">
-            <p>{{ translate("injaunja.description") }}</p>
+            <p>{{ translate("INJAUNJA_DESCRIPTION") }}</p>
         </v-card-text>
 
         <h2 class="text-h5 text-center mt-8 mb-4">
-            {{ translate("injaunja.teamTitle") }}
+            {{ translate("TEAM_TITLE") }}
         </h2>
 
         <div class="team-members">

@@ -33,19 +33,19 @@ export default {
             drawer: false,
             activePage: "dashboard",
             menuItems: [
-                { title: "UserSidebar.UserDashboard", icon: "mdi-view-dashboard", page: "UserDashboard", link: "/UserDashboard" },
-                { title: "UserSidebar.createAdForm", icon: "mdi-plus-box", page: "createAdForm", link: "/createAdForm" },
-                { title: "UserSidebar.UserProfile", icon: "mdi-account", page: "UserProfile", link: "/UserProfile" },
-                { title: "UserSidebar.UserReservations", icon: "mdi-calendar-check", page: "MyReservations", link: "/MyReservations" },
-                { title: "UserSidebar.MyAds", icon: "mdi-format-list-bulleted", page: "MyAds", link: "/MyAds" },
-                { title: "UserSidebar.houses", icon: "mdi-home-city", page: "houses", link: "/houses" },
-                { title: "UserSidebar.vehicles", icon: "mdi-car", page: "vehicles", link: "/vehicles" },
-                { title: "UserSidebar.events", icon: "mdi-calendar-star", page: "events", link: "/events" },
-                { title: "UserSidebar.travelers", icon: "mdi-account-group", page: "travelers", link: "/travelers" },
-                { title: "UserSidebar.Messages", icon: "mdi-message", page: "Messages", link: "/Messages" },
-                { title: "UserSidebar.UserFinance", icon: "mdi-finance", page: "UserFinance", link: "/UserFinance" },
-                { title: "UserSidebar.UserSettings", icon: "mdi-cog", page: "UserSettings", link: "/UserSettings" },
-                { title: "UserSidebar.Support", icon: "mdi-help-circle", page: "Support", link: "/Support" }
+                { title: "USERSIDEBAR_USERDASHBOARD", icon: "mdi-view-dashboard", page: "UserDashboard", link: "/UserDashboard" },
+                { title: "USERSIDEBAR_CREATEADFORM", icon: "mdi-plus-box", page: "createAdForm", link: "/createAdForm" },
+                { title: "USERSIDEBAR_USERPROFILE", icon: "mdi-account", page: "UserProfile", link: "/UserProfile" },
+                { title: "USERSIDEBAR_USERRESERVATIONS", icon: "mdi-calendar-check", page: "MyReservations", link: "/MyReservations" },
+                { title: "USERSIDEBAR_MYADS", icon: "mdi-format-list-bulleted", page: "MyAds", link: "/MyAds" },
+                { title: "USERSIDEBAR_HOUSES", icon: "mdi-home-city", page: "houses", link: "/houses" },
+                { title: "USERSIDEBAR_VEHICLES", icon: "mdi-car", page: "vehicles", link: "/vehicles" },
+                { title: "USERSIDEBAR_EVENTS", icon: "mdi-calendar-star", page: "events", link: "/events" },
+                { title: "USERSIDEBAR_TRAVELERS", icon: "mdi-account-group", page: "travelers", link: "/travelers" },
+                { title: "USERSIDEBAR_MESSAGES", icon: "mdi-message", page: "Messages", link: "/Messages" },
+                { title: "USERSIDEBAR_USERFINANCE", icon: "mdi-finance", page: "UserFinance", link: "/UserFinance" },
+                { title: "USERSIDEBAR_USERSETTINGS", icon: "mdi-cog", page: "UserSettings", link: "/UserSettings" },
+                { title: "USERSIDEBAR_SUPPORT", icon: "mdi-help-circle", page: "Support", link: "/Support" }
             ]
         };
     },

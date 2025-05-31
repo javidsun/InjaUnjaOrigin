@@ -21,10 +21,10 @@
                         <v-card class="elevation-2 rounded-lg border1">
                             <v-card-title class="text-h5 primary--text">
                                 <v-icon class="mr-2">mdi-bullhorn</v-icon>
-                                {{ translate('Admin_AdManagement.ad_management') }}
+                                {{ translate('ADMIN_ADMANAGEMENT_AD_MANAGEMENT') }}
                             </v-card-title>
                             <v-card-subtitle class="text-body2">
-                                {{ translate('Admin_AdManagement.ad_list_and_actions') }}
+                                {{ translate('ADMIN_ADMANAGEMENT_AD_LIST_AND_ACTIONS') }}
                             </v-card-subtitle>
                         </v-card>
                     </v-col>
@@ -35,7 +35,7 @@
                         <v-card class="elevation-2 rounded-lg border1">
                             <v-card-title>
                                 <v-btn color="primary" @click="openAdDialog" elevation="2" rounded>
-                                    {{ translate('Admin_AdManagement.add_new_ad') }}
+                                    {{ translate('ADMIN_ADMANAGEMENT_ADD_NEW_AD') }}
                                 </v-btn>
                             </v-card-title>
                             <v-data-table
@@ -75,7 +75,7 @@
                 <v-dialog v-model="adTypeDialog" max-width="500px" persistent>
                     <v-card class="elevation-2 rounded-lg">
                         <v-card-title class="headline text-center">
-                            {{ translate('Admin_AdManagement.select_ad_type') }}
+                            {{ translate('SELECT_AD_TYPE') }}
                         </v-card-title>
                         <v-card-text>
                             <v-row>
@@ -100,31 +100,31 @@
                 <v-dialog v-model="adDialog" max-width="800px">
                     <v-card class="elevation-2 rounded-lg">
                         <v-card-title class="headline text-center">
-                            {{ editingAd ? translate('Admin_AdManagement.edit_ad') : translate('Admin_AdManagement.add_new_ad') }}
+                            {{ editingAd ? translate('ADMIN_ADMANAGEMENT_EDIT_AD') : translate('ADMIN_ADMANAGEMENT_ADD_NEW_AD') }}
                         </v-card-title>
                         <v-card-text>
                             <div v-if="selectedAdType === 'house'">
                                 <v-form ref="form" v-model="valid">
-                                    <v-text-field v-model="adForm.title" :label="translate('Admin_AdManagement.ad_title')" :rules="[rules.required]" outlined dense />
-                                    <v-textarea v-model="adForm.description" :label="translate('Admin_AdManagement.ad_description')" :rules="[rules.required]" outlined dense />
+                                    <v-text-field v-model="adForm.title" :label="translate('ADMIN_ADMANAGEMENT_AD_TITLE')" :rules="[rules.required]" outlined dense />
+                                    <v-textarea v-model="adForm.description" :label="translate('ADMIN_ADMANAGEMENT_AD_DESCRIPTION')" :rules="[rules.required]" outlined dense />
                                     <v-select
                                         v-model="adForm.category"
                                         :items="categories"
-                                        :label="translate('Admin_AdManagement.ad_category')"
+                                        :label="translate('ADMIN_ADMANAGEMENT_AD_CATEGORY')"
                                         :rules="[rules.required]"
                                         outlined dense
                                     />
-                                    <v-text-field v-model="adForm.basePrice" :label="translate('Admin_AdManagement.base_price')" type="number" outlined dense />
-                                    <v-text-field v-model="adForm.serviceFee" :label="translate('Admin_AdManagement.service_fee')" type="number" outlined dense />
-                                    <v-text-field v-model="adForm.discountPercent" :label="translate('Admin_AdManagement.discount') + ' (%)'" type="number" outlined dense />
-                                    <v-text-field :value="totalPriceComputed" :label="translate('Admin_AdManagement.total_price')" type="number" readonly outlined dense />
-                                    <v-text-field :value="finalReceivedAmountComputed" :label="translate('Admin_AdManagement.received_amount')" type="number" readonly outlined dense />
-                                    <v-checkbox v-model="adForm.hostType" :label="translate('Admin_AdManagement.host_as_individual')" value="individual" />
-                                    <v-checkbox v-model="adForm.hostType" :label="translate('Admin_AdManagement.host_as_business')" value="business" />
-                                    <v-checkbox v-model="adForm.locationFeatures" :label="translate('Admin_AdManagement.security_camera')" value="security_camera" />
-                                    <v-checkbox v-model="adForm.locationFeatures" :label="translate('Admin_AdManagement.sound_insulation')" value="sound_insulation" />
-                                    <v-checkbox v-model="adForm.locationFeatures" :label="translate('Admin_AdManagement.protective_weapons')" value="protective_weapons" />
-                                    <v-switch v-model="adForm.active" :label="translate('Admin_AdManagement.ad_active')" color="primary" />
+                                    <v-text-field v-model="adForm.basePrice" :label="translate('AD_BASE_PRICE')" type="number" outlined dense />
+                                    <v-text-field v-model="adForm.serviceFee" :label="translate('AD_SERVICE_FEE')" type="number" outlined dense />
+                                    <v-text-field v-model="adForm.discountPercent" :label="translate('AD_DISCOUNTS') + ' (%)'" type="number" outlined dense />
+                                    <v-text-field :value="totalPriceComputed" :label="translate('AD_TOTAL_PRICE')" type="number" readonly outlined dense />
+                                    <v-text-field :value="finalReceivedAmountComputed" :label="translate('AD_RECEIVED_AMOUNT')" type="number" readonly outlined dense />
+                                    <v-checkbox v-model="adForm.hostType" :label="translate('AD_HOST_AS_INDIVIDUAL')" value="individual" />
+                                    <v-checkbox v-model="adForm.hostType" :label="translate('AD_HOST_AS_BUSINESS')" value="business" />
+                                    <v-checkbox v-model="adForm.locationFeatures" :label="translate('AD_SECURITY_CAMERA')" value="security_camera" />
+                                    <v-checkbox v-model="adForm.locationFeatures" :label="translate('AD_SOUND_INSULATION')" value="sound_insulation" />
+                                    <v-checkbox v-model="adForm.locationFeatures" :label="translate('AD_PROTECTIVE_WEAPONS')" value="protective_weapons" />
+                                    <v-switch v-model="adForm.active" :label="translate('AD_ACTIVE')" color="primary" />
                                 </v-form>
                             </div>
 
@@ -132,21 +132,21 @@
                                 <v-form ref="companionForm" v-model="companionValid">
                                     <v-text-field
                                         v-model="companionForm.title"
-                                        :label="translate('Admin_AdManagement.companion_title')"
+                                        :label="translate('COMPANOIN_TITLE')"
                                         :rules="[rules.required]"
                                         outlined dense
                                     />
 
                                     <v-textarea
                                         v-model="companionForm.description"
-                                        :label="translate('Admin_AdManagement.companion_description')"
+                                        :label="translate('COMPANOIN_DESCRIPTION')"
                                         :rules="[rules.required]"
                                         outlined dense
                                     />
                                     <v-select
                                         v-model="companionForm.travelType"
                                         :items="travelTypes"
-                                        :label="translate('Admin_AdManagement.travel_type')"
+                                        :label="translate('TRAVEL_TYPE')"
                                         outlined
                                         dense
                                         item-title="label"
@@ -157,7 +157,7 @@
                                     <v-select
                                         v-model="companionForm.genderPreference"
                                         :items="genderPreferences"
-                                        :label="translate('Admin_AdManagement.gender_preference')"
+                                        :label="translate('GENDER_PREFRENCE')"
                                         outlined
                                         dense
                                         item-title="label"
@@ -167,14 +167,14 @@
 
                                     <v-text-field
                                         v-model="companionForm.origin"
-                                        :label="translate('Admin_AdManagement.origin')"
+                                        :label="translate('ORIGIN')"
                                         :rules="[rules.required]"
                                         outlined dense
                                     />
 
                                     <v-text-field
                                         v-model="companionForm.destination"
-                                        :label="translate('Admin_AdManagement.destination')"
+                                        :label="translate('DESTINATION')"
                                         :rules="[rules.required]"
                                         outlined dense
                                     />
@@ -189,7 +189,7 @@
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-text-field
                                                 v-model="companionForm.travelDate"
-                                                :label="translate('Admin_AdManagement.travel_date')"
+                                                :label="translate('TRAVELDATE')"
                                                 prepend-icon="mdi-calendar"
                                                 readonly
                                                 v-bind="attrs"
@@ -206,23 +206,23 @@
 
                                     <v-text-field
                                         v-model="companionForm.price"
-                                        :label="translate('Admin_AdManagement.price')"
+                                        :label="translate('HOUSESCONTENT_PRICE')"
                                         type="number"
                                         outlined dense
                                     />
 
-                                    <v-switch v-model="adForm.active" :label="translate('Admin_AdManagement.ad_active')" color="primary" />
+                                    <v-switch v-model="adForm.active" :label="translate('AD_ACTIVE')" color="primary" />
                                 </v-form>
                             </div>
                             <div v-else class="text-center py-12">
                                 <v-icon x-large color="grey" class="mb-4">mdi-clock-outline</v-icon>
-                                <h3 class="text-h5 grey--text">{{ translate('Admin_AdManagement.coming_soon') }}</h3>
-                                <p class="grey--text">{{ translate('Admin_AdManagement.this_feature_will_be_available_soon') }}</p>
+                                <h3 class="text-h5 grey--text">{{ translate('COMINGSOON') }}</h3>
+                                <p class="grey--text">{{ translate('THIS_FEATURE_WILL_BE_AVAILABLE_SOON') }}</p>
                             </div>
                         </v-card-text>
                         <v-card-actions class="justify-end">
                             <v-btn @click="closeAdDialog" color="grey" outlined rounded>
-                                {{ translate('Admin_AdManagement.close') }}
+                                {{ translate('CLOSE') }}
                             </v-btn>
                             <v-btn
                                 v-if="selectedAdType === 'house'"
@@ -231,7 +231,7 @@
                                 :disabled="!valid"
                                 rounded
                             >
-                                {{ translate('Admin_AdManagement.save') }}
+                                {{ translate('SAVE') }}
                             </v-btn>
                             <v-btn
                                 v-else-if="selectedAdType === 'companion'"
@@ -240,7 +240,7 @@
                                 :disabled="!companionValid"
                                 rounded
                             >
-                                {{ translate('Admin_AdManagement.save') }}
+                                {{ translate('SAVE') }}
                             </v-btn>
                         </v-card-actions>
                     </v-card>
@@ -250,7 +250,7 @@
                 <v-dialog v-model="detailsDialog" max-width="800px">
                     <v-card class="elevation-2 rounded-lg">
                         <v-card-title class="headline">
-                            {{ translate('Admin_AdManagement.ad_details') }} {{ selectedAd.title }}
+                            {{ translate('HOUSESCONTENT_AD_DETAILS') }} {{ selectedAd.title }}
                         </v-card-title>
                         <v-card-text>
                             <v-carousel v-if="selectedAd.images && selectedAd.images.length > 0">
@@ -264,27 +264,27 @@
                             <v-list>
                                 <v-list-item>
                                     <v-list-item-content>
-                                        <v-list-item-title class="font-weight-bold">{{ translate('Admin_AdManagement.ad_description') }}</v-list-item-title>
+                                        <v-list-item-title class="font-weight-bold">{{ translate('AD_DESCRIPTION') }}</v-list-item-title>
                                         <v-list-item-subtitle class="text-body-1">{{ selectedAd.description }}</v-list-item-subtitle>
                                     </v-list-item-content>
                                 </v-list-item>
                                 <v-list-item>
                                     <v-list-item-content>
-                                        <v-list-item-title class="font-weight-bold">{{ translate('Admin_AdManagement.ad_category') }}</v-list-item-title>
+                                        <v-list-item-title class="font-weight-bold">{{ translate('ADMIN_ADMANAGEMENT_AD_CATEGORY') }}</v-list-item-title>
                                         <v-list-item-subtitle class="text-body-1">{{ selectedAd.category }}</v-list-item-subtitle>
                                     </v-list-item-content>
                                 </v-list-item>
                                 <v-list-item>
                                     <v-list-item-content>
-                                        <v-list-item-title class="font-weight-bold">{{ translate('Admin_AdManagement.ad_status') }}</v-list-item-title>
-                                        <v-list-item-subtitle class="text-body-1">{{ selectedAd.status || 'Awaiting_confirmation' }}</v-list-item-subtitle>
+                                        <v-list-item-title class="font-weight-bold">{{ translate('ADMIN_ADMANAGEMENT_AD_STATUS') }}</v-list-item-title>
+                                        <v-list-item-subtitle class="text-body-1">{{ selectedAd.status || 'ADMIN_ADMANAGEMENT_AWAITING_CONFIRMATION' }}</v-list-item-subtitle>
                                     </v-list-item-content>
                                 </v-list-item>
                             </v-list>
                         </v-card-text>
                         <v-card-actions class="justify-end">
                             <v-btn @click="detailsDialog = false" color="grey" outlined rounded>
-                                {{ translate('Admin_AdManagement.close') }}
+                                {{ translate('CLOSE') }}
                             </v-btn>
                         </v-card-actions>
                     </v-card>
@@ -298,7 +298,7 @@
 <script>
 //Todo: Ad Model (House Type): id/title/description/category/basePrice/serviceFee/discountPercent/hostType/locationFeatures/status/images/type/active
 //Todo: Ad Model (Companion Type):{id/title/description/origin/destination/travelDate/price/genderPreference/travelType/status/type/active/smokingAllowed/petsAllowed/images
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 import Sidebar from "../Sidebar.vue";
 import { ref,reactive, computed } from 'vue';
 import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
@@ -381,12 +381,12 @@ export default {
                 }
             ],
             adHeaders: [
-                { text: this.translate('Admin_AdManagement.ad_title'), align: 'start', key: 'title', sortable: true },
-                { text: this.translate('Admin_AdManagement.ad_description'), key: 'description' },
-                { text: this.translate('Admin_AdManagement.ad_category'), key: 'category' },
-                { text: this.translate('Admin_AdManagement.ad_status'), key: 'status' },
-                { text: this.translate('Admin_AdManagement.images'), key: 'images', sortable: false },
-                { text: this.translate('Admin_AdManagement.actions'), key: 'actions', sortable: false }
+                { text: this.translate('AD_TITLE'), align: 'start', key: 'title', sortable: true },
+                { text: this.translate('AD_DESCRIPTION'), key: 'description' },
+                { text: this.translate('ADMIN_ADMANAGEMENT_AD_CATEGORY'), key: 'category' },
+                { text: this.translate('ADMIN_ADMANAGEMENT_AD_STATUS'), key: 'status' },
+                { text: this.translate('AD_IMAGES'), key: 'images', sortable: false },
+                { text: this.translate('ADMIN_SUPPORT_ACTIONS'), key: 'actions', sortable: false }
             ],
             adTypes: [
                 { text: this.translate('house'), value: 'house', icon: 'mdi-home' },
@@ -402,23 +402,23 @@ export default {
         },
         travelTypes() {
             return [
-                { label: this.translate("Ad.Normal"), value: 'normal', img: '/Travel 005.png' },
-                { label: this.translate('Ad.Luxury'), value: 'luxury', img: '/Travel 006.png' },
-                { label: this.translate('Ad.Adventure'), value: 'adventure', img: '/Travel 007.png' },
-                { label: this.translate('Ad.Camping'), value: 'camping', img: '/Travel 008.png' },
-                { label: this.translate('Ad.Backpacking'), value: 'backpacking', img: '/Travel 009.png' }
+                { label: this.translate("NORMAL"), value: 'normal', img: '/Travel 005.png' },
+                { label: this.translate('LUXURY'), value: 'luxury', img: '/Travel 006.png' },
+                { label: this.translate('ADVENTURE'), value: 'adventure', img: '/Travel 007.png' },
+                { label: this.translate('CAMPING'), value: 'camping', img: '/Travel 008.png' },
+                { label: this.translate('BACKPACKING'), value: 'backpacking', img: '/Travel 009.png' }
             ];
         },
         genderPreferences() {
             return [
-                { label: this.translate('Admin_AdManagement.no_preference'), value: 'no_preference' },
-                { label: this.translate('Admin_AdManagement.male_only'), value: 'male' },
-                { label: this.translate('Admin_AdManagement.female_only'), value: 'female' }
+                { label: this.translate('ADMIN_ADMANAGEMENT_NO_PREFERENCE'), value: 'no_preference' },
+                { label: this.translate('ADMIN_ADMANAGEMENT_MALE_ONLY'), value: 'male' },
+                { label: this.translate('ADMIN_ADMANAGEMENT_FEMALE_ONLY'), value: 'female' }
             ];
         },
         rules() {
             return {
-                required: value => !!value || this.translate('Admin_AdManagement.validation.required')
+                required: value => !!value || this.translate('ADMIN_ADMANAGEMENT_VALIDATION_REQUIRED')
             };
         },
         totalPriceComputed() {

@@ -2,7 +2,7 @@
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
             <v-card-title class="gift-card-section">
-                <span>{{ translate('giftCard.giftCardTitle') }}</span>
+                <span>{{ translate('GUIDE_GIFTCARD_GIFTCARDTITLE') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -11,12 +11,12 @@
             <v-divider></v-divider>
 
             <v-card-text class="modal-content">
-                <p>{{ translate('giftCard.walletBalance') }}: {{ walletBalance }} {{ translate('giftCard.currency') }}</p>
+                <p>{{ translate('GUIDE_GIFTCARD_WALLETBALANCE') }}: {{ walletBalance }} {{ translate('giftCard.currency') }}</p>
 
                 <v-form @submit.prevent="confirmGiftCardPurchase">
                     <v-text-field
                         v-model="giftCardAmount"
-                        :label="translate('giftCard.giftCardAmountLabel')"
+                        :label="translate('GUIDE_GIFTCARD_GIFTCARDAMOUNTLABEL')"
                         type="number"
                         :min="1"
                         :max="walletBalance"
@@ -27,37 +27,37 @@
 
                     <v-text-field
                         v-model="giftCardRecipient"
-                        :label="translate('giftCard.giftCardRecipientLabel')"
+                        :label="translate('GUIDE_GIFTCARD_GIFTCARDRECIPIENTLABEL')"
                         outlined
                         class="mb-4"
                     ></v-text-field>
 
                     <v-textarea
                         v-model="giftCardMessage"
-                        :label="translate('giftCard.giftCardMessageLabel')"
+                        :label="translate('GUIDE_GIFTCARD_GIFTCARDMESSAGELABEL')"
                         outlined
                         class="mb-4"
                     ></v-textarea>
 
                     <div class="button-container">
                         <v-btn @click="confirmGiftCardPurchase" color="primary" large>
-                            {{ translate('giftCard.confirmPurchase') }}
+                            {{ translate('GUIDE_GIFTCARD_CONFIRMPURCHASE') }}
                         </v-btn>
                         <v-btn @click="closeModal" color="secondary" large class="ml-2">
-                            {{ translate('giftCard.cancel') }}
+                            {{ translate('CANCEL') }}
                         </v-btn>
                     </div>
 
                     <v-card class="gift-card-details">
-                        <v-card-title class="gift-card-details">{{ translate('giftCard.giftCardTitle') }}</v-card-title>
+                        <v-card-title class="gift-card-details">{{ translate('GUIDE_GIFTCARD_GIFTCARDTITLE') }}</v-card-title>
                         <v-divider></v-divider>
                         <v-card-text>
                             <div class="gift-card-details">
-                                <p>{{ translate('giftCard.issueDate') }}: {{ new Date().toLocaleDateString() }}</p>
-                                <p>{{ translate('giftCard.amount') }}: {{ giftCardAmount }} {{ translate('giftCard.currency') }}</p>
-                                <p>{{ translate('giftCard.giftCardRecipientLabel') }}: {{ giftCardRecipient }}</p>
-                                <p>{{ translate('giftCard.giftCardMessageLabel') }}: {{ giftCardMessage }}</p>
-                                <p>{{ translate('giftCard.expiryDate') }}: {{ expiryDate }}</p>
+                                <p>{{ translate('GUIDE_GIFTCARD_ISSUEDATE') }}: {{ new Date().toLocaleDateString() }}</p>
+                                <p>{{ translate('GUIDE_GIFTCARD_AMOUNT') }}: {{ giftCardAmount }} {{ translate('giftCard.currency') }}</p>
+                                <p>{{ translate('GUIDE_GIFTCARD_GIFTCARDRECIPIENTLABEL') }}: {{ giftCardRecipient }}</p>
+                                <p>{{ translate('GUIDE_GIFTCARD_GIFTCARDMESSAGELABEL') }}: {{ giftCardMessage }}</p>
+                                <p>{{ translate('GUIDE_GIFTCARD_EXPIRYDATE') }}: {{ expiryDate }}</p>
                             </div>
                         </v-card-text>
                         <v-divider></v-divider>
@@ -65,7 +65,7 @@
                 </v-form>
 
                 <v-btn @click="viewGiftCardHistory" color="secondary" class="mt-4">
-                    {{ translate('giftCard.viewHistory') }}
+                    {{ translate('GUIDE_GIFTCARD_VIEWHISTORY') }}
                 </v-btn>
             </v-card-text>
         </v-card>
@@ -74,20 +74,20 @@
     <v-dialog v-model="isConfirmationModalOpen" max-width="400px" transition="dialog-transition">
         <v-card>
             <v-card-title class="gift-card-section">
-                <span>{{ translate('giftCard.confirmPurchaseTitle') }}</span>
+                <span>{{ translate('GUIDE_GIFTCARD_CONFIRMPURCHASETITLE') }}</span>
             </v-card-title>
             <v-divider></v-divider>
 
             <v-card-text class="modal-content">
-                <p>{{ translate('giftCard.confirmPurchaseMessage') }}</p>
+                <p>{{ translate('GUIDE_GIFTCARD_CONFIRMPURCHASEMESSAGE') }}</p>
             </v-card-text>
 
             <v-card-actions>
                 <v-btn @click="sendGiftCard" color="primary" large>
-                    {{ translate('giftCard.yes') }}
+                    {{ translate('GUIDE_GIFTCARD_YES') }}
                 </v-btn>
                 <v-btn @click="cancelPurchase" color="secondary" large>
-                    {{ translate('giftCard.no') }}
+                    {{ translate('GUIDE_GIFTCARD_NO') }}
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -96,7 +96,7 @@
     <v-dialog v-model="isHistoryModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
             <v-card-title class="gift-card-section">
-                <span>{{ translate('giftCard.historyTitle') }}</span>
+                <span>{{ translate('GUIDE_GIFTCARD_HISTORYTITLE') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeHistoryModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -110,18 +110,18 @@
                         <v-list-item v-for="(card, index) in giftCards" :key="index">
                             <v-list-item-content>
                                 <v-list-item-title>
-                                    {{ translate('giftCard.amount') }}: {{ card.amount }} {{ translate('giftCard.currency') }}
+                                    {{ translate('GUIDE_GIFTCARD_AMOUNT') }}: {{ card.amount }} {{ translate('GUIDE_GIFTCARD_CURRENCY') }}
                                 </v-list-item-title>
                                 <v-list-item-subtitle>
-                                    {{ translate('giftCard.issueDate') }}: {{ new Date(card.date).toLocaleDateString() }} <br/>
-                                    {{ translate('giftCard.expiryDate') }}: {{ card.expiryDate }}
+                                    {{ translate('GUIDE_GIFTCARD_ISSUEDATE') }}: {{ new Date(card.date).toLocaleDateString() }} <br/>
+                                    {{ translate('GUIDE_GIFTCARD_EXPIRYDATE') }}: {{ card.expiryDate }}
                                 </v-list-item-subtitle>
                             </v-list-item-content>
                         </v-list-item>
                     </v-list-item-group>
                     <v-list-item v-if="giftCards.length === 0">
                         <v-list-item-content>
-                            <v-list-item-title>{{ translate('giftCard.noCardsIssued') }}</v-list-item-title>
+                            <v-list-item-title>{{ translate('GUIDE_GIFTCARD_NOCARDSISSUED') }}</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list>
@@ -185,7 +185,7 @@ export default {
         confirmGiftCardPurchase() {
             try {
                 if (this.giftCardAmount > this.walletBalance) {
-                    alert(this.translate('giftCard.insufficientBalance'));
+                    alert(this.translate('INSUFFICIENT_BALANCE'));
                     return;
                 }
 
@@ -222,12 +222,12 @@ export default {
 
                 if (navigator.share) {
                     await navigator.share({
-                        title: this.translate('friendInvite.shareTitle'),
-                        text: `${this.translate('friendInvite.shareMessage')} - ${giftCardDetails}`,
+                        title: this.translate('GUIDE_FRIENDINVITE_SHARETITLE'),
+                        text: `${this.translate('GUIDE_FRIENDINVITE_SHAREMESSAGE')} - ${giftCardDetails}`,
                         url: url
                     });
                 } else {
-                    alert(this.translate('friendInvite.shareFallback'));
+                    alert(this.translate('GUIDE_FRIENDINVITE_SHAREFALLBACK'));
                 }
 
                 this.giftCards.push({

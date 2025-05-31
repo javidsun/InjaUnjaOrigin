@@ -21,7 +21,7 @@
                         <v-card class="elevation-4 rounded-lg pa-4">
                             <v-card-title class="text-h5 primary--text sizem">
                                 <v-icon class="mr-2">mdi-chart-bar</v-icon>
-                                {{ translate('Admin_Finance.user_stats') }}
+                                {{ translate('ADMIN_FINANCE_USER_STATS') }}
                             </v-card-title>
                             <v-card-text>
                                 <v-row>
@@ -30,10 +30,10 @@
                                             <v-card-title class="text-h6">
                                                 {{ bestUserLastMonth.user }}
                                             </v-card-title>
-                                            <v-card-subtitle>{{ translate('Admin_Finance.best_user') }} - Last Month</v-card-subtitle>
+                                            <v-card-subtitle>{{ translate('ADMIN_FINANCE_BEST_USER') }} - Last Month</v-card-subtitle>
                                             <v-card-text>
-                                                <p>{{ translate('Admin_Finance.successful_attempts') }}: {{ bestUserLastMonth.successfulAttempts }}</p>
-                                                <p>{{ translate('Admin_Finance.unsuccessful_attempts') }}: {{ bestUserLastMonth.unsuccessfulAttempts }}</p>
+                                                <p>{{ translate('ADMIN_FINANCE_SUCCESSFUL_ATTEMPTS') }}: {{ bestUserLastMonth.successfulAttempts }}</p>
+                                                <p>{{ translate('ADMIN_FINANCE_UNSUCCESSFUL_ATTEMPTS') }}: {{ bestUserLastMonth.unsuccessfulAttempts }}</p>
                                             </v-card-text>
                                         </v-card>
                                     </v-col>
@@ -42,33 +42,33 @@
                                             <v-card-title class="text-h6">
                                                 {{ worstUserLastMonth.user }}
                                             </v-card-title>
-                                            <v-card-subtitle>{{ translate('Admin_Finance.worst_user') }} - Last Month</v-card-subtitle>
+                                            <v-card-subtitle>{{ translate('ADMIN_FINANCE_WORST_USER') }} - Last Month</v-card-subtitle>
                                             <v-card-text>
-                                                <p>{{ translate('Admin_Finance.successful_attempts') }}: {{ worstUserLastMonth.successfulAttempts }}</p>
-                                                <p>{{ translate('Admin_Finance.unsuccessful_attempts') }}: {{ worstUserLastMonth.unsuccessfulAttempts }}</p>
+                                                <p>{{ translate('ADMIN_FINANCE_SUCCESSFUL_ATTEMPTS') }}: {{ worstUserLastMonth.successfulAttempts }}</p>
+                                                <p>{{ translate('ADMIN_FINANCE_UNSUCCESSFUL_ATTEMPTS') }}: {{ worstUserLastMonth.unsuccessfulAttempts }}</p>
                                             </v-card-text>
                                         </v-card>
                                     </v-col>
                                     <v-dialog v-model="messageDialog" max-width="500">
                                         <v-card>
                                             <v-card-title>
-                                                {{ translate('Admin_Finance.send_message') }}</v-card-title>
+                                                {{ translate('ADMIN_FINANCE_SEND_MESSAGE') }}</v-card-title>
                                             <v-card-text>
                                                 <v-textarea
                                                     v-model="messageText"
-                                                    :label="translate('Admin_Finance.message')"
+                                                    :label="translate('ADMIN_FINANCE_MESSAGE')"
                                                     outlined
                                                 ></v-textarea>
                                                 <v-file-input
                                                     v-model="messageImage"
-                                                    :label="translate('Admin_Finance.upload_image')"
+                                                    :label="translate('ADMIN_FINANCE_UPLOAD_IMAGE')"
                                                     accept="image/*"
                                                 ></v-file-input>
                                             </v-card-text>
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
-                                                <v-btn color="primary" @click="sendMessage">{{ translate('Admin_Finance.send_message') }}</v-btn>
-                                                <v-btn color="error" @click="messageDialog = false">{{ translate('Admin_Finance.cancel') }}</v-btn>
+                                                <v-btn color="primary" @click="sendMessage">{{ translate('ADMIN_FINANCE_SEND_MESSAGE') }}</v-btn>
+                                                <v-btn color="error" @click="messageDialog = false">{{ translate('CANCEL') }}</v-btn>
                                             </v-card-actions>
                                         </v-card>
                                     </v-dialog>
@@ -82,7 +82,7 @@
                         <v-card class="elevation-4 rounded-lg pa-4">
                             <v-card-title class="text-h5 primary--text sizem">
                                 <v-icon class="mr-2">mdi-cash-multiple</v-icon>
-                                {{ translate('Admin_Finance.payments_list') }}
+                                {{ translate('ADMIN_FINANCE_PAYMENTS_LIST') }}
                             </v-card-title>
                             <v-card-text>
                                 <v-data-table
@@ -99,7 +99,7 @@
                                     </template>
                                     <template v-slot:item.actions="{ item }">
                                         <v-btn small color="error" @click="openBlockUserDialog(item)" v-if="item.failedAttempts > 3">
-                                            {{ translate('Admin_Finance.block_user') }}
+                                            {{ translate('ADMIN_FINANCE_BLOCK_USER') }}
                                         </v-btn>
                                     </template>
                                 </v-data-table>
@@ -113,7 +113,7 @@
                         <v-card class="elevation-4 rounded-lg pa-4">
                             <v-card-title class="text-h5 primary--text sizem">
                                 <v-icon class="mr-2">mdi-cash-refund</v-icon>
-                                {{ translate('Admin_Finance.refund_requests') }}
+                                {{ translate('ADMIN_FINANCE_REFUND_REQUESTS') }}
                             </v-card-title>
                             <v-card-text>
                                 <v-data-table
@@ -130,10 +130,10 @@
                                     </template>
                                     <template v-slot:item.actions="{ item }">
                                         <v-btn small color="primary" @click="openApproveRefundDialog(item)">
-                                            {{ translate('Admin_Finance.approve_refund') }}
+                                            {{ translate('ADMIN_FINANCE_APPROVE_REFUND') }}
                                         </v-btn>
                                         <v-btn small color="error" @click="openRejectRefundDialog(item)" class="ml-2">
-                                            {{ translate('Admin_Finance.reject_refund') }}
+                                            {{ translate('ADMIN_FINANCE_REJECT_REFUND') }}
                                         </v-btn>
                                     </template>
                                 </v-data-table>
@@ -146,57 +146,57 @@
 
         <v-dialog v-model="blockUserDialog" max-width="500">
             <v-card>
-                <v-card-title>{{ translate('Admin_Finance.block_user') }}</v-card-title>
+                <v-card-title>{{ translate('ADMIN_FINANCE_BLOCK_USER') }}</v-card-title>
                 <v-card-text>
                     <v-textarea
                         v-model="blockUserNote"
-                        :label="translate('Admin_Finance.add_note')"
-                        :placeholder="translate('Admin_Finance.note_placeholder')"
+                        :label="translate('ADMIN_FINANCE_ADD_NOTE')"
+                        :placeholder="translate('ADMIN_FINANCE_NOTE_PLACEHOLDER')"
                         outlined
                     ></v-textarea>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="blockUser">{{ translate('Admin_Finance.confirm') }}</v-btn>
-                    <v-btn color="error" @click="blockUserDialog = false">{{ translate('Admin_Finance.cancel') }}</v-btn>
+                    <v-btn color="primary" @click="blockUser">{{ translate('ADMIN_FINANCE_CONFIRM') }}</v-btn>
+                    <v-btn color="error" @click="blockUserDialog = false">{{ translate('ADMIN_FINANCE_CANCEL') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
 
         <v-dialog v-model="approveRefundDialog" max-width="500">
             <v-card>
-                <v-card-title>{{ translate('Admin_Finance.approve_refund') }}</v-card-title>
+                <v-card-title>{{ translate('ADMIN_FINANCE_APPROVE_REFUND') }}</v-card-title>
                 <v-card-text>
                     <v-textarea
                         v-model="approveRefundNote"
-                        :label="translate('Admin_Finance.add_note')"
-                        :placeholder="translate('Admin_Finance.note_placeholder')"
+                        :label="translate('ADMIN_FINANCE_ADD_NOTE')"
+                        :placeholder="translate('ADMIN_FINANCE_NOTE_PLACEHOLDER')"
                         outlined
                     ></v-textarea>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="approveRefund">{{ translate('Admin_Finance.confirm') }}</v-btn>
-                    <v-btn color="error" @click="approveRefundDialog = false">{{ translate('Admin_Finance.cancel') }}</v-btn>
+                    <v-btn color="primary" @click="approveRefund">{{ translate('CONFIRM') }}</v-btn>
+                    <v-btn color="error" @click="approveRefundDialog = false">{{ translate('CANCEL') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
 
         <v-dialog v-model="rejectRefundDialog" max-width="500">
             <v-card>
-                <v-card-title>{{ translate('Admin_Finance.reject_refund') }}</v-card-title>
+                <v-card-title>{{ translate('ADMIN_FINANCE_REJECT_REFUND') }}</v-card-title>
                 <v-card-text>
                     <v-textarea
                         v-model="rejectRefundNote"
-                        :label="translate('Admin_Finance.add_note')"
-                        :placeholder="translate('Admin_Finance.note_placeholder')"
+                        :label="translate('ADMIN_FINANCE_ADD_NOTE')"
+                        :placeholder="translate('ADMIN_FINANCE_NOTE_PLACEHOLDER')"
                         outlined
                     ></v-textarea>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="rejectRefund">{{ translate('Admin_Finance.confirm') }}</v-btn>
-                    <v-btn color="error" @click="rejectRefundDialog = false">{{ translate('Admin_Finance.cancel') }}</v-btn>
+                    <v-btn color="primary" @click="rejectRefund">{{ translate('CONFIRM') }}</v-btn>
+                    <v-btn color="error" @click="rejectRefundDialog = false">{{ translate('CANCEL') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -240,12 +240,12 @@ export default {
             selectedRefund: null,
 
             paymentHeaders: [
-                { text: translate('Admin_Finance.payments_list'), value: "id" },
-                { text: translate('Admin_Finance.user'), value: "user" },
-                { text: translate('Admin_Finance.amount'), value: "amount" },
-                { text: translate('Admin_Finance.date'), value: "date" },
-                { text: translate('Admin_Finance.status'), value: "status" },
-                { text: translate('Admin_Finance.actions'), value: "actions" },
+                { text: translate('ADMIN_FINANCE_PAYMENTS_LIST'), value: "id" },
+                { text: translate('USER'), value: "user" },
+                { text: translate('FINANCE_AMOUNT'), value: "amount" },
+                { text: translate('ADMIN_REPORTS_DATE'), value: "date" },
+                { text: translate('ADMIN_REPORTS_STATUS'), value: "status" },
+                { text: translate('ADMIN_NOTIFICATIONS_ACTIONS'), value: "actions" },
             ],
 
             payments: [
@@ -315,12 +315,12 @@ export default {
             ],
 
             refundHeaders: [
-                { text: translate('Admin_Finance.refund_requests'), value: "id" },
-                { text: translate('Admin_Finance.user'), value: "user" },
-                { text: translate('Admin_Finance.amount'), value: "amount" },
-                { text: translate('Admin_Finance.requestDate'), value: "requestDate" },
-                { text: translate('Admin_Finance.status'), value: "status" },
-                { text: translate('Admin_Finance.actions'), value: "actions" },
+                { text: translate('ADMIN_FINANCE_REFUND_REQUESTS'), value: "id" },
+                { text: translate('USER'), value: "user" },
+                { text: translate('PAYMENTS_AMOUNT'), value: "amount" },
+                { text: translate('REQUESTDATE'), value: "requestDate" },
+                { text: translate('FINANCE_STATUS'), value: "status" },
+                { text: translate('ADMIN_NOTIFICATIONS_ACTIONS'), value: "actions" },
             ],
 
             refundRequests: [

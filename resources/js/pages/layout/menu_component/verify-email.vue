@@ -10,10 +10,10 @@
                         <img src="/assets/images/inja-unja.png" alt="Logo" class="logo-image"/>
                     </div>
                     <h4 class="mb-1 font fontsiz">
-                        {{ translate('verifyEmail.greeting') }}
+                        {{ translate('VERIFYEMAIL_GREETING') }}
                     </h4>
                     <p class="font fontsize2">
-                        {{ translate('verifyEmail.instructions') }}
+                        {{ translate('VERIFYEMAIL_INSTRUCTIONS') }}
                     </p>
                 </VCardText>
 
@@ -26,8 +26,8 @@
                         <VCol cols="12" class="form font form_Style">
                             <VTextField
                                 v-model="email"
-                                :label="translate('verifyEmail.email')"
-                                :placeholder="translate('verifyEmail.emailPlaceholder')"
+                                :label="translate('VERIFYEMAIL_EMAIL')"
+                                :placeholder="translate('VERIFYEMAIL_EMAILPLACEHOLDER')"
                                 outlined
                                 dense
                                 type="email"
@@ -35,7 +35,7 @@
                         </VCol>
                         <VCol cols="12" class="form2">
                             <VBtn block type="submit" class="font buttonfont1" color="light-purple">
-                                {{ translate('verifyEmail.resend') }}
+                                {{ translate('VERIFYEMAIL_RESEND') }}
                             </VBtn>
                         </VCol>
                     </VRow>
@@ -43,9 +43,9 @@
 
                 <VCardText class="text-center mt-4 form2 fontsize3 font">
                     <p>
-                        {{ translate('verifyEmail.skip') }}
+                        {{ translate('VERIFYEMAIL_SKIP') }}
                         <RouterLink to="/" style="color: #4cc8ff" class="fontsize3">
-                            {{ translate('verifyEmail.goHome') }}
+                            {{ translate('VERIFYEMAIL_GOHOME') }}
                         </RouterLink>
                     </p>
                 </VCardText>
@@ -73,15 +73,15 @@ export default {
 
         async handleResendVerification() {
             if (!this.email) {
-                alert(this.translate('verifyEmail.emailRequired'));
+                alert(this.translate('VERIFYEMAIL_EMAILREQUIRED'));
                 return;
             }
 
             try {
                 // Todo: call your email service
-                alert(this.translate('verifyEmail.resendSuccess'));
+                alert(this.translate('VERIFYEMAIL_RESENDSUCCESS'));
             } catch (error) {
-                alert(this.translate('verifyEmail.resendError'));
+                alert(this.translate('VERIFYEMAIL_RESENDERROR'));
             }
         }
     }

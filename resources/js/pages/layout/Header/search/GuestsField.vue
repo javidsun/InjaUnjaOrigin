@@ -6,7 +6,7 @@
                 alt="Guests Icon"
                 class="icon-img"
             />
-            <span class="field-text" v-show="!isMobile">{{ translate('guests.title') }}</span>
+            <span class="field-text" v-show="!isMobile">{{ translate('GUESTS_TITLE') }}</span>
         </div>
 
         <div v-if="isActive" class="modal-overlay" @click="toggleMenu"></div>
@@ -14,8 +14,8 @@
         <div v-if="isActive" class="modal-content">
             <div class="guest-field">
                 <div class="guest-info">
-                    <span class="guest-title">{{ translate('guests.adults') }}</span>
-                    <span class="guest-subtitle">{{ translate('guests.adultsSubtitle') }}</span>
+                    <span class="guest-title">{{ translate('GUESTS_ADULTS') }}</span>
+                    <span class="guest-subtitle">{{ translate('GUESTS_ADULTSSUBTITLE') }}</span>
                 </div>
                 <div class="guest-controls">
                     <button @click.stop="decrement('adults')" :disabled="adults === 0" class="control-btn">-</button>
@@ -26,8 +26,8 @@
 
             <div class="guest-field">
                 <div class="guest-info">
-                    <span class="guest-title">{{ translate('guests.children') }}</span>
-                    <span class="guest-subtitle">{{ translate('guests.childrenSubtitle') }}</span>
+                    <span class="guest-title">{{ translate('GUESTS_CHILDREN') }}</span>
+                    <span class="guest-subtitle">{{ translate('GUESTS_CHILDRENSUBTITLE') }}</span>
                 </div>
                 <div class="guest-controls">
                     <button @click.stop="decrement('children')" :disabled="children === 0" class="control-btn">-</button>
@@ -38,8 +38,8 @@
 
             <div class="guest-field">
                 <div class="guest-info">
-                    <span class="guest-title">{{ translate('guests.infants') }}</span>
-                    <span class="guest-subtitle">{{ translate('guests.infantsSubtitle') }}</span>
+                    <span class="guest-title">{{ translate('GUESTS_INFANTS') }}</span>
+                    <span class="guest-subtitle">{{ translate('GUESTS_INFANTSSUBTITLE') }}</span>
                 </div>
                 <div class="guest-controls">
                     <button @click.stop="decrement('infants')" :disabled="infants === 0" class="control-btn">-</button>
@@ -50,8 +50,8 @@
 
             <div class="guest-field">
                 <div class="guest-info">
-                    <span class="guest-title">{{ translate('guests.pets') }}</span>
-                    <span class="guest-subtitle">{{ translate('guests.petsSubtitle') }}</span>
+                    <span class="guest-title">{{ translate('GUESTS_PETS') }}</span>
+                    <span class="guest-subtitle">{{ translate('GUESTS_PETSSUBTITLE') }}</span>
                 </div>
                 <div class="guest-controls">
                     <button @click.stop="decrement('pets')" :disabled="pets === 0" class="control-btn">-</button>

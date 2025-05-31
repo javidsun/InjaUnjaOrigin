@@ -2,11 +2,11 @@
     <UserSidebar>
         <v-card>
             <v-card-text class="support-content">
-                <p class="welcome-message">{{ translate('support.welcomeMessage') }}</p>
+                <p class="welcome-message">{{ translate('GUIDE_SUPPORT_WELCOMEMESSAGE') }}</p>
 
                 <v-text-field
                     v-model="searchQuery"
-                    :placeholder="translate('support.searchPlaceholder')"
+                    :placeholder="translate('GUIDE_SUPPORT_SEARCHPLACEHOLDER')"
                     outlined
                     dense
                     class="search-bar"
@@ -25,10 +25,10 @@
                 </v-list>
 
                 <div class="contact-section">
-                    <p class="contact-title"><strong>{{ translate('support.contactTitle') }}</strong></p>
-                    <p class="contact-subtitle">{{ translate('support.contactSubtitle') }}</p>
+                    <p class="contact-title"><strong>{{ translate('GUIDE_SUPPORT_CONTACTTITLE') }}</strong></p>
+                    <p class="contact-subtitle">{{ translate('GUIDE_SUPPORT_CONTACTSUBTITLE') }}</p>
                     <v-btn @click="contactSupport" color="primary" large class="contact-btn">
-                        {{ translate('support.contactButton') }}
+                        {{ translate('GUIDE_SUPPORT_CONTACTBUTTON') }}
                     </v-btn>
                 </div>
             </v-card-text>
@@ -67,15 +67,15 @@ export default {
             searchQuery: '',
             selectedQuestion: null,
             supportQuestions: [
-                {title: 'support.cancelGuest', answer: 'support.cancelGuestAnswer'},
-                {title: 'support.accountSettings', answer: 'support.accountSettingsAnswer'},
-                {title: 'support.refundHost', answer: 'support.refundHostAnswer'},
-                {title: 'support.hostingGoals', answer: 'support.hostingGoalsAnswer'},
-                {title: 'support.prepareListings', answer: 'support.prepareListingsAnswer'},
-                {title: 'support.payments', answer: 'support.paymentsAnswer'},
-                {title: 'support.manageExperiences', answer: 'support.manageExperiencesAnswer'},
-                {title: 'support.coHost', answer: 'support.coHostAnswer'},
-                {title: 'support.billHelp', answer: 'support.billHelpAnswer'},
+                {title: 'GUIDE_SUPPORT_CANCELGUEST', answer: 'GUIDE_SUPPORT_CANCELGUESTANSWER'},
+                {title: 'GUIDE_SUPPORT_ACCOUNTSETTINGS', answer: 'GUIDE_SUPPORT_ACCOUNTSETTINGSANSWER'},
+                {title: 'GUIDE_SUPPORT_REFUNDHOST', answer: 'GUIDE_SUPPORT_REFUNDHOSTANSWER'},
+                {title: 'GUIDE_SUPPORT_HOSTINGGOALS', answer: 'GUIDE_SUPPORT_HOSTINGGOALSANSWER'},
+                {title: 'GUIDE_SUPPORT_PREPARELISTINGS', answer: 'GUIDE_SUPPORT_PREPARELISTINGSANSWER'},
+                {title: 'GUIDE_SUPPORT_PAYMENTS', answer: 'GUIDE_SUPPORT_PAYMENTSANSWER'},
+                {title: 'GUIDE_SUPPORT_MANAGEEXPERIENCES', answer: 'GUIDE_SUPPORT_MANAGEEXPERIENCESANSWER'},
+                {title: 'GUIDE_SUPPORT_COHOST', answer: 'GUIDE_SUPPORT_COHOSTANSWER'},
+                {title: 'GUIDE_SUPPORT_BILLHELP', answer: 'GUIDE_SUPPORT_BILLHELPANSWER'},
             ],
         };
     },
@@ -96,16 +96,16 @@ export default {
         },
         contactSupport() {
             const url = window.location.href;
-            const supportDetails = this.translate('support.contactMessage', { query: this.searchQuery });
+            const supportDetails = this.translate('GUIDE_SUPPORT_CONTACTMESSAGE', { query: this.searchQuery });
 
             if (navigator.share) {
                 navigator.share({
-                    title: this.translate('support.contactTitle'),
+                    title: this.translate('GUIDE_SUPPORT_CONTACTTITLE'),
                     text: supportDetails,
                     url: url,
                 }).catch((error) => console.error("Error sharing:", error));
             } else {
-                alert(this.translate('support.contactFallback'));
+                alert(this.translate('GUIDE_SUPPORT_CONTACTFALLBACK'));
             }
         },
         translate,

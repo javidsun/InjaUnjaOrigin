@@ -39,8 +39,8 @@
                             <v-form @submit.prevent="handleLogin" ref="form">
                                 <v-text-field
                                     v-model="form.email"
-                                    :label="translate('login.email')"
-                                    :placeholder="translate('login.emailPlaceholder')"
+                                    :label="translate('LOGIN_EMAIL')"
+                                    :placeholder="translate('LOGIN_EMAILPLACEHOLDER')"
                                     prepend-icon="mdi-email"
                                     required
                                     outlined
@@ -53,8 +53,8 @@
                                     v-model="form.password"
                                     :append-icon="isPasswordVisible ? 'mdi-eye' : 'mdi-eye-off'"
                                     :type="isPasswordVisible ? 'text' : 'password'"
-                                    :label="translate('login.password')"
-                                    :placeholder="translate('login.passwordPlaceholder')"
+                                    :label="translate('LOGIN_PASSWORD')"
+                                    :placeholder="translate('LOGIN_PASSWORDPLACEHOLDER')"
                                     prepend-icon="mdi-lock"
                                     @click:append="isPasswordVisible = !isPasswordVisible"
                                     required
@@ -66,13 +66,13 @@
 
                                 <v-checkbox
                                     v-model="form.remember"
-                                    :label="translate('login.rememberMe')"
+                                    :label="translate('LOGIN_REMEMBERME')"
                                 ></v-checkbox>
                             </v-form>
                         </v-card-text>
 
                         <v-list-item @click="goToForgotPassword">
-                            <v-list-item-title>{{ translate("login.forgotPassword") }}</v-list-item-title>
+                            <v-list-item-title>{{ translate("LOGIN_FORGOTPASSWORD") }}</v-list-item-title>
                         </v-list-item>
 
                         <v-card-text>
@@ -83,26 +83,26 @@
                                 :loading="loading"
                                 :disabled="loginAttempts >= 5"
                             >
-                                {{ translate('login.login') }}
+                                {{ translate('LOGIN_LOGIN') }}
                             </v-btn>
                         </v-card-text>
 
                         <v-card-text v-if="loginAttempts >= 5" class="text-center red--text">
-                            {{ translate('login.tooManyAttempts') }}
+                            {{ translate('LOGIN_TOOMANYATTEMPTS') }}
                         </v-card-text>
 
                         <v-card-text class="text-center mt-4 form2 fontsize3 font">
                             <p>
-                                {{ translate('login.newUser') }}
+                                {{ translate('LOGIN_NEWUSER') }}
                                 <v-btn @click="openModal(goToRegister)" style="color: #4cc8ff" class="fontsize3">
-                                    {{ translate('login.createAccount') }}
+                                    {{ translate('LOGIN_CREATEACCOUNT') }}
                                 </v-btn>
                             </p>
                         </v-card-text>
 
                         <v-divider></v-divider>
                         <v-card-text class="text-center">
-                            <p class="text-body-2 mb-3">{{ translate('login.or') }}</p>
+                            <p class="text-body-2 mb-3">{{ translate('LOGIN_OR') }}</p>
                             <v-btn icon="mdi-google" color="red" variant="text" class="mx-2" @click="socialLogin('google')"></v-btn>
                             <v-btn icon="mdi-facebook" color="blue" variant="text" class="mx-2" @click="socialLogin('facebook')"></v-btn>
                             <v-btn icon="mdi-twitter" color="light-blue" variant="text" class="mx-2" @click="socialLogin('twitter')"></v-btn>
@@ -190,7 +190,7 @@ export default {
                         window.location.href = '/UserDashboard';
                     }, 1500);
                 } else {
-                    this.error = loginResponse.data.message || this.translate('login.loginFailed');
+                    this.error = loginResponse.data.message || this.translate('LOGIN_FAILED');
                     this.loginAttempts++;
                 }
 
@@ -199,16 +199,16 @@ export default {
 
                 if (error.response) {
                     if (error.response.status === 401) {
-                        this.error = this.translate('login.invalidCredentials');
+                        this.error = this.translate('INVALID_CREDENTIAL');
                     } else if (error.response.status === 422) {
                         this.error = error.response.data.message || "Invalid input data";
                     } else {
-                        this.error = this.translate('login.loginFailed');
+                        this.error = this.translate('LOGIN_FAILED');
                     }
                 } else if (error.request) {
-                    this.error = this.translate('login.noServerResponse');
+                    this.error = this.translate('LOGIN_NO_SERVER');
                 } else {
-                    this.error = this.translate('login.unexpectedError');
+                    this.error = this.translate('UNXPECTED_ERROR');
                 }
 
                 this.loginAttempts++;

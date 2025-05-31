@@ -2,42 +2,42 @@
     <v-dialog v-model="showModal" max-width="600px" persistent>
         <v-card>
             <v-card-title class="text-h5 text-center">
-                {{ translate('Ad.SelectOption') }}
+                {{ translate('AD_SELECTOPTION') }}
             </v-card-title>
             <v-card-text class="text-center">
                 <v-row justify="center">
                     <v-col cols="4">
                         <v-card class="option-card" @click="openModal('companion')">
                             <v-img src="/Travel 001.png" contain height="120"></v-img>
-                            <v-btn class="mt-2 option-btn">{{ translate('Ad.Companion') }}</v-btn>
+                            <v-btn class="mt-2 option-btn">{{ translate('AD_ACCOMMODATION') }}</v-btn>
                         </v-card>
                     </v-col>
                     <v-col cols="4">
                         <v-card class="option-card" @click="showComingSoon = true; showModal = false;">
                             <v-img src="/Travel 002.png" contain height="120"></v-img>
-                            <v-btn class="mt-2 option-btn">{{ translate('Ad.Tour') }}</v-btn>
+                            <v-btn class="mt-2 option-btn">{{ translate('TOUR') }}</v-btn>
                         </v-card>
                     </v-col>
                     <v-col cols="4">
                         <v-card class="option-card" @click="showComingSoon = true; showModal = false;">
                             <v-img src="/Travel 003.png" contain height="120"></v-img>
-                            <v-btn class="mt-2 option-btn">{{ translate('Ad.TourLeader') }}</v-btn>
+                            <v-btn class="mt-2 option-btn">{{ translate('TOURLEADER') }}</v-btn>
                         </v-card>
                     </v-col>
                 </v-row>
             </v-card-text>
             <v-card-actions>
-                <v-btn color="red" block @click="closeModal">{{ translate('Ad.Close') }}</v-btn>
+                <v-btn color="red" block @click="closeModal">{{ translate('CLOSE') }}</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
 
     <v-dialog v-model="showComingSoon" max-width="400px" persistent>
         <v-card>
-            <v-card-title class="text-h5 text-center">{{ translate('Ad.FeatureNotAvailable') }}</v-card-title>
+            <v-card-title class="text-h5 text-center">{{ translate('FEATURENOTAVAILABLE') }}</v-card-title>
             <v-card-actions class="justify-end">
                 <v-btn color="primary" @click="showComingSoon = false">
-                    {{ translate('Ad.Close') }}
+                    {{ translate('CLOSE') }}
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -48,22 +48,22 @@
             <v-card-text class="text-center">
                 <v-img src="/Travel 004.png" contain height="150" class="mb-4"></v-img>
                 <v-card-title class="text-h5 text-center" style="color: #007bff">
-                    {{ translate('Ad.FirstStep') }}
+                    {{ translate('FIRSTSTEP') }}
                 </v-card-title>
                 <p class=" font-weight-bold descriptionModal">
-                    {{ translate('Ad.Step1Description') }}
+                    {{ translate('STEP1DESCRIPTION') }}
                 </p>
                 <p class="text-body-1 descriptionModal">
-                    {{ translate('Ad.Step1_1Description') }}
+                    {{ translate('STEP1_1DESCRIPTION') }}
                 </p>
             </v-card-text>
             <v-card-actions class="d-flex justify-end gap-2">
                 <v-btn color="grey" text @click="closeModal">
                     <v-icon left>mdi-content-save-outline</v-icon>
-                    {{ translate('Ad.SaveExit') }}
+                    {{ translate('AD_SAVEEXIT') }}
                 </v-btn>
                 <v-btn color="primary" @click="goNext">
-                    {{ translate('Ad.ConfirmNext') }}
+                    {{ translate('AD_CONFIRMNEXT') }}
                     <v-icon right>mdi-arrow-right</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -73,12 +73,12 @@
     <v-dialog v-model="showStep2" max-width="800px" persistent>
         <v-card>
             <v-card-title class="text-h5 text-center" style="color: #007bff">
-                {{ translate('Ad.EnterDestination') }}
+                {{ translate('ENTERDESTINATION') }}
             </v-card-title>
             <v-card-text>
                 <v-text-field
                     v-model="originSearch"
-                    :label="translate('Ad.SearchOrigin')"
+                    :label="translate('SEARCHORIGIN')"
                     outlined
                     clearable
                     @input="searchOriginLocation"
@@ -99,7 +99,7 @@
 
                 <v-text-field
                     v-model="destinationSearch"
-                    :label="translate('Ad.SearchDestination')"
+                    :label="translate('SEARCHDESTINATION')"
                     outlined
                     clearable
                     @input="searchLocation"
@@ -121,42 +121,42 @@
                 <div v-if="distance" class="distance-display mt-2 text-center">
                     <v-chip color="primary">
                         <v-icon left>mdi-map-marker-distance</v-icon>
-                        {{ translate('Ad.Distance') }}: {{ distance }}
+                        {{ translate('DISTANCE') }}: {{ distance }}
                     </v-chip>
                 </div>
 
                 <v-alert v-if="userLocation && !selectedOrigin" type="info" class="mb-2">
                     <v-icon left>mdi-map-marker</v-icon>
-                    {{ translate('Ad.Origin') }}: {{ translate('Ad.YourCurrentLocation') }}
+                    {{ translate('ORIGIN') }}: {{ translate('YOURCURRENTLOCATION') }}
                     <span v-if="userLocationAddress">({{ userLocationAddress }})</span>
                 </v-alert>
 
                 <v-alert v-if="selectedOrigin" type="info" class="mb-2">
                     <v-icon left>mdi-map-marker</v-icon>
-                    {{ translate('Ad.Origin') }}: {{ selectedOrigin.display_name }}
+                    {{ translate('ORIGIN') }}: {{ selectedOrigin.display_name }}
                 </v-alert>
 
                 <v-alert v-if="selectedDestination" type="info">
                     <v-icon left>mdi-flag</v-icon>
-                    {{ translate('Ad.Destination') }}: {{ selectedDestination.display_name }}
+                    {{ translate('DESTINATION') }}: {{ selectedDestination.display_name }}
                 </v-alert>
             </v-card-text>
 
             <v-card-actions class="d-flex justify-end gap-2">
                 <v-btn color="grey" text @click="goBack">
                     <v-icon left>mdi-arrow-left</v-icon>
-                    {{ translate('Ad.Back') }}
+                    {{ translate('BACK') }}
                 </v-btn>
                 <v-btn color="grey" text @click="saveAndExit">
                     <v-icon left>mdi-content-save-outline</v-icon>
-                    {{ translate('Ad.SaveExit') }}
+                    {{ translate('SAVEEXIT') }}
                 </v-btn>
                 <v-btn
                     color="primary"
                     @click="confirmDestination"
                     :disabled="!selectedDestination"
                 >
-                    {{ translate('Ad.ConfirmNext') }}
+                    {{ translate('AD_CONFIRMNEXT') }}
                     <v-icon right>mdi-arrow-right</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -166,10 +166,10 @@
     <v-dialog v-model="showStep3" max-width="600px" persistent>
         <v-card>
             <v-card-title class="text-h5 text-center" style="color: #007bff">
-                {{ translate('Ad.SelectTravelStyle') }}
+                {{ translate('SELECTTRAVELSTYLE') }}
             </v-card-title>
             <v-card-subtitle class="text-center">
-                {{ translate('Ad.TravelStyleSubtitle') }}
+                {{ translate('TRAVELSTYLESUBTITLE') }}
             </v-card-subtitle>
 
             <v-card-text>
@@ -194,7 +194,7 @@
                     dense
                     class="mt-2"
                 >
-                    {{ translate('Ad.PleaseSelectStyle') }}
+                    {{ translate('PLEASESELECTSTYLE') }}
                 </v-alert>
 
             </v-card-text>
@@ -202,17 +202,17 @@
             <v-card-actions class="d-flex justify-end gap-2">
                 <v-btn color="grey" text @click="goBack">
                     <v-icon left>mdi-arrow-left</v-icon>
-                    {{ translate('Ad.Back') }}
+                    {{ translate('BACK') }}
                 </v-btn>
                 <v-btn color="grey" text @click="saveAndExit">
                     <v-icon left>mdi-content-save-outline</v-icon>
-                    {{ translate('Ad.SaveExit') }}
+                    {{ translate('SAVEEXIT') }}
                 </v-btn>
                 <v-btn
                     color="primary"
                     @click="confirmTravelStyle"
                 >
-                    {{ translate('Ad.ConfirmNext') }}
+                    {{ translate('AD_CONFIRMNEXT') }}
                     <v-icon right>mdi-arrow-right</v-icon>
                 </v-btn>
 
@@ -224,16 +224,16 @@
         <v-card>
             <v-card-title class="text-h5 text-center" style="color: #007bff">
                 <v-img src="/Travel 010.png" contain height="150" class="mb-4"></v-img>
-                {{ translate('Ad.SetBudgetRange') }}
+                {{ translate('SETBUDGETRANGE') }}
             </v-card-title>
             <v-card-subtitle class="text-center">
-                {{ translate('Ad.BudgetDescription') }}
+                {{ translate('BUDGETDESCRIPTION') }}
             </v-card-subtitle>
 
             <v-card-text>
                 <v-text-field
                     v-model="budgetAmount"
-                    :label="translate('Ad.BudgetPerPerson')"
+                    :label="translate('BUDGETPERPERSON')"
                     outlined
                     type="number"
                     suffix="€"
@@ -244,18 +244,18 @@
             <v-card-actions class="d-flex justify-end gap-2">
                 <v-btn color="grey" text @click="goBack">
                     <v-icon left>mdi-arrow-left</v-icon>
-                    {{ translate('Ad.Back') }}
+                    {{ translate('BACK') }}
                 </v-btn>
                 <v-btn color="grey" text @click="saveAndExit">
                     <v-icon left>mdi-content-save-outline</v-icon>
-                    {{ translate('Ad.SaveExit') }}
+                    {{ translate('SAVEEXIT') }}
                 </v-btn>
                 <v-btn
                     color="primary"
                     @click="goNext"
                     :disabled="!budgetAmount"
                 >
-                    {{ translate('Ad.ConfirmNext') }}
+                    {{ translate('AD_CONFIRMNEXT') }}
                     <v-icon right>mdi-arrow-right</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -265,11 +265,11 @@
     <v-dialog v-model="showStep5" max-width="800px" persistent>
         <v-card>
             <v-card-title class="text-h5 text-center primary--text">
-                {{ translate('Ad.PersonalityHeader') }}
+                {{ translate('PERSONALITYHEADER') }}
 
             </v-card-title>
             <v-card-subtitle class="text-center">
-                {{ translate('Ad.PersonalitySubHeader') }}
+                {{ translate('PERSONALITYSUBHEADER') }}
             </v-card-subtitle>
             <v-divider class="my-3"></v-divider>
             <v-card-text>
@@ -303,18 +303,18 @@
             <v-card-actions class="d-flex justify-end gap-2">
                 <v-btn color="grey" text @click="goBack">
                     <v-icon left>mdi-arrow-left</v-icon>
-                    {{ translate('Ad.Back') }}
+                    {{ translate('BACK') }}
                 </v-btn>
                 <v-btn color="grey" text @click="saveAndExit">
                     <v-icon left>mdi-content-save-outline</v-icon>
-                    {{ translate('Ad.SaveExit') }}
+                    {{ translate('SAVEEXIT') }}
                 </v-btn>
                 <v-btn
                     color="primary"
                     @click="confirmPersonalityTraits"
                     :disabled="selectedTraits.length === 0"
                 >
-                    {{ translate('Ad.ConfirmNext') }}
+                    {{ translate('AD_CONFIRMNEXT') }}
                     <v-icon right>mdi-arrow-right</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -325,21 +325,21 @@
         <v-card>
 
             <v-card-title class="text-h5 text-center">
-                {{ translate('Ad.ShareTravelExperiences') }}
+                {{ translate('SHARETRAVELEXPERIENCES') }}
             </v-card-title>
             <v-card-text class="text-center">
                 <v-img src="/Travel 041.png" contain height="150" class="mb-4"></v-img>
 
                 <p class="font-weight-bold">
-                    {{ translate('Ad.ShareExperienceDescription') }}
+                    {{ translate('SHAREEXPERIENCEDESCRIPTION') }}
                 </p>
 
                 <p class="text-body-2 mt-2">
-                    {{ translate('Ad.PhotoUploadDescription') }}
+                    {{ translate('PHOTOUPLOADDESCRIPTION') }}
                 </p>
 
                 <p class="text-body-1 mt-4">
-                    {{ translate('Ad.OptionalPhotoNote') }}
+                    {{ translate('OPTIONALPHOTONOTE') }}
                 </p>
 
                 <v-card
@@ -347,7 +347,7 @@
                     class="mt-4 d-flex align-center justify-space-between pa-4"
                     @click="triggerFileInput"
                 >
-                    <span>{{ translate('Ad.AddPhoto') }}</span>
+                    <span>{{ translate('ADDPHOTO') }}</span>
                     <v-icon>mdi-camera</v-icon>
                     <input
                         type="file"
@@ -362,12 +362,12 @@
                 <v-textarea
                     v-if="uploadedPhotos.length > 0"
                     v-model="photoDescription"
-                    :label="translate('Ad.PhotoDescriptionPlaceholder')"
+                    :label="translate('PHOTODESCRIPTIONPLACEHOLDER')"
                     outlined
                     class="mt-4"
                     :counter="60"
                     maxlength="60"
-                    :placeholder="translate('Ad.PhotoDescriptionHint')"
+                    :placeholder="translate('PHOTODESCRIPTIONHINT')"
                     rows="2"
                 ></v-textarea>
 
@@ -396,18 +396,18 @@
             <v-card-actions class="d-flex justify-end gap-2">
                 <v-btn color="grey" text @click="goBack">
                     <v-icon left>mdi-arrow-left</v-icon>
-                    {{ translate('Ad.Back') }}
+                    {{ translate('BACK') }}
                 </v-btn>
                 <v-btn color="grey" text @click="saveAndExit">
                     <v-icon left>mdi-content-save-outline</v-icon>
-                    {{ translate('Ad.SaveExit') }}
+                    {{ translate('SAVEEXIT') }}
                 </v-btn>
                 <v-btn
                     color="primary"
                     @click="confirmTravelPlan"
                     :disabled="selectedTraits.length === 0"
                 >
-                    {{ translate('Ad.ConfirmNext') }}
+                    {{ translate('AD_CONFIRMNEXT') }}
                     <v-icon right>mdi-arrow-right</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -420,19 +420,19 @@
 
             <v-card-title class="text-h5 text-center" style="margin-top: 130px">
 
-                {{ translate('Ad.SelectTravelCompanion') }}
+                {{ translate('SELECTTRAVELCOMPANION') }}
             </v-card-title>
 
             <v-card-subtitle class="text-h6 text-center" style="color: #007bff">
-                {{ translate('Ad.SecondStep') }}
+                {{ translate('SECONDSTEP') }}
             </v-card-subtitle>
             <v-card-subtitle class="text-h7 text-center">
-                {{ translate('Ad.Step2Description') }}
+                {{ translate('STEP2DESCRIPTION') }}
             </v-card-subtitle>
 
             <v-card-text>
                 <p class="font-weight-bold">
-                    {{ translate('Ad.WriteOrUploadTravelPlan') }}
+                    {{ translate('WRITEORUPLOADTRAVELPLAN') }}
                 </p>
 
                 <v-card
@@ -440,7 +440,7 @@
                     class="mb-4 d-flex align-center justify-space-between pa-4 rounded-lg"
                     @click="triggerPlanFileInput"
                 >
-                    <span>{{ translate('Ad.UploadFile') }}</span>
+                    <span>{{ translate('UPLOADFILE') }}</span>
                     <v-icon>mdi-paperclip</v-icon>
                     <input
                         type="file"
@@ -483,7 +483,7 @@
                 </p>
 
                 <p class="text-center my-2">
-                    {{ translate('Ad.Or') }}
+                    {{ translate('OR') }}
                 </p>
 
                 <v-card
@@ -491,16 +491,16 @@
                     class="mb-2 rounded-lg"
                 >
                     <v-card-title class="text-subtitle-1">
-                        {{ translate('Ad.WriteYourTravelPlan') }}
+                        {{ translate('WRITEYOURTRAVELPLAN') }}
                     </v-card-title>
                     <v-card-text>
                         <v-textarea
                             v-model="travelPlanText"
                             outlined
-                            :placeholder="translate('Ad.TravelPlanPlaceholder')"
+                            :placeholder="translate('TRAVELPLANPLACEHOLDER')"
                             :counter="2500"
                             maxlength="2500"
-                            :rules="[v => v.length <= 2500 || translate('Ad.MaxCharactersReached')]"
+                            :rules="[v => v.length <= 2500 || translate('MAXCHARACTERSREACHED')]"
                             auto-grow
                             rows="6"
                         ></v-textarea>
@@ -508,23 +508,23 @@
                 </v-card>
 
                 <p class="text-caption mt-2">
-                    {{ translate('Ad.NotifyChangesWarning') }}
+                    {{ translate('NOTIFYCHANGESWARNING') }}
                 </p>
             </v-card-text>
             <v-card-actions class="d-flex justify-end gap-2">
                 <v-btn color="grey" text @click="goBack">
                     <v-icon left>mdi-arrow-left</v-icon>
-                    {{ translate('Ad.Back') }}
+                    {{ translate('BACK') }}
                 </v-btn>
                 <v-btn color="grey" text @click="saveAndExit">
                     <v-icon left>mdi-content-save-outline</v-icon>
-                    {{ translate('Ad.SaveExit') }}
+                    {{ translate('SAVEEXIT') }}
                 </v-btn>
                 <v-btn
                     color="primary"
                     @click="confirmCompanionCount"
                 >
-                    {{ translate('Ad.ConfirmNext') }}
+                    {{ translate('AD_CONFIRMNEXT') }}
                     <v-icon right>mdi-arrow-right</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -536,24 +536,24 @@
     <v-dialog v-model="showStep9" max-width="600px" persistent>
         <v-card>
             <v-card-title class="text-h5 text-center Text2">
-                {{ translate('Ad.TravelCompanionsCount') }}
+                {{ translate('TRAVELCOMPANIONSCOUNT') }}
             </v-card-title>
 
             <v-card-text class="text-center">
                 <p class="font-weight-bold mb-4 ">
-                    {{ translate('Ad.CurrentCompanionsInfo') }}
+                    {{ translate('CURRENTCOMPANIONSINFO') }}
                 </p>
 
                 <p class="mb-6 Text3">
-                    {{ translate('Ad.CompanionsNeededInfo') }}
+                    {{ translate('COMPANIONSNEEDEDINFO') }}
                 </p>
 
                 <p class="font-weight-bold mb-4 Text1">
-                    {{ translate('Ad.CurrentTravelersInfo') }}
+                    {{ translate('CURRENTTRAVELERSINFO') }}
                 </p>
 
                 <p class="mb-6 Text1">
-                    {{ translate('Ad.ExistingCompanionsInfo') }}
+                    {{ translate('EXISTINGCOMPANIONSINFO') }}
                 </p>
 
                 <v-row align="center" justify="center" class="mb-6">
@@ -594,14 +594,14 @@
             <v-card-actions class="d-flex justify-end gap-2">
                 <v-btn color="grey" text @click="goBack">
                     <v-icon left>mdi-arrow-left</v-icon>
-                    {{ translate('Ad.Back') }}
+                    {{ translate('BACK') }}
                 </v-btn>
                 <v-btn color="grey" text @click="saveAndExit">
                     <v-icon left>mdi-content-save-outline</v-icon>
-                    {{ translate('Ad.SaveExit') }}
+                    {{ translate('SAVEEXIT') }}
                 </v-btn>
                 <v-btn color="primary" @click="confirmCompanionCount">
-                    {{ translate('Ad.ConfirmNext') }}
+                    {{ translate('AD_CONFIRMNEXT') }}
                     <v-icon right>mdi-arrow-right</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -611,11 +611,11 @@
     <v-dialog v-model="showStep10" max-width="600px" persistent>
         <v-card>
             <v-card-title class="text-h5 text-center">
-                {{ translate('Ad.SelectCompanionsTitle') }}
+                {{ translate('SELECTCOMPANIONSTITLE') }}
             </v-card-title>
 
             <v-card-title class="text-center Text2">
-                {{ translate('Ad.CompanionsSelectionSubtitle') }}
+                {{ translate('COMPANIONSSELECTIONSUBTITLE') }}
             </v-card-title>
 
             <v-card-text class="text-center">
@@ -671,7 +671,7 @@
                 </v-row>
 
                 <v-card outlined class="pa-4 mt-4">
-                    <p class="font-weight-bold mb-2">{{ translate('Ad.TotalCompanions') }}</p>
+                    <p class="font-weight-bold mb-2">{{ translate('TOTALCOMPANIONS') }}</p>
                     <p class="text-h4">{{ totalCompanions }}</p>
                 </v-card>
             </v-card-text>
@@ -679,14 +679,14 @@
             <v-card-actions class="d-flex justify-end gap-2">
                 <v-btn color="grey" text @click="goBack">
                     <v-icon left>mdi-arrow-left</v-icon>
-                    {{ translate('Ad.Back') }}
+                    {{ translate('BACK') }}
                 </v-btn>
                 <v-btn color="grey" text @click="saveAndExit">
                     <v-icon left>mdi-content-save-outline</v-icon>
-                    {{ translate('Ad.SaveExit') }}
+                    {{ translate('SAVEEXIT') }}
                 </v-btn>
                 <v-btn color="primary" @click="goNext">
-                    {{ translate('Ad.ConfirmNext') }}
+                    {{ translate('AD_CONFIRMNEXT') }}
                     <v-icon right>mdi-arrow-right</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -697,46 +697,46 @@
     <v-dialog v-model="showStep11" max-width="600px" persistent>
         <v-card>
             <v-card-title class="text-h5 text-center">
-                {{ translate('Ad.MoreDescriptionTitle') }}
+                {{ translate('MOREDESCRIPTIONTITLE') }}
             </v-card-title>
 
             <v-card-text>
                 <p class="text-body-1 mb-4">
-                    {{ translate('Ad.MoreDescriptionInstruction') }}
+                    {{ translate('MOREDESCRIPTIONINSTRUCTION') }}
                 </p>
 
                 <v-card outlined class="pa-4 rounded-lg mb-4">
                     <v-textarea
                         v-model="additionalDescription"
                         outlined
-                        :placeholder="translate('Ad.AdditionalDescriptionPlaceholder')"
+                        :placeholder="translate('ADDITIONALDESCRIPTIONPLACEHOLDER')"
                         :counter="441"
                         maxlength="441"
-                        :rules="[v => v.length <= 441 || translate('Ad.MaxCharactersReached')]"
+                        :rules="[v => v.length <= 441 || translate('MAXCHARACTERSREACHED')]"
                         auto-grow
                         rows="4"
                     ></v-textarea>
                     <p class="text-caption grey--text text-right">
-                        {{ translate('Ad.Max441Characters') }}
+                        {{ translate('MAX441CHARACTERS') }}
                     </p>
                 </v-card>
 
                 <p class="text-caption mt-2">
-                    {{ translate('Ad.DescriptionChangeNotification') }}
+                    {{ translate('DESCRIPTIONCHANGENOTIFICATION') }}
                 </p>
             </v-card-text>
 
             <v-card-actions class="d-flex justify-end gap-2">
                 <v-btn color="grey" text @click="goBack">
                     <v-icon left>mdi-arrow-left</v-icon>
-                    {{ translate('Ad.Back') }}
+                    {{ translate('BACK') }}
                 </v-btn>
                 <v-btn color="grey" text @click="saveAndExit">
                     <v-icon left>mdi-content-save-outline</v-icon>
-                    {{ translate('Ad.SaveExit') }}
+                    {{ translate('SAVEEXIT') }}
                 </v-btn>
                 <v-btn color="primary" @click="goNext">
-                    {{ translate('Ad.ConfirmNext') }}
+                    {{ translate('AD_CONFIRMNEXT') }}
                     <v-icon right>mdi-arrow-right</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -748,32 +748,32 @@
             <v-img src="/Travel 042.png" contain height="150" class="mb-4" style="position: absolute; top: 0; left: 0; right: 0; z-index: -1;"></v-img>
 
             <v-card-title class="text-h5 text-center" style="margin-top: 150px">
-                {{ translate('Ad.FinalReviewTitle') }}
+                {{ translate('FINALREVIEWTITLE') }}
             </v-card-title>
 
             <v-card-subtitle class="text-center">
-                {{ translate('Ad.PublishAndFinish') }}
+                {{ translate('PUBLISHANDFINISH') }}
             </v-card-subtitle>
 
             <v-card-text class="text-center font-weight-bold Text2">
-                {{ translate('Ad.Step3') }}
+                {{ translate('STEP3') }}
             </v-card-text>
 
             <v-card-text class="text-center">
-                {{ translate('Ad.FinalReviewDescription') }}
+                {{ translate('FINALREVIEWDESCRIPTION') }}
             </v-card-text>
 
             <v-card-actions class="d-flex justify-end gap-2">
                 <v-btn color="grey" text @click="goBack">
                     <v-icon left>mdi-arrow-left</v-icon>
-                    {{ translate('Ad.Back') }}
+                    {{ translate('BACK') }}
                 </v-btn>
                 <v-btn color="grey" text @click="saveAndExit">
                     <v-icon left>mdi-content-save-outline</v-icon>
-                    {{ translate('Ad.SaveExit') }}
+                    {{ translate('SAVEEXIT') }}
                 </v-btn>
                 <v-btn color="primary" @click="publishListing">
-                    {{ translate('Ad.ConfirmNext') }}
+                    {{ translate('AD_CONFIRMNEXT') }}
                     <v-icon right>mdi-arrow-right</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -793,15 +793,15 @@
             </div>
 
             <v-card-title class="text-h5 text-center primary--text pt-6">
-                {{ translate('Ad.TravelDateTitle') }}
+                {{ translate('TRAVELDATETITLE') }}
             </v-card-title>
 
             <v-card-subtitle class="text-center text--secondary text-caption">
-                {{ translate('Ad.TravelDateSubtitle') }}
+                {{ translate('TRAVELDATESUBTITLE') }}
             </v-card-subtitle>
 
             <v-card-text class="text-center text--secondary text-caption pb-0">
-                {{ translate('Ad.TravelDateInstruction') }}
+                {{ translate('TRAVELDATEINSTRUCTION') }}
             </v-card-text>
 
             <v-card-text class="d-flex justify-center flex-wrap">
@@ -829,13 +829,13 @@
                     >
                         <div class="d-flex flex-column">
                             <div class="text-h6 primary--text mb-2">
-                                {{ translate('Ad.SelectedTravelDates') }}
+                                {{ translate('SELECTEDTRAVELDATES') }}
                             </div>
                             <div class="text-subtitle-1 mb-2">
                                 {{ formatSelectedDates() }}
                             </div>
                             <div class="text-caption mb-2">
-                                {{ translate('Ad.SelectedDaysCount') }}: {{ selectedDates.length }}
+                                {{ translate('SELECTEDDAYSCOUNT') }}: {{ selectedDates.length }}
                             </div>
                             <v-btn
                                 text
@@ -845,7 +845,7 @@
                                 block
                             >
                                 <v-icon left small>mdi-close</v-icon>
-                                {{ translate('Ad.ClearSelection') }}
+                                {{ translate('CLEARSELECTION') }}
                             </v-btn>
                         </div>
                     </v-alert>
@@ -855,11 +855,11 @@
                 <div>
                     <v-btn text @click="goBack" class="mr-2">
                         <v-icon left>mdi-arrow-left</v-icon>
-                        {{ translate('Ad.Back') }}
+                        {{ translate('BACK') }}
                     </v-btn>
                     <v-btn text @click="saveAndExit" color="grey darken-1">
                         <v-icon left>mdi-content-save-outline</v-icon>
-                        {{ translate('Ad.SaveExit') }}
+                        {{ translate('SAVEEXIT') }}
                     </v-btn>
                 </div>
                 <v-btn
@@ -869,7 +869,7 @@
                     depressed
                     large
                 >
-                    {{ translate('Ad.ConfirmNext') }}
+                    {{ translate('AD_CONFIRMNEXT') }}
                     <v-icon right>mdi-arrow-right</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -879,16 +879,16 @@
     <v-dialog v-model="showStep14" max-width="650px" persistent scrollable>
         <v-card class="rounded-lg" elevation="12">
             <v-card-title class="text-h4 text-center primary--text pt-6 Text2">
-                {{ translate('Ad.SafetyGuidelinesTitle') }}
+                {{ translate('SAFETYGUIDELINESTITLE') }}
             </v-card-title>
 
             <v-card-text class="px-6">
                 <div class="mb-4 text-center">
                     <div class="text-h5 font-weight-bold mb-4">
-                        {{ translate('Ad.SecureCommunication') }}
+                        {{ translate('SECURECOMMUNICATION') }}
                     </div>
                     <div class="text-h7">
-                        {{ translate('Ad.SecureCommunicationDescription') }}
+                        {{ translate('SECURECOMMUNICATIONDESCRIPTION') }}
                     </div>
                 </div>
 
@@ -896,7 +896,7 @@
 
                 <div class="mb-4 text-center">
                     <div class="text-h6 Text3">
-                        {{ translate('Ad.UseAppOnlyMessage') }}
+                        {{ translate('USEAPPONLYMESSAGE') }}
                     </div>
                 </div>
 
@@ -904,10 +904,10 @@
 
                 <div class="mb-4 text-center">
                     <div class="text-h5 font-weight-bold mb-2">
-                        {{ translate('Ad.Payments') }}
+                        {{ translate('PAYMENTS') }}
                     </div>
                     <div class="text-h7">
-                        {{ translate('Ad.PaymentsDescription') }}
+                        {{ translate('PAYMENTSDESCRIPTION') }}
                     </div>
                 </div>
 
@@ -915,11 +915,11 @@
 
                 <div class="mb-4 text-center">
                     <div class=" text-h5 font-weight-bold mb-2">
-                        {{ translate('Ad.ImportantToKnow') }}
+                        {{ translate('IMPORTANTTOKNOW') }}
                     </div>
                     <div class="text-body-2">
-                        <div class="text-h6">{{ translate('Ad.SecurityCamerasRule') }}</div>
-                        <div class="text-h6">{{ translate('Ad.FollowLocalRules') }}</div>
+                        <div class="text-h6">{{ translate('SECURITYCAMERASRULE') }}</div>
+                        <div class="text-h6">{{ translate('FOLLOWLOCALRULES') }}</div>
                     </div>
                 </div>
                 <v-divider class="my-4"></v-divider>
@@ -927,7 +927,7 @@
                 <div class="mb-4">
                     <div class="text-subtitle-1 font-weight-bold mb-2 text-center">
                         <a @click="showEssentialTips" class="text-h5 Text2" style="text-decoration: none; cursor: pointer;">
-                            {{ translate('Ad.EssentialTravelTips') }}
+                            {{ translate('ESSENTIALTRAVELTIPS') }}
                             <v-icon small color="primary">mdi-open-in-new</v-icon>
                         </a>
                     </div>
@@ -938,11 +938,11 @@
                 <div>
                     <v-btn text @click="goBack" class="mr-2">
                         <v-icon left>mdi-arrow-left</v-icon>
-                        {{ translate('Ad.Back') }}
+                        {{ translate('BACK') }}
                     </v-btn>
                     <v-btn text @click="saveAndExit" color="grey darken-1">
                         <v-icon left>mdi-content-save-outline</v-icon>
-                        {{ translate('Ad.SaveExit') }}
+                        {{ translate('SAVEEXIT') }}
                     </v-btn>
                 </div>
                 <v-btn
@@ -951,7 +951,7 @@
                     depressed
                     large
                 >
-                    {{ translate('Ad.ConfirmAndFinish') }}
+                    {{ translate('CONFIRMANDFINISH') }}
                     <v-icon right>mdi-check</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -961,7 +961,7 @@
     <v-dialog v-model="showEssentialTipsModal" max-width="600px">
         <v-card>
             <v-card-title class="text-h5 primary--text">
-                {{ translate('Ad.EssentialTravelTips') }}
+                {{ translate('ESSENTIALTRAVELTIPS') }}
             </v-card-title>
             <v-card-text>
                 <div v-for="(tip, index) in essentialTips" :key="index" class="mb-2">
@@ -971,7 +971,7 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" @click="showEssentialTipsModal = false">
-                    {{ translate('Ad.Close') }}
+                    {{ translate('CLOSE') }}
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -980,11 +980,11 @@
     <v-dialog v-model="showStep15" max-width="800px" persistent scrollable>
         <v-card class="rounded-lg" elevation="12">
             <v-card-title class="text-h4 text-center primary--text pt-6 "style="color: #db4437">
-                {{ translate('Ad.PreviewYourAd') }}
+                {{ translate('PREVIEWYOUREAD') }}
             </v-card-title>
             <div class="text-h5 mb-4 text-center">
                 <v-icon left color="primary">mdi-account-group</v-icon>
-                {{ translate('Ad.LookingForTravelCompanion') }}
+                {{ translate('LOOKINGFORTRAVELCOMPANION') }}
             </div>
 
             <v-card outlined class="mx-4 mt-4 mb-2" style="border-radius: 8px;">
@@ -1023,15 +1023,15 @@
                         <div class="mb-3">
                             <div class="text-subtitle-1 font-weight-bold Text3">
                                 <v-icon small>mdi-map-marker</v-icon>
-                                {{ translate('Ad.From') }}:
+                                {{ translate('FROM') }}:
                             </div>
-                            <div class="pl-4">{{ userLocationAddress || translate('Ad.YourCurrentLocation') }}</div>
+                            <div class="pl-4">{{ userLocationAddress || translate('YOURCURRENTLOCATION') }}</div>
                         </div>
 
                         <div class="mb-3">
                             <div class="text-subtitle-1 font-weight-bold Text3">
                                 <v-icon small>mdi-flag</v-icon>
-                                {{ translate('Ad.To') }}:
+                                {{ translate('TO') }}:
                             </div>
                             <div class="pl-4">{{ selectedDestination?.display_name }}</div>
                         </div>
@@ -1039,14 +1039,14 @@
                         <div class="mb-3">
                             <div class="text-subtitle-1 font-weight-bold Text3">
                                 <v-icon small>mdi-map-marker-distance</v-icon>
-                                {{ translate('Ad.Distance') }}:
+                                {{ translate('DISTANCE') }}:
                             </div>
                             <div class="pl-4">{{ distance }}</div>
                         </div>
                         <div class="mb-3">
                             <div class="text-subtitle-1 font-weight-bold Text3">
                                 <v-icon small>mdi-account</v-icon>
-                                {{ translate('Ad.PostedBy') }}:
+                                {{ translate('POSTEDBY') }}:
                             </div>
                             <div class="pl-4">{{ userName }}</div>
                         </div>
@@ -1063,7 +1063,7 @@
                         <v-col cols="12" md="6">
                             <div class="text-subtitle-1 font-weight-bold mb-2 Text3">
                                 <v-icon left>mdi-calendar</v-icon>
-                                {{ translate('Ad.TravelDates') }}
+                                {{ translate('TRAVELDATES') }}
                             </div>
                             <div class="pl-8">{{ formatSelectedDatesRange() }}</div>
                         </v-col>
@@ -1072,7 +1072,7 @@
                         <div class="mb-3">
                             <div class="text-subtitle-1 font-weight-bold Text3">
                                 <v-icon small>mdi-cash</v-icon>
-                                {{ translate('Ad.EstimatedCost') }}:
+                                {{ translate('ESTIMATEDCOST') }}:
                             </div>
                             <div class="pl-4 text-h5 primary--text">{{ budgetAmount }} €</div>
                         </div>
@@ -1085,11 +1085,11 @@
                 <div>
                     <v-btn text @click="goToStep14" class="mr-2">
                         <v-icon left>mdi-arrow-left</v-icon>
-                        {{ translate('Ad.Back') }}
+                        {{ translate('BACK') }}
                     </v-btn>
                     <v-btn color="grey" text @click="saveAndExit">
                         <v-icon left>mdi-content-save-outline</v-icon>
-                        {{ translate('Ad.SaveExit') }}
+                        {{ translate('SAVEEXIT') }}
                     </v-btn>
                 </div>
                 <v-btn
@@ -1098,7 +1098,7 @@
                     depressed
                     large
                 >
-                    {{ translate('Ad.PublishAd') }}
+                    {{ translate('PUBLISHAD') }}
                     <v-icon right>mdi-send</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -1110,8 +1110,7 @@
 import { translate } from "@/store/languageStore";
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import imageUploadService from '@/services/imageUploadService';
-
+import imageUploadService from '../../../services/ imageUploadService.js';
 export default {
     name: 'TravelCompanionModal',
     props: {
@@ -1170,9 +1169,9 @@ export default {
             maxDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().substr(0, 10),
             userName: "UserName",
             essentialTips: [
-                'Ad.Tip1',
-                'Ad.Tip2',
-                'Ad.Tip3'
+                'TIP1DESCRIPTION',
+                'TIP2DESCRIPTION',
+                'TIP1DESCRIPTION'
             ]
         }
     },
@@ -1187,44 +1186,44 @@ export default {
         },
         travelStyles() {
             return [
-                { label: this.translate("Ad.Normal"), value: 'normal', img: '/Travel 005.png' },
-                { label: this.translate('Ad.Luxury'), value: 'luxury', img: '/Travel 006.png' },
-                { label: this.translate('Ad.Adventure'), value: 'adventure', img: '/Travel 007.png' },
-                { label: this.translate('Ad.Camping'), value: 'camping', img: '/Travel 008.png' },
-                { label: this.translate('Ad.Backpacking'), value: 'backpacking', img: '/Travel 009.png' },
+                { label: this.translate("NORMAL"), value: 'normal', img: '/Travel 005.png' },
+                { label: this.translate('LUXURY'), value: 'luxury', img: '/Travel 006.png' },
+                { label: this.translate('ADVENTURE'), value: 'adventure', img: '/Travel 007.png' },
+                { label: this.translate('CAMPING'), value: 'camping', img: '/Travel 008.png' },
+                { label: this.translate('BACKPACKING'), value: 'backpacking', img: '/Travel 009.png' },
             ]
         },
         personalityTraits() {
             return [
-                { key: "calm", label: "Traits.Calm", img: "/Travel 011.png" },
-                { key: "friendly", label: "Traits.Friendly", img: "/Travel 012.png" },
-                { key: "warrior", label: "Traits.Warrior", img: "/Travel 013.png" },
-                { key: "hardworking", label: "Traits.Hardworking", img: "/Travel 014.png" },
-                { key: "gamer", label: "Traits.Gamer", img: "/Travel 016.png" },
-                { key: "nightOwl", label: "Traits.NightOwl", img: "/Travel 018.png" },
-                { key: "earlyBird", label: "Traits.EarlyBird", img: "/Travel 019.png" },
-                { key: "sleepy", label: "Traits.Sleepy", img: "/Travel 017.png" },
-                { key: "foodie", label: "Traits.Foodie", img: "/Travel 020.png" },
-                { key: "snacker", label: "Traits.Snacker", img: "/Travel 021.png" },
-                { key: "vegetarian", label: "Traits.Vegetarian", img: "/Travel 022.png" },
-                { key: "athlete", label: "Traits.Athlete", img: "/Travel 023.png" },
-                { key: "bookworm", label: "Traits.Bookworm", img: "/Travel 025.png" },
-                { key: "curious", label: "Traits.Curious", img: "/Travel 026.png" },
-                { key: "planner", label: "Traits.Planner", img: "/Travel 027.png" },
-                { key: "punctual", label: "Traits.Punctual", img: "/Travel 028.png" },
-                { key: "supportive", label: "Traits.Supportive", img: "/Travel 029.png" },
-                { key: "musicLover", label: "Traits.MusicLover", img: "/Travel 030.png" },
-                { key: "honest", label: "Traits.Honest", img: "/Travel 031.png" },
-                { key: "leader", label: "Traits.Leader", img: "/Travel 032.png" },
-                { key: "happy", label: "Traits.Happy", img: "/Travel 033.png" },
-                { key: "tired", label: "Traits.Tired", img: "/Travel 034.png" },
-                { key: "extrovert", label: "Traits.Extrovert", img: "/Travel 035.png" },
-                { key: "introvert", label: "Traits.Introvert", img: "/Travel 036.png" },
-                { key: "coordinator", label: "Traits.Coordinator", img: "/Travel 037.png" },
-                { key: "coldSensitive", label: "Traits.ColdSensitive", img: "/Travel 038.png" },
-                { key: "heatSensitive", label: "Traits.HeatSensitive", img: "/Travel 039.png" },
-                { key: "analytical", label: "Traits.Analytical", img: "/Travel 040.png" },
-                { key: "warm", label: "Traits.warm", img: "/Travel 024.png" },
+                { key: "calm", label: "TRAITS_CALM", img: "/Travel 011.png" },
+                { key: "friendly", label: "TRAITS_FRIENDLY", img: "/Travel 012.png" },
+                { key: "warrior", label: "TRAITS_WARRIOR", img: "/Travel 013.png" },
+                { key: "hardworking", label: "TRAITS_HARDWORKING", img: "/Travel 014.png" },
+                { key: "gamer", label: "TRAITS_GAMER", img: "/Travel 016.png" },
+                { key: "nightOwl", label: "TRAITS_NIGHTOWL", img: "/Travel 018.png" },
+                { key: "earlyBird", label: "TRAITS_EARLYBIRD", img: "/Travel 019.png" },
+                { key: "sleepy", label: "TRAITS_SLEEPY", img: "/Travel 017.png" },
+                { key: "foodie", label: "TRAITS_FOODIE", img: "/Travel 020.png" },
+                { key: "snacker", label: "TRAITS_SNACKER", img: "/Travel 021.png" },
+                { key: "vegetarian", label: "TRAITS_VEGETARIAN", img: "/Travel 022.png" },
+                { key: "athlete", label: "TRAITS_ATHLETE", img: "/Travel 023.png" },
+                { key: "bookworm", label: "TRAITS_BOOKWORM", img: "/Travel 025.png" },
+                { key: "curious", label: "TRAITS_CURIOUS", img: "/Travel 026.png" },
+                { key: "planner", label: "TRAITS_PLANNER", img: "/Travel 027.png" },
+                { key: "punctual", label: "TRAITS_PUNCTUAL", img: "/Travel 028.png" },
+                { key: "supportive", label: "TRAITS_SUPPORTIVE", img: "/Travel 029.png" },
+                { key: "musicLover", label: "TRAITS_MUSICLOVER", img: "/Travel 030.png" },
+                { key: "honest", label: "TRAITS_HONEST", img: "/Travel 031.png" },
+                { key: "leader", label: "TRAITS_LEADER", img: "/Travel 032.png" },
+                { key: "happy", label: "TRAITS_HAPPY", img: "/Travel 033.png" },
+                { key: "tired", label: "TRAITS_TIRED", img: "/Travel 034.png" },
+                { key: "extrovert", label: "TRAITS_EXTROVERT", img: "/Travel 035.png" },
+                { key: "introvert", label: "TRAITS_INTROVERT", img: "/Travel 036.png" },
+                { key: "coordinator", label: "TRAITS_COORDINATOR", img: "/Travel 037.png" },
+                { key: "coldSensitive", label: "TRAITS_COLDSENSITIVE", img: "/Travel 038.png" },
+                { key: "heatSensitive", label: "TRAITS_HEATSENSITIVE", img: "/Travel 039.png" },
+                { key: "analytical", label: "TRAITS_ANALYTICAL", img: "/Travel 040.png" },
+                { key: "warm", label: "TRAITS_WARM", img: "/Travel 024.png" },
             ]
         },
         totalCompanions() {
@@ -1408,7 +1407,7 @@ export default {
                         iconAnchor: [10, 10]
                     })
                 }).addTo(this.map)
-                    .bindPopup(this.translate('Ad.SelectedOrigin')).openPopup()
+                    .bindPopup(this.translate('SELECTEDORIGIN')).openPopup()
 
                 this.userLocation = latLng
 
@@ -1624,7 +1623,7 @@ export default {
                 const newPhotos = await imageUploadService.openGallery(10, 5);
 
                 if (newPhotos.length + this.uploadedPhotos.length > 10) {
-                    alert(this.translate('Ad.MaxPhotosWarning'));
+                    alert(this.translate('MAXPHOTOSWARNING'));
                     return;
                 }
 
@@ -1642,12 +1641,12 @@ export default {
 
                 const validTypes = ['application/pdf', 'image/jpeg', 'image/png'];
                 if (!validTypes.includes(file.type)) {
-                    alert(this.translate('Ad.InvalidFileType'));
+                    alert(this.translate('INVALIDFILETYPE'));
                     return;
                 }
 
                 if (file.size > 5 * 1024 * 1024) {
-                    alert(this.translate('Ad.FileTooLarge'));
+                    alert(this.translate('FILETOOLARGE'));
                     return;
                 }
 

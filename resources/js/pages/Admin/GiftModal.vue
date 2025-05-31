@@ -2,7 +2,7 @@
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
             <v-card-title class="gift-card-section">
-                <span>{{ translate('giftCardTitle') }}</span>
+                <span>{{ translate('GUIDE_GIFTCARD_GIFTCARDTITLE') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -16,13 +16,13 @@
                 </div>
 
                 <p class="description">
-                    {{ translate('giftCardDescription') }}
+                    {{ translate('GUIDE_GIFTCARD_GIFTCARDDESCRIPTION') }}
                 </p>
 
                 <v-form @submit.prevent="handleGiftCardPurchase">
                     <v-text-field
                         v-model="formData.amount"
-                        :label="translate('giftCardAmountLabel')"
+                        :label="translate('GUIDE_GIFTCARD_GIFTCARDAMOUNTLABEL')"
                         type="number"
                         required
                         outlined
@@ -32,7 +32,7 @@
 
                     <v-text-field
                         v-model="formData.recipient"
-                        :label="translate('giftCardRecipientLabel')"
+                        :label="translate('GUIDE_GIFTCARD_GIFTCARDRECIPIENTLABEL')"
                         type="email"
                         required
                         outlined
@@ -42,17 +42,17 @@
 
                     <v-textarea
                         v-model="formData.message"
-                        :label="translate('giftCardMessageLabel')"
+                        :label="translate('GUIDE_GIFTCARD_GIFTCARDMESSAGELABEL')"
                         outlined
                         class="mb-4"
                     ></v-textarea>
 
                     <div class="button-container">
                         <v-btn type="submit" color="primary" large :loading="isSubmitting">
-                            {{ translate('confirmPurchase') }}
+                            {{ translate('GUIDE_GIFTCARD_CONFIRMPURCHASE') }}
                         </v-btn>
                         <v-btn @click="closeModal" color="secondary" large class="ml-2">
-                            {{ translate('cancel') }}
+                            {{ translate('CANCEL') }}
                         </v-btn>
                     </div>
                 </v-form>
@@ -61,9 +61,9 @@
     </v-dialog>
 
     <div class="gift-card-section">
-        <h2 class="gift-card-title">{{ translate('giftCardTitle') }}</h2>
+        <h2 class="gift-card-title">{{ translate('GUIDE_GIFTCARD_GIFTCARDTITLE') }}</h2>
         <v-divider></v-divider>
-        <p class="gift-card-subtitle">{{ translate('giftCardSubtitle') }}</p>
+        <p class="gift-card-subtitle">{{ translate('GUIDE_GIFTCARD_GIFTCARDSUBTITLE') }}</p>
 
         <div class="image-container">
             <v-img src="/icons8-gift-card-98.png" alt="Gift Card Image" class="gift-card-image"></v-img>
@@ -71,7 +71,7 @@
 
         <div class="button-container">
             <v-btn @click="openModal" color="primary" large>
-                {{ translate('buyGiftCard') }}
+                {{ translate('GUIDE_GIFTCARD_BUYGIFTCARD') }}
             </v-btn>
         </div>
     </div>
@@ -83,7 +83,7 @@
 //Todo:{validation_messages: amount_required/amount_positive/email_required/email_valid}
 //Todo:{business_rules: minimum_amount/maximum_amount/expiration_days/currency}
 
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
 export default {
     name: 'GiftCardComponent',
@@ -98,12 +98,12 @@ export default {
                 message: ''
             },
             amountRules: [
-                value => !!value || this.translate('amountRequired'),
-                value => (value && value > 0) || this.translate('amountMustBePositive')
+                value => !!value || this.translate('AMOUNT_REQUIRED'),
+                value => (value && value > 0) || this.translate('AMOUNT_MOST_BE_POSITIVE')
             ],
             emailRules: [
-                value => !!value || this.translate('emailRequired'),
-                value => /.+@.+\..+/.test(value) || this.translate('emailMustBeValid')
+                value => !!value || this.translate('EMAIL_REQUIRED'),
+                value => /.+@.+\..+/.test(value) || this.translate('EMAIL_MOST_BE_VALID')
             ]
         };
     },
@@ -129,7 +129,7 @@ export default {
 
         async handleGiftCardPurchase() {
             if (!this.validateForm()) {
-                this.showError(this.translate('formValidationFailed'));
+                this.showError(this.translate('FROM_VALIDATION_FAILED'));
                 return;
             }
 
@@ -137,10 +137,10 @@ export default {
 
             try {
                 const response = await this.submitGiftCardPurchase();
-                this.showSuccess(this.translate('purchaseSuccessful'));
+                this.showSuccess(this.translate('PURCHASE_SUCCESSFUL'));
                 this.closeModal();
             } catch (error) {
-                this.showError(this.translate('purchaseFailed') + ': ' + error.message);
+                this.showError(this.translate('PURCHASE_FAILED') + ': ' + error.message);
             } finally {
                 this.isSubmitting = false;
             }

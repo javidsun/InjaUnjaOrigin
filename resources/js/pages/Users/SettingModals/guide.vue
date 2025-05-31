@@ -2,7 +2,7 @@
     <v-dialog v-model="isModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
             <v-card-title class="dialog-header">
-                <span class="headline">{{ translate('guide.guideBooks') }}</span>
+                <span class="headline">{{ translate('GUIDE_GUIDEBOOKS') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -11,7 +11,7 @@
             <v-divider></v-divider>
 
             <v-card-text class="modal-content">
-                <p class="description">{{ translate('guide.createGuideDescription') }}</p>
+                <p class="description">{{ translate('GUIDE_CREATEGUIDEDESCRIPTION') }}</p>
                 <div class="image-container">
                     <v-img src="/icons8-guide-book-98.png" alt="Guide Image" class="guide-image"></v-img>
                 </div>
@@ -20,13 +20,13 @@
                     <h3 class="guide-title">{{ createdGuide.title }}</h3>
                     <p class="guide-description">{{ createdGuide.description }}</p>
                     <v-btn @click="editGuide" color="primary" class="mt-4">
-                        {{ translate('guide.editGuide') }}
+                        {{ translate('GUIDE_EDITGUIDE') }}
                     </v-btn>
                 </div>
 
                 <div v-else class="button-container">
                     <v-btn @click="openCreateGuideModal" color="primary" large>
-                        {{ translate('guide.createGuide') }}
+                        {{ translate('GUIDE_CREATEGUIDE') }}
                     </v-btn>
                 </div>
             </v-card-text>
@@ -36,7 +36,7 @@
     <v-dialog v-model="isCreateGuideModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
             <v-card-title class="dialog-header">
-                <span class="headline">{{ isEditing ? translate('guide.editGuideTitle') : translate('guide.createGuideTitle') }}</span>
+                <span class="headline">{{ isEditing ? translate('GUIDE_EDITGUIDETITLE') : translate('GUIDE_CREATEGUIDETITLE') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeCreateGuideModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -45,11 +45,11 @@
             <v-divider></v-divider>
 
             <v-card-text class="modal-content">
-                <p class="description">{{ translate('guide.guideDescription') }}</p>
+                <p class="description">{{ translate('GUIDE_GUIDEDESCRIPTION') }}</p>
                 <v-form @submit.prevent="saveGuide">
                     <v-text-field
                         v-model="guideTitle"
-                        :label="translate('guide.guideTitleLabel')"
+                        :label="translate('GUIDE_GUIDETITLELABEL')"
                         required
                         outlined
                         class="mb-4"
@@ -57,7 +57,7 @@
 
                     <v-textarea
                         v-model="guideDescription"
-                        :label="translate('guide.guideDescriptionLabel')"
+                        :label="translate('GUIDE_GUIDEDESCRIPTIONLABEL')"
                         required
                         outlined
                         class="mb-4"
@@ -69,10 +69,10 @@
 
                     <div class="button-container">
                         <v-btn type="submit" color="primary" large>
-                            {{ isEditing ? translate('guide.saveChanges') : translate('guide.createGuideButton') }}
+                            {{ isEditing ? translate('GUIDE_SAVECHANGES') : translate('GUIDE_CREATEGUIDEBUTTON') }}
                         </v-btn>
                         <v-btn @click="closeCreateGuideModal" color="secondary" large class="ml-2">
-                            {{ translate('cancel') }}
+                            {{ translate('CANCEL') }}
                         </v-btn>
                     </div>
                 </v-form>

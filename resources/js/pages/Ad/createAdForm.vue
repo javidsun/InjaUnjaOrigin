@@ -5,27 +5,27 @@
                 <v-btn icon @click="$router.go(-1)" class="back-btn">
                     <v-icon>mdi-arrow-right</v-icon>
                 </v-btn>
-                <h2 class="text-h5 Txt font-weight-bold ">{{ translate('Ad.NewAd') }}</h2>
+                <h2 class="text-h5 Txt font-weight-bold ">{{ translate('AD_NEWAD') }}</h2>
                 <br>
-                <p class="text-body-2 Txt">{{ translate('Ad.SelectOption') }}</p>
+                <p class="text-body-2 Txt">{{ translate('AD_SELECTOPTION') }}</p>
 
                 <v-row class="mt-6" justify="center">
                     <v-col cols="4" sm="6" md="3">
                         <v-card class="option-card Txt2" @click="handleAccommodationClick">
                             <v-img src="/Untitled design (1) 10.png" contain height="100"></v-img>
-                            <v-btn class="mt-2 option-card2 Txt3 Txt2 " block>{{ translate('Ad.Accommodation') }}</v-btn>
+                            <v-btn class="mt-2 option-card2 Txt3 Txt2 " block>{{ translate('AD_ACCOMMODATION') }}</v-btn>
                         </v-card>
                     </v-col>
                     <v-col cols="4" sm="6" md="3">
                         <v-card class="option-card Txt2" @click="handleVehicleClick">
                             <v-img src="/Untitled design (1) 11.png" contain height="100"></v-img>
-                            <v-btn class="mt-2 option-card2 Txt2 " block>{{ translate('Ad.Vehicle') }}</v-btn>
+                            <v-btn class="mt-2 option-card2 Txt2 " block>{{ translate('AD_VEHICLE') }}</v-btn>
                         </v-card>
                     </v-col>
                     <v-col cols="4" sm="6" md="3">
                         <v-card class="option-card Txt2" @click="handleCompanionClick">
                             <v-img src="/Untitled design (1) 12.png" contain height="100"></v-img>
-                            <v-btn class="mt-2 option-card2 Txt2 " block>{{ translate('Ad.Companion') }}</v-btn>
+                            <v-btn class="mt-2 option-card2 Txt2 " block>{{ translate('AD_COMPANION') }}</v-btn>
                         </v-card>
                     </v-col>
                 </v-row>
@@ -99,7 +99,7 @@ export default {
                 title: this.translate('General.ComingSoon'),
                 text: this.translate('General.FeatureComingSoon'),
                 icon: 'info',
-                confirmButtonText: this.translate('General.OK'),
+                confirmButtonText: this.translate('OK'),
                 confirmButtonColor: '#3085d6',
                 timer: 3000,
                 timerProgressBar: true
@@ -110,7 +110,7 @@ export default {
                 title: this.translate('General.Error'),
                 text: message,
                 icon: 'error',
-                confirmButtonText: this.translate('General.OK'),
+                confirmButtonText: this.translate('OK'),
                 confirmButtonColor: '#d33'
             });
         }

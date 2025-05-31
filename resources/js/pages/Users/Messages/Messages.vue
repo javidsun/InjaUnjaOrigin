@@ -2,19 +2,19 @@
     <UserSidebar class="back">
         <v-container class="messages-container">
             <v-btn color="primary" @click="openNewMessageDialog" aria-label="Send new message">
-                {{ translate('Message.NewMessage') }}
+                {{ translate('MESSAGE_NEWMESSAGE') }}
             </v-btn>
 
             <v-dialog v-model="uiState.newMessageDialog" max-width="500px">
                 <v-card class="modal1">
-                    <v-card-title>{{ translate('Message.NewMessage') }}</v-card-title>
+                    <v-card-title>{{ translate('MESSAGE_NEWMESSAGE') }}</v-card-title>
                     <v-card-text>
-                        <v-select v-model="messageData.newMessageType" :items="messageCategories" item-value="type" item-text="title" :label="translate('Message.SelectCategory')"></v-select>
-                        <v-text-field v-model="messageData.newMessageUsername" :label="translate('Message.Username')" dense outlined v-if="messageData.newMessageType === 'host' || messageData.newMessageType === 'guest'"></v-text-field>
-                        <v-text-field v-model="messageData.newMessageText" :label="translate('Message.MessageText')" dense outlined></v-text-field>
+                        <v-select v-model="messageData.newMessageType" :items="messageCategories" item-value="type" item-text="title" :label="translate('MESSAGE_SELECTCATEGORY')"></v-select>
+                        <v-text-field v-model="messageData.newMessageUsername" :label="translate('MESSAGE_USERNAME')" dense outlined v-if="messageData.newMessageType === 'host' || messageData.newMessageType === 'guest'"></v-text-field>
+                        <v-text-field v-model="messageData.newMessageText" :label="translate('MESSAGE_MESSAGETEXT')" dense outlined></v-text-field>
                         <v-file-input
                             @change="handleImageUpload"
-                            :label="translate('Message.Image_selection')"
+                            :label="translate('MESSAGE_IMAGE_SELECTION')"
                             dense
                             outlined
                             accept="image/*">
@@ -22,8 +22,8 @@
                         <v-img v-if="uiState.previewImage" :src="uiState.previewImage" class="preview-image"></v-img>
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn color="primary" @click="sendNewMessage" :disabled="!messageData.newMessageText || (messageData.newMessageType !== 'support' && !messageData.newMessageUsername)">{{ translate('Message.SendMessage') }}</v-btn>
-                        <v-btn text @click="closeNewMessageDialog">{{ translate('housescontent.close') }}</v-btn>
+                        <v-btn color="primary" @click="sendNewMessage" :disabled="!messageData.newMessageText || (messageData.newMessageType !== 'support' && !messageData.newMessageUsername)">{{ translate('MESSAGE_SENDMESSAGE') }}</v-btn>
+                        <v-btn text @click="closeNewMessageDialog">{{ translate('CLOSE') }}</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -62,7 +62,7 @@
                                 <span :class="{'approved': message.approved, 'pending': !message.approved}">
                                     {{ message.status }}
                                 </span>
-                                <v-btn class="message-time2" color="red" @click.stop="closeMessage(message)">{{ translate('Message.Close') }}</v-btn>
+                                <v-btn class="message-time2" color="red" @click.stop="closeMessage(message)">{{ translate('CLOSE') }}</v-btn>
                             </v-list-item-action>
                         </v-list-item>
                     </v-list>
@@ -86,17 +86,17 @@
                         </div>
                     </v-card-text>
                     <v-card-actions>
-                        <v-text-field v-model="messageData.replyText" :label="translate('Message.Reply')" dense outlined :disabled="uiState.selectedMessage.closed"></v-text-field>
+                        <v-text-field v-model="messageData.replyText" :label="translate('MESSAGE_REPLY')" dense outlined :disabled="uiState.selectedMessage.closed"></v-text-field>
                         <v-file-input
                             @change="handleReplyImageUpload"
-                            :label="translate('Message.Image_selection')"
+                            :label="translate('MESSAGE_IMAGE_SELECTION')"
                             dense
                             outlined
                             accept="image/*">
                         </v-file-input>
                         <v-img v-if="uiState.replyPreviewImage" :src="uiState.replyPreviewImage" class="preview-image"></v-img>
-                        <v-btn color="primary" @click="sendReply" :disabled="uiState.selectedMessage.closed">{{ translate('Message.SendMessage') }}</v-btn>
-                        <v-btn text @click="closeMessageDialog">{{ translate('housescontent.close') }}</v-btn>
+                        <v-btn color="primary" @click="sendReply" :disabled="uiState.selectedMessage.closed">{{ translate('MESSAGE_SENDMESSAGE') }}</v-btn>
+                        <v-btn text @click="closeMessageDialog">{{ translate('CLOSE') }}</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-dialog>
@@ -133,15 +133,15 @@ export default {
                 replyImage: null
             },
             allCategories: [
-                { title: translate("all"), type: "all" },
-                { title: translate("host"), type: "host" },
-                { title: translate("guest"), type: "guest" },
-                { title: translate("support"), type: "support" }
+                { title: translate("MESSAGE_ALL"), type: "all" },
+                { title: translate("MESSAGE_HOST"), type: "host" },
+                { title: translate("MESSAGE_GUEST"), type: "guest" },
+                { title: translate("MESSAGE_SUPPORT"), type: "support" }
             ],
             messageCategories: [
-                { title: translate("host"), type: "host" },
-                { title: translate("guest"), type: "guest" },
-                { title: translate("support"), type: "support" }
+                { title: translate("MESSAGE_HOST"), type: "host" },
+                { title: translate("MESSAGE_GUEST"), type: "guest" },
+                { title: translate("MESSAGE_SUPPORT"), type: "support" }
             ],
             messages: [
                 {
@@ -244,7 +244,7 @@ export default {
                 this.uiState.previewImage = URL.createObjectURL(file);
                 this.messageData.newMessageImage = file;
             } catch (error) {
-                this.showErrorAlert(this.translate('Message.ImageUploadError'));
+                this.showErrorAlert(this.translate('SECURITY_ERROR'));
             }
         },
 
@@ -256,7 +256,7 @@ export default {
                 this.uiState.replyPreviewImage = URL.createObjectURL(file);
                 this.messageData.replyImage = file;
             } catch (error) {
-                this.showErrorAlert(this.translate('Message.ImageUploadError'));
+                this.showErrorAlert(this.translate('SECURITY_ERROR'));
             }
         },
 
@@ -276,16 +276,16 @@ export default {
                 if (this.uiState.selectedMessage === message) {
                     this.uiState.selectedMessage = null;
                 }
-                this.showSuccessAlert(this.translate('Message.MessageClosed'));
+                this.showSuccessAlert(this.translate('MESSAGE_CLOSED'));
             } catch (error) {
-                this.showErrorAlert(this.translate('Message.CloseError'));
+                this.showErrorAlert(this.translate('SECURITY_ERROR'));
             }
         },
 
         sendNewMessage() {
             try {
                 if (!this.messageData.newMessageText.trim() || !this.messageData.newMessageType) {
-                    throw new Error(this.translate('Message.RequiredFields'));
+                    throw new Error(this.translate('REQUIRED_FIELDS'));
                 }
 
                 const sanitizedText = this.sanitizeMessage(this.messageData.newMessageText);
@@ -304,9 +304,9 @@ export default {
                 this.messages.unshift(newMessage);
                 this.resetNewMessageForm();
                 this.uiState.newMessageDialog = false;
-                this.showSuccessAlert(this.translate('Message.SentSuccess'));
+                this.showSuccessAlert(this.translate('SEND_SUCCESS'));
             } catch (error) {
-                this.showErrorAlert(error.message || this.translate('Message.SendError'));
+                this.showErrorAlert(error.message || this.translate('SECURITY_ERROR'));
             }
         },
 
@@ -325,7 +325,7 @@ export default {
         sendReply() {
             try {
                 if (!this.messageData.replyText.trim() || !this.uiState.selectedMessage || this.uiState.selectedMessage.closed) {
-                    throw new Error(this.translate('Message.InvalidReply'));
+                    throw new Error(this.translate('INVALID_REPLY'));
                 }
 
                 if (!this.uiState.selectedMessage.replies) {
@@ -341,9 +341,9 @@ export default {
 
                 this.resetReplyForm();
                 this.uiState.selectedMessage = null;
-                this.showSuccessAlert(this.translate('Message.ReplySent'));
+                this.showSuccessAlert(this.translate('REPLY_SENT'));
             } catch (error) {
-                this.showErrorAlert(error.message || this.translate('Message.ReplyError'));
+                this.showErrorAlert(error.message || this.translate('SECURITY_ERROR'));
             }
         },
 
@@ -370,7 +370,7 @@ export default {
             this.$emit('show-alert', {
                 type: 'success',
                 message: message,
-                title: this.translate('Message.Success')
+                title: this.translate('SUCCESS')
             });
         },
 
@@ -378,7 +378,7 @@ export default {
             this.$emit('show-alert', {
                 type: 'error',
                 message: message,
-                title: this.translate('Message.Error')
+                title: this.translate('ERROR')
             });
         }
     },

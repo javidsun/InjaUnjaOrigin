@@ -25,41 +25,41 @@
                     <v-img v-else-if="openModal === 'discountModal'" src="/Untitled design (1) 14.png" contain
                            height="100"></v-img>
 
-                    <h3 v-if="openModal === 'amenities'">{{ translate('Ad.highlight_your_place') }}</h3>
-                    <h3 v-else-if="openModal === 'photos'">{{ translate('Ad.add_photos_of_your_place') }}</h3>
-                    <h4 v-else-if="openModal === 'modal4'">{{ translate('Ad.modal_4_title') }}</h4>
+                    <h3 v-if="openModal === 'amenities'">{{ translate('AD_HIGHLIGHT_YOUR_PLACE') }}</h3>
+                    <h3 v-else-if="openModal === 'photos'">{{ translate('AD_ADD_PHOTOS_OF_YOUR_PLACE') }}</h3>
+                    <h4 v-else-if="openModal === 'modal4'">{{ translate('AD_MODAL_4_TITLE') }}</h4>
                     <h3 class="text-primary" v-else-if="openModal === 'modalStep3'">
-                        {{translate('Ad.finalize_and_publish') }}<br>{{ translate('Ad.step_three') }}</h3>
-                    <h3 v-else-if="openModal === 'Step3-1'">{{ translate('Ad.HowReserve') }}</h3>
-                    <h3 class="top1" v-else-if="openModal === 'thirdStepSetPrice'">{{ translate('Ad.set_your_price')
+                        {{translate('AD_FINALIZE_AND_PUBLISH') }}<br>{{ translate('AD_STEP_THREE') }}</h3>
+                    <h3 v-else-if="openModal === 'Step3-1'">{{ translate('AD_HOWRESERVE') }}</h3>
+                    <h3 class="top1" v-else-if="openModal === 'thirdStepSetPrice'">{{ translate('AD_SET_YOUR_PRICE')
                         }}</h3>
-                    <h3 v-else-if="openModal === 'discountModal'">{{ translate('Ad.discounts') }}</h3>
+                    <h3 v-else-if="openModal === 'discountModal'">{{ translate('AD_DISCOUNTS') }}</h3>
                     <h2 class="font-weight-bold text-primary font-weight-bold3"
-                        v-else-if="openModal === 'finalStepModal'">{{ translate('Ad.final_step') }}</h2>
-                    <h5 v-else-if="openModal === 'finalStepModal2'">{{ translate('Ad.Request_Approval') }}</h5>
+                        v-else-if="openModal === 'finalStepModal'">{{ translate('AD_FINAL_STEP') }}</h2>
+                    <h5 v-else-if="openModal === 'finalStepModal2'">{{ translate('AD_REQUEST_APPROVAL') }}</h5>
 
-                    <p class="modal-text text-info" v-if="openModal === 'amenities'">{{ translate('Ad.step_two') }}<br>{{
-                            translate('Ad.step_two_description') }}</p>
-                    <p class="modal-text" v-else-if="openModal === 'photos'">{{ translate('Ad.need_to_add_photos')
+                    <p class="modal-text text-info" v-if="openModal === 'amenities'">{{ translate('AD_STEP_TWO') }}<br>{{
+                            translate('step_two_description') }}</p>
+                    <p class="modal-text" v-else-if="openModal === 'photos'">{{ translate('AD_NEED_TO_ADD_PHOTOS')
                         }}</p>
                     <p class="modal-text text-muted" v-else-if="openModal === 'modalStep3'">{{
-                            translate('Ad.final_step_description') }}</p>
-                    <p class="modal-text" v-else-if="openModal === 'Step3-1'">{{ translate('Ad.CanChange') }} </p>
+                            translate('AD_FINAL_STEP_DESCRIPTION') }}</p>
+                    <p class="modal-text" v-else-if="openModal === 'Step3-1'">{{ translate('AD_CANCHANGE') }} </p>
                     <p class="modal-text top1" v-else-if="openModal === 'thirdStepSetPrice'">{{
-                            translate('Ad.CanChange') }}</p>
+                            translate('AD_CANCHANGE') }}</p>
                     <p class="modal-text top1" v-else-if="openModal === 'discountModal'">{{
-                            translate('Ad.Helps_highlight_your_niche') }} </p>
+                            translate('AD_HELPS_HIGHLIGHT_YOUR_NICHE') }} </p>
                     <p class="modal-text top1" v-else-if="openModal === 'finalStepModal'">{{
-                            translate('Ad.host_type_question') }} </p>
+                            translate('AD_HOST_TYPE_QUESTION') }} </p>
                     <h2 class="modal-text  bold-red-text" v-else-if="openModal === 'finalStepModal2'">{{
-                            translate('Ad.Awaiting_Confirmation') }} </h2>
+                            translate('AD_AWAITING_CONFIRMATION') }} </h2>
 
                 </v-card-title>
                 <v-card v-if="openModal === 'property'" class="top1">
                     <v-card-text class="top1">
-                        <p class="Txt2">{{ translate('Ad.Modal1_1') }}</p>
+                        <p class="Txt2">{{ translate('AD_MODAL1_1') }}</p>
                         <br>
-                        <p class="Txt2">{{ translate('Ad.Modal1_2') }}</p>
+                        <p class="Txt2">{{ translate('AD_MODAL1_2') }}</p>
                         <br>
 
                         <v-row>
@@ -76,7 +76,7 @@
                     </v-card-text>
                 </v-card>
                 <v-card v-else-if="openModal === 'map'">
-                    <v-card-title class="text-h6 Txt2">{{ translate('Ad.WhereAccommodation') }}</v-card-title>
+                    <v-card-title class="text-h6 Txt2">{{ translate('AD_WHEREACCOMMODATION') }}</v-card-title>
                     <v-card-subtitle class="Txt2"></v-card-subtitle>
                     <v-card-text>
                         <v-text-field v-model="searchQuery" label="Search location"
@@ -85,7 +85,7 @@
                     </v-card-text>
                 </v-card>
                 <v-card v-else-if="openModal === 'details'" class="top1 details">
-                    <v-card-title class="text-h6 top1 Txt2">{{ translate('Ad.ShareAccommodationInfo') }}</v-card-title>
+                    <v-card-title class="text-h6 top1 Txt2">{{ translate('AD_SHAREACCOMMODATIONINFO') }}</v-card-title>
                     <v-card-text>
                         <v-row>
                             <v-col v-for="(item, index) in accommodationDetails" :key="index" cols="" md="12">
@@ -112,7 +112,7 @@
                     </v-card-text>
                 </v-card>
                 <template v-if="openModal === 'amenities'">
-                    <h4 class="mb-2" style="margin-top: 70px;"> {{ translate('Ad.tell_guests_about_amenities') }}</h4>
+                    <h4 class="mb-2" style="margin-top: 70px;"> {{ translate('AD_TELL_GUESTS_ABOUT_AMENITIES') }}</h4>
                     <v-row>
                         <v-col v-for="item in amenities" :key="item.text" cols="6" sm="3">
                             <v-card
@@ -126,7 +126,7 @@
                             </v-card>
                         </v-col>
                     </v-row>
-                    <h4 class="mt-4">{{ translate('Ad.special_amenities') }}</h4>
+                    <h4 class="mt-4">{{ translate('AD_SPECIAL_AMENITIES') }}</h4>
                     <v-row>
                         <v-col v-for="(item, index) in specialAmenities" :key="index" cols="6" sm="3">
                             <v-card
@@ -140,7 +140,7 @@
                             </v-card>
                         </v-col>
                     </v-row>
-                    <h4 class="mt-4">{{ translate('Ad.safety_amenities') }}</h4>
+                    <h4 class="mt-4">{{ translate('AD_SAFETY_AMENITIES') }}</h4>
                     <v-row>
                         <v-col v-for="(item, index) in safetyFeatures" :key="index" cols="6" sm="3">
                             <v-card
@@ -164,7 +164,7 @@
                             class="py-8 rounded-lg d-none d-md-block"
                             @click="openGallery">
                             <v-icon left class="icon-small font-weight-bold">mdi-image</v-icon>
-                            {{ translate('Ad.add_photo') }}
+                            {{ translate('AD_ADD_PHOTO') }}
                         </v-btn>
 
                         <v-btn
@@ -173,7 +173,7 @@
                             class="py-8 rounded-lg mt-2 d-md-none"
                             @click="openCamera">
                             <v-icon left class="icon-small font-weight-bold">mdi-camera</v-icon>
-                            {{ translate('Ad.take_new_photo') }}
+                            {{ translate('AD_TAKE_NEW_PHOTO') }}
                         </v-btn>
 
                         <v-btn
@@ -182,7 +182,7 @@
                             class="py-8 rounded-lg mt-2 d-md-none"
                             @click="openGallery">
                             <v-icon left class="icon-small font-weight-bold">mdi-image</v-icon>
-                            {{ translate('Ad.add_photo') }}
+                            {{ translate('AD_ADD_PHOTO') }}
                         </v-btn>
                     </div>
 
@@ -209,8 +209,8 @@
                     </div>
                 </template>
                 <v-card v-else-if="openModal === 'title'">
-                    <h3 class="top1">{{ translate('Ad.give_title_for_accommodation') }}</h3>
-                    <p class="modal-text text-muted ">{{ translate('Ad.short_title_suggestion') }}</p>
+                    <h3 class="top1">{{ translate('AD_GIVE_TITLE_FOR_ACCOMMODATION') }}</h3>
+                    <p class="modal-text text-muted ">{{ translate('AD_SHORT_TITLE_SUGGESTION') }}</p>
 
                     <v-text-field v-model="title"
                                   max-length="32"
@@ -222,12 +222,12 @@
                     <br>
                     <p class="text-left top1"
                        :style="{ fontSize: '12px', color: characterLimitExceeded ? 'red' : 'grey' }">
-                        {{ translate('Ad.max_32_characters') }}
+                        {{ translate('AD_MAX_32_CHARACTERS') }}
                     </p>
                     <br>
 
-                    <h3>{{ translate('Ad.create_your_description') }}</h3>
-                    <p>{{ translate('Ad.share_what_makes_your_place_special') }}</p>
+                    <h3>{{ translate('AD_CREATE_YOUR_DESCRIPTION') }}</h3>
+                    <p>{{ translate('AD_SHARE_WHAT_MAKES_YOUR_PLACE_SPECIAL') }}</p>
 
                     <div class="description-container">
                         <v-textarea v-model="description"
@@ -239,14 +239,14 @@
                         ></v-textarea>
                         <p class="text-left"
                            :style="{ fontSize: '12px', color: characterLimitExceeded2 ? 'red' : 'grey' }">
-                            {{ translate('Ad.max_441_characters') }}
+                            {{ translate('AD_MAX_441_CHARACTERS') }}
                         </p>
                     </div>
 
                 </v-card>
                 <template v-if="openModal === 'modal4'">
                     <div>
-                        <p style="margin-top: 50px;" class="modal-text">{{ translate('Ad.modal_4_description') }}</p>
+                        <p style="margin-top: 50px;" class="modal-text">{{ translate('AD_MODAL_4_DESCRIPTION') }}</p>
                         <br>
                         <v-row class="flex-wrap">
                             <v-col v-for="(item, index) in modal4Options" :key="index" cols="6" sm="4">
@@ -275,8 +275,8 @@
                         >
                             <v-icon size="25">mdi-lightning-bolt</v-icon>
                             <v-col cols="10">
-                                <h4 class="font-weight-bold">{{ translate('Ad.quickReserve') }}</h4>
-                                <p class="font-weight-bold2">{{ translate('Ad.reservationAutomatically') }}</p>
+                                <h4 class="font-weight-bold">{{ translate('AD_QUICKRESERVE') }}</h4>
+                                <p class="font-weight-bold2">{{ translate('AD_RESERVATIONAUTOMATICALLY') }}</p>
                             </v-col>
                         </v-btn>
 
@@ -290,8 +290,8 @@
                         >
                             <v-icon size="25">mdi-note-text</v-icon>
                             <v-col cols="10">
-                                <h4 class="font-weight-bold">{{ translate('Ad.AcceptReject') }}</h4>
-                                <p class="font-weight-bold2">{{ translate('Ad.reservationRequest') }}</p>
+                                <h4 class="font-weight-bold">{{ translate('AD_ACCEPTREJECT') }}</h4>
+                                <p class="font-weight-bold2">{{ translate('AD_RESERVATIONREQUEST') }}</p>
                             </v-col>
                         </v-btn>
                     </div>
@@ -307,15 +307,15 @@
                         </v-col>
 
                         <v-col cols="8" class="mb-0">
-                            <v-text-field v-model="basePrice" :label="translate('Ad.base_price')" type="number" dense
+                            <v-text-field v-model="basePrice" :label="translate('AD_BASE_PRICE')" type="number" dense
                                           outlined class="rounded-lg"></v-text-field>
                         </v-col>
                         <v-col cols="8" class="mb-0">
-                            <v-text-field v-model="serviceFee" :label="translate('Ad.service_fee')" type="number" dense
+                            <v-text-field v-model="serviceFee" :label="translate('AD_SERVICE_FEE')" type="number" dense
                                           outlined class="rounded-lg"></v-text-field>
                         </v-col>
                         <v-col cols="8" class="mb-0 received-amount2">
-                            <v-text-field v-model="totalPrice" :label="translate('Ad.total_price')" dense outlined
+                            <v-text-field v-model="totalPrice" :label="translate('AD_TOTAL_PRICE')" dense outlined
                                           readonly class="rounded-lg">
                                 <template v-slot:append>
                                     <span>{{ currency }}</span>
@@ -323,7 +323,7 @@
                             </v-text-field>
                         </v-col>
                         <v-col cols="8" class="mb-0 received-amount2">
-                            <v-text-field v-model="totalPrice" :label="translate('Ad.received_amount')" dense
+                            <v-text-field v-model="totalPrice" :label="translate('AD_RECEIVED_AMOUNT')" dense
                                           outlined readonly class="rounded-lg">
                                 <template v-slot:append>
                                     <span>{{ currency }}</span>
@@ -339,16 +339,16 @@
                     </v-row>
 
                     <v-btn v-if="!isCustomer" block color="primary" class="py-3 mt-4 rounded-lg" @click="addExtraFee">
-                        + {{ translate('Ad.add_extra_fee') }}
+                        + {{ translate('AD_ADD_EXTRA_FEE') }}
                     </v-btn>
 
                     <v-row v-for="(fee, index) in extraFees" :key="index" justify="center" align="center">
                         <v-col cols="6">
-                            <v-text-field v-model="fee.title" :label="translate('Ad.extra_fee_title')" dense outlined
+                            <v-text-field v-model="fee.title" :label="translate('AD_EXTRA_FEE_TITLE')" dense outlined
                                           class="rounded-lg"></v-text-field>
                         </v-col>
                         <v-col cols="4">
-                            <v-text-field v-model="fee.amount" type="number" :label="translate('Ad.amount')" dense
+                            <v-text-field v-model="fee.amount" type="number" :label="translate('AD_AMOUNT')" dense
                                           outlined class="rounded-lg"></v-text-field>
                         </v-col>
                         <v-col cols="2" v-if="isCustomer">
@@ -417,7 +417,7 @@
                             </v-list-item>
                         </v-list>
                         <v-col cols="12">
-                            <h3> {{translate('Ad.received_amount') }}: {{ receivedAmount }} €</h3>
+                            <h3> {{translate('AD_RECEIVED_AMOUNT') }}: {{ receivedAmount }} €</h3>
                         </v-col>
                     </v-row>
                 </template>
@@ -428,7 +428,7 @@
                                 <v-col cols="6" class="top1">
                                     <v-checkbox
                                         v-model="hostType"
-                                        :label="translate('Ad.host_as_individual')"
+                                        :label="translate('AD_HOST_AS_INDIVIDUAL')"
                                         :value="'individual'"
                                         required
                                     />
@@ -436,7 +436,7 @@
                                 <v-col cols="6" class="top1">
                                     <v-checkbox
                                         v-model="hostType"
-                                        :label="translate('Ad.host_as_business')"
+                                        :label="translate('AD_HOST_AS_BUSINESS')"
                                         :value="'business'"
                                         required
                                     />
@@ -446,26 +446,26 @@
 
                         <v-col cols="12">
                             <v-divider class="my-4"/>
-                            <p>{{ translate('Ad.location_features') }}</p>
+                            <p>{{ translate('AD_LOCATION_FEATURES') }}</p>
                             <v-row>
                                 <v-col cols="6">
                                     <v-checkbox
                                         v-model="locationFeatures"
-                                        :label="translate('Ad.security_camera')"
+                                        :label="translate('AD_SECURITY_CAMERA')"
                                         :value="'security_camera'"
                                     />
                                 </v-col>
                                 <v-col cols="6">
                                     <v-checkbox
                                         v-model="locationFeatures"
-                                        :label="translate('Ad.sound_insulation')"
+                                        :label="translate('AD_SOUND_INSULATION')"
                                         :value="'sound_insulation'"
                                     />
                                 </v-col>
                                 <v-col cols="6">
                                     <v-checkbox
                                         v-model="locationFeatures"
-                                        :label="translate('Ad.protective_weapons')"
+                                        :label="translate('AD_PROTECTIVE_WEAPONS')"
                                         :value="'protective_weapons'"
                                     />
                                 </v-col>
@@ -475,18 +475,18 @@
                         <v-col cols="12">
                             <v-divider class="my-4"/>
                             <h2 align="center" class="font-weight-bold3" style="color: darkred"><strong>{{
-                                    translate('Ad.important_information') }}</strong></h2>
-                            <p>{{ translate('Ad.cctv_prohibited') }}</p>
-                            <p>{{ translate('Ad.onsite_cameras_required') }}</p>
+                                    translate('AD_IMPORTANT_INFORMATION') }}</strong></h2>
+                            <p>{{ translate('AD_CCTV_PROHIBITED') }}</p>
+                            <p>{{ translate('AD_ONSITE_CAMERAS_REQUIRED') }}</p>
                             <h4 class="font-weight-bold3" style="color: #1b43ff">{{
-                                    translate('Ad.follow_local_regulations') }}</h4>
+                                    translate('AD_FOLLOW_LOCAL_REGULATIONS') }}</h4>
                         </v-col>
                     </v-row>
                 </template>
                 <template v-if="openModal === 'calendarModal'">
                     <v-row justify="center">
                         <v-col cols="12">
-                            <h3 class="text-center">{{ translate('Ad.select_available_dates') }}</h3>
+                            <h3 class="text-center">{{ translate('SELECT_AVAILABLE_DATES') }}</h3>
                             <v-date-picker
                                 v-model="selectedDates"
                                 range
@@ -502,7 +502,7 @@
                             <v-col cols="12">
                                 <div class="info-container">
                                     <div class="info-box">
-                                        <div align="center" style="color: #858585">{{ translate('Ad.ShowHost') }}</div>
+                                        <div align="center" style="color: #858585">{{ translate('AD_SHOWHOST') }}</div>
                                         <v-row class="d-flex flex-wrap" justify="center">
                                             <v-card class="apartment-card top1" align="center">
                                                 <v-img :src="uploadedImage || uploadedImages[0] || '/20.jpg'"
@@ -539,28 +539,28 @@
 
                     <v-row>
                         <v-col cols="12">
-                            <p>{{ translate('Ad.required_sections') }}</p>
+                            <p>{{ translate('AD_REQUIRED_SECTIONS') }}</p>
                         </v-col>
                     </v-row>
 
                     <v-row align="center" justify="center" class="selectable-item" @click="openModal = 'calendarModal'">
                         <v-icon class="mr-2">mdi-calendar-month</v-icon>
-                        <h3>{{ translate('Ad.Set_up_calendar') }}</h3>
+                        <h3>{{ translate('AD_SET_UP_CALENDAR') }}</h3>
                     </v-row>
 
                     <v-row>
                         <v-col cols="12">
-                            <p>{{ translate('Ad.choose_available') }}</p>
+                            <p>{{ translate('AD_CHOOSE_AVAILABLE') }}</p>
                         </v-col>
                     </v-row>
 
                     <v-row align="center" justify="center" class="selectable-item" @click="goNext">
-                        <h3>{{ translate('Ad.Check_settings') }}</h3>
+                        <h3>{{ translate('AD_CHECK_SETTINGS') }}</h3>
                     </v-row>
 
                     <v-row>
                         <v-col cols="12">
-                            <p>{{ translate('Ad.Set_house_rules') }}</p>
+                            <p>{{ translate('AD_SET_HOUSE_RULES') }}</p>
                         </v-col>
                     </v-row>
                 </template>
@@ -568,12 +568,12 @@
                 <v-card-actions class="d-flex flex-row flex-wrap justify-end gap-2">
                     <v-btn color="grey" text class="btn-small" style="min-width: auto; padding: 4px 8px;"
                            @click="goBack">
-                        {{ translate('Ad.Back') }}
+                        {{ translate('BACK') }}
                     </v-btn>
 
                     <v-btn color="grey" text class="btn-small" style="min-width: auto;
                      padding: 4px 8px;" @click="$emit('update:modelValue', false)">
-                        {{ translate('Ad.SaveExit') }}
+                        {{ translate('SAVEEXIT') }}
                     </v-btn>
                     <v-btn
                         color="primary"
@@ -582,7 +582,7 @@
                         @click="goNext"
                         :disabled="characterLimitExceeded || (openModal === 'finalStepModal' && !hostType.length)"
                     >
-                        {{ openModal === 'finalStepModal2' ? translate('Ad.Publish') : translate('Ad.ConfirmNext') }}
+                        {{ openModal === 'finalStepModal2' ? translate('PUBLISHANDFINISH') : translate('AD_CONFIRMNEXT') }}
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -600,7 +600,7 @@
 //Todo: status:published
 
 import { translate } from "../../../store/languageStore";
-import imageUploadService from '@/services/imageUploadService';
+import imageUploadService from '../../../services/ imageUploadService.js';
 
 export default {
     props: {
@@ -660,57 +660,57 @@ export default {
             location: "Default Location",
 
             propertyTypes: [
-                {title: "Ad.home", image: "/home-icon.png"},
-                {title: "Ad.apartment", image: "/apartment-icon.png"},
-                {title: "Ad.furniture", image: "/furniture-icon.png"},
-                {title: "Ad.bed", image: "/bed-icon.png"},
-                {title: "Ad.Camper", image: "/car-icon.png"},
-                {title: "Ad.travelTent", image: "/tent-icon.png"},
-                {title: "Ad.container", image: "/container.png"},
-                {title: "Ad.Treehouse", image: "/Treehouse.png"}
+                {title: "AD_HOME", image: "/home-icon.png"},
+                {title: "AD_APARTMENT", image: "/apartment-icon.png"},
+                {title: "AD_FURNITURE", image: "/furniture-icon.png"},
+                {title: "AD_BED", image: "/bed-icon.png"},
+                {title: "AD_CAMPER", image: "/car-icon.png"},
+                {title: "AD_TRAVELTENT", image: "/tent-icon.png"},
+                {title: "AD_CONTAINER", image: "/container.png"},
+                {title: "AD_TREEHOUSE", image: "/Treehouse.png"}
             ],
             accommodationDetails: [
-                {name: "Ad.Guest", value: 1},
-                {name: "Ad.Room", value: 1},
-                {name: "Ad.bed", value: 1},
-                {name: "Ad.Bathroom", value: 1}
+                {name: "AD_GUEST", value: 1},
+                {name: "AD_ROOM", value: 1},
+                {name: "AD_BED", value: 1},
+                {name: "AD_BATHROOM", value: 1}
             ],
             modal4Options: [
-                {text: "Ad.peaceful", icon: 'mdi-home-heart'},
-                {text: "Ad.unique", icon: 'mdi-flower'},
-                {text: "Ad.family_favorite", icon: 'mdi-heart'},
-                {text: "Ad.unique_style", icon: 'mdi-palette'},
-                {text: "Ad.center", icon: 'mdi-map-marker'},
-                {text: "Ad.spacious", icon: 'mdi-home-variant'}
+                {text: "AD_PEACEFUL", icon: 'mdi-home-heart'},
+                {text: "AD_UNIQUE", icon: 'mdi-flower'},
+                {text: "AD_FAMILY_FAVORITE", icon: 'mdi-heart'},
+                {text: "AD_UNIQUE_STYLE", icon: 'mdi-palette'},
+                {text: "AD_CENTER", icon: 'mdi-map-marker'},
+                {text: "AD_SPACIOUS", icon: 'mdi-home-variant'}
             ],
             amenities: [
-                {text: "Ad.wifi", icon: 'mdi-wifi'},
-                {text: "Ad.television", icon: 'mdi-television'},
-                {text: "Ad.kitchen", icon: 'mdi-silverware-fork-knife'},
-                {text: "Ad.washing_machine", icon: 'mdi-washing-machine'},
-                {text: "Ad.free_parking", icon: 'mdi-parking'},
-                {text: "Ad.paid_parking", icon: 'mdi-currency-usd'},
-                {text: "Ad.air_conditioning", icon: 'mdi-air-conditioner'},
-                {text: "Ad.work_space", icon: 'mdi-desk'}
+                {text: "AD_WIFI", icon: 'mdi-wifi'},
+                {text: "AD_TELEVISION", icon: 'mdi-television'},
+                {text: "AD_KITCHEN", icon: 'mdi-silverware-fork-knife'},
+                {text: "AD_WASHING_MACHINE", icon: 'mdi-washing-machine'},
+                {text: "AD_FREE_PARKING", icon: 'mdi-parking'},
+                {text: "AD_PAID_PARKING", icon: 'mdi-currency-usd'},
+                {text: "AD_AIR_CONDITIONING", icon: 'mdi-air-conditioner'},
+                {text: "AD_WORKSPACE", icon: 'mdi-desk'}
             ],
             specialAmenities: [
-                {text: "Ad.pool", icon: 'mdi-pool'},
-                {text: "Ad.yard", icon: 'mdi-tree'},
-                {text: "Ad.barbecue", icon: 'mdi-grill'},
-                {text: "Ad.patio", icon: 'mdi-patio-heater'},
-                {text: "Ad.gym", icon: 'mdi-dumbbell'},
-                {text: "Ad.sea_access", icon: 'mdi-wave'}
+                {text: "AD_POOL", icon: 'mdi-pool'},
+                {text: "AD_YARD", icon: 'mdi-tree'},
+                {text: "AD_BARBECUE", icon: 'mdi-grill'},
+                {text: "AD_PATIO", icon: 'mdi-patio-heater'},
+                {text: "AD_GYM", icon: 'mdi-dumbbell'},
+                {text: "AD_SEA_ACCESS", icon: 'mdi-wave'}
             ],
             safetyFeatures: [
-                {text: "Ad.smoke_alarm", icon: 'mdi-smoke-detector'},
-                {text: "Ad.fire_extinguisher", icon: 'mdi-fire-extinguisher'},
-                {text: "Ad.first_aid_kit", icon: 'mdi-plus-circle'},
-                {text: "Ad.carbon_monoxide_alarm", icon: 'mdi-molecule-co'}
+                {text: "AD_SMOKE_ALARM", icon: 'mdi-smoke-detector'},
+                {text: "AD_FIRE_EXTINGUISHER", icon: 'mdi-fire-extinguisher'},
+                {text: "AD_FIRST_AID_KIT", icon: 'mdi-plus-circle'},
+                {text: "AD_CARBON_MONOXIDE_ALARM", icon: 'mdi-molecule-co'}
             ],
             discountOptions: [
-                {value: 1, title: this.translate("Ad.Special_discount"), description: this.translate("Ad.OffFirstReserve"), percent: 20},
-                {value: 2, title: this.translate("Ad.Weekly_discount"), description: this.translate("Ad.Off7night"), percent: 10},
-                {value: 3, title: this.translate("Ad.Monthly_discount"), description: this.translate("Ad.Off28nightStay"), percent: 20}
+                {value: 1, title: this.translate("AD_SPECIAL_DISCOUNT"), description: this.translate("AD_OFFFIRSTRESERVE"), percent: 20},
+                {value: 2, title: this.translate("AD_WEEKLY_DISCOUNT"), description: this.translate("AD_OFF7NIGHT"), percent: 10},
+                {value: 3, title: this.translate("AD_MONTHLY_DISCOUNT"), description: this.translate("AD_OFF28NIGHTSTAY"), percent: 20}
             ]
         };
     },

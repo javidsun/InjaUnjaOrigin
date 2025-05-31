@@ -21,7 +21,7 @@
                         <v-card class="elevation-4 rounded-lg border1 animated-card">
                             <v-card-title class="text-h5 primary--text">
                                 <v-icon class="mr-2">mdi-chart-bar</v-icon>
-                                {{ translate('Admin_Reports.analysis_and_reports') }}
+                                {{ translate('ADMIN_REPORTS_ANALYSIS_AND_REPORTS') }}
                             </v-card-title>
                         </v-card>
                     </v-col>
@@ -32,28 +32,28 @@
                         <v-card class="elevation-4 rounded-lg pa-4 text-center animated-card" @click="goTo('/ReservationManagement')">
                             <v-icon size="50" color="primary">mdi-calendar-check</v-icon>
                             <v-card-title class="mt-2">{{ reservationsThisMonth }}</v-card-title>
-                            <v-card-subtitle>{{ translate('Admin_Reports.reservations_this_month') }}</v-card-subtitle>
+                            <v-card-subtitle>{{ translate('ADMIN_REPORTS_RESERVATIONS_THIS_MONTH') }}</v-card-subtitle>
                         </v-card>
                     </v-col>
                     <v-col cols="12" md="6" lg="3">
                         <v-card class="elevation-4 rounded-lg pa-4 text-center animated-card" @click="showModal('average_host_income')">
                             <v-icon size="50" color="green">mdi-cash-multiple</v-icon>
                             <v-card-title class="mt-2">{{ averageHostIncome }} €</v-card-title>
-                            <v-card-subtitle>{{ translate('Admin_Reports.average_host_income') }}</v-card-subtitle>
+                            <v-card-subtitle>{{ translate('ADMIN_REPORTS_AVERAGE_HOST_INCOME') }}</v-card-subtitle>
                         </v-card>
                     </v-col>
                     <v-col cols="12" md="6" lg="3">
                         <v-card class="elevation-4 rounded-lg pa-4 text-center animated-card" @click="showModal('approval_rate')">
                             <v-icon size="50" color="blue">mdi-checkbox-marked-circle-outline</v-icon>
                             <v-card-title class="mt-2">{{ approvalRate }}%</v-card-title>
-                            <v-card-subtitle>{{ translate('Admin_Reports.approval_rate') }}</v-card-subtitle>
+                            <v-card-subtitle>{{ translate('ADMIN_REPORTS_APPROVAL_RATE') }}</v-card-subtitle>
                         </v-card>
                     </v-col>
                     <v-col cols="12" md="6" lg="3">
                         <v-card class="elevation-4 rounded-lg pa-4 text-center animated-card" @click="goTo('/CancellationsDetails')">
                             <v-icon size="50" color="red">mdi-close-circle</v-icon>
                             <v-card-title class="mt-2">{{ cancellationRate }}%</v-card-title>
-                            <v-card-subtitle>{{ translate('Admin_Reports.cancellation_rate') }}</v-card-subtitle>
+                            <v-card-subtitle>{{ translate('ADMIN_REPORTS_CANCELLATION_RATE') }}</v-card-subtitle>
                         </v-card>
                     </v-col>
                 </v-row>
@@ -61,9 +61,9 @@
                 <v-row>
                     <v-col cols="12" md="4">
                         <v-card class="card-dashboard elevation-4 animated-card" @click="showTableDetails('conversionRate')">
-                            <v-card-title>{{ translate('re_dashboard.conversionRate') }}</v-card-title>
+                            <v-card-title>{{ translate('RE_DASHBOARD_CONVERSIONRATE') }}</v-card-title>
                             <v-card-text class="text1">
-                                <p>{{ translate('re_dashboard.conversionRateDescription') }}</p>
+                                <p>{{ translate('RE_DASHBOARD_CONVERSIONRATEDESCRIPTION') }}</p>
                                 <apex-chart
                                     v-if="chartData.conversionRate && chartData.conversionRate.options"
                                     type="donut"
@@ -77,7 +77,7 @@
 
                     <v-col cols="12" md="4">
                         <v-card class="card-dashboard elevation-4 animated-card" @click="showTableDetails('revenueByCategory')">
-                            <v-card-title>{{ translate('re_dashboard.revenueByCategory') }}</v-card-title>
+                            <v-card-title>{{ translate('RE_DASHBOARD_REVENUEBYCATEGORY') }}</v-card-title>
                             <v-card-text class="text1">
                                 <apex-chart
                                     v-if="chartData.revenueByCategory && chartData.revenueByCategory.options"
@@ -100,7 +100,7 @@
 
                     <v-col cols="12" md="4">
                         <v-card class="card-dashboard elevation-4 animated-card text1" @click="showTableDetails('geoActivity')">
-                            <v-card-title>{{ translate('re_dashboard.geoActivity') }}</v-card-title>
+                            <v-card-title>{{ translate('RE_DASHBOARD_GEOACTIVITY') }}</v-card-title>
                             <v-card-text>
                                 <apex-chart
                                     v-if="chartData.revenueByCategory && chartData.revenueByCategory.options"
@@ -144,7 +144,7 @@
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="primary" @click="tableDetailsVisible = false">{{ translate('Admin_AdManagement.close') }}</v-btn>
+                            <v-btn color="primary" @click="tableDetailsVisible = false">{{ translate('CLOSE') }}</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
@@ -156,13 +156,13 @@
             <v-card class="elevation-6">
                 <v-card-title class="text-h5">{{ modalTitle }}</v-card-title>
                 <v-card-text>
-                    <p><strong>{{ translate('Admin_Reports.value') }}:</strong> {{ modalData.value }}</p>
-                    <p><strong>{{ translate('Admin_Reports.description') }}:</strong> {{ modalData.description }}</p>
-                    <p><strong>{{ translate('Admin_Reports.date') }}:</strong> {{ modalData.date }}</p>
+                    <p><strong>{{ translate('ADMIN_REPORTS_VALUE') }}:</strong> {{ modalData.value }}</p>
+                    <p><strong>{{ translate('ADMIN_REPORTS_DESCRIPTION') }}:</strong> {{ modalData.description }}</p>
+                    <p><strong>{{ translate('ADMIN_REPORTS_DATE') }}:</strong> {{ modalData.date }}</p>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="modalVisible = false">{{ translate('Admin_AdManagement.close') }}</v-btn>
+                    <v-btn color="primary" @click="modalVisible = false">{{ translate('CLOSE') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -204,13 +204,13 @@ export default {
                 date: new Date().toLocaleDateString(),
             },
             revenueByCategory: [
-                { categoryKey: "re_dashboard.Home", revenue: 5000 },
-                { categoryKey: "re_dashboard.Car", revenue: 2000 },
-                { categoryKey: "re_dashboard.Others", revenue: 1000 },
+                { categoryKey: "RE_DASHBOARD_HOME", revenue: 5000 },
+                { categoryKey: "RE_DASHBOARD_CAR", revenue: 2000 },
+                { categoryKey: "RE_DASHBOARD_OTHERS", revenue: 1000 },
             ],
             tableHeaders: [
-                { textKey: "re_dashboard.category", key: "category" },
-                { textKey: "re_dashboard.revenue", key: "revenue" },
+                { textKey: "RE_DASHBOARD_CATEGORY", key: "category" },
+                { textKey: "RE_DASHBOARD_REVENUE", key: "revenue" },
             ],
             chartData: {
                 conversionRate: {
@@ -272,7 +272,7 @@ export default {
                 if (this.chartData.revenueByCategory) {
                     this.chartData.revenueByCategory.series = [
                         {
-                            name: translate("re_dashboard.revenue"),
+                            name: translate("RE_DASHBOARD_REVENUE"),
                             data: newVal.map((c) => c.revenue),
                         },
                     ];
@@ -293,7 +293,7 @@ export default {
         showTableDetails(key) {
             try {
                 this.tableDetailsKey = key;
-                this.tableDetailsTitle = translate(`re_dashboard.${key}`);
+                this.tableDetailsTitle = translate(`${key}`);
                 this.tableDetailsVisible = true;
             } catch (error) {
                 this.handleError("Table details error", error);
@@ -304,19 +304,19 @@ export default {
                 const modalDataMap = {
                     reservations_this_month: {
                         value: this.reservationsThisMonth,
-                        description: translate('Admin_Reports.reservations_this_month_description'),
+                        description: translate('ADMIN_REPORTS_RESERVATIONS_THIS_MONTH_DESCRIPTION'),
                     },
                     average_host_income: {
                         value: `${this.averageHostIncome} €`,
-                        description: translate('Admin_Reports.average_host_income_description'),
+                        description: translate('ADMIN_REPORTS_AVERAGE_HOST_INCOME_DESCRIPTION'),
                     },
                     approval_rate: {
                         value: `${this.approvalRate}%`,
-                        description: translate('Admin_Reports.approval_rate_description'),
+                        description: translate('ADMIN_REPORTS_APPROVAL_RATE_DESCRIPTION'),
                     },
                     cancellation_rate: {
                         value: `${this.cancellationRate}%`,
-                        description: translate('Admin_Reports.cancellation_rate_description'),
+                        description: translate('ADMIN_REPORTS_CANCELLATION_RATE_DESCRIPTION'),
                     },
                 };
 

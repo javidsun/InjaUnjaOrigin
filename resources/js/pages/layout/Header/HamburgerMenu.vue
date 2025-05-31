@@ -51,11 +51,11 @@ export default {
             selectedComponent: null,
             modalRef: null,
             menuItems: [
-                { title: "menu.register", icon: "mdi-account-plus", component: RegisterUser },
-                { title: "menu.login", icon: "mdi-login", component: Login },
-                { title: "menu.giftCard", icon: "mdi-gift", component: GiftModal },
-                { title: "menu.injaUnja", icon: "mdi-map-marker", component: InjaUnja },
-                { title: "menu.helpCenter", icon: "mdi-help-circle", component: HelpCenter }
+                { title: "MENU_REGISTER", icon: "mdi-account-plus", component: RegisterUser },
+                { title: "MENU_LOGIN", icon: "mdi-login", component: Login },
+                { title: "MENU_GIFTCARD", icon: "mdi-gift", component: GiftModal },
+                { title: "MENU_INJAUNJA", icon: "mdi-map-marker", component: InjaUnja },
+                { title: "MENU_HELPCENTER", icon: "mdi-help-circle", component: HelpCenter }
             ]
         };
     },

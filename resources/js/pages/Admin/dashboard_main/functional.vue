@@ -1,7 +1,7 @@
 <template>
     <VCard class="main-card pa-4" outlined>
         <div class="dashboard-header">
-            <p class="text-body-1 mb-0 fontsize">{{ translate('functional.todayPerformance') }}</p>
+            <p class="text-body-1 mb-0 fontsize">{{ translate('FUNCTIONAL_TODAYPERFORMANCE') }}</p>
         </div>
         <div class="dashboard-cards">
             <VCard v-for="(item, index) in performanceStats" :key="index" class="stat-card d-flex text-secondary2 align-center " flat>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 
 export default {
     name: 'functional',
@@ -24,19 +24,19 @@ export default {
         return {
             performanceStats: [
                 {
-                    title: "functional.todayReservations",
+                    title: "FUNCTIONAL_TODAYRESERVATIONS",
                     stats: '35',
                     icon: 'mdi-calendar-check',
                     color: 'primary'
                 },
                 {
-                    title: "functional.dailyRevenue",
+                    title: "FUNCTIONAL_DAILYREVENUE",
                     stats: '1.5M',
                     icon: 'mdi-cash',
                     color: 'success'
                 },
                 {
-                    title: "functional.newUsers",
+                    title: "FUNCTIONAL_NEWUSERS",
                     stats: '45',
                     icon: 'mdi-account-plus',
                     color: 'warning'

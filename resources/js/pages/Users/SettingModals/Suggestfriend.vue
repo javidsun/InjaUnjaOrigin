@@ -2,7 +2,7 @@
     <v-dialog v-model="isfriendModalOpen" max-width="600px" transition="dialog-transition">
         <v-card>
             <v-card-title class="gift-card-section">
-                <span>{{ translate('friendInvite.title') }}</span>
+                <span>{{ translate('GUIDE_FRIENDINVITE_TITLE') }}</span>
                 <v-spacer></v-spacer>
                 <v-btn icon @click="closeModal" class="close-btn">
                     <v-icon>mdi-close</v-icon>
@@ -11,7 +11,7 @@
             <v-divider></v-divider>
 
             <v-card-text class="modal-content">
-                <p>{{ translate('friendInvite.shareLink') }}</p>
+                <p>{{ translate('GUIDE_FRIENDINVITE_SHARELINK') }}</p>
 
                 <v-row>
                     <v-col cols="12">
@@ -21,7 +21,7 @@
 
                 <div class="button-container">
                     <v-btn @click="shareLink" color="primary" large>
-                        {{ translate('friendInvite.shareButton') }}
+                        {{ translate('GUIDE_FRIENDINVITE_SHAREBUTTON') }}
                     </v-btn>
                 </div>
             </v-card-text>
@@ -56,12 +56,12 @@ export default {
             const url = window.location.href;
             if (navigator.share) {
                 navigator.share({
-                    title: translate('friendInvite.shareTitle'),
-                    text: translate('friendInvite.shareMessage'),
+                    title: translate('GUIDE_FRIENDINVITE_SHARETITLE'),
+                    text: translate('GUIDE_FRIENDINVITE_SHAREMESSAGE'),
                     url: url
                 }).catch((error) => console.error("❌ Error sharing:", error));
             } else {
-                alert(translate('friendInvite.shareFallback'));
+                alert(translate('GUIDE_FRIENDINVITE_SHAREFALLBACK'));
             }
         }
     },

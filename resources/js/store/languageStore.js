@@ -3,42 +3,27 @@ import { ref } from 'vue';
 const currentLanguage = ref('en');
 const messages = ref({});
 
-const setLanguage = (lang) => {
+const setLanguage = async (lang) => {
     currentLanguage.value = lang;
 
-    if (lang === 'fa') {
-        import('../language/fa.js').then((module) => {
-            messages.value = module.default;
-        });
-    } else {
-        import('../language/en.js').then((module) => {
-            messages.value = module.default;
-        });
+    try {
+        const module = await import(`../language/${lang}.json`);
+        messages.value = module.default || module;
+    } catch (error) {
+        console.error(`Error loading language file for ${lang}`, error);
+        messages.value = {};
     }
 };
 
 setLanguage(currentLanguage.value);
 
 const translate = (key) => {
-
-    if (!messages.value) return key;
-
-    if (typeof key !== 'string') {
+    if (!messages.value || typeof key !== 'string') {
         return key;
     }
 
-    const keys = key.split('.');
-    let result = messages.value;
-
-    for (const k of keys) {
-        if (result && result[k] !== undefined) {
-            result = result[k];
-        } else {
-            return key;
-        }
-    }
-
-    return result || key;
+    const value = messages.value[key.toUpperCase()];
+    return value !== undefined ? value : key;
 };
 
 export { currentLanguage, messages, setLanguage, translate };

@@ -24,14 +24,14 @@
                         <v-card class="elevation-4 rounded-lg pa-4">
                             <v-card-title class="text-h5 primary--text sizem">
                                 <v-icon class="mr-2">mdi-headset</v-icon>
-                                {{ translate('Admin_Support.support_messages') }}
+                                {{ translate('ADMIN_SUPPORT_SUPPORT_MESSAGES') }}
                             </v-card-title>
                             <v-card-text>
                                 <v-row>
                                     <v-col cols="12" md="4">
                                         <v-text-field
                                             v-model="searchQuery"
-                                            :label="translate('Admin_Support.search_messages')"
+                                            :label="translate('ADMIN_SUPPORT_SEARCH_MESSAGES')"
                                             outlined
                                         ></v-text-field>
                                     </v-col>
@@ -41,13 +41,13 @@
                                             :items="statusOptions"
                                             item-title="text"
                                             item-value="value"
-                                            :label="translate('Admin_Support.filter_by_status')"
+                                            :label="translate('ADMIN_SUPPORT_FILTER_BY_STATUS')"
                                             outlined
                                         ></v-select>
                                     </v-col>
                                     <v-col cols="12" md="4">
                                         <v-btn color="primary" @click="toggleMessageForm">
-                                            {{ translate('Admin_Support.new_message') }}
+                                            {{ translate('ADMIN_SUPPORT_NEW_MESSAGE') }}
                                         </v-btn>
                                     </v-col>
                                 </v-row>
@@ -57,18 +57,18 @@
                                         <v-select
                                             v-model="selectedUser"
                                             :items="users"
-                                            :label="translate('Admin_Support.select_user')"
+                                            :label="translate('ADMIN_SUPPORT_SELECT_USER')"
                                             outlined
                                         ></v-select>
                                         <v-textarea
                                             v-model="newMessage"
-                                            :label="translate('Admin_Support.your_message')"
+                                            :label="translate('ADMIN_SUPPORT_YOUR_MESSAGE')"
                                             outlined
                                             rows="4"
                                             auto-grow
                                         ></v-textarea>
                                         <v-btn @click="sendMessage" color="success">
-                                            {{ translate('Admin_Support.send_message') }}
+                                            {{ translate('ADMIN_SUPPORT_SEND_MESSAGE') }}
                                         </v-btn>
                                     </v-col>
                                 </v-row>
@@ -89,13 +89,13 @@
                                             </template>
                                             <template v-slot:item.actions="{ item }">
                                                 <v-btn small color="primary" @click="replyToMessage(item)">
-                                                    {{ translate('Admin_Support.reply') }}
+                                                    {{ translate('ADMIN_SUPPORT_REPLY') }}
                                                 </v-btn>
                                                 <v-btn small color="success" @click="markAsResolved(item)" class="ml-2">
-                                                    {{ translate('Admin_Support.mark_resolved') }}
+                                                    {{ translate('ADMIN_SUPPORT_MARK_RESOLVED') }}
                                                 </v-btn>
                                                 <v-btn small color="error" @click="deleteMessage(item)" class="ml-2">
-                                                    {{ translate('Admin_Support.delete') }}
+                                                    {{ translate('Delete') }}
                                                 </v-btn>
                                             </template>
                                         </v-data-table>
@@ -150,11 +150,11 @@ export default {
                 { text: translate('Unresolved'), value: "unresolved" },
             ],
             messageHeaders: [
-                { text: translate('Admin_Support.sender'), value: "sender" },
-                { text: translate('Admin_Support.date'), value: "date" },
-                { text: translate('Admin_Support.content'), value: "content" },
-                { text: translate('Admin_Support.status'), value: "status" },
-                { text: translate('Admin_Support.actions'), value: "actions" },
+                { text: translate('MESSAGE_SENDER'), value: "sender" },
+                { text: translate('ADMIN_SUPPORT_DATE'), value: "date" },
+                { text: translate('ADMIN_SUPPORT_CONTENT'), value: "content" },
+                { text: translate('ADMIN_SUPPORT_STATUS'), value: "status" },
+                { text: translate('ADMIN_SUPPORT_ACTIONS'), value: "actions" },
             ]
         }
     },

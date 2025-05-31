@@ -21,7 +21,7 @@
                         <v-card class="elevation-4 rounded-lg pa-4">
                             <v-card-title class="text-h5 primary--text sizem">
                                 <v-icon class="mr-2">mdi-file-chart</v-icon>
-                                {{ translate('Admin_Reports.reservations_details') }}
+                                {{ translate('ADMIN_REPORTS_RESERVATIONS_DETAILS') }}
                             </v-card-title>
                             <v-card-text>
                                 <v-row>
@@ -30,9 +30,9 @@
                                             <v-card-title class="text-h6">
                                                 {{ reservationsDetails.total }}
                                             </v-card-title>
-                                            <v-card-subtitle>{{ translate('Admin_Reports.total_reservations') }}</v-card-subtitle>
+                                            <v-card-subtitle>{{ translate('ADMIN_REPORTS_TOTAL_RESERVATIONS') }}</v-card-subtitle>
                                             <v-card-actions>
-                                                <v-btn @click="exportToExcel('total')" color="primary">{{ translate('General.export') }}</v-btn>
+                                                <v-btn @click="exportToExcel('total')" color="primary">{{ translate('GENERAL_EXPORT') }}</v-btn>
                                             </v-card-actions>
                                         </v-card>
                                     </v-col>
@@ -41,9 +41,9 @@
                                             <v-card-title class="text-h6">
                                                 {{ reservationsDetails.successful }}
                                             </v-card-title>
-                                            <v-card-subtitle>{{ translate('Admin_Reports.successful_reservations') }}</v-card-subtitle>
+                                            <v-card-subtitle>{{ translate('ADMIN_REPORTS_SUCCESSFUL_RESERVATIONS') }}</v-card-subtitle>
                                             <v-card-actions>
-                                                <v-btn @click="exportToExcel('successful')" color="primary">{{ translate('General.export') }}</v-btn>
+                                                <v-btn @click="exportToExcel('successful')" color="primary">{{ translate('GENERAL_EXPORT') }}</v-btn>
                                             </v-card-actions>
                                         </v-card>
                                     </v-col>
@@ -52,9 +52,9 @@
                                             <v-card-title class="text-h6">
                                                 {{ reservationsDetails.pending }}
                                             </v-card-title>
-                                            <v-card-subtitle>{{ translate('Admin_Reports.pending_reservations') }}</v-card-subtitle>
+                                            <v-card-subtitle>{{ translate('ADMIN_REPORTS_PENDING_RESERVATIONS') }}</v-card-subtitle>
                                             <v-card-actions>
-                                                <v-btn @click="exportToExcel('pending')" color="primary">{{ translate('General.export') }}</v-btn>
+                                                <v-btn @click="exportToExcel('pending')" color="primary">{{ translate('GENERAL_EXPORT') }}</v-btn>
                                             </v-card-actions>
                                         </v-card>
                                     </v-col>
@@ -63,9 +63,9 @@
                                             <v-card-title class="text-h6">
                                                 {{ reservationsDetails.failed }}
                                             </v-card-title>
-                                            <v-card-subtitle>{{ translate('Admin_Reports.failed_reservations') }}</v-card-subtitle>
+                                            <v-card-subtitle>{{ translate('ADMIN_REPORTS_FAILED_RESERVATIONS') }}</v-card-subtitle>
                                             <v-card-actions>
-                                                <v-btn @click="exportToExcel('failed')" color="primary">{{ translate('General.export') }}</v-btn>
+                                                <v-btn @click="exportToExcel('failed')" color="primary">{{ translate('GENERAL_EXPORT') }}</v-btn>
                                             </v-card-actions>
                                         </v-card>
                                     </v-col>
@@ -121,7 +121,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="reservationDialog = false">{{ translate('General.close') }}</v-btn>
+                    <v-btn color="primary" @click="reservationDialog = false">{{ translate('CLOSE') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -147,7 +147,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="detailsDialog = false">{{ translate('General.close') }}</v-btn>
+                    <v-btn color="primary" @click="detailsDialog = false">{{ translate('CLOSE') }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -161,7 +161,7 @@
 import Sidebar from "../Sidebar.vue";
 import Darkmood from "../../layout/Header/Darkmood.vue";
 import LanguageSwitcher from "../../layout/Header/LanguageSwitcher.vue";
-import { translate } from "@/store/languageStore.js";
+import { translate } from "@/store/languageStore";
 import * as XLSX from 'xlsx';
 
 export default {
@@ -218,11 +218,11 @@ export default {
                 },
             ],
             detailsTableHeaders: [
-                { text: this.translate('General.name'), value: "name" },
-                { text: this.translate('General.date'), value: "date" },
-                { text: this.translate('General.icon'), value: "icon" },
-                { text: this.translate('General.image'), value: "image" },
-                { text: this.translate('General.amount'), value: "amount" },
+                { text: this.translate('REGISTER_NAME'), value: "name" },
+                { text: this.translate('ADMIN_REPORTS_DATE'), value: "date" },
+                { text: this.translate('ICON'), value: "icon" },
+                { text: this.translate('IMAGE'), value: "image" },
+                { text: this.translate('AD_AMOUNT'), value: "amount" },
             ],
         };
     },
@@ -262,7 +262,7 @@ export default {
                     amount: reservation.amount
                 })),
                 failed: this.reservations.filter(reservation =>
-                    reservation.title === this.translate("TravelerReservation")
+                    reservation.title === this.translate("USERRESERVATION_TRAVELERRESERVATION")
                 ).map(reservation => ({
                     name: reservation.title,
                     date: reservation.date,
@@ -280,12 +280,12 @@ export default {
         },
         showDetails(value, type) {
             try {
-                this.detailsTitle = this.translate(`Admin_Reports.${type}_reservations`);
+                this.detailsTitle = this.translate(`${type}_reservations`);
                 this.detailsItems = this.detailsData[type];
                 this.detailsDialog = true;
             } catch (error) {
                 this.$emit('error', {
-                    message: this.translate('Errors.failed_to_show_details'),
+                    message: this.translate('FAILED_TO_SHOW_DETAILS'),
                     error: error
                 });
             }
@@ -304,11 +304,11 @@ export default {
         exportToExcel(type) {
             try {
                 const data = this.detailsData[type].map(item => ({
-                    [this.translate('General.name')]: item.name,
-                    [this.translate('General.date')]: item.date,
-                    [this.translate('General.icon')]: item.icon,
-                    [this.translate('General.image')]: item.image,
-                    [this.translate('General.amount')]: item.amount
+                    [this.translate('REGISTER_NAME')]: item.name,
+                    [this.translate('ANYWEEK_DATE')]: item.date,
+                    [this.translate('ICON')]: item.icon,
+                    [this.translate('IMAGE')]: item.image,
+                    [this.translate('FINANCE_AMOUNT')]: item.amount
                 }));
 
                 const worksheet = XLSX.utils.json_to_sheet(data);
@@ -316,10 +316,10 @@ export default {
                 XLSX.utils.book_append_sheet(workbook, worksheet, "Reservations");
                 XLSX.writeFile(workbook, `${type}_reservations.xlsx`);
 
-                this.$emit('success', this.translate('Success.export_successful'));
+                this.$emit('success', this.translate('SUCCESS'));
             } catch (error) {
                 this.$emit('error', {
-                    message: this.translate('Errors.export_failed'),
+                    message: this.translate('ERROR'),
                     error: error
                 });
             }
@@ -329,7 +329,6 @@ export default {
 </script>
 
 <style scoped>
-/* Your existing styles remain unchanged */
 .info-card.success {
     background: #d4edda;
     color: #155724;

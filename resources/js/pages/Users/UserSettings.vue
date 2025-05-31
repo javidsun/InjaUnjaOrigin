@@ -8,13 +8,13 @@
                     </v-avatar>
                     <div class="text-content">
                         <v-list-item-title class="user-name">{{ userName }}</v-list-item-title>
-                        <v-list-item-subtitle class="profile-link">{{ translate('setting.showProfile') }}
+                        <v-list-item-subtitle class="profile-link">{{ translate('SETTING_SHOWPROFILE') }}
                         </v-list-item-subtitle>
                     </div>
                 </v-list-item>
                 <v-divider></v-divider>
 
-                <v-list-subheader class="text1 list-item">{{ translate('setting.settings') }}</v-list-subheader>
+                <v-list-subheader class="text1 list-item">{{ translate('SETTING_SETTINGS') }}</v-list-subheader>
                 <template v-for="(item, index) in settingsItems" :key="index">
                     <v-list-item @click="handleSettingClick(item.link)" class="list-item">
                         <v-icon class="icon">{{ item.icon }}</v-icon>
@@ -22,16 +22,16 @@
                     </v-list-item>
                     <v-divider></v-divider>
                 </template>
-                <v-list-subheader class="text1 list-item">{{ translate('setting.host') }}</v-list-subheader>
+                <v-list-subheader class="text1 list-item">{{ translate('SETTING_HOST') }}</v-list-subheader>
                 <v-list-item @click="handleSettingClick('/Guide')" class="list-item">
                     <v-list-item class="text">
                         <v-icon>mdi-book</v-icon>
-                        <v-list-item-title>{{ translate('setting.guide') }}</v-list-item-title>
+                        <v-list-item-title>{{ translate('SETTING_GUIDE') }}</v-list-item-title>
                     </v-list-item>
                 </v-list-item>
                 <v-divider></v-divider>
 
-                <v-list-subheader class="text1 list-item">{{ translate('setting.referrals') }}</v-list-subheader>
+                <v-list-subheader class="text1 list-item">{{ translate('SETTING_REFERRALS') }}</v-list-subheader>
                 <template v-for="(item, index) in referralItems" :key="index">
                     <v-list-item @click="handleSettingClick(item.link)" class="list-item">
                         <v-icon class="icon">{{ item.icon }}</v-icon>
@@ -40,7 +40,7 @@
                 </template>
                 <v-divider></v-divider>
 
-                <v-list-subheader class="text1 list-item">{{ translate('setting.support') }}</v-list-subheader>
+                <v-list-subheader class="text1 list-item">{{ translate('SETTING_SUPPORT') }}</v-list-subheader>
                 <template v-for="(item, index) in supportItems" :key="index">
                     <v-list-item @click="handleSettingClick(item.link)" class="list-item">
                         <v-icon class="icon">{{ item.icon }}</v-icon>
@@ -49,7 +49,7 @@
                 </template>
                 <v-divider></v-divider>
 
-                <v-list-subheader class="text1 list-item">{{ translate('setting.policies') }}</v-list-subheader>
+                <v-list-subheader class="text1 list-item">{{ translate('SETTING_POLICIES') }}</v-list-subheader>
                 <template v-for="(item, index) in policyItems" :key="index">
                     <v-list-item @click="handleSettingClick(item.link)" class="list-item">
                         <v-icon class="icon">{{ item.icon }}</v-icon>
@@ -59,7 +59,7 @@
                 <v-divider></v-divider>
                 <v-list-item @click="goToPage('/login')" class="logout list-item">
                     <v-icon class="icon">mdi-logout</v-icon>
-                    <span class="text">{{ translate('setting.logout') }}</span>
+                    <span class="text">{{ translate('SETTING_LOGOUT') }}</span>
                 </v-list-item>
 
             </v-list>
@@ -138,28 +138,28 @@ export default {
             userName: 'Zahra Azizi',
             isModalOpen: false,
             settingsItems: [
-                { title: "setting.personalInfo", icon: "mdi-account", link: "/SettingModal" },
-                { title: "setting.RoleAndPermission", icon: "mdi-information", link: "/RoleAndPermissionModal" },
-                { title: "setting.notifications", icon: "mdi-bell", link: "/NotificationsModals" },
-                { title: "setting.loginSecurity", icon: "mdi-security", link: "/SecurityModal" },
-                { title: "setting.payments", icon: "mdi-credit-card", link: "/PaymentsModal" },
-                { title: "setting.access", icon: "mdi-lock", link: "/AccessModal" },
-                { title: "setting.currency", icon: "mdi-currency-eur", link: "/CurrencyModal" },
-                { title: "setting.privacySharing", icon: "mdi-lock-outline", link: "/PrivacySharing" }
+                { title: "SETTING_PERSONALINFO", icon: "mdi-account", link: "/SettingModal" },
+                { title: "SETTING_ROLEANDPERMISSION", icon: "mdi-information", link: "/RoleAndPermissionModal" },
+                { title: "SETTING_NOTIFICATIONS", icon: "mdi-bell", link: "/NotificationsModals" },
+                { title: "SETTING_LOGINSECURITY", icon: "mdi-security", link: "/SecurityModal" },
+                { title: "SETTING_PAYMENTS", icon: "mdi-credit-card", link: "/PaymentsModal" },
+                { title: "SETTING_ACCESS", icon: "mdi-lock", link: "/AccessModal" },
+                { title: "SETTING_CURRENCY", icon: "mdi-currency-eur", link: "/CurrencyModal" },
+                { title: "SETTING_PRIVACYSHARING", icon: "mdi-lock-outline", link: "/PrivacySharing" }
             ],
             referralItems: [
-                { title: "setting.giftCard", icon: "mdi-gift", link: "/GiftModal" },
-                { title: "setting.referHost", icon: "mdi-account-group", link: "/Suggestfriend" }
+                { title: "SETTING_GIFTCARD", icon: "mdi-gift", link: "/GiftModal" },
+                { title: "SETTING_REFERHOST", icon: "mdi-account-group", link: "/Suggestfriend" }
             ],
             supportItems: [
-                { title: "setting.supportCenter", icon: "mdi-headset", link: "/SupportModal" },
-                { title: "setting.reportIssues", icon: "mdi-alert", link: "/ReportModal" },
-                { title: "setting.howItWorks", icon: "mdi-information", link: "/HowItWorksModal" },
-                { title: "setting.feedback", icon: "mdi-comment", link: "/FeedbackModal" }
+                { title: "SETTING_SUPPORTCENTER", icon: "mdi-headset", link: "/SupportModal" },
+                { title: "SETTING_REPORTISSUES", icon: "mdi-alert", link: "/ReportModal" },
+                { title: "SETTING_HOWITWORKS", icon: "mdi-information", link: "/HowItWorksModal" },
+                { title: "SETTING_FEEDBACK", icon: "mdi-comment", link: "/FeedbackModal" }
             ],
             policyItems: [
-                { title: "setting.termsOfService", icon: "mdi-file-document", link: "/Terms" },
-                { title: "setting.privacyPolicy", icon: "mdi-lock-check", link: "/Policy" }
+                { title: "SETTING_TERMSOFSERVICE", icon: "mdi-file-document", link: "/Terms" },
+                { title: "SETTING_PRIVACYPOLICY", icon: "mdi-lock-check", link: "/Policy" }
             ]
         };
     },

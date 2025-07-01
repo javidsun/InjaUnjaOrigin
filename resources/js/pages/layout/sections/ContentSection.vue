@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div class="hero-section">
+            <h1 class="hero-title">Welcome to InjaUnja</h1>
+            <p class="hero-tagline">Find your next adventure, home, ride, or event – all in one place.</p>
+        </div>
         <v-row class="content-section">
             <v-col cols="12" :md="isGroupSelected && !isExpanded ? 8 : 12"
                    class="move-down"
@@ -7,12 +11,37 @@
                        'desktop-centered': !isGroupSelected && !isMobile,
                        'left-content': isGroupSelected && !isExpanded
                    }">
-                <Group :groupImages="images.groups"
-                       @selectGroup="handleGroupSelect"
-                       :selectedGroup="selectedGroup"
-                       :is-expanded="isExpanded" />
+                <div class="icon-grid">
+                    <v-row justify="center" align="center" class="icon-row">
+                        <v-col v-for="(icon, idx) in images.groups" :key="icon" cols="6" sm="3" class="icon-col">
+                            <v-tooltip bottom>
+                                <template #activator="{ on, attrs }">
+                                    <v-card
+                                        class="icon-card"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        :elevation="selectedGroup === idx ? 12 : 4"
+                                        :class="{ 'icon-card--active': selectedGroup === idx }"
+                                        @click="handleGroupSelect(idx)"
+                                        tabindex="0"
+                                        aria-label="Select group"
+                                        v-ripple
+                                    >
+                                        <v-img :src="'/' + icon" :alt="icon.replace('.ico','') + ' icon'" class="icon-img" contain />
+                                        <div class="icon-label">{{ translate(`icons.${icon.replace('.ico', '')}`) }}</div>
+                                    </v-card>
+                                </template>
+                                <span>{{ icon.replace('.ico','') }}</span>
+                            </v-tooltip>
+                        </v-col>
+                    </v-row>
+                </div>
                 <div class="divider"></div>
-
+                <template v-if="isMobile && isGroupSelected && !isExpanded">
+                    <div class="selected-group-content mobile-group-content">
+                        <component :is="selectedComponent" @close="handleClose" @expand="handleExpand" />
+                    </div>
+                </template>
                 <Advertisements
                     v-if="!isExpanded"
                     :advertisements="images.advertisements"
@@ -40,6 +69,7 @@ import TravelersContent from "./Groups/Travel Ads/TravelersContent.vue";
 import HousesContent from "./Groups/House Ads/HousesContent.vue";
 import VehiclesContent from "./Groups/Vehicles Ads/VehiclesContent.vue";
 import EventsContent from "./Groups/Event Ads/EventsContent.vue";
+import { translate } from "../../../store/languageStore";
 
 export default {
     name: 'ContentSection',
@@ -106,6 +136,7 @@ export default {
         }
     },
     methods: {
+        translate,
         handleExpand(expanded) {
             try {
                 this.isExpanded = expanded;
@@ -148,6 +179,80 @@ export default {
 </script>
 
 <style scoped>
+.hero-section {
+    text-align: center;
+    margin-bottom: 32px;
+    margin-top: 8px;
+}
+.hero-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #1a237e;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+.hero-tagline {
+    font-size: 1.25rem;
+    color: #374151;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+.icon-grid {
+    margin-bottom: 32px;
+}
+.icon-row {
+    margin: 0 auto;
+    max-width: 900px;
+}
+.icon-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icon-card {
+    width: 150px;
+    height: 170px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 24px;
+    box-shadow: 0 2px 16px rgba(30,34,44,0.10);
+    background:var(--background-color);
+    transition: box-shadow 0.25s, transform 0.18s, background 0.18s;
+    outline: none;
+    border: 2px solid transparent;
+    margin-bottom: 8px;
+    position: relative;
+}
+.icon-card:focus {
+    border: 2px solid #4cc8ff;
+    box-shadow: 0 0 0 4px rgba(76,200,255,0.15);
+}
+.icon-card:hover {
+    box-shadow: 0 8px 32px rgba(76,200,255,0.18);
+    background: rgba(236,248,255,0.95);
+    transform: translateY(-4px) scale(1.04);
+}
+.icon-card--active {
+    border: 2.5px solid #1a237e;
+    background: rgba(76,200,255,0.10);
+    box-shadow: 0 8px 32px rgba(76,200,255,0.22);
+}
+.icon-img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 2px 8px rgba(76,200,255,0.10));
+    border-radius: 25px;
+}
+.icon-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--txt-color);
+    text-align: center;
+    letter-spacing: 0.5px;
+}
 .left-content {
     animation: slideLeft 0.5s ease-out forwards;
 }

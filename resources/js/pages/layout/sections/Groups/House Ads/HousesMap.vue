@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-card>
-            <v-card-title class="text-h6 Txt2">{{ translate("Ad.WhereAccommodation") }}</v-card-title>
+            <v-card-title class="text-h6 Txt2">{{ translate("AD_WHEREACCOMMODATION") }}</v-card-title>
             <v-card-subtitle class="Txt2"></v-card-subtitle>
             <v-card-text>
                 <v-text-field

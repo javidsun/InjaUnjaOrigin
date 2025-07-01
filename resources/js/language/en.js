@@ -5,6 +5,13 @@ export default {
         teamTitle: 'Our Team',
 
     },
+    icons:{
+        Traveler:'Traveler',
+        House:'House',
+        Vehicles:'Vehicles',
+        Event:'Event'
+
+    },
     general: {
         ok: 'Ok',
         success: 'Success',
@@ -107,7 +114,6 @@ export default {
         Your_successful: 'Your reservation was successful!',
         Quick_booking: 'Quick Reserv',
         Reservation_request: 'Reservation request',
-        Owner: 'Owner\'s name:',
         Location: 'Location:',
         Your_details: 'Your Reserv details',
         Edit_date: 'Edit date',
@@ -115,7 +121,6 @@ export default {
         Pay_with: 'Pay with',
         Edit: 'Edit',
         Edit_guest: 'Edit guest information:',
-        Guest_name: 'Guest name',
         Edit_guest2: "Edit guest",
         Guest_number: "Guest number",
         Save: "Save",

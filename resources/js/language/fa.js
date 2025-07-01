@@ -4,7 +4,13 @@ export default {
         firstAd: 'متن اولین تبلیغ',
         secondAd: 'متن دومین تبلیغ',
     },
+    icons:{
+        Traveler:'همسفر',
+        House:'خانه',
+        Vehicles:'ماشین',
+        Event:'رویداد'
 
+    },
     Anyweek: {
         anyweek: 'هر هفته',
         date: 'تاریخ',
@@ -93,7 +99,6 @@ export default {
         Guest: 'مهمان',
         Edit: 'ویرایش',
         Edit_guest: 'ویرایش اطلاعات مهمان‌ها',
-        Guest_name: 'نام مهمان',
         Edit_guest2: "ویرایش مهمان",
         Guest_number: "تعداد مهمان‌ها",
         Save: "ذخیره",
